@@ -38,17 +38,38 @@ function createUserscriptsListingFileTask(cb) {
 
         return `
     
-            <!DOCTYPE html>
-            <html lang="en">
-            <head>
-                <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>Userscripts installieren</title>
-            </head>
-            <body>
-                ${buttons}
-            </body>
-            </html>
+        <!DOCTYPE html>
+        <html lang="en">
+        
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>MIB32 Userscripts - Gruppe B - Team: Onur Sahin, Christian Knoth, Dustin Bastke, Anna Glomb, Stefanie Roddeck</title>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+        </head>
+        
+        <body>
+        
+            <section class="hero is-primary">
+                <div class="hero-body">
+                    <div class="container">
+                        <h1 class="title">MIB32 Userscripts - Gruppe B</h1>
+                        <p class="subtitle">Team: Onur Sahin, Christian Knoth, Dustin Bastke, Anna Glomb, Stefanie Roddeck</p>
+                    </div>
+                </div>
+            </section>
+        
+            <section class="section">
+                <div class="container">
+                    <div class="columns is-multiline">
+                        ${buttons.join("")}
+                    </div>
+                </div>
+            </section>
+        
+        </body>
+        
+        </html>
 
         `;
 
@@ -59,7 +80,11 @@ function createUserscriptsListingFileTask(cb) {
     fs.readdir(distFolder, (err, files) => {
 
         files.forEach(file => {
-            buttons.push(`<a href="https://localhost:3000/dist/${file}">${file}</a> <br>`);
+            buttons.push(`
+                <div class="column is-full">
+                    <a role="button" class="button" href="https://localhost:3000/dist/${file}">${file}</a>
+                </div>
+            `);
         });
 
         let htmlContent = templateBuilder(buttons);

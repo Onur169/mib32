@@ -18,8 +18,8 @@ function injectScript(server, scriptName) {
 }
 
 // ==UserScript==
-// @name         klima-streik.org (social)
-// @namespace    https://www.klima-streik.org/social
+// @name         klima-streik.org (helloworld)
+// @namespace    https://www.klima-streik.org/helloworld
 // @version      0.1
 // @description  try to take over the world!
 // @author       Onur Sahin, Christian Knoth, Dustin Bastke, Anna Glomb, Stefanie Roddeck
@@ -30,4 +30,5 @@ function injectScript(server, scriptName) {
 let server = isDevModeOn() ? devServer : liveServer;
 let scriptName = 'web-and-development-1.user';
 
-console.log("Hallo Welt !!!");
+
+console.log("Hello World!");
