@@ -12,9 +12,12 @@
     "gulp": "^4.0.2"
   },
   "dependencies": {
-    "gulp-rename": "^2.0.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "https": "^1.0.0"
+    "gulp-concat": "^2.6.1",
+    "gulp-insert": "^0.5.0",
+    "gulp-rename": "^2.0.0",
+    "https": "^1.0.0",
+    "merge-stream": "^2.0.0"
   }
 }

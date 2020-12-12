@@ -8,39 +8,7 @@
 // @grant        none
 // ==/UserScript==
 
-(function () {
-    'use strict';
+let server = isDevModeOn() ? devServer : liveServer;
+let scriptName = 'web-and-development-1.user';
 
-    let devServer = 'https://localhost:9001';
-    let liveServer = 'https://github.com/Onur169/mib32/raw/main/userscripts/dist';
-    
-    let devScriptName = 'web-and-development-1';
-    let liveScriptName = devScriptName + '.user.';
-
-    function isLocalhost() {
-        return location.hostname === "localhost" || location.hostname === "127.0.0.1";
-    }
-
-    function injectScript() {
-
-        let server = isLocalhost() ? devServer : liveServer;
-        let scriptName = isLocalhost() ? devScriptName : liveScriptName;
-
-        console.log("Inject-Infos", server, scriptName);
-
-        var jsTag = document.createElement('script');
-        jsTag.type = "text/javascript";
-        jsTag.src = `${server}/${scriptName}.js`;
-
-        document.getElementsByTagName('head')[0].appendChild(jsTag);
-
-
-    }
-
-    function init() {
-        injectScript();
-    }
-
-    init();
-
-})();
+console.log("Hallo Welt");
