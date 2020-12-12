@@ -3,7 +3,7 @@
 // @namespace    https://www.klima-streik.org/
 // @version      0.1
 // @description  try to take over the world!
-// @author       You
+// @author       Onur Sahin, Christian Knoth, Dustin Bastke, Anna Glomb, Stefanie Roddeck
 // @match        https://www.klima-streik.org/*
 // @grant        none
 // ==/UserScript==
