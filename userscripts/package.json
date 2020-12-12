@@ -1,0 +1,20 @@
+{
+  "name": "userscripts",
+  "version": "1.0.0",
+  "description": "Gruppe B Userscripts",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^4.0.2"
+  },
+  "dependencies": {
+    "gulp-rename": "^2.0.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "https": "^1.0.0"
+  }
+}
