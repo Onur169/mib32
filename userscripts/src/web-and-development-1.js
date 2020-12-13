@@ -11,4 +11,4 @@
 let server = isDevModeOn() ? devServer : liveServer;
 let scriptName = 'web-and-development-1.user';
 
-console.log("Hallo Welt !!!");
+console.log("Tach ihr Luschen!!!");
