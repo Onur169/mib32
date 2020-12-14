@@ -2,6 +2,10 @@
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
@@ -48,6 +52,29 @@ var Uludag = /*#__PURE__*/function () {
       jsTag.src = "".concat(server, "/").concat(scriptName, ".js");
       document.getElementsByTagName('head')[0].appendChild(jsTag);
     }
+  }, {
+    key: "elem",
+    value: function elem(waitFor, callback, timeout, self, time) {
+      var _self = this || self,
+          _time = time || Date.now(),
+          _status = false,
+          _result;
+
+      if (Date.now() - _time > 10000) {
+        callback(false);
+        return false;
+      }
+
+      if (typeof waitFor === "string") {
+        _result = document.querySelectorAll(waitFor);
+        _status = _result.length > 0;
+      } else {
+        _result = waitFor() || false;
+        _status = !!_result;
+      }
+
+      return _status === true ? callback(_result) : setTimeout(_self.elem.bind(null, waitFor, callback, timeout, _self, _time), timeout || 20);
+    }
   }]);
 
   return Uludag;
@@ -55,7 +82,7 @@ var Uludag = /*#__PURE__*/function () {
 // @name         klima-streik.org (social)
 // @namespace    https://www.klima-streik.org/social
 // @version      0.1
-// @description  try to take over the world!
+// @description  Dieses Script
 // @author       Onur Sahin, Christian Knoth, Dustin Bastke, Anna Glomb, Stefanie Roddeck
 // @match        https://www.klima-streik.org/*
 // @grant        none
@@ -74,8 +101,26 @@ var UserScript = /*#__PURE__*/function (_Uludag) {
   }
 
   _createClass(UserScript, [{
+    key: "getTemplate",
+    value: function getTemplate() {
+      var template = "\n        \n            <div id=\"facebook-box\">\n\n                <hr />\n\n                <h2>Was geht bei Social Media?</h2>\n                <p>\n                  \n                </p>\n                <p>\n                    84.006 Personen sind gerade flei\xDFig am Posten! <span>\uD83D\uDC97</span>\n                </p>\n                <p>\n                    Zur Zeit sind folgende Hashtags auf Facebook angesagt:\n                </p>\n                <p>\n                    <nav>\n                        <a href=\"#RetteWaldGr%C3%BCneHoffnung\" target=\"_blank\">#RetteWaldGr&uuml;neHoffnung</a>\n                        <a href=\"#ArtenvielfaltSch%C3%BCtzenGr%C3%BCneHoffnung\" rel=\"noopener noreferrer\" target=\"_blank\">#ArtenvielfaltSch&uuml;tzenGr&uuml;neHoffnung</a>\n                    </nav>\n                </p>\n            </div>\n\n        ";
+      return template;
+    }
+  }, {
+    key: "injectFacebookBox",
+    value: function injectFacebookBox() {
+      var _this = this;
+
+      _get(_getPrototypeOf(UserScript.prototype), "elem", this).call(this, "#c510 .frame-container .frame-inner", function (el) {
+        if (el) {
+          el[0].insertAdjacentHTML('beforeend', _this.getTemplate());
+        }
+      });
+    }
+  }, {
     key: "init",
-    value: function init() {//super.info();
+    value: function init() {
+      this.injectFacebookBox();
     }
   }]);
 
