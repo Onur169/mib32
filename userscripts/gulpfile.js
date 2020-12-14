@@ -9,6 +9,7 @@ const rename = require("gulp-rename");
 const concat = require("gulp-concat");
 const mergeStream =   require('merge-stream');
 const insert = require("gulp-insert");
+const babel = require('gulp-babel');
 
 const distFolder = 'dist/';
 const entryJsFiles = './src/*.js';
@@ -28,6 +29,9 @@ function jsTask() {
             path.basename += ".user";
         }))
         //.pipe(concat("all.js"))
+        .pipe(babel({
+            presets: ['@babel/env']
+        }))
         .pipe(dest(distFolder));
 
 }

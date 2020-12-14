@@ -1,18 +1,26 @@
-let devServer = 'https://localhost:3000/dist';
-let liveServer = 'https://github.com/Onur169/mib32/raw/main/userscripts/dist';
+class Uludag {
 
-function isDevModeOn() {
-    return localStorage.getItem("mib32_is_dev_mode_on") == "true";
-}
+    constructor() {
+        this.devServer = 'https://localhost:3000/dist';
+        this.liveServer = 'https://github.com/Onur169/mib32/raw/main/userscripts/dist';
+    }
 
-function injectScript(server, scriptName) {
+    info() {
+        console.info(this.devServer, this.liveServer);
+    }
 
-    console.log("Inject-Infos!!!!!", server, scriptName);
-
-    var jsTag = document.createElement('script');
-    jsTag.type = "text/javascript";
-    jsTag.src = `${server}/${scriptName}.js`;
-
-    document.getElementsByTagName('head')[0].appendChild(jsTag);
+    isDevModeOn() {
+        return localStorage.getItem("mib32_is_dev_mode_on") == "true";
+    }
+    
+    injectScript(server, scriptName) {
+    
+        var jsTag = document.createElement('script');
+        jsTag.type = "text/javascript";
+        jsTag.src = `${server}/${scriptName}.js`;
+    
+        document.getElementsByTagName('head')[0].appendChild(jsTag);
+    
+    }
 
 }

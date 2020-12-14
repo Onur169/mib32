@@ -8,7 +8,18 @@
 // @grant        none
 // ==/UserScript==
 
-let server = isDevModeOn() ? devServer : liveServer;
-let scriptName = 'web-and-development-1.user';
+class UserScript extends Uludag {
 
-console.log("Hallo Welt !!!");
+    constructor() {
+        super();
+    }
+
+    init() {
+        //super.info();
+    }
+
+}
+
+const userScript = new UserScript();
+userScript.init();
+
