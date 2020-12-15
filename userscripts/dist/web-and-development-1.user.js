@@ -54,14 +54,6 @@ var Uludag = /*#__PURE__*/function () {
       document.getElementsByTagName('head')[0].appendChild(jsTag);
     }
   }, {
-    key: "setCookie",
-    value: function setCookie(name, val) {
-      localStorage.setItem(this.storageKey + name, {
-        val: val,
-        created_at: new Date()
-      });
-    }
-  }, {
     key: "capitalizeWord",
     value: function capitalizeWord(s) {
       if (typeof s !== 'string') return '';
@@ -70,7 +62,16 @@ var Uludag = /*#__PURE__*/function () {
   }, {
     key: "getCookie",
     value: function getCookie(name) {
-      return localStorage.getItem(this.storageKey + name);
+      return JSON.parse(localStorage.getItem(this.storageKey + name));
+    }
+  }, {
+    key: "setCookie",
+    value: function setCookie(name, _val) {
+      var valObj = {
+        val: _val,
+        created_at: new Date()
+      };
+      localStorage.setItem(this.storageKey + name, JSON.stringify(valObj));
     }
   }, {
     key: "elem",
@@ -120,7 +121,8 @@ var UserScript = /*#__PURE__*/function (_Uludag) {
     _classCallCheck(this, UserScript);
 
     _this = _super.call(this);
-    _this.socialMediaTypes = ["facebook", "twitter"];
+    _this.socialMediaTypes = ["facebook", "twitter", "instagram"];
+    _this.socialMediaImageUrl = 'https://raw.githubusercontent.com/Onur169/mib32/main/userscripts/assets/social-media.png';
     return _this;
   }
 
@@ -135,9 +137,25 @@ var UserScript = /*#__PURE__*/function (_Uludag) {
       return supportedSocialMedia().includes(socialMediaType);
     }
   }, {
+    key: "getOffsetForSocialMediaSprite",
+    value: function getOffsetForSocialMediaSprite(socialMediaType) {
+      var offset = -109;
+
+      if (socialMediaType == "facebook") {
+        return 0;
+      } else if (socialMediaType == "instagram") {
+        return offset;
+      } else if (socialMediaType == "twitter") {
+        return offset * 2;
+      } else {
+        return 0;
+      }
+    }
+  }, {
     key: "getTemplate",
     value: function getTemplate(socialMediaType) {
-      var template = "\n        \n            <div id=\"facebook-box\">\n\n                <hr />\n\n                <h2>Was geht auf ".concat(_get(_getPrototypeOf(UserScript.prototype), "capitalizeWord", this).call(this, socialMediaType), "?</h2>\n\n                <p>\n                    84.006 Personen sind gerade flei\xDFig am Posten! <span>\uD83D\uDC97</span>\n                </p>\n\n                <p>\n                    Zur Zeit sind folgende Hashtags auf Facebook angesagt:\n                </p>\n\n                <p>\n                    <nav>\n                        <a href=\"#RetteWaldGr%C3%BCneHoffnung\" target=\"_blank\">#RetteWaldGr&uuml;neHoffnung</a>\n                        <a href=\"#ArtenvielfaltSch%C3%BCtzenGr%C3%BCneHoffnung\" rel=\"noopener noreferrer\" target=\"_blank\">#ArtenvielfaltSch&uuml;tzenGr&uuml;neHoffnung</a>\n                    </nav>\n                </p>\n\n            </div>\n\n        ");
+      var offset = this.getOffsetForSocialMediaSprite(socialMediaType);
+      var template = "\n        \n            <div id=\"social-media-box\">\n\n                <hr />\n\n                <div id=\"social-media-logo\" style=\"width: 90px; height: 90px; margin: 1.5rem 0; background: url(".concat(this.socialMediaImageUrl, ") ").concat(offset, "px; background-size: 307px; background-repeat: no-repeat;\"></div>\n\n                <h2>Was geht auf ").concat(_get(_getPrototypeOf(UserScript.prototype), "capitalizeWord", this).call(this, socialMediaType), "?</h2>\n\n                <p>\n                    84.006 Personen sind gerade flei\xDFig am Posten! <span>\uD83D\uDC97</span>\n                </p>\n\n                <p>\n                    Zur Zeit sind folgende Hashtags auf Facebook angesagt:\n                </p>\n\n                <p>\n                    <nav>\n                        <a href=\"#RetteWaldGr%C3%BCneHoffnung\" target=\"_blank\">#RetteWaldGr&uuml;neHoffnung</a>\n                        <a href=\"#ArtenvielfaltSch%C3%BCtzenGr%C3%BCneHoffnung\" rel=\"noopener noreferrer\" target=\"_blank\">#ArtenvielfaltSch&uuml;tzenGr&uuml;neHoffnung</a>\n                    </nav>\n                </p>\n\n                <p style=\"font-size: .9rem\">\n                    Wenn du wissen m\xF6chtest, was auf den anderen Socialmedia-Kan\xE4len so passiert, dann klicke doch <a href=\"#test\">hier!</a>\n                </p>\n\n            </div>\n\n        ");
       return template;
     }
   }, {
@@ -147,7 +165,7 @@ var UserScript = /*#__PURE__*/function (_Uludag) {
 
       var socialMediaTypeByCookie = _get(_getPrototypeOf(UserScript.prototype), "getCookie", this).call(this, "social_media_type");
 
-      var socialMediaType = socialMediaTypeByCookie ? socialMediaTypeByCookie : this.supportedSocialMedia()[0];
+      var socialMediaType = socialMediaTypeByCookie ? socialMediaTypeByCookie.val : this.supportedSocialMedia()[0];
 
       _get(_getPrototypeOf(UserScript.prototype), "elem", this).call(this, "#c510 .frame-container .frame-inner", function (el) {
         if (el) {
@@ -158,8 +176,9 @@ var UserScript = /*#__PURE__*/function (_Uludag) {
   }, {
     key: "init",
     value: function init() {
+      window.userscript = this; //super.setCookie("social_media_type", "facebook");
+
       this.injectBox();
-      window.userscript = this;
     }
   }]);
 

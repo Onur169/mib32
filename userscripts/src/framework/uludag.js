@@ -24,22 +24,24 @@ class Uludag {
 
     }
 
-    setCookie(name, val) {
-
-        localStorage.setItem(this.storageKey + name, {
-            val: val,
-            created_at: new Date()
-        });
-
-    }
-
     capitalizeWord(s) {
         if (typeof s !== 'string') return '';
         return s.charAt(0).toUpperCase() + s.slice(1)
     }
 
     getCookie(name) {
-        return localStorage.getItem(this.storageKey + name);
+        return JSON.parse(localStorage.getItem(this.storageKey + name));
+    }
+
+    setCookie(name, _val) {
+
+        let valObj = {
+            val: _val,
+            created_at: new Date()
+        };
+
+        localStorage.setItem(this.storageKey + name, JSON.stringify(valObj));
+
     }
 
     elem(waitFor, callback, timeout, self, time) {

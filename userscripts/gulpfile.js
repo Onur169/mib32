@@ -10,9 +10,10 @@ const concat = require("gulp-concat");
 const mergeStream =   require('merge-stream');
 const insert = require("gulp-insert");
 const babel = require('gulp-babel');
+//const ts = require('gulp-typescript');
 
 const distFolder = 'dist/';
-const entryJsFiles = './src/*.js';
+const entryJsFiles = './src/*.{js,ts}';
 
 function jsTask() {
 
@@ -29,6 +30,11 @@ function jsTask() {
             path.basename += ".user";
         }))
         //.pipe(concat("all.js"))
+        /*
+        .pipe(ts({
+            allowJs: true
+        }))
+        */
         .pipe(babel({
             presets: ['@babel/env']
         }))
