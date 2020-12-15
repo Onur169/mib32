@@ -13,13 +13,6 @@ app.use(express.static(__dirname));
 
 const port = 3000;
 
-console.log(__dirname);
-
-app.get('*', function(req, res) {  
-    console.log('https://' + req.headers.host + req.url);
-    res.redirect('https://' + req.headers.host + req.url);
-});
-
 https.createServer({
     key: key,
     cert: cert,

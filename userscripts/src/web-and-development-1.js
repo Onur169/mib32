@@ -103,8 +103,6 @@ class UserScript extends Uludag {
 
         window.userscript = this;
 
-        //super.setCookie("social_media_type", "facebook");
-
         this.injectBox();
 
     }

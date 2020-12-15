@@ -177,8 +177,7 @@ var UserScript = /*#__PURE__*/function (_Uludag) {
   }, {
     key: "init",
     value: function init() {
-      window.userscript = this; //super.setCookie("social_media_type", "facebook");
-
+      window.userscript = this;
       this.injectBox();
     }
   }]);
