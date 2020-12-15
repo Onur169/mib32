@@ -3,6 +3,7 @@ class Uludag {
     constructor() {
         this.devServer = 'https://localhost:3000/dist';
         this.liveServer = 'https://github.com/Onur169/mib32/raw/main/userscripts/dist';
+        this.storageKey = 'uludag_';
     }
 
     info() {
@@ -10,7 +11,7 @@ class Uludag {
     }
 
     isDevModeOn() {
-        return localStorage.getItem("mib32_is_dev_mode_on") == "true";
+        return localStorage.getItem(this.storageKey + "is_dev_mode_on") == "true";
     }
 
     injectScript(server, scriptName) {
@@ -21,6 +22,24 @@ class Uludag {
 
         document.getElementsByTagName('head')[0].appendChild(jsTag);
 
+    }
+
+    setCookie(name, val) {
+
+        localStorage.setItem(this.storageKey + name, {
+            val: val,
+            created_at: new Date()
+        });
+
+    }
+
+    capitalizeWord(s) {
+        if (typeof s !== 'string') return '';
+        return s.charAt(0).toUpperCase() + s.slice(1)
+    }
+
+    getCookie(name) {
+        return localStorage.getItem(this.storageKey + name);
     }
 
     elem(waitFor, callback, timeout, self, time) {
@@ -48,7 +67,7 @@ class Uludag {
         }
 
         return _status === true ? callback(_result) : setTimeout(_self.elem.bind(null, waitFor, callback, timeout, _self, _time), timeout || 20);
-        
+
     }
 
 

@@ -32,6 +32,7 @@ var Uludag = /*#__PURE__*/function () {
 
     this.devServer = 'https://localhost:3000/dist';
     this.liveServer = 'https://github.com/Onur169/mib32/raw/main/userscripts/dist';
+    this.storageKey = 'uludag_';
   }
 
   _createClass(Uludag, [{
@@ -42,7 +43,7 @@ var Uludag = /*#__PURE__*/function () {
   }, {
     key: "isDevModeOn",
     value: function isDevModeOn() {
-      return localStorage.getItem("mib32_is_dev_mode_on") == "true";
+      return localStorage.getItem(this.storageKey + "is_dev_mode_on") == "true";
     }
   }, {
     key: "injectScript",
@@ -51,6 +52,25 @@ var Uludag = /*#__PURE__*/function () {
       jsTag.type = "text/javascript";
       jsTag.src = "".concat(server, "/").concat(scriptName, ".js");
       document.getElementsByTagName('head')[0].appendChild(jsTag);
+    }
+  }, {
+    key: "setCookie",
+    value: function setCookie(name, val) {
+      localStorage.setItem(this.storageKey + name, {
+        val: val,
+        created_at: new Date()
+      });
+    }
+  }, {
+    key: "capitalizeWord",
+    value: function capitalizeWord(s) {
+      if (typeof s !== 'string') return '';
+      return s.charAt(0).toUpperCase() + s.slice(1);
+    }
+  }, {
+    key: "getCookie",
+    value: function getCookie(name) {
+      return localStorage.getItem(this.storageKey + name);
     }
   }, {
     key: "elem",
@@ -95,32 +115,51 @@ var UserScript = /*#__PURE__*/function (_Uludag) {
   var _super = _createSuper(UserScript);
 
   function UserScript() {
+    var _this;
+
     _classCallCheck(this, UserScript);
 
-    return _super.call(this);
+    _this = _super.call(this);
+    _this.socialMediaTypes = ["facebook", "twitter"];
+    return _this;
   }
 
   _createClass(UserScript, [{
+    key: "supportedSocialMedia",
+    value: function supportedSocialMedia() {
+      return this.socialMediaTypes;
+    }
+  }, {
+    key: "isSocialMediaSupported",
+    value: function isSocialMediaSupported(socialMediaType) {
+      return supportedSocialMedia().includes(socialMediaType);
+    }
+  }, {
     key: "getTemplate",
-    value: function getTemplate() {
-      var template = "\n        \n            <div id=\"facebook-box\">\n\n                <hr />\n\n                <h2>Was geht bei Social Media?</h2>\n                <p>\n                  \n                </p>\n                <p>\n                    84.006 Personen sind gerade flei\xDFig am Posten! <span>\uD83D\uDC97</span>\n                </p>\n                <p>\n                    Zur Zeit sind folgende Hashtags auf Facebook angesagt:\n                </p>\n                <p>\n                    <nav>\n                        <a href=\"#RetteWaldGr%C3%BCneHoffnung\" target=\"_blank\">#RetteWaldGr&uuml;neHoffnung</a>\n                        <a href=\"#ArtenvielfaltSch%C3%BCtzenGr%C3%BCneHoffnung\" rel=\"noopener noreferrer\" target=\"_blank\">#ArtenvielfaltSch&uuml;tzenGr&uuml;neHoffnung</a>\n                    </nav>\n                </p>\n            </div>\n\n        ";
+    value: function getTemplate(socialMediaType) {
+      var template = "\n        \n            <div id=\"facebook-box\">\n\n                <hr />\n\n                <h2>Was geht auf ".concat(_get(_getPrototypeOf(UserScript.prototype), "capitalizeWord", this).call(this, socialMediaType), "?</h2>\n\n                <p>\n                    84.006 Personen sind gerade flei\xDFig am Posten! <span>\uD83D\uDC97</span>\n                </p>\n\n                <p>\n                    Zur Zeit sind folgende Hashtags auf Facebook angesagt:\n                </p>\n\n                <p>\n                    <nav>\n                        <a href=\"#RetteWaldGr%C3%BCneHoffnung\" target=\"_blank\">#RetteWaldGr&uuml;neHoffnung</a>\n                        <a href=\"#ArtenvielfaltSch%C3%BCtzenGr%C3%BCneHoffnung\" rel=\"noopener noreferrer\" target=\"_blank\">#ArtenvielfaltSch&uuml;tzenGr&uuml;neHoffnung</a>\n                    </nav>\n                </p>\n\n            </div>\n\n        ");
       return template;
     }
   }, {
-    key: "injectFacebookBox",
-    value: function injectFacebookBox() {
-      var _this = this;
+    key: "injectBox",
+    value: function injectBox() {
+      var _this2 = this;
+
+      var socialMediaTypeByCookie = _get(_getPrototypeOf(UserScript.prototype), "getCookie", this).call(this, "social_media_type");
+
+      var socialMediaType = socialMediaTypeByCookie ? socialMediaTypeByCookie : this.supportedSocialMedia()[0];
 
       _get(_getPrototypeOf(UserScript.prototype), "elem", this).call(this, "#c510 .frame-container .frame-inner", function (el) {
         if (el) {
-          el[0].insertAdjacentHTML('beforeend', _this.getTemplate());
+          el[0].insertAdjacentHTML('beforeend', _this2.getTemplate(socialMediaType));
         }
       });
     }
   }, {
     key: "init",
     value: function init() {
-      this.injectFacebookBox();
+      this.injectBox();
+      window.userscript = this;
     }
   }]);
 

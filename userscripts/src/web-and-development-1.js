@@ -12,9 +12,18 @@ class UserScript extends Uludag {
 
     constructor() {
         super();
+        this.socialMediaTypes = ["facebook", "twitter"];
     }
 
-    getTemplate() {
+    supportedSocialMedia() {
+        return this.socialMediaTypes;
+    }
+
+    isSocialMediaSupported(socialMediaType) {
+        return supportedSocialMedia().includes(socialMediaType);
+    }
+
+    getTemplate(socialMediaType) {
 
         let template = `
         
@@ -22,22 +31,23 @@ class UserScript extends Uludag {
 
                 <hr />
 
-                <h2>Was geht bei Social Media?</h2>
-                <p>
-                  
-                </p>
+                <h2>Was geht auf ${super.capitalizeWord(socialMediaType)}?</h2>
+
                 <p>
                     84.006 Personen sind gerade fleißig am Posten! <span>💗</span>
                 </p>
+
                 <p>
                     Zur Zeit sind folgende Hashtags auf Facebook angesagt:
                 </p>
+
                 <p>
                     <nav>
                         <a href="#RetteWaldGr%C3%BCneHoffnung" target="_blank">#RetteWaldGr&uuml;neHoffnung</a>
                         <a href="#ArtenvielfaltSch%C3%BCtzenGr%C3%BCneHoffnung" rel="noopener noreferrer" target="_blank">#ArtenvielfaltSch&uuml;tzenGr&uuml;neHoffnung</a>
                     </nav>
                 </p>
+
             </div>
 
         `;
@@ -46,13 +56,16 @@ class UserScript extends Uludag {
 
     }
 
-    injectFacebookBox() {
+    injectBox() {
+
+        let socialMediaTypeByCookie = super.getCookie("social_media_type");
+        let socialMediaType = socialMediaTypeByCookie ? socialMediaTypeByCookie : this.supportedSocialMedia()[0];
 
         super.elem("#c510 .frame-container .frame-inner", el => {
 
             if(el) {
 
-                el[0].insertAdjacentHTML('beforeend', this.getTemplate());
+                el[0].insertAdjacentHTML('beforeend', this.getTemplate(socialMediaType));
 
             }
 
@@ -62,7 +75,9 @@ class UserScript extends Uludag {
 
     init() {
 
-        this.injectFacebookBox();
+        this.injectBox();
+
+        window.userscript = this;
 
     }
 
