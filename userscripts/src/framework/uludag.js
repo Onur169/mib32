@@ -62,6 +62,7 @@ class Uludag {
 
             _result = document.querySelectorAll(waitFor);
             _status = _result.length > 0;
+            
         } else {
 
             _result = waitFor() || false;

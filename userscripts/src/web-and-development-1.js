@@ -6,6 +6,7 @@
 // @author       Onur Sahin, Christian Knoth, Dustin Bastke, Anna Glomb, Stefanie Roddeck
 // @match        https://www.klima-streik.org/*
 // @grant        none
+// @run-at       document-start
 // ==/UserScript==
 
 class UserScript extends Uludag {
