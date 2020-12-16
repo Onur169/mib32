@@ -60,7 +60,7 @@ class UserScript extends Uludag {
                 </p>
 
                 <p>
-                    Zur Zeit sind folgende Hashtags auf Facebook angesagt:
+                    Zur Zeit sind folgende Hashtags auf ${super.capitalizeWord(socialMediaType)} angesagt:
                 </p>
 
                 <p>
