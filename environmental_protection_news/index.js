@@ -1,5 +1,6 @@
 let Crawler = require("simplecrawler");
 let cheerio = require ("cheerio");
+let fs = require('fs');
 
 process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 
@@ -7,13 +8,11 @@ process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 let crawler = new Crawler('https://www.nabu.de/umwelt-und-ressourcen/index.html');
 crawler.maxDepth = 2;
 
-let result = [];
+let news = [];
 
 crawler.on("fetchcomplete", function(queueItem, responseBuffer, response) {
 
     var $ = cheerio.load(responseBuffer.toString("utf8"));
-
-    let news = [];
 
     $('.sudoslider .column').each(function (i, elem) {
 
@@ -23,14 +22,19 @@ crawler.on("fetchcomplete", function(queueItem, responseBuffer, response) {
     
         news.push({
 
-            title: hyperlink.text(),
-            description: description.text(),
+            title: hyperlink.text().trim(),
+            description: description.text().trim(),
             image_url: image.attr("src"),
             external_url: hyperlink.attr("href")
 
         });
 
     });
+
+    fs.writeFile('news.json', JSON.stringify(news, null, 2), function (err) {
+        if (err) throw err;
+        console.log('File is created successfully.');
+    }); 
 
 });
 
