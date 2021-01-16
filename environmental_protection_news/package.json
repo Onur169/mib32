@@ -2,7 +2,6 @@
   "name": "environmental_protection_news",
   "version": "1.0.0",
   "description": "Kommt noch",
-  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
