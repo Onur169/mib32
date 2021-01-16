@@ -11,15 +11,25 @@ let result = [];
 
 crawler.on("fetchcomplete", function(queueItem, responseBuffer, response) {
 
-
-    console.log(queueItem.url);
-
     var $ = cheerio.load(responseBuffer.toString("utf8"));
 
-    console.log(responseBuffer.toString("utf8"));
+    let news = [];
 
-    $('.slide').each(function (i, elem) {
-        //console.log($(this).html());
+    $('.sudoslider .column').each(function (i, elem) {
+
+        let image = $(this).find("img");
+        let hyperlink = $(this).find("a");
+        let description = $(this).find("p");
+    
+        news.push({
+
+            title: hyperlink.text(),
+            description: description.text(),
+            image_url: image.attr("src"),
+            external_url: hyperlink.attr("href")
+
+        });
+
     });
 
 });
