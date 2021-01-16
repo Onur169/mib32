@@ -17,13 +17,13 @@ crawler.on("fetchcomplete", function(queueItem, responseBuffer, response) {
     $('.sudoslider .column').each(function (i, elem) {
 
         let image = $(this).find("img");
-        let hyperlink = $(this).find("a");
+        let hyperlink = $(this).find("h2 a");
         let description = $(this).find("p");
     
         news.push({
 
             title: hyperlink.text().trim(),
-            description: description.text().trim(),
+            description: description.contents().first().text().trim(),
             image_url: image.attr("src"),
             external_url: hyperlink.attr("href")
 
