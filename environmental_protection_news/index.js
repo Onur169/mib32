@@ -1,3 +1,5 @@
+const DOMAIN = 'https://www.nabu.de/umwelt-und-ressourcen/index.html';
+
 let Crawler = require("simplecrawler");
 let cheerio = require ("cheerio");
 let fs = require('fs');
@@ -5,7 +7,7 @@ let fs = require('fs');
 process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 
 // initiate Crawler
-let crawler = new Crawler('https://www.nabu.de/umwelt-und-ressourcen/index.html');
+let crawler = new Crawler(DOMAIN);
 crawler.maxDepth = 2;
 
 let news = [];
