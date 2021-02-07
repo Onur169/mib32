@@ -21,15 +21,22 @@ set_error_handler(function ($severity, $message, $filename, $lineno) {
 });
 
 use App\Classes\Helper;
+use App\Classes\Database;
 use App\Middleware\CorsMiddleware;
 use App\Routes\ModulesController;
 
-use Slim\Factory\AppFactory;
 use Slim\Exception\NotFoundException;
+use Slim\Factory\AppFactory;
+use DI\Container;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Container\ContainerInterface;
 
-// Init Slimframework
+// Create Container using PHP-DI
+$container = new Container();
+
+// Set container to create App with on AppFactory
+AppFactory::setContainer($container);
 $app = AppFactory::create();
 
 /**
@@ -62,24 +69,18 @@ try {
 // Set Basepath
 $app->setBasePath($basePath);
 
-// DB erzeugen
-/*
-$db = new MaintenanceDatabase();
-$parentDirName = basename(pathinfo(__DIR__)["dirname"]);
-$dbLocation = $parentDirName . '.db';*/
-
-try {
-
-    $db->init($dbLocation);
-    $homeTemplate = "frontend.php";
-
-} catch (\Throwable $th) {
-
-
-}
-
 // Middleware
-//$app->add(new CorsMiddleware());
+$app->add(new CorsMiddleware());
+
+// Set Services (DI)
+$container->set('ModulesController', function () use ($config) {
+    
+    $db = new Database();
+    $db->init($config);
+
+    return new ModulesController($db);
+
+});
 
 // Routen definieren
 $app->get('/climatestrike/modules', ModulesController::class . ':get');

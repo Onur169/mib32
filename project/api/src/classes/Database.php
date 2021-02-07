@@ -2,8 +2,7 @@
 
 namespace App\Classes;
 
-use Exception;
-use SQLite3;
+use App\Exception\DatabaseException;
 
 class Database
 {
@@ -15,24 +14,31 @@ class Database
         $this->handle = null;
     }
 
-    public function init($location)
+    public function init($config)
     {
 
-
+        $hostName = $config["hostName"];
+        $database = $config["database"];
+        $userName = $config["userName"];
+        $password = $config["password"];
 
         $this->handle = new mysqli($hostName, $userName, $password, $database);
 
     }
 
-    public function query($sql)
+    public function insert(string $table, array $columns, array $values)
     {
 
+        $sql = '
+            INSERT INTO ' . $table . ' (' . join(",", $columns) . ')
+            VALUES (' . join(",", $values) . ')
+        ';
 
-
-    }
-
-    public function execute($sql)
-    {
+        if ($this->handle->query($sql) === true) {
+            return $this->handle->insert_id;
+        } else {
+            throw new DatabaseException(DatabaseException::INSERT_WAS_NOT_SUCCESSFUL);
+        }
 
     }
 
