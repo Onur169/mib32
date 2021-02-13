@@ -193,7 +193,7 @@ class ComposerStaticInitc5817a5945756a0e85745c6bbc6d82b9
         'App\\Classes\\Response' => __DIR__ . '/../..' . '/src/classes/Response.php',
         'App\\Exception\\DatabaseException' => __DIR__ . '/../..' . '/src/exception/DatabaseException.php',
         'App\\Middleware\\CorsMiddleware' => __DIR__ . '/../..' . '/src/middleware/CorsMiddleware.php',
-        'App\\Routes\\ModulesController' => __DIR__ . '/../..' . '/src/routes/ModulesController.php',
+        'App\\Routes\\EventController' => __DIR__ . '/../..' . '/src/routes/EventController.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'DI\\Annotation\\Inject' => __DIR__ . '/..' . '/php-di/php-di/src/Annotation/Inject.php',
         'DI\\Annotation\\Injectable' => __DIR__ . '/..' . '/php-di/php-di/src/Annotation/Injectable.php',

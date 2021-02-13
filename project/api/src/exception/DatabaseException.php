@@ -4,19 +4,20 @@ namespace App\Exception;
 
 use Exception;
 
-const INSERT_WAS_NOT_SUCCESSFUL = 0;
-
 class DatabaseException extends Exception
 {
+
+    const INSERT_WAS_NOT_SUCCESSFUL = 0;
+    const SELECT_WAS_NOT_SUCCESSFUL = 1;
 
     private $errorMessages;
 
     public function __construct($code = -1, Exception $previous = null)
     {
 
-        parent::__construct(self::getErrorMessage($code), $code, $previous);
+        parent::__construct($this->getErrorMessage($code), $code, $previous);
 
-        $this->$errorMessages = [
+        $this->errorMessages = [
             self::INSERT_WAS_NOT_SUCCESSFUL => "Insert was not successful",
         ];
 
