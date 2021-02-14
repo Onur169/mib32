@@ -27,6 +27,7 @@ use DI\Container;
 use Psr\Container\ContainerInterface;
 use Slim\Factory\AppFactory;
 use App\Routes\EventController;
+use Slim\Routing\RouteCollectorProxy;
 
 // Create Container using PHP-DI
 $container = new Container();
@@ -70,8 +71,12 @@ try {
     $app->add(new CorsMiddleware());
 
     // Routen definieren
-    $app->get('/climatestrike/events', EventController::class . ':get');
-    $app->post('/climatestrike/events', EventController::class . ':add');
+    $app->group('/climatestrike', function (RouteCollectorProxy $group) {
+
+        $group->get('/events', EventController::class . ':get');
+        $group->post('/events', EventController::class . ':add');
+
+    });
 
     // App starten
     $app->run();
