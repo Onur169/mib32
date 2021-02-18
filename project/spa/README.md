@@ -1,3 +1,17 @@
+# Deployment
+
+## install
+
+- ng add @nguniversal/express-engine
+- https://www.youtube.com/watch?v=w7xKZ5PWizs /Firebase-Hosting Tutorial
+
+## deploy
+
+-npm run build:ssr
+-embed browser variant into public folder of spa
+-firebase deploy
+
+Domain: "https://klimaschutz-b225b.web.app/"
 # Spa
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.1.4.
