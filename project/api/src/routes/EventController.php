@@ -3,6 +3,8 @@
 namespace App\Routes;
 
 use App\Classes\Helper;
+use App\Classes\Database;
+use App\Classes\Api;
 use App\Classes\Response as ResponseBuilder;
 use DateTime;
 use Psr\Container\ContainerInterface;
@@ -15,6 +17,7 @@ class EventController
     private $db;
     private $helper;
     private $container;
+    private $api;
 
     public function __construct(ContainerInterface $container)
     {
@@ -28,17 +31,17 @@ class EventController
 
         try {
 
-            $sql = 'SELECT * FROM events';
+            $sql = 'SELECT * FROM events ' . $this->db->buildPaginatorSql($request);
 
             $list = $this->db->get($sql);
 
-            $jsonResponse = ResponseBuilder::build(ResponseBuilder::SUCCESS_RESPONSE_VAL, $list);
+            $jsonResponse = ResponseBuilder::build(ResponseBuilder::SUCCESS_RESPONSE_VAL, $list, );
 
         } catch (\Throwable $th) {
 
             $jsonResponse = ResponseBuilder::build(ResponseBuilder::ERROR_RESPONSE_KEY, [
                 ResponseBuilder::CODE_RESPONSE_KEY => $th->getCode(),
-                ResponseBuilder::MSG_RESPONSE_KEY => $th->getMessage(),
+                ResponseBuilder::MSG_RESPONSE_KEY => $th->getMessage()
             ]);
 
         } finally {

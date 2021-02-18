@@ -12,13 +12,20 @@ class Response
     const CODE_RESPONSE_KEY = "code";
     const MSG_RESPONSE_KEY = "msg";
     const INSERT_ID_RESPONSE_KEY = "insert_id";
+    const NEXT_PAGE_URL_KEY = "next_page_url";
 
-    public static function build($ack, $result) {
+    public static function build($ack, $result, $nextPageUrl = null) {
 
-        return json_encode([
+        $response = [
             self::ACK_RESPONSE_KEY => $ack,
-            self::DATA_RESPONSE_KEY => $result,
-        ]);
+            self::DATA_RESPONSE_KEY => $result
+        ];
+
+        if($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $response[self::NEXT_PAGE_URL_KEY] = $nextPageUrl;
+        }
+
+        return json_encode($response);
 
     }
 

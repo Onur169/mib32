@@ -23,10 +23,10 @@ set_error_handler(function ($severity, $message, $filename, $lineno) {
 use App\Classes\Database;
 use App\Classes\Helper;
 use App\Middleware\CorsMiddleware;
+use App\Routes\EventController;
 use DI\Container;
 use Psr\Container\ContainerInterface;
 use Slim\Factory\AppFactory;
-use App\Routes\EventController;
 use Slim\Routing\RouteCollectorProxy;
 
 // Create Container using PHP-DI

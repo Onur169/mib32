@@ -4,11 +4,14 @@ namespace App\Classes;
 
 use mysqli;
 use App\Exception\DatabaseException;
+use Psr\Http\Message\ServerRequestInterface as Request;
 
 class Database
 {
 
     protected $handle;
+    private $itemsToShowPerPage;
+    private $isPagingActive;
 
     public function __construct($config)
     {
@@ -18,7 +21,21 @@ class Database
         $userName = $config["db"]["userName"];
         $password = $config["db"]["password"];
 
+        $this->itemsToShowPerPage = 2;
+        $this->isPagingActive = false;
         $this->handle = new mysqli($hostName, $userName, $password, $database);
+
+    }
+
+    public function buildPaginatorSql(Request $request): string {
+
+        $this->isPagingActive = true;
+
+        $queryParams = $request->getQueryParams();
+        $page = $queryParams["page"] ?? 1;
+        $offset = ($page - 1) * $this->itemsToShowPerPage;
+
+        return 'LIMIT '.$this->itemsToShowPerPage.' OFFSET ' . $offset;
 
     }
 
