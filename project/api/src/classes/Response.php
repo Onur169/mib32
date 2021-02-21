@@ -12,9 +12,10 @@ class Response
     const CODE_RESPONSE_KEY = "code";
     const MSG_RESPONSE_KEY = "msg";
     const INSERT_ID_RESPONSE_KEY = "insert_id";
+    const PREV_PAGE_URL_KEY = "prev_page_url";
     const NEXT_PAGE_URL_KEY = "next_page_url";
 
-    public static function build($ack, $result, $nextPageUrl = null) {
+    public static function build($ack, $result, $prevPageUrl = null, $nextPageUrl = null) {
 
         $response = [
             self::ACK_RESPONSE_KEY => $ack,
@@ -22,6 +23,7 @@ class Response
         ];
 
         if($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $response[self::PREV_PAGE_URL_KEY] = $prevPageUrl;
             $response[self::NEXT_PAGE_URL_KEY] = $nextPageUrl;
         }
 

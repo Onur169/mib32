@@ -30,14 +30,13 @@ class EventController
 
         try {
 
-            $api = new Api($request);
+            $api = new Api($this->db, $request);
+            $prevPageUrl = $api->getPrevPageUrl();
             $nextPageUrl = $api->getNextPageUrl();
 
-            $sql = 'SELECT * FROM events ' . $this->db->buildPaginatorSql($request);
+            $list = $api->getWithPaginator('SELECT * FROM events');
 
-            $list = $this->db->get($sql);
-
-            $jsonResponse = ResponseBuilder::build(ResponseBuilder::SUCCESS_RESPONSE_VAL, $list, $nextPageUrl);
+            $jsonResponse = ResponseBuilder::build(ResponseBuilder::SUCCESS_RESPONSE_VAL, $list, $nextPageUrl, $prevPageUrl);
 
         } catch (\Throwable $th) {
 
@@ -60,8 +59,6 @@ class EventController
     {
 
         try {
-
-            //var_dump($request->getQueryParams())
 
             $params = $request->getQueryParams();
             $now = new DateTime();

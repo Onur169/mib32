@@ -3,6 +3,7 @@
 namespace App\Classes;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use App\Classes\Database;
 
 class Api
 {
@@ -11,17 +12,19 @@ class Api
     const NEXT = "next";
 
     private $request;
+    private $db;
 
-    public function __construct(Request $request)
+    public function __construct(Database $db, Request $request)
     {
         $this->request = $request;
+        $this->db = $db;
     }
 
     private function getCurrentPage(): int {
 
         $queryParams = $this->request->getQueryParams();
 
-        return (int) $queryParams["page"] ?? 0;
+        return (int) $queryParams["page"] ?? 1;
 
     }
 
@@ -43,7 +46,7 @@ class Api
 
         $pageNumber = $type === self::NEXT ? $this->getNextPage() : $this->getPrevPage();
 
-        return $uri->getScheme() . "//" . $uri->getHost() . $uri->getPath() . '?page=' . $pageNumber;
+        return $uri->getScheme() . "://" . $uri->getHost() . $uri->getPath() . '?page=' . $pageNumber;
 
     }
 
@@ -53,6 +56,20 @@ class Api
 
     public function getPrevPageUrl() {
         return $this->buildPaginatorUrl(self::PREV);
+    }
+
+    public function buildPaginatorSql() {
+        return $this->db->buildPaginatorSql($this->request);
+    }
+
+    public function getWithPaginator($sql) {
+
+        $paginatorSql = $this->buildPaginatorSql();
+
+        $sql = $sql . ' ' . $paginatorSql;
+
+        return $this->db->get($sql);
+
     }
 
 }
