@@ -1,0 +1,3 @@
+RewriteEngine On
+RewriteBase /
+RewriteRule ^tab/([^/]*)$ /index.php?tab=$1 [L]

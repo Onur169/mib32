@@ -16,6 +16,9 @@
     $navIterator['nav'] = $template->getTabs(); 
     $navBar = $m->render($navContent, $navIterator);
 
+    $uri = $_SERVER['REQUEST_URI'];
+    $uriParts = explode("/", $uri);
+
     $firstTab = $navIterator['nav'][0]["filename"];
     $currentTab = $_GET["tab"] ?? $navIterator['nav'][0]["filename"];
     $currentTab = $template->isTabRegistered($currentTab) ? $currentTab : $firstTab;
@@ -58,7 +61,7 @@
             <div class="column is-full">
                 <?php 
                     if(file_exists($currentTabPath)) {
-                        include_once __DIR__ . "/tabs/" . $currentTab . ".php";
+                        include_once $currentTabPath;
                     }
                 ?>
             </div>
