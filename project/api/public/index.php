@@ -24,6 +24,7 @@ use App\Classes\Database;
 use App\Classes\Helper;
 use App\Middleware\CorsMiddleware;
 use App\Routes\EventController;
+use App\Routes\ThrowbackController;
 use DI\Container;
 use Psr\Container\ContainerInterface;
 use Slim\Factory\AppFactory;
@@ -73,8 +74,12 @@ try {
     // Routen definieren
     $app->group('climatestrike', function (RouteCollectorProxy $group) {
 
+        // Event Calls
         $group->get('/events', EventController::class . ':get');
         $group->post('/events', EventController::class . ':add');
+
+        // Rückblick Calls
+        $group->get('/throwbacks', ThrowbackController::class . ':get');
 
     });
 

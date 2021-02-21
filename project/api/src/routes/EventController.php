@@ -65,6 +65,7 @@ class EventController
 
             $guidv4 = $this->helper->guidv4();
             $name = $params["name"];
+            $description = $params["description"];
             $startAt = $params["start_at"];
             $endAt = $params["end_at"];
             $lat = $params["lat"];
@@ -72,8 +73,14 @@ class EventController
             $createdAt = $now->format('Y-m-d H:i:s');
 
             $insertId = $this->db->insert("events",
-                ["id", "name", "start_at", "end_at", "lat", "lng", "created_at"],
-                [$guidv4, $name, $startAt, $endAt, $lat, $lng, $createdAt]
+                ["id", "name", "description", "start_at", "end_at", "lat", "lng", "created_at"],
+                [$guidv4, $name, $description, $startAt, $endAt, $lat, $lng, $createdAt]
+            );
+
+            $guidv4Throwback = $this->helper->guidv4();
+            $insertThrowbackId = $this->db->insert("throwbacks",
+                ["id", "description", "social_media_video_url", "events_id", "created_at"],
+                [$guidv4Throwback, "", "", $guidv4, $createdAt]
             );
 
             $jsonResponse = ResponseBuilder::build(ResponseBuilder::SUCCESS_RESPONSE_VAL, [
