@@ -17,7 +17,6 @@ class EventController
     private $db;
     private $helper;
     private $container;
-    private $api;
 
     public function __construct(ContainerInterface $container)
     {
@@ -31,11 +30,14 @@ class EventController
 
         try {
 
+            $api = new Api($request);
+            $nextPageUrl = $api->getNextPageUrl();
+
             $sql = 'SELECT * FROM events ' . $this->db->buildPaginatorSql($request);
 
             $list = $this->db->get($sql);
 
-            $jsonResponse = ResponseBuilder::build(ResponseBuilder::SUCCESS_RESPONSE_VAL, $list, );
+            $jsonResponse = ResponseBuilder::build(ResponseBuilder::SUCCESS_RESPONSE_VAL, $list, $nextPageUrl);
 
         } catch (\Throwable $th) {
 

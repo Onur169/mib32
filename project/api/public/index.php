@@ -71,7 +71,7 @@ try {
     $app->add(new CorsMiddleware());
 
     // Routen definieren
-    $app->group('/climatestrike', function (RouteCollectorProxy $group) {
+    $app->group('climatestrike', function (RouteCollectorProxy $group) {
 
         $group->get('/events', EventController::class . ':get');
         $group->post('/events', EventController::class . ':add');
