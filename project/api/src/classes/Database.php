@@ -21,10 +21,14 @@ class Database
         $userName = $config["db"]["userName"];
         $password = $config["db"]["password"];
 
-        $this->itemsToShowPerPage = 2;
+        $this->itemsToShowPerPage = 10;
         $this->isPagingActive = false;
         $this->handle = new mysqli($hostName, $userName, $password, $database);
 
+    }
+
+    public function setItemsToShowPerPage($maxItems) {
+        $this->itemsToShowPerPage = $maxItems;
     }
 
     public function buildPaginatorSql(Request $request): string {
