@@ -3,6 +3,7 @@
     require_once 'vendor/autoload.php';
 
     use App\Classes\Template;
+    use App\Classes\Api;
 
     $form = new Formr\Formr('bulma');
 
@@ -24,8 +25,8 @@
     $currentTab = $template->isTabRegistered($currentTab) ? $currentTab : $firstTab;
     $currentTabPath = __DIR__ . "/tabs/" . $currentTab . ".php";
 
+    $api = new Api();
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,7 +34,11 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Climatestrike API Backend</title>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
         <style>
             /** Wird alles nach auf scss umgestellt */
             #app {
@@ -43,16 +48,28 @@
                 margin-bottom: 30px;
                 width: 300px;
             }
+            body * {
+                font-family: 'Roboto', sans-serif;
+            }
+            h1, h2, h3, h4, h5, h6 {
+                font-family: 'Bebas Neue', cursive;
+            }
+            h1 {
+                font-size: 3rem;
+                color: black;
+            }
         </style>
+        <script src="https://unpkg.com/vue@3.0.0-beta.12/dist/vue.global.js"></script>
     </head>
 
-    <body class="container" id="app">
+    <body class="container">
 
-        <div class="columns is-multiline is-mobile">
+        <div class="columns is-multiline is-mobile" id="app">
         
             <div class="column is-full">
                 <a href="./">
-                    <img id="logo" src="https://www.klima-streik.org/typo3conf/ext/user_template_v5/Resources/Public/Images/klima-streik-header-210319.png" alt="Logo">
+                    <!-- <img id="logo" src="https://www.klima-streik.org/typo3conf/ext/user_template_v5/Resources/Public/Images/klima-streik-header-210319.png" alt="Logo"> -->
+                    <h1>{{ name }}</h1>
                 </a>
             </div>
 
@@ -61,12 +78,28 @@
             <div class="column is-full">
                 <?php 
                     if(file_exists($currentTabPath)) {
-                        include_once $currentTabPath;
+
+                        //include_once $currentTabPath;
+                        $currentTabContent = @file_get_contents($currentTabPath);
+
+                        $tabIterator = [];
+                        $response = $api->getRessource($currentTab);
+                        $tabIterator[$currentTab] = $response["data"]; 
+                        $mainContent = $m->render($currentTabContent, $tabIterator);
+
+                        echo $mainContent;
+
                     }
                 ?>
             </div>
 
         </div>
+
+    <script src="/main.js"></script>
+    <script>
+        console.log(app);
+        const mountedApp = app.mount('#app');
+    </script>
 
     </body>
 

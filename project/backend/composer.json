@@ -4,7 +4,8 @@
     "description": "Climatestrike Backend",
     "require": {
         "formr/formr": "^1.2",
-        "mustache/mustache": "^2.13"
+        "mustache/mustache": "^2.13",
+        "guzzlehttp/guzzle": "^7.0"
     },
     "autoload": {
         "psr-4": {
