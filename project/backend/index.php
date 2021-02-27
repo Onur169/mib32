@@ -48,7 +48,7 @@
                 margin-bottom: 30px;
                 width: 300px;
             }
-            body * {
+            body {
                 font-family: 'Roboto', sans-serif;
             }
             h1, h2, h3, h4, h5, h6 {
@@ -79,15 +79,11 @@
                 <?php 
                     if(file_exists($currentTabPath)) {
 
-                        //include_once $currentTabPath;
                         $currentTabContent = @file_get_contents($currentTabPath);
+                        echo $currentTabContent;
 
-                        $tabIterator = [];
                         $response = $api->getRessource($currentTab);
-                        $tabIterator[$currentTab] = $response["data"]; 
-                        $mainContent = $m->render($currentTabContent, $tabIterator);
-
-                        echo $mainContent;
+                        $api->injectRessourceDataIntoWindowObject($response);
 
                     }
                 ?>
@@ -97,7 +93,6 @@
 
     <script src="/main.js"></script>
     <script>
-        console.log(app);
         const mountedApp = app.mount('#app');
     </script>
 

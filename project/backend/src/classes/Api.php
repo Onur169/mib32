@@ -24,6 +24,8 @@ class Api
         return json_decode($this->client->request('GET', '/climatestrike/'.$ressource.'?page=' . $page)->getBody()->getContents(), true);
     }
 
-
+    public function injectRessourceDataIntoWindowObject($response) {
+        echo '<script>window["api"] = []; window.api["data"] = '.json_encode($response["data"]).'</script>';
+    }
 
 }

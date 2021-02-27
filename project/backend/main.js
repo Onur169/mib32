@@ -6,38 +6,71 @@ const app = Vue.createApp({
             name: 'Climatestrike API Backend',
             apiUrl: 'https://api.judoclub-rockenberg.de',
             pager: 1,
-            currentRessource: 'events'
+            currentRessource: 'events',
+            rows: window.api.data
         }
 
     },
 
-    methods() {
+    mounted() {
 
-        return {
-            
-            fetchData() {
+        this.init();
 
+    },
 
-                console.log("Fetch data", this.currentRessource, this.pager);
+    methods: {
 
-            },
+        init() {
 
-            loadPrevPage() {
-
-                --this.pager;
-
-                this.fetchData();
-
-            },
-
-            loadNextPage() {
-
-                ++this.pager;
-
-                this.fetchData();
-
+            for(let row in this.rows) {
+                row["isDropdownActive"] = false;
             }
 
+        },
+        
+        fetchData() {
+
+
+            console.log("Fetch data", this.currentRessource, this.pager);
+
+        },
+
+        loadPrevPage() {
+
+            --this.pager;
+
+            this.fetchData();
+
+        },
+
+        loadNextPage() {
+
+            ++this.pager;
+
+            this.fetchData();
+
+        },
+
+        toggleDropdown(rowIndex) {
+
+            this.rows[rowIndex].isDropdownActive = !this.rows[rowIndex].isDropdownActive;
+
+            this.rows.forEach( (row, i) => {
+
+                if(i != rowIndex) {
+                    this.rows[i].isDropdownActive = false;
+                }
+
+            });
+
+        },
+
+        editRow(rowIndex) {
+            console.log(rowIndex);
+        },
+
+        deleteRow(rowIndex) {
+            console.log(rowIndex);
         }
 
     }

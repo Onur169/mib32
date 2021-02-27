@@ -12,39 +12,33 @@
     </tr>
   </thead>
   <tbody>
-    {{#events}}
-      <tr>
-        <td>{{id}}</td>
-        <td>{{name}}</td>
-        <td>{{description}}</td>
-        <td>{{start_at}}</td>
-        <td>{{end_at}}</td>
-        <td>{{lat}}</td>
-        <td>{{lng}}</td>
+      <tr v-for="(row, rowIndex) in rows">
+        <td>{{row.id}}</td>
+        <td>{{row.name}}</td>
+        <td>{{row.description}}</td>
+        <td>{{row.start_at}}</td>
+        <td>{{row.end_at}}</td>
+        <td>{{row.lat}}</td>
+        <td>{{row.lng}}</td>
         <td>
-          <div class="dropdown">
+          <div class="dropdown" :class="{'is-active': row.isDropdownActive}" v-on:click="toggleDropdown(rowIndex)">
             <div class="dropdown-trigger">
-              <button class="button" aria-haspopup="true" aria-controls="dropdown-menu3">
-                <span>Click me</span>
+              <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+                <span>Aktion</span>
                 <span class="icon is-small">
                   <i class="fas fa-angle-down" aria-hidden="true"></i>
                 </span>
               </button>
             </div>
-            <div class="dropdown-menu" id="dropdown-menu3" role="menu">
+            <div class="dropdown-menu" id="dropdown-menu" role="menu">
               <div class="dropdown-content">
-                <a href="#" class="dropdown-item">
-                  Editieren
-                </a>
-                <a href="#" class="dropdown-item">
-                  Löschen
-                </a>
+                <a href="#" class="dropdown-item" v-on:click="editRow(rowIndex)">Editieren</a>
+                <a href="#" class="dropdown-item" v-on:click="deleteRow(rowIndex)">Löschen</a>
               </div>
             </div>
           </div>
         </td>
       </tr>
-    {{/events}}
   </tbody>
 </table>
 
