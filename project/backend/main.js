@@ -13,7 +13,7 @@ const app = Vue.createApp({
             currentPage: window.api.data.current_page,
             maxPages: window.api.data.max_pages,
             paginatorList: [],
-            notificationRead: localStorage.getItem("notificationRead") ? localStorage.getItem("notificationRead"): false
+            notificationRead: localStorage.getItem("notificationRead") ? localStorage.getItem("notificationRead") : false
         }
 
     },
@@ -24,15 +24,21 @@ const app = Vue.createApp({
 
     },
 
+    computed: {
+
+        isPrevDisabled() {
+            return this.currentPage <= 1;
+        }
+
+    },
+
     methods: {
 
         init() {
 
-            for(let i = 1; i <= this.maxPages; i++) {
+            for (let i = 1; i <= this.maxPages; i++) {
                 this.paginatorList.push(i);
             }
-
-            console.log(this.paginatorList, this.maxPages);
 
             for (let row in this.rows) {
                 row["isDropdownActive"] = false;
@@ -47,23 +53,23 @@ const app = Vue.createApp({
 
         fetch(fetchUrl) {
 
-            return new Promise(async(resolve, reject) => {
+            return new Promise(async (resolve, reject) => {
 
                 try {
 
                     response = await fetch(fetchUrl).then(response => response.json());
-    
+
                     this.rows = response.data;
                     this.prevPageUrl = response.prev_page_url;
                     this.nextPageUrl = response.next_page_url;
                     this.currentPage = response.current_page;
 
                     resolve(response);
-    
+
                 } catch (error) {
-                    
+
                     reject(error);
-    
+
                 }
 
             });
