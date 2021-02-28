@@ -14,8 +14,10 @@ class Response
     const INSERT_ID_RESPONSE_KEY = "insert_id";
     const PREV_PAGE_URL_KEY = "prev_page_url";
     const NEXT_PAGE_URL_KEY = "next_page_url";
+    const CURRENT_PAGE_KEY = "current_page";
+    const MAX_PAGES_KEY = "max_pages";
 
-    public static function build($ack, $result, $prevPageUrl = null, $nextPageUrl = null) {
+    public static function build($ack, $result, $prevPageUrl = null, $nextPageUrl = null, $magPages = null) {
 
         $response = [
             self::ACK_RESPONSE_KEY => $ack,
@@ -23,8 +25,12 @@ class Response
         ];
 
         if($_SERVER['REQUEST_METHOD'] === 'GET') {
+
             $response[self::PREV_PAGE_URL_KEY] = $prevPageUrl;
             $response[self::NEXT_PAGE_URL_KEY] = $nextPageUrl;
+            $response[self::CURRENT_PAGE_KEY] = $_GET["page"] ?? 1;
+            $response[self::MAX_PAGES_KEY] = $magPages ?? null;
+
         }
 
         return json_encode($response);

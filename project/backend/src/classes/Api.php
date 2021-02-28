@@ -25,7 +25,7 @@ class Api
     }
 
     public function injectRessourceDataIntoWindowObject($response) {
-        echo '<script>window["api"] = []; window.api["data"] = '.json_encode($response["data"]).'</script>';
+        echo '<script>window["api"] = []; window.api["data"] = '.json_encode($response).'</script>';
     }
 
 }

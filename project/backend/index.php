@@ -37,6 +37,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+        <link rel="stylesheet" href="https://unpkg.com/bulmaswatch/materia/bulmaswatch.min.css">
         <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
         <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
         <style>
@@ -62,9 +63,17 @@
         <script src="https://unpkg.com/vue@3.0.0-beta.12/dist/vue.global.js"></script>
     </head>
 
-    <body class="container">
+    <body class="container" >
 
         <div class="columns is-multiline is-mobile" id="app">
+
+            <div class="column is-full">
+                <div class="notification is-info" v-if="!notificationRead">
+                    <button class="delete" v-on:click="notificationHasBeenRead()"></button>
+                    Du kannst deine Pfeiltasten nutzen, um zwischen den Seiten zu navigieren <br><br>
+                    <button class="button is-small" v-on:click="notificationHasBeenRead()">Alles klar!</button>
+                </div>
+            </div>
         
             <div class="column is-full">
                 <a href="./">

@@ -36,7 +36,7 @@ class ThrowbackController
 
             $list = $api->getWithPaginator('SELECT * FROM throwbacks');
 
-            $jsonResponse = ResponseBuilder::build(ResponseBuilder::SUCCESS_RESPONSE_VAL, $list, $nextPageUrl, $prevPageUrl);
+            $jsonResponse = ResponseBuilder::build(ResponseBuilder::SUCCESS_RESPONSE_VAL, $list, $prevPageUrl, $nextPageUrl);
 
         } catch (\Throwable $th) {
 

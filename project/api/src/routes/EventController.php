@@ -35,8 +35,9 @@ class EventController
             $nextPageUrl = $api->getNextPageUrl();
 
             $list = $api->getWithPaginator('SELECT * FROM events');
+            $maxPages = $api->getMaxPages('events');
 
-            $jsonResponse = ResponseBuilder::build(ResponseBuilder::SUCCESS_RESPONSE_VAL, $list, $nextPageUrl, $prevPageUrl);
+            $jsonResponse = ResponseBuilder::build(ResponseBuilder::SUCCESS_RESPONSE_VAL, $list, $prevPageUrl, $nextPageUrl, $maxPages);
 
         } catch (\Throwable $th) {
 

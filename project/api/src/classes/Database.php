@@ -2,8 +2,8 @@
 
 namespace App\Classes;
 
-use mysqli;
 use App\Exception\DatabaseException;
+use mysqli;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 class Database
@@ -27,11 +27,18 @@ class Database
 
     }
 
-    public function setItemsToShowPerPage($maxItems) {
+    public function setItemsToShowPerPage($maxItems)
+    {
         $this->itemsToShowPerPage = $maxItems;
     }
 
-    public function buildPaginatorSql(Request $request): string {
+    public function getItemsToShowPerPage()
+    {
+        return $this->itemsToShowPerPage;
+    }
+
+    public function buildPaginatorSql(Request $request): string
+    {
 
         $this->isPagingActive = true;
 
@@ -39,19 +46,20 @@ class Database
         $page = $queryParams["page"] ?? 1;
         $offset = ($page - 1) * $this->itemsToShowPerPage;
 
-        return 'LIMIT '.$this->itemsToShowPerPage.' OFFSET ' . $offset;
+        return 'LIMIT ' . $this->itemsToShowPerPage . ' OFFSET ' . $offset;
 
     }
 
-    public function get($sql) {
+    public function get($sql)
+    {
 
         $list = [];
 
         $result = $this->handle->query($sql);
 
-        if($result){
+        if ($result) {
 
-            while ($row = $result->fetch_object()){
+            while ($row = $result->fetch_object()) {
                 $list[] = $row;
             }
 
@@ -79,7 +87,7 @@ class Database
             VALUES (' . htmlentities($valuesStr) . ')
         ';
 
-        $idKey = array_search('id', $columns); 
+        $idKey = array_search('id', $columns);
         $idVal = $values[$idKey];
 
         if ($this->handle->query($sql) === true) {
