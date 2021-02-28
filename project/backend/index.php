@@ -40,26 +40,7 @@
         <link rel="stylesheet" href="https://unpkg.com/bulmaswatch/materia/bulmaswatch.min.css">
         <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
         <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-        <style>
-            /** Wird alles nach auf scss umgestellt */
-            #app {
-                padding: 3rem 1.5rem;
-            }
-            #app #logo {
-                margin-bottom: 30px;
-                width: 300px;
-            }
-            body {
-                font-family: 'Roboto', sans-serif;
-            }
-            h1, h2, h3, h4, h5, h6 {
-                font-family: 'Bebas Neue', cursive;
-            }
-            h1 {
-                font-size: 3rem;
-                color: black;
-            }
-        </style>
+        <link href="/dist/app.css" rel="stylesheet">
         <script src="https://unpkg.com/vue@3.0.0-beta.12/dist/vue.global.js"></script>
     </head>
 
@@ -100,7 +81,8 @@
 
         </div>
 
-    <script src="/main.js"></script>
+    <!-- <script src="/dist/app.js"></script> -->
+    <script src="/src/js/app.js"></script>
     <script>
         const mountedApp = app.mount('#app');
     </script>

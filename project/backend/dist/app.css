@@ -1,0 +1,17 @@
+body {
+  font-family: 'Roboto', sans-serif; }
+  body #app {
+    padding: 3rem 1.5rem; }
+    body #app #logo {
+      margin-bottom: 30px;
+      width: 300px; }
+    body #app h1,
+    body #app h2,
+    body #app h3,
+    body #app h4,
+    body #app h5,
+    body #app h6 {
+      font-family: 'Bebas Neue', cursive; }
+    body #app h1 {
+      font-size: 3rem;
+      color: black; }
