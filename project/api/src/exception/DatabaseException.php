@@ -9,6 +9,7 @@ class DatabaseException extends Exception
 
     const INSERT_WAS_NOT_SUCCESSFUL = 0;
     const SELECT_WAS_NOT_SUCCESSFUL = 1;
+    const UPDATE_WAS_NOT_SUCCESSFUL = 2;
 
     private $errorMessages;
 
@@ -19,6 +20,8 @@ class DatabaseException extends Exception
 
         $this->errorMessages = [
             self::INSERT_WAS_NOT_SUCCESSFUL => "Insert was not successful",
+            self::SELECT_WAS_NOT_SUCCESSFUL => "Select was not successful",
+            self::UPDATE_WAS_NOT_SUCCESSFUL => "Update was not successful",
         ];
 
     }

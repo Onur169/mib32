@@ -98,4 +98,27 @@ class Database
 
     }
 
+    public function update(string $table, string $id, array $updateArray)
+    {
+        
+        $columnWithValues = [];
+        
+        foreach($updateArray as $updateKey => $updateValue) {
+            $columnWithValues[] = $updateKey . " = '" . $updateValue . "'" ;
+        }
+
+        $sql = '
+            UPDATE '.$table.' 
+            SET '.join(",", $columnWithValues).' 
+            WHERE id = "'.$id.'"
+        ';
+
+        if ($this->handle->query($sql) === true) {
+            return $id;
+        } else {
+            throw new DatabaseException(DatabaseException::UPDATE_WAS_NOT_SUCCESSFUL);
+        }
+
+    }
+
 }

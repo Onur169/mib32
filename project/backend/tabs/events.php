@@ -32,8 +32,8 @@
           </div>
           <div class="dropdown-menu" id="dropdown-menu" role="menu">
             <div class="dropdown-content">
-              <a href="#" class="dropdown-item" @click="editRow(rowIndex)">Editieren</a>
-              <a href="#" class="dropdown-item" @click="deleteRow(rowIndex)">Löschen</a>
+              <a href="#" class="dropdown-item" @click="editRow(row.id)">Editieren</a>
+              <a href="#" class="dropdown-item" @click="deleteRow(row.id)">Löschen</a>
             </div>
           </div>
         </div>

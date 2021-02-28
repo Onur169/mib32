@@ -77,6 +77,7 @@ try {
         // Event Calls
         $group->get('/events', EventController::class . ':get');
         $group->post('/events', EventController::class . ':add');
+        $group->put('/events/{id}', EventController::class . ':edit');
 
         // Rückblick Calls
         $group->get('/throwbacks', ThrowbackController::class . ':get');

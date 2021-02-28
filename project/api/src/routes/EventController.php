@@ -105,4 +105,51 @@ class EventController
 
     }
 
+    public function edit(Request $request, Response $response, array $args): Response
+    {
+
+        try {
+
+            $params = $request->getQueryParams();
+
+            $id = $args['id'];
+            $name = $params["name"];
+            $description = $params["description"];
+            $startAt = $params["start_at"];
+            $endAt = $params["end_at"];
+            $lat = $params["lat"];
+            $lng = $params["lng"];
+
+            $updateArray = [
+                "name" => $name,
+                "description" => $description,
+                "start_at" => $startAt,
+                "end_at" => $endAt,
+                "lat" => $lat,
+                "lng" => $lng
+            ];
+
+            $updateId = $this->db->update("events", $id, $updateArray);
+
+            $jsonResponse = ResponseBuilder::build(ResponseBuilder::SUCCESS_RESPONSE_VAL, [
+                ResponseBuilder::UPDATE_ID_RESPONSE_KEY => $updateId,
+            ]);
+
+        } catch (\Throwable $th) {
+
+            $jsonResponse = ResponseBuilder::build(ResponseBuilder::ERROR_RESPONSE_KEY, [
+                ResponseBuilder::CODE_RESPONSE_KEY => $th->getCode(),
+                ResponseBuilder::MSG_RESPONSE_KEY => $th->getMessage(),
+            ]);
+
+        } finally {
+
+            $response->getBody()->write($jsonResponse);
+
+            return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
+
+        }
+
+    }
+
 }
