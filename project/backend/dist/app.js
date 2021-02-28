@@ -96,20 +96,70 @@ var app = Vue.createApp({
       }());
     }),
     fetchData: function fetchData(option) {
-      var fetchUrl = option == "next" ? this.nextPageUrl : this.prevPageUrl;
-      this.fetch(fetchUrl).then(function (response) {
-        console.log("fetchData success", response);
-      })["catch"](function (err) {
-        return console.log(err);
-      });
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+        var fetchUrl, response;
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                fetchUrl = option == "next" ? _this2.nextPageUrl : _this2.prevPageUrl;
+                response = null;
+                _context2.prev = 2;
+                _context2.next = 5;
+                return _this2.fetch(fetchUrl);
+
+              case 5:
+                response = _context2.sent;
+                _context2.next = 11;
+                break;
+
+              case 8:
+                _context2.prev = 8;
+                _context2.t0 = _context2["catch"](2);
+                console.log(_context2.t0);
+
+              case 11:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, null, [[2, 8]]);
+      }))();
     },
     fetchDataByPageNumber: function fetchDataByPageNumber(pageNumber) {
-      var fetchUrl = "".concat(this.apiUrl, "/").concat(this.apiMainRessource, "/").concat(this.currentRessource, "?page=").concat(pageNumber);
-      this.fetch(fetchUrl).then(function (response) {
-        console.log("fetchDataByPageNumber success", response);
-      })["catch"](function (err) {
-        return console.log(err);
-      });
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
+        var fetchUrl, response;
+        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                fetchUrl = "".concat(_this3.apiUrl, "/").concat(_this3.apiMainRessource, "/").concat(_this3.currentRessource, "?page=").concat(pageNumber);
+                response = null;
+                _context3.prev = 2;
+                _context3.next = 5;
+                return _this3.fetch(fetchUrl);
+
+              case 5:
+                response = _context3.sent;
+                _context3.next = 11;
+                break;
+
+              case 8:
+                _context3.prev = 8;
+                _context3.t0 = _context3["catch"](2);
+                console.log(_context3.t0);
+
+              case 11:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, null, [[2, 8]]);
+      }))();
     },
     loadPrevPage: function loadPrevPage() {
       this.fetchData('prev');
@@ -118,12 +168,12 @@ var app = Vue.createApp({
       this.fetchData('next');
     },
     toggleDropdown: function toggleDropdown(rowIndex) {
-      var _this2 = this;
+      var _this4 = this;
 
       this.rows[rowIndex].isDropdownActive = !this.rows[rowIndex].isDropdownActive;
       this.rows.forEach(function (row, i) {
         if (i != rowIndex) {
-          _this2.rows[i].isDropdownActive = false;
+          _this4.rows[i].isDropdownActive = false;
         }
       });
     },

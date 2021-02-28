@@ -76,23 +76,39 @@ const app = Vue.createApp({
 
         },
 
-        fetchData(option) {
+        async fetchData(option) {
 
             const fetchUrl = option == "next" ? this.nextPageUrl : this.prevPageUrl;
 
-            this.fetch(fetchUrl).then(response => {
-                console.log("fetchData success", response);
-            }).catch(err => console.log(err));
+            let response = null;
+
+            try {
+
+                response = await this.fetch(fetchUrl);
+
+            } catch (error) {
+                
+                console.log(error);
+
+            }
 
         },
 
-        fetchDataByPageNumber(pageNumber) {
+        async fetchDataByPageNumber(pageNumber) {
 
             const fetchUrl = `${this.apiUrl}/${this.apiMainRessource}/${this.currentRessource}?page=${pageNumber}`;
 
-            this.fetch(fetchUrl).then(response => {
-                console.log("fetchDataByPageNumber success", response);
-            }).catch(err => console.log(err));
+            let response = null;
+
+            try {
+
+                response = await this.fetch(fetchUrl);
+
+            } catch (error) {
+                
+                console.log(error);
+
+            }
 
         },
 
