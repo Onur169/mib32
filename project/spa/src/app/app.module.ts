@@ -5,12 +5,14 @@ import { AppComponent } from './app.component';
 import { NavigationComponent } from './header/navigation/navigation.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TimerComponent } from './components/timer/timer.component';
+import { LandingpageComponent } from './components/landingpage/landingpage.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavigationComponent,
-    TimerComponent
+    TimerComponent,
+    LandingpageComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
