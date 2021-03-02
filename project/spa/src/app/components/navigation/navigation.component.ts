@@ -1,3 +1,10 @@
+/**
+ * @param createdBy
+ * Dustin Bastke
+ * @param authors
+ * Dustin Bastke
+ */
+
 import { Component, OnInit } from '@angular/core';
 
 @Component({
