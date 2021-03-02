@@ -40,7 +40,7 @@ export class MarkerManager{
     }
   }
 
-  //gibt die nächste Seite aus, sofern existent ; ansonsten aktuelle Seite ausgeben.
+  //gibt die nächste Seite aus, sofern existent ; ansonsten aktuelle Seite ausgeben. ->Diese Seite übernimmt keine Änderungen
   getNextPage(): Marker[]{
     if(this.pages[++this.current_page] && this.hasNextPage()){
       return this.pages[this.current_page];
@@ -48,7 +48,7 @@ export class MarkerManager{
     else return this.pages[--this.current_page];
   }
 
-  //gibt die vorherige Seite aus, sofern existent ; ansonsten aktuelle Seite ausgeben.
+  //gibt die vorherige Seite aus, sofern existent ; ansonsten aktuelle Seite ausgeben. ->Diese Seite übernimmt keine Änderungen
   getPreviousPage(): Marker[]{
     if(this.pages[--this.current_page] && this.hasPreviousPage()){
       return this.pages[this.current_page];
@@ -56,6 +56,7 @@ export class MarkerManager{
     else return this.pages[++this.current_page];
   }
 
+  //wenn via http-request eine neue Seite geladen wird, so soll sie hiermit gesetzt werden.
   setnewPage(current_page:number, markers: Marker[]): void{
     this.pages[current_page]=markers;
   }
@@ -73,7 +74,7 @@ export class MarkerManager{
   }
 
   getNextEvent(){
-    return this.pages[1][1].start_at;
+    return this.pages[0][0];
   }
 
 }
