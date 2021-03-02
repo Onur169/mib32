@@ -12,8 +12,8 @@ import { Marker } from "./Marker";
 export class MarkerManager{
 
   private pages: Map<number, Marker[]>=new Map<number, Marker[]>();
-  private current_page: number=0;
-  private max_pages: number=0;
+  private current_page: number=1;
+  private max_pages: number=1;
 
   constructor(){
   }
@@ -83,6 +83,23 @@ export class MarkerManager{
       console.error("Momentan ist entweder kein Event in Aussicht oder es gab ein Problem beim Abrufen unserer Demos");
       return undefined;
     }
+  }
+
+  getPageNumberOfNext(): number{
+    return this.current_page+1;
+  }
+
+  getPageNumberOfPrevious(): number{
+    return this.current_page-1;
+  }
+
+  setCurrentPage(current_page: number): void{
+    this.current_page=current_page;
+  }
+
+  //sollte nur für die allererste Abfrage genutzt werden
+  getCurrentPage(): number{
+    return this.current_page;
   }
 
 }
