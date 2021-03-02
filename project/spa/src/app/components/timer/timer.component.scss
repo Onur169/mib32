@@ -25,7 +25,7 @@
     width: 15vh;
     height: 15vh;
     background-color: rgba(black, 0.5);
-    padding-top: 0.7vh;
+   // padding-top: 0.7vh;
 
 }
 
@@ -53,4 +53,9 @@ span{
 
 #infoDay{
     font-size: 4vh;
+}
+
+.count{
+  font-size: 3.8rem;
+  line-height: 1;//hier
 }
