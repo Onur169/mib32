@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -16,6 +17,7 @@ import { AppRoutingModule } from './modules/app-routing/app-routing.module';
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     NgbModule,
+    HttpClientModule,
     AppRoutingModule
   ],
   providers: [],
