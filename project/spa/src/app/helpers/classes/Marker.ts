@@ -1,8 +1,8 @@
 /**
  * @param createdBy
- * Christian Knoth.
+ * Christian Knoth
  * @param authors
- * Christian Knoth.
+ * Christian Knoth
  * @param summary
  * Die Marker-Klasse repräsentiert ein instanziertes Event und wird im Rahmen der Timer- und der Event-Komponente genutzt.
  */
