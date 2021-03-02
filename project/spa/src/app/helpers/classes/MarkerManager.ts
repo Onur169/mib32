@@ -7,7 +7,7 @@
  * Die MarkerManager-Klasse repräsentiert alle aktuell angefragten Events und wird im Rahmen der Timer- und der Event-Komponente genutzt.
  */
 
-import { Marker } from "./marker";
+import { Marker } from "./Marker";
 
 export class MarkerManager{
 
