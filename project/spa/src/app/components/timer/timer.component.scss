@@ -1,3 +1,5 @@
+@import '../../../costum-variables';
+
 .bg-image{
     background-image: url('../../../assets/timer_background.jpg');
     background-repeat: no-repeat;
@@ -6,4 +8,8 @@
     background-repeat: no-repeat;
     background-size: cover;
     height: 80vh;
+}
+
+.btn-outline-secondary:hover{
+    background-color: $primary;
 }
