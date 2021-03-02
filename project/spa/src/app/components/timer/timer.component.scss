@@ -3,16 +3,39 @@
 .bg-image{
     background-image: url('../../../assets/timer_background.jpg');
     background-repeat: no-repeat;
-    width: 100%;
-    background-position: 0 40%;
+    background-position: 0 70%;
     background-repeat: no-repeat;
     background-size: cover;
     height: 80vh;
 }
 
+#frame{
+    width: 70%;
+    height: 90%;
+    border-style: solid;
+    border-color: $info;
+    border-width: 0.3em;
+}
+
+.h1{
+    font-size: 7vh;
+}
+
+.rounded-circle{
+    width: 15vh;
+    height: 12vh;
+    background-color: rgba(black, 0.5);
+    padding-top: 0.7vh;
+
+}
+
+span{
+    font-size: 4vh;
+    font-weight: bold;
+}
+
 .btn-outline-secondary{
     background-color: rgba($primary, 0.5);
-    border-radius: 0%;
 }
 
 .btn-outline-secondary:hover{
@@ -21,4 +44,8 @@
 
 .btn-outline-secondary:focus, .btn-outline-secondary:active {
     background-color: $primary;
+}
+
+#infoDay{
+    font-size: 4vh;
 }
