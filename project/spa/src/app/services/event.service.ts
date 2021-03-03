@@ -39,9 +39,14 @@ export class EventService {
 
         let response= await this.http.get<EventResponse>(RequestUrl, {params:params}).toPromise();
 
-        this.markermanager.setnewPage(response.current_page,response.data);
+        this.markermanager.setnewPage(parseInt(response.current_page),response.data);
         this.markermanager.setMaxPages(response.max_pages);
-        this.markermanager.setCurrentPage(response.current_page);
+
+        let x=parseInt(response.current_page.toString());
+        this.markermanager.setCurrentPage(x);
+       // this.markermanager.setCurrentPage(response.current_page);
+
+
 
         resolve(response);
 
