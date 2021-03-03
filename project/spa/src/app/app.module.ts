@@ -9,12 +9,14 @@ import { LandingpageComponent } from './components/landingpage/landingpage.compo
 
 import { AppRoutingModule } from './modules/app-routing/app-routing.module';
 import { NavigationComponent } from './components/navigation/navigation.component';
+import { MapComponent } from './components/map/map.component';
 @NgModule({
   declarations: [
     AppComponent,
     TimerComponent,
     LandingpageComponent,
-    NavigationComponent
+    NavigationComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
