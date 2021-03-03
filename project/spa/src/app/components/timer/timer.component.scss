@@ -22,7 +22,8 @@
 .rounded-circle{
     padding: 1.2rem;
     height: auto;
-    background-color: rgba(black, 0.5);
+    background-color: rgba(black, 0.35);
+    border-image-source: linear-gradient(to right, #9c20aa, #fb3570) !important;
 }
 
 .count{
@@ -37,22 +38,11 @@
 
 }
 
-/*.box {
-    position: relative;
-    top: -12rem;
-    right: 0.2rem;
+.border {
+    border-width: 0.5vh !important;
+    border-right-width: 0.7vh !important;
 }
 
-.shadow{
-    border-radius: 0 50% 50% 0;
-    width: 45rem;
-    height: 9rem;
-    border: solid $secondary;
-    overflow: hidden;
-    clip: rect(100px, 135px, 125px, 90px);
-    border-width: .4rem;
-}
-*/
 .btn-outline-secondary{
     background-color: rgba($primary, 0.5);
     padding: 0 0.5vh;
@@ -153,7 +143,39 @@
       }
  }
 
- @media (min-width: 768px) {
+ @media (min-width: 768px) and (max-width: 1109px) {
+    .bg-image{
+        height: 60vh;
+    }
+    
+    .count{
+        font-size: 5.5vh;
+      }  
+    
+    #info{
+        width: 5rem;
+      } 
+
+    .rounded-circle{
+        padding: 1.2rem !important;
+      } 
+    
+    .m-4{
+        margin-top: 2vh !important;
+        margin-bottom: 2vh !important;
+    }
+
+    #infoDay{
+        font-size: 4vh !important;
+      }
+    
+      .bg-warning{
+          top: -6rem;
+          width: 40% !important;
+      }
+ }
+
+ @media (min-width: 1109.02px) {
     .bg-image{
         height: 60vh;
     }
@@ -174,5 +196,4 @@
         margin-top: 5vh !important;
         margin-bottom: 5vh !important;
     }
-
- }
+}
