@@ -11,11 +11,13 @@ import { Marker } from "./Marker";
 
 export class MarkerManager{
 
-  private pages: Map<number, Marker[]>=new Map<number, Marker[]>();
-  private current_page: number=1;
-  private max_pages: number=1;
+  public pages: Map<number, Marker[]>=new Map<number, Marker[]>();
+  private current_page: number;
+  private max_pages: number;
 
   constructor(){
+    this.current_page=1;
+    this.max_pages=1;
   }
 
   hasNextPage(): boolean{
@@ -78,7 +80,7 @@ export class MarkerManager{
 
   //gibt für den Timer erste Event aus
   getNextEvent(): Marker | undefined{
-    if(this.pages.get(0))return this.pages.get(0)![0];
+    if(this.pages.get(1))return this.pages.get(1)![0];
     else {
       console.error("Momentan ist entweder kein Event in Aussicht oder es gab ein Problem beim Abrufen unserer Demos");
       return undefined;
