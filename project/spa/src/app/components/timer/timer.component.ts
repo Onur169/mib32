@@ -8,6 +8,7 @@
  */
 
 import { Component, OnInit } from '@angular/core';
+import { interval, Subscription } from 'rxjs';
 import { EventService } from 'src/app/services/event.service';
 
 @Component({
@@ -17,11 +18,69 @@ import { EventService } from 'src/app/services/event.service';
 })
 export class TimerComponent implements OnInit {
 
-  constructor(private event_service: EventService) { }
+  private subscription: Subscription;
 
-  async ngOnInit(): Promise<void> {
-  await  this.event_service.fetch(this.event_service.markermanager.getCurrentPage());
-  console.log(this.event_service.markermanager.getMarkers());
+  public dateNow = new Date();
+  public dDay = new Date('Jan 01 2021 00:00:00');
+  public timeDifference:number;
+  public secondsToDday:number;
+  public minutesToDday:number;
+  public hoursToDday:number;
+  public daysToDday:number;
+
+  public gDate: string;
+
+  private milliSecondsInASecond :number= 1000;
+  private hoursInADay :number= 24;
+  private minutesInAnHour :number= 60;
+  private SecondsInAMinute  :number= 60;
+
+  constructor(private event_service: EventService) {
+    this.timeDifference=0;
+    this.secondsToDday=0;
+    this.minutesToDday=0;
+    this.hoursToDday=0;
+    this.daysToDday=0;
+
+    this.gDate="Unbekanntes Datum";
+
+    this.subscription = interval(1000)
+           .subscribe(x => { this.getTimeDifference(); });
   }
+
+  ngOnInit(){
+
+    this.setProperties()
+
+  }
+
+  async setProperties(){
+    await  this.event_service.fetch(this.event_service.markermanager.getCurrentPage());
+
+    let newestDate: Date=new Date(this.event_service.markermanager.getNextEvent()!.start_at!);
+
+  this.subscription = interval(1000)
+          .subscribe(x => { this.getTimeDifference(newestDate); });
+
+          const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+          this.gDate=newestDate.toLocaleDateString('de-DE', options);
+  }
+
+  private getTimeDifference (newdate?: Date) {
+
+    if(newdate){
+      this.dDay=newdate;
+    }
+      this.timeDifference = this.dDay.getTime() - new  Date().getTime();
+
+    this.allocateTimeUnits(this.timeDifference);
+}
+
+private allocateTimeUnits (timeDifference: number) {
+  this.secondsToDday = Math.floor((timeDifference) / (this.milliSecondsInASecond) % this.SecondsInAMinute);
+  this.minutesToDday = Math.floor((timeDifference) / (this.milliSecondsInASecond * this.minutesInAnHour) % this.SecondsInAMinute);
+  this.hoursToDday = Math.floor((timeDifference) / (this.milliSecondsInASecond * this.minutesInAnHour * this.SecondsInAMinute) % this.hoursInADay);
+  this.daysToDday = Math.floor((timeDifference) / (this.milliSecondsInASecond * this.minutesInAnHour * this.SecondsInAMinute * this.hoursInADay));
+}
 
 }
