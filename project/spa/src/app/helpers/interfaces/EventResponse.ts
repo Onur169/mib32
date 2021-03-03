@@ -9,14 +9,13 @@
  *
  */
 
-export interface Demonstration {
-    id: string;
-    name: string;
-    description: string;
-    start_at: Date;
-    end_at: Date;
-    lat: number;
-    lng: number;
-    created_at: Date;
-    deleted_at: Date;
+import { Demonstration } from "./Demonstration";
+
+export interface EventResponse {
+  ack: string,
+  data: Demonstration[],
+  prev_page_url: string,
+  next_page_url: string,
+  current_page: number,
+  max_pages: number
 }

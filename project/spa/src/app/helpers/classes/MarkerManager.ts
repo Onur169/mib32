@@ -1,8 +1,8 @@
 /**
  * @param createdBy
- * Christian Knoth.
+ * Christian Knoth
  * @param authors
- * Christian Knoth.
+ * Christian Knoth
  * @param summary
  * Die MarkerManager-Klasse repräsentiert alle aktuell angefragten Events und wird im Rahmen der Timer- und der Event-Komponente genutzt.
  */
@@ -11,15 +11,11 @@ import { Marker } from "./Marker";
 
 export class MarkerManager{
 
-  private pages: Marker[][]=[];
-  private current_page: number;
-  private max_pages: number=0;
+  private pages: Map<number, Marker[]>=new Map<number, Marker[]>();
+  private current_page: number=1;
+  private max_pages: number=1;
 
-  constructor(markers: Marker[], current_page: number, max_pages: number){
-
-    this.current_page=current_page;
-    this.pages[this.current_page]=markers;
-    this.max_pages=max_pages;
+  constructor(){
   }
 
   hasNextPage(): boolean{
@@ -42,39 +38,68 @@ export class MarkerManager{
 
   //gibt die nächste Seite aus, sofern existent ; ansonsten aktuelle Seite ausgeben. ->Diese Seite übernimmt keine Änderungen
   getNextPage(): Marker[]{
-    if(this.pages[++this.current_page] && this.hasNextPage()){
-      return this.pages[this.current_page];
+    if(this.pages.get(++this.current_page) && this.hasNextPage()){
+      return this.pages.get(this.current_page)!;
     }
-    else return this.pages[--this.current_page];
+    else return this.pages.get(--this.current_page)!;
   }
 
   //gibt die vorherige Seite aus, sofern existent ; ansonsten aktuelle Seite ausgeben. ->Diese Seite übernimmt keine Änderungen
   getPreviousPage(): Marker[]{
-    if(this.pages[--this.current_page] && this.hasPreviousPage()){
-      return this.pages[this.current_page];
+    if(this.pages.get(--this.current_page) && this.hasPreviousPage()){
+      return this.pages.get(this.current_page)!;
     }
-    else return this.pages[++this.current_page];
+    else return this.pages.get(++this.current_page)!;
   }
 
   //wenn via http-request eine neue Seite geladen wird, so soll sie hiermit gesetzt werden.
-  setnewPage(current_page:number, markers: Marker[]): void{
-    this.pages[current_page]=markers;
+  setnewPage(new_page:number, markers: Marker[]): void{
+    this.pages.set(new_page, markers);
   }
 
-  getMarkers(): Marker[][]{
+  //gibt alles aus, was bisher gesetzt wurde
+  getMarkers(): Map<number,Marker[]>{
     return this.pages;
   }
 
-  getMarkersByCurrentPage(): Marker[]{
-    return this.pages[this.current_page];
+  //gibt die aktuelle Page aus
+  getMarkersByCurrentPage(): Marker[] | undefined{
+    if(this.pages.get(this.current_page))return this.pages.get(this.current_page)!;
+    else{
+      console.error("Momentan entweder kein Event in Aussicht oder es gab ein Problem beim Abrufen unserer Demos");
+      return undefined;
+    }
   }
 
+  //für das Überschreiben
   setMaxPages(max_pages: number): void{
     this.max_pages=max_pages;
   }
 
-  getNextEvent(){
-    return this.pages[0][0];
+  //gibt für den Timer erste Event aus
+  getNextEvent(): Marker | undefined{
+    if(this.pages.get(0))return this.pages.get(0)![0];
+    else {
+      console.error("Momentan ist entweder kein Event in Aussicht oder es gab ein Problem beim Abrufen unserer Demos");
+      return undefined;
+    }
+  }
+
+  getPageNumberOfNext(): number{
+    return this.current_page+1;
+  }
+
+  getPageNumberOfPrevious(): number{
+    return this.current_page-1;
+  }
+
+  setCurrentPage(current_page: number): void{
+    this.current_page=current_page;
+  }
+
+  //sollte nur für die allererste Abfrage genutzt werden
+  getCurrentPage(): number{
+    return this.current_page;
   }
 
 }

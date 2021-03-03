@@ -1,4 +1,14 @@
+/**
+ * @param createdBy
+ * Christian Knoth
+ * @param authors
+ * Anna Glomb, Christian Knoth
+ * @param summary
+ * Die Marker-Klasse repräsentiert ein instanziertes Event und wird im Rahmen der Timer- und der Event-Komponente genutzt.
+ */
+
 import { Component, OnInit } from '@angular/core';
+import { EventService } from 'src/app/services/event.service';
 
 @Component({
   selector: 'app-timer',
@@ -7,9 +17,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TimerComponent implements OnInit {
 
-  constructor() { }
+  constructor(private event_service: EventService) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+  await  this.event_service.fetch(this.event_service.markermanager.getCurrentPage());
+  console.log(this.event_service.markermanager.getMarkers());
   }
 
 }
