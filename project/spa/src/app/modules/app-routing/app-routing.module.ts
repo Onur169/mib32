@@ -1,8 +1,8 @@
 /**
  * @param createdBy
- * Christian Knoth.
+ * Christian Knoth
  * @param author
- * Christian Knoth.
+ * Christian Knoth
  * @param summary
  * Organisiert den Router-Outlet um weitere Optionen als Content neben der landing-Page offen zu halten.
  */
