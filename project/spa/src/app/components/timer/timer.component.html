@@ -1,30 +1,30 @@
 <div class="bg-image d-flex justify-content-center align-items-center w-100">
-    <div class="p-5" id="frame">
+    <div class="p-5 w-75 border border-info" id="frame">
 
         <p class="h1 text-uppercase text-white text-center">Globaler Klimastreik</p>
 
-        <div class="d-flex justify-content-center align-items-center m-5">
-            <div class="rounded-circle text-white text-center m-2 d-flex flex-column justify-content-center">
-                <div class="text font-weight-bold count">{{daysToDday}}</div>
-                <div class="text">Tage</div>
-            </div>
-            <div class="rounded-circle text-white text-center m-2 d-flex flex-column justify-content-center">
-                <div class="text font-weight-bold count">{{hoursToDday}}</div>
-                <div class="text">Stunden</div>
-            </div>
-            <div
-                class="rounded-circle text-white text-center m-2 d-flex flex-column justify-content-center border-right">
-                <div class="text font-weight-bold count">{{minutesToDday}}</div>
-                <div class="text">Minuten</div>
-            </div>
+        <div class="d-flex justify-content-center align-items-center m-3">
+                <div class="rounded-circle border border-secondary text-white text-center  p-3 px-4 mx-2 d-flex flex-column justify-content-center">
+                    <div class="text fs-2 fw-bold lh-1 px-2">22</div>
+                    <div class="text">Tage</div>
+                </div>
+                <div class="rounded-circle border border-secondary text-white text-center p-3 mx-2 d-flex flex-column justify-content-center">
+                    <div class="text fs-2 fw-bold lh-1" lh-1>22</div>
+                    <div class="text">Stunden</div>
+                </div>
+                <div class="rounded-circle border border-secondary text-white text-center p-3 mx-2 py-3 d-flex flex-column justify-content-center">
+                    <div class="text fs-2 fw-bold lh-1">22</div>
+                    <div class="text">Minuten</div>
+                </div>
         </div>
 
-        <button type="button" class="text-white btn btn-outline-secondary rounded">Save
-            the day</button>
-
-        <div class="bg-warning">
-            <p class="text-uppercase text-center text-white" id="infoDay">{{this.gDate}}</p>
+        <div class="d-flex justify-content-center align-items-center">
+        <button type="button" class="text-white btn btn-outline-secondary rounded-0">Save the day</button>
         </div>
-
     </div>
 </div>
+
+<div class="bg-warning position-relative start-0 w-75">
+    <p class="text text-uppercase text-white fs-4">19.März, 12 Uhr</p>
+</div>
+
