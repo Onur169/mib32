@@ -4,7 +4,8 @@
  * @param authors
  * Anna Glomb, Christian Knoth
  * @param summary
- * Die Marker-Klasse repräsentiert ein instanziertes Event und wird im Rahmen der Timer- und der Event-Komponente genutzt.
+ * Die Timer-Komponente erfüllt sämtliche Aufgaben zur Darstellung unseres Timer-Features
+ * (und lässt momentan die erste Seite des Paginators seitens der API laden).
  */
 
 import { Component, OnInit } from '@angular/core';
@@ -54,6 +55,7 @@ export class TimerComponent implements OnInit {
 
   }
 
+  //hier werden momentan die Events auf der ersten Seite angefragt. aus dem ersten Event wird ein Timer angelegt und das Datum als Property gesetzt
   async setProperties(){
     await  this.event_service.fetch(this.event_service.markermanager.getCurrentPage());
 
@@ -62,7 +64,7 @@ export class TimerComponent implements OnInit {
   this.subscription = interval(1000)
           .subscribe(x => { this.getTimeDifference(newestDate); });
 
-          const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+          const options = { weekday: 'long' /*, year: 'numeric'*/, month: 'long', day: 'numeric' , hour: 'numeric'};
           this.gDate=newestDate.toLocaleDateString('de-DE', options);
   }
 
@@ -76,6 +78,7 @@ export class TimerComponent implements OnInit {
     this.allocateTimeUnits(this.timeDifference);
 }
 
+//rechnet Zeit in Tage, Stunden, etc. um
 private allocateTimeUnits (timeDifference: number) {
   this.secondsToDday = Math.floor((timeDifference) / (this.milliSecondsInASecond) % this.SecondsInAMinute);
   this.minutesToDday = Math.floor((timeDifference) / (this.milliSecondsInASecond * this.minutesInAnHour) % this.SecondsInAMinute);
