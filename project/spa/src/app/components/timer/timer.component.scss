@@ -3,23 +3,26 @@
 .bg-image{
     background-image: url('../../../assets/timer_background.jpg');
     background-position: 0 100%;
-    background-size: cover;
-    height: 100vh;
+    background-repeat: no-repeat;
+    height: 100%;
+}
+
+.display-3{
+    font-size: 2rem !important;
+    margin-top: 6rem !important;
+    margin-bottom: 2rem !important;
 }
 
 .rounded-circle{
     background-color: rgba(black, 0.35);
     border-width:  0.1vw 0.4vw 0.1vw 0 !important;
-    height: 12vw;
-    width: 12vw;
+    height: 7rem;
+    width: 7rem;
+    margin-right: 0.5rem;
 }
 
 .border-info{
-    border-width: 0.3vw !important;
-}
-
-.mt-4{
-    margin-top: 10vh !important;
+    border-width: 0.2rem !important;
 }
 
 .bg-info{
@@ -27,15 +30,22 @@
 }
 
 .text-circle-count{
-    font-size: calc(4vw - 30%);
+    font-size: 2rem;
 }
 
 .text-circle{
-    font-size: calc(2.5vw - 30%);
+    font-size: 0.8rem;
+}
+
+.circle-box{
+    margin-bottom: 2rem !important;
 }
 
 .btn-outline-secondary{
    background-color: rgba($primary, 0.2);
+   width: 8rem !important;
+   font-size: 1rem !important;
+   padding: 0.2rem 0 !important;
 }
 
 .btn-outline-secondary:hover{
@@ -47,29 +57,20 @@
 }
 
 .bg-warning{
-    font-size: calc(3vw - 30%);
+    font-size: 1.5rem;
     clip-path: polygon(0 0, 100% 0%, 85% 100%, 0% 100%);
-    top: calc(50vh - 70%) !important;
+    -webkit-clip-path: polygon(0 0, 100% 0%, 85% 100%, 0% 100%);
     z-index: 1 !important;
-    left: calc(-50vw + 50%) !important;
+    width: 75% !important;
+    left:-2rem !important;
+    margin-top: 4rem !important;
+    text-indent: 4rem;
+    overflow: auto !important;
 }
 
 @media (max-width: 500px){
-    .display-3{
-        font-size: 6vw;
-    }
-
     .border-info{
-        margin-top: -6vh !important;
-    }
-
-    .m-2{
-        margin: -1vw 1vw 0 1vw !important; 
-    }
-
-    .mt-4{
-        margin-top: 0 !important;
-        padding-top: 7vh !important;
+        height: 90% !important;
     }
 
     .circle-box{
@@ -77,54 +78,36 @@
     }
 
     .rounded-circle{
-        margin: 1vh 0 !important;
-        height: 30vw !important;
-        width: 30vw !important;
-    }
-
-    .text-circle-count{
-        font-size: 8vw;
-    }
-    
-    .text-circle{
-        font-size: 4vw;
+        margin-top: 0.3rem !important;
+        height: 6rem;
+        width: 6rem;
     }
 
     .bg-warning{
-        font-size: calc(3vw + 60%) !important;
-        width: 120% !important;
-        padding-right: 7vw !important;
-        top: calc(50vh - 65%) !important;
+        font-size: 1rem;
+        width: 80% !important;
+        text-indent: 1rem;
     }
 }
 
 @media (min-width: 500.01px) and (max-width: 750px){
-
-    .border-info{
-        margin-top: -6vh !important;
-    }
-
-    .mt-4{
-        padding-top: 7vh !important;
-    }
-
-    .rounded-circle{
-        height: 20vw !important;
-        width: 20vw !important;
-    }
-
-    .text-circle-count{
-        font-size: 6vw;
-    }
-    
-    .text-circle{
-        font-size: 3vw;
-    }
-
     .bg-warning{
-        font-size: calc(3vw + 60%) !important;
-        width: 120% !important;
-        padding-right: 7vw !important;
-        top: calc(50vh - 65%) !important;
+        font-size: 1.2rem;
+        width: 90% !important;
+        padding-right: 2.2rem !important;
+        text-indent: 2rem;
+    }   
+}
+
+@media (min-width: 750.01px){
+
+    .display-3{
+        font-size: 2.5rem !important;
+        margin-top: 8rem !important;
     }
+
+    .btn-outline-secondary{
+        width: 12rem !important;
+        font-size: 1.3rem !important;
+     }
 }
