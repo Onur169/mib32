@@ -54,6 +54,9 @@ export class TimerComponent implements OnInit {
 
   }
 
+  /**
+   * Bestellt Daten von Backend und initialisiert die davon abhängigen Properties.
+   */
   async setProperties(){
     await  this.event_service.fetch(this.event_service.markermanager.getCurrentPage());
 
