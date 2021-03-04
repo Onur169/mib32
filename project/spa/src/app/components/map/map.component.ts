@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { EventService } from 'src/app/services/event.service';
 
 @Component({
   selector: 'app-map',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MapComponent implements OnInit {
 
-  constructor() { }
+  constructor(eventService: EventService) {
+
+  }
 
   ngOnInit(): void {
   }
