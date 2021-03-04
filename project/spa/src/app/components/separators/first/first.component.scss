@@ -1,0 +1,40 @@
+.bg-image{
+  background-image: url('../../../../assets/separater1_background.jpg');
+  background-repeat: no-repeat;
+  background-position: 0 40%;
+  background-size: cover;
+  height: 80vh;
+}
+
+#frame{
+  background-color: rgba($color: #B3A494, $alpha: 0.7);
+}
+
+#frameContent{
+
+}
+
+#headline{
+  border-color: #00464C;
+}
+
+#headlineContent{
+  border-bottom-color: #00464C !important;
+}
+
+#text{
+
+}
+
+#textContent{
+
+}
+
+#button{
+
+}
+
+#buttonContent{
+  background-color: rgba($color: #B3A494, $alpha: 0.8);
+  border-color: #00464C !important;
+}
