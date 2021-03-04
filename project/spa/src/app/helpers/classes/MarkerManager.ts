@@ -56,7 +56,8 @@ export class MarkerManager{
 
   //wenn via http-request eine neue Seite geladen wird, so soll sie hiermit gesetzt werden.
   setnewPage(new_page:number, markers: Marker[]): void{
-    this.pages.set(new_page, markers);
+
+   this.pages.set(new_page,  markers);
   }
 
   //gibt alles aus, was bisher gesetzt wurde
