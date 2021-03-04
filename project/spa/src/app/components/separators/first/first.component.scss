@@ -1,9 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Tillana&display=swap');
+
 .bg-image{
   background-image: url('../../../../assets/separater1_background.jpg');
   background-repeat: no-repeat;
   background-position: 0 40%;
   background-size: cover;
   height: 80vh;
+  padding: 0;
+  padding-top: 15%;
 }
 
 #frame{
@@ -15,7 +19,7 @@
 }
 
 #headline{
-  border-color: #00464C;
+
 }
 
 #headlineContent{
@@ -23,11 +27,12 @@
 }
 
 #text{
-
+  line-height: 1.0;
 }
 
 #textContent{
-
+  font-family: 'Tillana', sans-serif;
+  font-size: 1.3em;
 }
 
 #button{
