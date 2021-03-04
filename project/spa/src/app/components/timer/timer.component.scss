@@ -4,14 +4,18 @@
     background-image: url('../../../assets/timer_background.jpg');
     background-position: 0 100%;
     background-size: cover;
-    height: 50vw;
+    height: 100vh;
 }
 
 .rounded-circle{
     background-color: rgba(black, 0.35);
     border-width:  0.1vw 0.4vw 0.1vw 0 !important;
-    height: 10vw;
-    width: 10vw;
+    height: 12vw;
+    width: 12vw;
+}
+
+.mt-4{
+    margin-top: 10vh !important;
 }
 
 .text-circle-count{
@@ -37,29 +41,82 @@
 .bg-warning{
     font-size: calc(3vw - 30%);
     clip-path: polygon(0 0, 100% 0%, 85% 100%, 0% 100%);
-    top: calc(50vw - 130%) !important;
+    top: calc(50vh - 70%) !important;
     z-index: 1 !important;
     left: calc(-50vw + 50%) !important;
 }
 
-@media (max-width: 600px){
-    
-}
-
-@media (max-width: 750px){
+@media (max-width: 500px){
     .display-3{
         font-size: 6vw;
     }
 
-    .text-circle{
-        font-size: calc(2vw - 10%);
+    .border-info{
+        margin-top: -6vh !important;
     }
 
     .m-2{
         margin: -1vw 1vw 0 1vw !important; 
     }
 
-    .pt-4{
-        padding-top: 1vw !important;
+    .mt-4{
+        margin-top: 0 !important;
+        padding-top: 7vh !important;
+    }
+
+    .circle-box{
+        flex-direction: column !important;
+    }
+
+    .rounded-circle{
+        margin: 1vh 0 !important;
+        height: 30vw !important;
+        width: 30vw !important;
+    }
+
+    .text-circle-count{
+        font-size: 8vw;
+    }
+    
+    .text-circle{
+        font-size: 4vw;
+    }
+
+    .bg-warning{
+        font-size: calc(3vw + 60%) !important;
+        width: 120% !important;
+        padding-right: 7vw !important;
+        top: calc(50vh - 65%) !important;
+    }
+}
+
+@media (min-width: 500.01px) and (max-width: 750px){
+
+    .border-info{
+        margin-top: -6vh !important;
+    }
+
+    .mt-4{
+        padding-top: 7vh !important;
+    }
+
+    .rounded-circle{
+        height: 20vw !important;
+        width: 20vw !important;
+    }
+
+    .text-circle-count{
+        font-size: 6vw;
+    }
+    
+    .text-circle{
+        font-size: 3vw;
+    }
+
+    .bg-warning{
+        font-size: calc(3vw + 60%) !important;
+        width: 120% !important;
+        padding-right: 7vw !important;
+        top: calc(50vh - 65%) !important;
     }
 }
