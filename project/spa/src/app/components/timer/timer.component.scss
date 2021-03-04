@@ -14,8 +14,16 @@
     width: 12vw;
 }
 
+.border-info{
+    border-width: 0.3vw !important;
+}
+
 .mt-4{
     margin-top: 10vh !important;
+}
+
+.bg-info{
+    background-color: rgba($primary, 0.7) !important;
 }
 
 .text-circle-count{
