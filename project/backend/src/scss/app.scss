@@ -1,6 +1,5 @@
 @charset "utf-8";
 @import "../../node_modules/bulma/bulma.sass";
-@import "../../node_modules/bulma-extensions/bulma-pageloader/dist//css/bulma-pageloader.min.css";
 
 body {
 
@@ -29,6 +28,10 @@ body {
             color: black;
         }
 
+    }
+
+    .table-wrapper {
+        overflow-x: auto;
     }
 
 }

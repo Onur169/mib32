@@ -46,8 +46,6 @@
 
         <div class="columns is-multiline is-mobile" id="app">
 
-            <div class="pageloader is-bottom-to-top is-active"><span class="title">Pageloader</span></div>
-
             <div class="column is-full">
                 <div class="notification is-info" v-if="!notificationRead">
                     <button class="delete" v-on:click="notificationHasBeenRead()"></button>
@@ -70,13 +68,18 @@
                     if(file_exists($currentTabPath)) {
 
                         $currentTabContent = @file_get_contents($currentTabPath);
-                        echo $currentTabContent;
+                        //echo $currentTabContent;
 
                         $response = $api->getRessource($currentTab);
                         $api->injectRessourceDataIntoWindowObject($response);
 
                     }
                 ?>
+
+                <tab-area 
+                    :cols="Object.keys(rows[0])"
+                    :rows="rows"
+                ></tab-area>
             </div>
 
         </div>
