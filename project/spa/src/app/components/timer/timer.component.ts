@@ -31,6 +31,8 @@ export class TimerComponent implements OnInit {
 
   public gDate: string;
 
+  public hasNewEvent: boolean;
+
   private milliSecondsInASecond :number= 1000;
   private hoursInADay :number= 24;
   private minutesInAnHour :number= 60;
@@ -44,6 +46,7 @@ export class TimerComponent implements OnInit {
     this.daysToDday=0;
 
     this.gDate="Unbekanntes Datum";
+    this.hasNewEvent=false;
 
     this.subscription = interval(1000)
            .subscribe(x => { this.getTimeDifference(); });
@@ -59,6 +62,10 @@ export class TimerComponent implements OnInit {
   async setProperties(){
     await  this.event_service.fetch(this.event_service.markermanager.getCurrentPage());
 
+    if(this.event_service.markermanager.getNextEvent()!.start_at!){
+
+      this.hasNewEvent=true;
+
     let newestDate: Date=new Date(this.event_service.markermanager.getNextEvent()!.start_at!);
 
   this.subscription = interval(1000)
@@ -66,6 +73,10 @@ export class TimerComponent implements OnInit {
 
           const options = { weekday: 'long' /*, year: 'numeric'*/, month: 'long', day: 'numeric' , hour: 'numeric'};
           this.gDate=newestDate.toLocaleDateString('de-DE', options);
+
+        }
+
+
   }
 
   private getTimeDifference (newdate?: Date) {
