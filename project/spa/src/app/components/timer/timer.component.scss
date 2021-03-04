@@ -2,27 +2,32 @@
 
 .bg-image{
     background-image: url('../../../assets/timer_background.jpg');
-    background-repeat: no-repeat;
-    background-position: 0 70%;
+    background-position: 0 100%;
     background-size: cover;
-}
-
-#frame{
-    height: 90% !important;
-    border-width: 0.3em !important;
+    height: 100vh;
 }
 
 .rounded-circle{
     background-color: rgba(black, 0.35);
+    border-width:  0.1vw 0.4vw 0.1vw 0 !important;
+    height: 12vw;
+    width: 12vw;
 }
 
-.border {
-    border-width:  0 0.2vw 0.2vw 0 !important;
+.mt-4{
+    margin-top: 10vh !important;
+}
+
+.text-circle-count{
+    font-size: calc(4vw - 30%);
+}
+
+.text-circle{
+    font-size: calc(2.5vw - 30%);
 }
 
 .btn-outline-secondary{
-    background-color: rgba($primary, 0.5);
-    padding: 0 0.5vh;
+   background-color: rgba($primary, 0.2);
 }
 
 .btn-outline-secondary:hover{
@@ -34,93 +39,84 @@
 }
 
 .bg-warning{
-    top: -9vh;
-    text-indent: 1.5rem;
+    font-size: calc(3vw - 30%);
     clip-path: polygon(0 0, 100% 0%, 85% 100%, 0% 100%);
+    top: calc(50vh - 70%) !important;
+    z-index: 1 !important;
+    left: calc(-50vw + 50%) !important;
 }
 
-@media (max-width: 540px){
-    .bg-image{
-        height: 40vh !important;
+@media (max-width: 500px){
+    .display-3{
+        font-size: 6vw;
     }
 
-    #frame{
-        padding-top: 0.5rem !important;
-        width: 90% !important; 
-    }
-}
-
-@media (min-width: 540.02px) and (max-width: 767.98px) {
-    .bg-image{
-        height: 40vh !important;
+    .border-info{
+        margin-top: -6vh !important;
     }
 
-    #frame{
-        padding-top: 2rem !important;
+    .m-2{
+        margin: -1vw 1vw 0 1vw !important; 
     }
 
-    .m-3{
-        margin-bottom: 3rem !important;
-    }
-    
-    .bg-warning{
-        top: -3.8rem;
-        width: 50% !important;
-    }
- }
-
- @media (min-width: 768px) and (max-width: 1109px) {
-    .bg-image{
-        height: 50vh !important;
+    .mt-4{
+        margin-top: 0 !important;
+        padding-top: 7vh !important;
     }
 
-    #frame{
-        padding: 3rem !important;
+    .circle-box{
+        flex-direction: column !important;
     }
-
-    .m-3{
-        margin-top: 4rem !important;
-        margin-bottom: 3rem !important;
-    }
-    
-    .bg-warning{
-          top: -6rem;
-          width: 40% !important;
-    }
-
-    .fs-4{
-        font-size: 2rem !important;
-    }
- }
-
- @media (min-width: 1109.02px) {
-    .bg-image{
-        height: 60vh;
-    } 
-
-    .h1{
-        font-size: 4rem;
-    }
-
-    #frame{
-        padding: 3.5rem !important;
-    }
-
-    .m-3{
-        margin-top: 3rem !important;
-        margin-bottom: 3rem !important;
-    }
-
-    .fs-4{
-        font-size: 2rem !important;
-    }
-
-    .bg-warning{
-        top: -12vh;
-        width: 40% !important;
-  }
 
     .rounded-circle{
-        padding: 2rem !important;
+        margin: 1vh 0 !important;
+        height: 30vw !important;
+        width: 30vw !important;
+    }
+
+    .text-circle-count{
+        font-size: 8vw;
+    }
+    
+    .text-circle{
+        font-size: 4vw;
+    }
+
+    .bg-warning{
+        font-size: calc(3vw + 60%) !important;
+        width: 120% !important;
+        padding-right: 7vw !important;
+        top: calc(50vh - 65%) !important;
+    }
+}
+
+@media (min-width: 500.01px) and (max-width: 750px){
+
+    .border-info{
+        margin-top: -6vh !important;
+    }
+
+    .mt-4{
+        padding-top: 7vh !important;
+    }
+
+    .rounded-circle{
+        height: 20vw !important;
+        width: 20vw !important;
+    }
+
+    .text-circle-count{
+        font-size: 6vw;
+    }
+    
+    .text-circle{
+        font-size: 3vw;
+    }
+
+    .bg-warning{
+        font-size: calc(3vw + 60%) !important;
+        width: 120% !important;
+        padding-right: 7vw !important;
+        top: calc(50vh - 65%) !important;
     }
 }

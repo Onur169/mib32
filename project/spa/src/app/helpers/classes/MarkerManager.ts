@@ -73,7 +73,8 @@ export class MarkerManager extends MapMath{
    * @param markers -Events
    * **/
   setnewPage(new_page:number, markers: Marker[]): void{
-    this.pages.set(new_page, markers);
+
+   this.pages.set(new_page,  markers);
   }
 
   /**

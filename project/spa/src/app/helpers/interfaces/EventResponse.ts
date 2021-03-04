@@ -16,6 +16,6 @@ export interface EventResponse {
   data: Demonstration[],
   prev_page_url: string,
   next_page_url: string,
-  current_page: string,
+  current_page: number,
   max_pages: number
 }
