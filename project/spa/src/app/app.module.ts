@@ -8,19 +8,24 @@ import { TimerComponent } from './components/timer/timer.component';
 import { LandingpageComponent } from './components/landingpage/landingpage.component';
 
 import { AppRoutingModule } from './modules/app-routing/app-routing.module';
+import { AngularMaterialModule } from './modules/angular-material/angular-material.module';
+
 import { NavigationComponent } from './components/navigation/navigation.component';
+import { MapComponent } from './components/map/map.component';
 @NgModule({
   declarations: [
     AppComponent,
     TimerComponent,
     LandingpageComponent,
-    NavigationComponent
+    NavigationComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     NgbModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    AngularMaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]

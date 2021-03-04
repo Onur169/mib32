@@ -13,7 +13,7 @@ const app = Vue.createApp({
             currentPage: window.api.data.current_page,
             maxPages: window.api.data.max_pages,
             paginatorList: [],
-            notificationRead: localStorage.getItem("notificationRead") ? localStorage.getItem("notificationRead") : false
+            notificationRead: localStorage.getItem("notificationRead") ? localStorage.getItem("notificationRead") : false,
         }
 
     },
@@ -124,6 +124,34 @@ const app = Vue.createApp({
 
         },
 
+        async renderTab(tab) {
+
+            let response = null;
+            let tabPath = `tab/${tab}`;
+
+            try {
+
+                response = await fetch(tabPath).then(response => response.text());
+
+            } catch (error) {
+                
+                console.log(error);
+
+            }
+
+        }
+
+    }
+
+});
+
+
+app.component('tab-area', {
+
+    props: ['cols', 'rows'],
+
+    methods: {
+
         toggleDropdown(rowIndex) {
 
             this.rows[rowIndex].isDropdownActive = !this.rows[rowIndex].isDropdownActive;
@@ -144,8 +172,54 @@ const app = Vue.createApp({
 
         deleteRow(rowIndex) {
             console.log(rowIndex);
-        }
+        },
 
-    }
 
+    },
+
+    template: `
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th v-for="columnName of cols">
+                        <span v-if="columnName != 'isDropdownActive'">{{ columnName }}</span>
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody>
+            
+                <tr v-for="(row, rowIndex) in rows">
+
+                    <td v-for="key in Object.keys(row)">
+                        <span v-if="key != 'isDropdownActive'">{{ row[key] }}</span>
+                    </td>
+
+                    <td>
+                        <div class="dropdown" :class="{'is-active': row.isDropdownActive}" @click="toggleDropdown(rowIndex)">
+                        <div class="dropdown-trigger">
+                            <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+                            <span>Aktion</span>
+                            <span class="icon is-small">
+                                <i class="fas fa-angle-down" aria-hidden="true"></i>
+                            </span>
+                            </button>
+                        </div>
+                        <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                            <div class="dropdown-content">
+                            <a href="#" class="dropdown-item" @click="editRow(row.id)">Editieren</a>
+                            <a href="#" class="dropdown-item" @click="deleteRow(row.id)">Löschen</a>
+                            </div>
+                        </div>
+                        </div>
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    `
 });

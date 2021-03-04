@@ -4,7 +4,7 @@
  * @param authors
  * Christian Knoth
  * @param summary
- * Das Demonsration-Inferface gibt die Attribute eines Events vor und wird im Rahmen der Timer- und der Event-Komponente genutzt.
+ * Das Demonstration-Inferface gibt die Attribute eines Events vor und wird im Rahmen der Timer- und der Event-Komponente genutzt.
  * Ebenso für den Typ-sicheren Empfang eines Events.
  *
  */

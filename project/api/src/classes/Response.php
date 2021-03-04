@@ -29,7 +29,7 @@ class Response
 
             $response[self::PREV_PAGE_URL_KEY] = $prevPageUrl;
             $response[self::NEXT_PAGE_URL_KEY] = $nextPageUrl;
-            $response[self::CURRENT_PAGE_KEY] = $_GET["page"] ?? 1;
+            $response[self::CURRENT_PAGE_KEY] = (int) $_GET["page"] ?? 1;
             $response[self::MAX_PAGES_KEY] = $magPages ?? null;
 
         }
