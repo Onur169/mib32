@@ -44,7 +44,7 @@ export class TimerComponent implements OnInit {
     this.hoursToDday = 0;
     this.daysToDday = 0;
 
-    this.gDate = 'Unbekanntes Datum';
+    this.gDate = 'kein Streik geplant';
     this.hasNewEvent = false;
 
     this.subscription = interval(1000).subscribe((x) => {
