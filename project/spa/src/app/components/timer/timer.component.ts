@@ -86,13 +86,12 @@ export class TimerComponent implements OnInit {
         this.getTimeDifference(newestDate);
       });
 
-      const options = {
+      this.gDate = newestDate.toLocaleDateString('de-DE', {
         weekday: 'long' /*, year: 'numeric'*/,
         month: 'long',
         day: 'numeric',
-        hour: 'numeric',
-      };
-      this.gDate = newestDate.toLocaleDateString('de-DE', options);
+        hour: 'numeric'
+      });
     }
   }
 
