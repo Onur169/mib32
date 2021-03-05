@@ -8,11 +8,16 @@ import { EventService } from 'src/app/services/event.service';
 })
 export class MapComponent implements OnInit {
 
-  constructor(eventService: EventService) {
+  position: Navigator;
 
+  constructor(eventService: EventService) {
+    this.position=navigator;
   }
 
   ngOnInit(): void {
+    navigator.geolocation.getCurrentPosition((position) => {
+      console.log(position);
+    });
   }
 
 }
