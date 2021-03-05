@@ -2,7 +2,7 @@
  * @param createdBy
  * Dustin Bastke
  * @param authors
- * Stefanie Roddeck, Dustin Bastke
+ * Stefanie Roddeck, Dustin Bastke, Christian Knoth
  * @param summary
  * Die First-Komponente stellt den ersten Trenner zwischen dem Timer und der Map dar.
  */
