@@ -1,6 +1,10 @@
 @import 'src/styles.scss';
 @import url('https://fonts.googleapis.com/css2?family=Tillana&display=swap');
 
+#content{
+  object-fit: cover;
+}
+
 .bg-image{
   background-image: url('../../../../assets/separater1_background.jpg');
   background-repeat: no-repeat;
@@ -48,7 +52,8 @@
   background-color: $info;
 }
 
-#content{
-  object-fit: cover;
+@media (max-width: 575.98px) {
+  #frame{
+    padding: 4% !important;
+  }
 }
-
