@@ -1,3 +1,4 @@
+@import 'src/styles.scss';
 @import url('https://fonts.googleapis.com/css2?family=Tillana&display=swap');
 
 .bg-image{
@@ -11,7 +12,7 @@
 }
 
 #frame{
-  background-color: rgba($color: #B3A494, $alpha: 0.7);
+  background-color: rgba($color: $info, $alpha: 0.7);
 }
 
 #frameContent{
@@ -23,16 +24,16 @@
 }
 
 #headlineContent{
-  border-bottom-color: #00464C !important;
+  border-bottom: 3px solid $primary !important;
 }
 
 #text{
-  line-height: 1.0;
+  line-height: 1.1;
 }
 
 #textContent{
   font-family: 'Tillana', sans-serif;
-  font-size: 1.3em;
+
 }
 
 #button{
@@ -40,6 +41,14 @@
 }
 
 #buttonContent{
-  background-color: rgba($color: #B3A494, $alpha: 0.8);
-  border-color: #00464C !important;
+  background-color: rgba($color: $info, $alpha: 0.8);
+  border: 1px solid $primary;
 }
+
+#buttonContent:hover {
+  border: 1px solid $secondary;
+  background-color: $info;
+}
+
+
+
