@@ -7,8 +7,6 @@
   background-position: 0 40%;
   background-size: cover;
   height: 80vh;
-  padding: 0;
-  padding-top: 15%;
 }
 
 #frame{
@@ -50,5 +48,7 @@
   background-color: $info;
 }
 
-
+#content{
+  object-fit: cover;
+}
 
