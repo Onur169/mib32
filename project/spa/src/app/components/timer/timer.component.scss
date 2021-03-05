@@ -96,19 +96,3 @@
         font-size: 1.3rem !important;
      }
 }
-
-@media (max-height: 300px){
-    .pt-4 .px-0 .pt-2 .pt-md-4 {
-        padding-top: 0 !important;
-        padding-right: 0 !important;
-        padding-left: 0 !important;
-        padding-bottom: 0 !important;
-    }
-
-    .mt-4 .m-2 .m-md-4 .m-md-3{
-        margin-top: 0 !important;
-        margin-right: 0 !important;
-        margin-left: 0 !important;
-        margin-bottom: 0 !important;
-    }
-}
