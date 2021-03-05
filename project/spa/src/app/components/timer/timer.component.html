@@ -1,35 +1,35 @@
-<div class="bg-image w-100 d-flex align-items-center flex-column justify-content-center">
-    <div class="container overflow-hidden border border-info w-75 h-75">
+<div class="bg-image w-100 d-flex align-items-center flex-column justify-content-center ">
+    <div class="container overflow-hidden border border-info w-75 h-75 pt-4 px-0">
 
-        <div class="text display-3 text-uppercase text-white text-center">Globaler Klimastreik</div>
+        <div class="text display-3 text-uppercase text-white text-center m-2 pt-2 m-md-4 pt-md-4">Globaler Klimastreik</div>
 
-        <div *ngIf="hasNewEvent; else elseBlock">
-        <div class="d-flex justify-content-center align-items-center circle-box">
-                <div class="rounded-circle border border-secondary text-white text-center d-flex flex-column justify-content-center">
+        <!--<div *ngIf="hasNewEvent; else elseBlock">-->
+        <div class="d-flex justify-content-center align-items-center circle-box w-100 h-50 position-relative py-2 py-md-4">
+                <div class="rounded-circle border border-secondary text-white text-center d-flex flex-column justify-content-center m-2 m-md-3">
                     <div class="text text-circle-count align-self-center fw-bold lh-1">{{daysToDday}}</div>
                     <div class="text text-circle align-self-center">Tage</div>
                 </div>
-                <div class="rounded-circle border border-secondary text-white text-center d-flex flex-column justify-content-center">
+                <div class="rounded-circle border border-secondary text-white text-center d-flex flex-column justify-content-center m-2 m-md-3">
                     <div class="text text-circle-count align-self-center fw-bold lh-1">{{hoursToDday}}</div>
                     <div class="text text-circle align-self-center">Stunden</div>
                 </div>
-                <div class="rounded-circle border border-secondary text-white text-center d-flex flex-column justify-content-center">
+                <div class="rounded-circle border border-secondary text-white text-center d-flex flex-column justify-content-center m-2 m-md-3">
                     <div class="text text-circle-count align-self-center fw-bold lh-1">{{minutesToDday}}</div>
                     <div class="text text-circle align-self-center">Minuten</div>
                 </div>
-        </div>
+       </div> 
 
-        <div class="text-center">
+        <div class="text-center m-2 m-md-4">
         <button onclick="href='#'"type="button" class="text-white btn btn-outline-secondary rounded-0">save the day</button>
-        </div>
+        <!--</div>-->
     </div>
 
-    <div class="bg-warning mt-4 position-relative">
+    <div class="bg-warning mt-4">
         <div class="text text-uppercase text-white p-1">{{gDate}}</div>
     </div>
 
-       <ng-template #elseBlock>
+       <!--<ng-template #elseBlock>
             <div class="text bg-info fs-2 text-white text-center m-3 py-4 px-3">Der nächste Streik befindet sich noch in der Planung. Schaue bitte zu einem späteren Zeitpunkt vorbei.</div>
-        </ng-template>
+        </ng-template>-->
     </div> 
 </div>
