@@ -54,3 +54,4 @@ Hier werden alle Tätigkeiten seitens der Front-End-Programmierung gelistet. All
 - ng-bootstrap installiert
 - Firebase-Hosting
 - Angular-Universal
+-ng add @angular/material
