@@ -12,6 +12,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { MarkerManager } from '../helpers/classes/MarkerManager';
+import { ApiConstants } from '../helpers/constants/APIConstants';
 import { EventResponse } from '../helpers/interfaces/EventResponse';
 
 @Injectable({
@@ -20,10 +21,8 @@ import { EventResponse } from '../helpers/interfaces/EventResponse';
 export class EventService {
 
   markermanager: MarkerManager;
-  private url: string;
 
   constructor(private http: HttpClient) {
-    this.url='https://api.judoclub-rockenberg.de/climatestrike/events';
     this.markermanager=new MarkerManager();
 
   }
@@ -34,7 +33,7 @@ export class EventService {
         let params= new HttpParams()
         .set('page', page.toString());
 
-        const RequestUrl=this.url;
+        const RequestUrl=ApiConstants.API_ENDPOINT+'events';
 
         let response= await this.http.get<EventResponse>(RequestUrl, {params:params}).toPromise();
 

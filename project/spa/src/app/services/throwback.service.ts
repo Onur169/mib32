@@ -1,17 +1,16 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ThrowbackManager } from '../helpers/classes/ThrowbackManager';
+import { ApiConstants } from '../helpers/constants/APIConstants';
 import { ThrowbacksResponse } from '../helpers/interfaces/ThrowbacksResponse';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ThrowbackService {
-  private url: string;
   throwbackmanager: ThrowbackManager;
 
   constructor(private http: HttpClient) {
-    this.url='https://api.judoclub-rockenberg.de/climatestrike/throwbacks';
     this.throwbackmanager=new ThrowbackManager();
 
   }
@@ -22,7 +21,7 @@ export class ThrowbackService {
         let params= new HttpParams()
         .set('page', page.toString());
 
-        const RequestUrl=this.url;
+        const RequestUrl=ApiConstants.API_ENDPOINT+'throwbacks';
 
         let response= await this.http.get<ThrowbacksResponse>(RequestUrl, {params:params}).toPromise();
 
