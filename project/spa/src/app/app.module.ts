@@ -12,13 +12,15 @@ import { AngularMaterialModule } from './modules/angular-material/angular-materi
 
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { MapComponent } from './components/map/map.component';
+import { ThrowbacksComponent } from './components/throwbacks/throwbacks.component';
 @NgModule({
   declarations: [
     AppComponent,
     TimerComponent,
     LandingpageComponent,
     NavigationComponent,
-    MapComponent
+    MapComponent,
+    ThrowbacksComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
