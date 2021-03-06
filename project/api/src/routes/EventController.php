@@ -35,15 +35,16 @@ class EventController
 
             $params = $request->getQueryParams();
 
-            $filter = $params["filter"] ?? null;
-            $filterSql = $filter ? $this->filter->build("events", $filter) : '';
+            $usedFilter = $params["filter"] ?? null;
+            $filterSql = $this->filter->build("events", $usedFilter);
 
             $api = new Api($this->db, $request);
             $prevPageUrl = $api->getPrevPageUrl();
             $nextPageUrl = $api->getNextPageUrl();
 
-            $list = $api->getWithPaginator('SELECT * FROM events WHERE '.$filterSql.' ORDER BY start_at DESC');
+            $list = $api->getWithPaginator('SELECT * FROM events '.$filterSql.' ORDER BY start_at DESC');
             $maxPages = $api->getMaxPages('events');
+
 
             $jsonResponse = ResponseBuilder::build(ResponseBuilder::SUCCESS_RESPONSE_VAL, $list, $prevPageUrl, $nextPageUrl, $maxPages);
 

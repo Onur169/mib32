@@ -29,9 +29,13 @@ class Filter
 
     }
 
-    public function build($refTable, $usedFilter) {
+    private function buildConditions($refTable, $usedFilter) {
 
         $sql = [];
+
+        if($usedFilter === null) {
+            return "";
+        }
 
         foreach($this->filters as $currentFilter) {
     
@@ -53,9 +57,19 @@ class Filter
                 $sql[0] = str_replace('AND', '', $sql[0]);
             }
             
-        }    
+        }  
+        
+        
         
         return join(PHP_EOL, $sql);
+
+    }
+
+    public function build($refTable, $usedFilter) {
+
+        $filterSql = $usedFilter == null ? '' : 'WHERE ' . $this->buildConditions($refTable, $usedFilter);
+
+        return $filterSql;
 
     }
 
