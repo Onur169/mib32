@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'App\\Classes\\Api' => $baseDir . '/src/classes/Api.php',
     'App\\Classes\\Database' => $baseDir . '/src/classes/Database.php',
+    'App\\Classes\\Filter' => $baseDir . '/src/classes/Filter.php',
     'App\\Classes\\Helper' => $baseDir . '/src/classes/Helper.php',
     'App\\Classes\\Response' => $baseDir . '/src/classes/Response.php',
     'App\\Exception\\DatabaseException' => $baseDir . '/src/exception/DatabaseException.php',

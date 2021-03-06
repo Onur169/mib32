@@ -4,6 +4,7 @@ namespace App\Routes;
 
 use App\Classes\Helper;
 use App\Classes\Database;
+use App\Classes\Filter;
 use App\Classes\Api;
 use App\Classes\Response as ResponseBuilder;
 use DateTime;
@@ -15,6 +16,7 @@ class EventController
 {
 
     private $db;
+    private $filter;
     private $helper;
     private $container;
 
@@ -23,6 +25,7 @@ class EventController
         $this->container = $container;
         $this->helper = new Helper();
         $this->db = $this->container->get('Database');
+        $this->filter = $this->container->get('Filter');
     }
 
     public function get(Request $request, Response $response, array $args): Response
@@ -30,11 +33,16 @@ class EventController
 
         try {
 
+            $params = $request->getQueryParams();
+
+            $filter = $params["filter"] ?? null;
+            $filterSql = $filter ? $this->filter->build("events", $filter) : '';
+
             $api = new Api($this->db, $request);
             $prevPageUrl = $api->getPrevPageUrl();
             $nextPageUrl = $api->getNextPageUrl();
 
-            $list = $api->getWithPaginator('SELECT * FROM events ORDER BY created_at DESC');
+            $list = $api->getWithPaginator('SELECT * FROM events WHERE '.$filterSql.' ORDER BY start_at DESC');
             $maxPages = $api->getMaxPages('events');
 
             $jsonResponse = ResponseBuilder::build(ResponseBuilder::SUCCESS_RESPONSE_VAL, $list, $prevPageUrl, $nextPageUrl, $maxPages);

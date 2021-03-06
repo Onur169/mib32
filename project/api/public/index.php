@@ -22,6 +22,7 @@ set_error_handler(function ($severity, $message, $filename, $lineno) {
 
 use App\Classes\Database;
 use App\Classes\Helper;
+use App\Classes\Filter;
 use App\Middleware\CorsMiddleware;
 use App\Routes\EventController;
 use App\Routes\ThrowbackController;
@@ -29,6 +30,10 @@ use DI\Container;
 use Psr\Container\ContainerInterface;
 use Slim\Factory\AppFactory;
 use Slim\Routing\RouteCollectorProxy;
+
+// Filter
+$filter = new Filter();
+$filter->register("current_events", 'NOW() < start_at', ['events']);
 
 // Create Container using PHP-DI
 $container = new Container();
@@ -46,11 +51,8 @@ try {
     $config = json_decode(file_get_contents(__DIR__ . "/../config.json"), true);
 
     // Set Container
-    $container->set('Database', function (ContainerInterface $container) use ($config) {
-
-        return new Database($config);
-
-    });
+    $container->set('Database', fn(ContainerInterface $container) => new Database($config));
+    $container->set('Filter', fn(ContainerInterface $container) => $filter);
 
     // Set container to create App with on AppFactory
     AppFactory::setContainer($container);

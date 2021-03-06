@@ -190,6 +190,7 @@ class ComposerStaticInitc5817a5945756a0e85745c6bbc6d82b9
     public static $classMap = array (
         'App\\Classes\\Api' => __DIR__ . '/../..' . '/src/classes/Api.php',
         'App\\Classes\\Database' => __DIR__ . '/../..' . '/src/classes/Database.php',
+        'App\\Classes\\Filter' => __DIR__ . '/../..' . '/src/classes/Filter.php',
         'App\\Classes\\Helper' => __DIR__ . '/../..' . '/src/classes/Helper.php',
         'App\\Classes\\Response' => __DIR__ . '/../..' . '/src/classes/Response.php',
         'App\\Exception\\DatabaseException' => __DIR__ . '/../..' . '/src/exception/DatabaseException.php',
