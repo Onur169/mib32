@@ -2,7 +2,9 @@
 
 namespace App\Routes;
 
+use App\Exception\UploadException;
 use App\Classes\Helper;
+use App\Classes\Upload;
 use App\Classes\Database;
 use App\Classes\Filter;
 use App\Classes\Api;
@@ -26,6 +28,7 @@ class TestimonialController
         $this->helper = new Helper();
         $this->db = $this->container->get('Database');
         $this->filter = $this->container->get('Filter');
+        $this->upload = new Upload();
     }
 
     public function add(Request $request, Response $response, array $args): Response
@@ -46,7 +49,16 @@ class TestimonialController
                 [$guidv4, $headline, $description]
             );
 
+            $mediaToken = sha1($guidv4);
+
             // Bei Upload auch Eintrag in die medias-Tabelle [TODO]
+            if($this->upload->prepareUploadDirectoryByToken($mediaToken)) {
+
+                // Hier Datei hochladen / verarbeiten in die versch. Größen / Eintrag in medias-Tabelle
+
+            } else {
+                throw new UploadException(UploadException::UPLOAD_DIR_COULD_NOT_BE_PREPARED);
+            }
 
             $jsonResponse = ResponseBuilder::build(ResponseBuilder::SUCCESS_RESPONSE_VAL, [
                 ResponseBuilder::INSERT_ID_RESPONSE_KEY => $insertId,
