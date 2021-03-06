@@ -2,17 +2,17 @@
 
 namespace App\Routes;
 
-use App\Exception\UploadException;
-use App\Classes\Helper;
-use App\Classes\Upload;
-use App\Classes\Database;
 use App\Classes\Filter;
-use App\Classes\Api;
+use App\Classes\Helper;
 use App\Classes\Response as ResponseBuilder;
+use App\Classes\Upload;
+use App\Exception\UploadException;
 use DateTime;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+
+use moveUploadedFile;
 
 class TestimonialController
 {
@@ -49,15 +49,33 @@ class TestimonialController
                 [$guidv4, $headline, $description]
             );
 
+            $uploadedFiles = $request->getUploadedFiles();
             $mediaToken = sha1($guidv4);
 
-            // Bei Upload auch Eintrag in die medias-Tabelle [TODO]
-            if($this->upload->prepareUploadDirectoryByToken($mediaToken)) {
+            if (count($uploadedFiles) > 0) {
 
-                // Hier Datei hochladen / verarbeiten in die versch. Größen / Eintrag in medias-Tabelle
+                // Bei Upload auch Eintrag in die medias-Tabelle [TODO]
+                if ($this->upload->prepareUploadDirectoryByToken($mediaToken)) {
 
-            } else {
-                throw new UploadException(UploadException::UPLOAD_DIR_COULD_NOT_BE_PREPARED);
+                    // Hier Datei hochladen / verarbeiten in die versch. Größen / Eintrag in medias-Tabelle
+                    $uploadedFile = $uploadedFiles['image'];
+
+                    if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
+
+                        $filename = $this->upload->moveUploadedFile($this->upload->getRecursiveDirectoryAbsolutePathByToken($mediaToken), $uploadedFile);
+
+                    } else {
+
+                        throw new UploadException(UploadException::UPLOAD_WAS_NOT_SUCCESSFUL);
+
+                    }
+
+                } else {
+
+                    throw new UploadException(UploadException::UPLOAD_DIR_COULD_NOT_BE_PREPARED);
+
+                }
+
             }
 
             $jsonResponse = ResponseBuilder::build(ResponseBuilder::SUCCESS_RESPONSE_VAL, [
