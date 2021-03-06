@@ -14,6 +14,7 @@ return array(
     'App\\Exception\\DatabaseException' => $baseDir . '/src/exception/DatabaseException.php',
     'App\\Middleware\\CorsMiddleware' => $baseDir . '/src/middleware/CorsMiddleware.php',
     'App\\Routes\\EventController' => $baseDir . '/src/routes/EventController.php',
+    'App\\Routes\\TestimonialController' => $baseDir . '/src/routes/TestimonialController.php',
     'App\\Routes\\ThrowbackController' => $baseDir . '/src/routes/ThrowbackController.php',
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
     'DI\\Annotation\\Inject' => $vendorDir . '/php-di/php-di/src/Annotation/Inject.php',

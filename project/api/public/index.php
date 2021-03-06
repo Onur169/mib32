@@ -26,6 +26,7 @@ use App\Classes\Filter;
 use App\Middleware\CorsMiddleware;
 use App\Routes\EventController;
 use App\Routes\ThrowbackController;
+use App\Routes\TestimonialController;
 use DI\Container;
 use Psr\Container\ContainerInterface;
 use Slim\Factory\AppFactory;
@@ -83,6 +84,9 @@ try {
 
         // Rückblick Calls
         $group->get('/throwbacks', ThrowbackController::class . ':get');
+
+        // Testimonal Calls
+        $group->post('/testimonials', TestimonialController::class . ':add');
 
     });
 
