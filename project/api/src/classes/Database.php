@@ -13,6 +13,9 @@ class Database
     private $itemsToShowPerPage;
     private $isPagingActive;
 
+    const NUM_ROWS = "num_rows";
+    const DATA = "data";
+
     public function __construct($config)
     {
 
@@ -21,7 +24,7 @@ class Database
         $userName = $config["db"]["userName"];
         $password = $config["db"]["password"];
 
-        $this->itemsToShowPerPage = 10;
+        $this->itemsToShowPerPage = 5;
         $this->isPagingActive = false;
         $this->handle = new mysqli($hostName, $userName, $password, $database);
 
@@ -63,10 +66,15 @@ class Database
                 $list[] = $row;
             }
 
+            $numRows = $result->num_rows;
+
             $result->close();
             $this->handle->next_result();
 
-            return $list;
+            return [
+                self::NUM_ROWS => $numRows,
+                self::DATA => $list
+            ];
 
         } else {
 
@@ -118,6 +126,14 @@ class Database
         } else {
             throw new DatabaseException(DatabaseException::UPDATE_WAS_NOT_SUCCESSFUL);
         }
+
+    }
+
+    public function buildSql(?string $selectPart, ?string $fromPart, ?string $joinPart, ?string $wherePart, ?string $groupByPart, ?string $orderByPart, ?string $limitPart) {
+
+        $args = func_get_args();
+
+        return join(" ", $args);
 
     }
 

@@ -59,15 +59,15 @@ class Filter
             
         }  
         
-        
-        
-        return join(PHP_EOL, $sql);
+        return count($sql) > 0 ? $sql : null;
 
     }
 
     public function build($refTable, $usedFilter) {
 
-        $filterSql = $usedFilter == null ? '' : 'WHERE ' . $this->buildConditions($refTable, $usedFilter);
+        $_usedFilter = $this->buildConditions($refTable, $usedFilter);
+
+        $filterSql = $_usedFilter == null ? '' : 'WHERE ' . join(PHP_EOL, $_usedFilter);
 
         return $filterSql;
 

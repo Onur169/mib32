@@ -42,9 +42,20 @@ class EventController
             $prevPageUrl = $api->getPrevPageUrl();
             $nextPageUrl = $api->getNextPageUrl();
 
-            $list = $api->getWithPaginator('SELECT * FROM events '.$filterSql.' ORDER BY start_at DESC');
-            $maxPages = $api->getMaxPages('events');
+            $sqlWithoutLimit = $api->db()->buildSql(
+                'SELECT id, name, description, start_at, end_at, lat, lng',
+                'FROM events',
+                null,
+                $filterSql,
+                'group by id',
+                'ORDER BY start_at DESC',
+                null
+            );
 
+            $maxPages = $api->getMaxPages($sqlWithoutLimit);
+
+            $result = $api->getWithPaginator($sqlWithoutLimit);
+            $list = $result[Database::DATA];
 
             $jsonResponse = ResponseBuilder::build(ResponseBuilder::SUCCESS_RESPONSE_VAL, $list, $prevPageUrl, $nextPageUrl, $maxPages);
 

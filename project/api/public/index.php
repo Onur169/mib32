@@ -33,7 +33,7 @@ use Slim\Routing\RouteCollectorProxy;
 
 // Filter
 $filter = new Filter();
-$filter->register("current_events", 'NOW() < start_at', ['events']);
+$filter->register("current_events", 'NOW() < events.start_at', ['events', 'throwbacks']);
 
 // Create Container using PHP-DI
 $container = new Container();
