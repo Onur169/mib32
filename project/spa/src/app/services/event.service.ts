@@ -12,7 +12,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { MarkerManager } from '../helpers/classes/MarkerManager';
-import { ApiConstants } from '../helpers/constants/APIConstants';
+import { ApiConstants } from '../helpers/constants/ApiConstants';
 import { EventResponse } from '../helpers/interfaces/EventResponse';
 
 @Injectable({
