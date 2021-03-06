@@ -7,11 +7,13 @@ import { TimerComponent } from './components/timer/timer.component';
 import { LandingpageComponent } from './components/landingpage/landingpage.component';
 
 import { AppRoutingModule } from './modules/app-routing/app-routing.module';
+import { DonationComponent } from './components/donation/donation.component';
 @NgModule({
   declarations: [
     AppComponent,
     TimerComponent,
-    LandingpageComponent
+    LandingpageComponent,
+    DonationComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
