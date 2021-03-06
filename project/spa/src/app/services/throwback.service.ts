@@ -1,8 +1,10 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ThrowbackClass } from '../helpers/classes/ThrowbackClass';
 import { ThrowbackManager } from '../helpers/classes/ThrowbackManager';
-import { ApiConstants } from '../helpers/constants/APIConstants';
-import { ThrowbacksResponse } from '../helpers/interfaces/ThrowbacksResponse';
+import { Demonstration } from '../helpers/interfaces/Demonstration';
+import { Throwback } from '../helpers/interfaces/Throwback';
+import { ApiService } from './api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,24 +12,27 @@ import { ThrowbacksResponse } from '../helpers/interfaces/ThrowbacksResponse';
 export class ThrowbackService {
   throwbackmanager: ThrowbackManager;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private api: ApiService) {
     this.throwbackmanager=new ThrowbackManager();
 
   }
 
-  fetch(page: number){
+  async getThrowbacks(){
     return new Promise(async (resolve, reject) => {
       try{
         let params= new HttpParams()
-        .set('page', page.toString());
+        .set('page', this.throwbackmanager.getCurrentPage().toString());
 
-        const RequestUrl=ApiConstants.API_ENDPOINT+'throwbacks';
+        const Url='throwbacks';
 
-        let response= await this.http.get<ThrowbacksResponse>(RequestUrl, {params:params}).toPromise();
+        let response= await this.api.fetch(Url, params) as Throwback[];
 
-        this.throwbackmanager.setnewPage(response.current_page,response.data);
-        this.throwbackmanager.setMaxPages(response.max_pages);
-        this.throwbackmanager.setCurrentPage(response.current_page);
+        let newThrowbacks: ThrowbackClass[]=[];
+
+        response.forEach((value: Throwback) => {
+          newThrowbacks.push(new ThrowbackClass(value));
+        });
+        this.throwbackmanager.setnewPage(this.throwbackmanager.getCurrentPage(),newThrowbacks);
 
         resolve(response);
 

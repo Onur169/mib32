@@ -27,7 +27,7 @@ import { ThrowbackClass } from "./ThrowbackClass";
    * @param markers -Events
    * **/
   setnewPage(newPage:number, markers: ThrowbackClass[]): void{
-
+    this.setCurrentPage(newPage);
     this.pages.set(newPage,  markers);
    }
 
