@@ -2,6 +2,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiConstants } from '../helpers/constants/ApiConstants';
 import { ApiResponse } from '../helpers/interfaces/ApiResponse';
+import { Demonstration } from '../helpers/interfaces/Demonstration';
+import { Throwback } from '../helpers/interfaces/Throwback';
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +14,9 @@ export class ApiService {
 
   }
 
-  fetch(page: number, url: string){
-    return new Promise(async (resolve, reject) => {
+  fetch(url: string, params: HttpParams){
+    return new Promise<Demonstration[]|Throwback[]>(async (resolve, reject) => {
       try{
-        let params= new HttpParams()
-        .set('page', page.toString());
 
         const RequestUrl=ApiConstants.API_ENDPOINT+url;
 
@@ -24,7 +24,7 @@ export class ApiService {
 
 
 
-        resolve(response);
+        resolve(response.data);
 
       }catch (error){
         reject(error)
