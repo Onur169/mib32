@@ -51,7 +51,7 @@ class TestimonialController
             $sqlWithoutLimit = $api->db()->buildSql(
                 'SELECT testimonials.id, testimonials.headline, testimonials.description, medias.token, medias.extension',
                 'FROM testimonials',
-                'INNER JOIN medias ON medias.id = testimonials.medias_id',
+                'LEFT JOIN medias ON medias.id = testimonials.medias_id',
                 $filterSql,
                 'group by id',
                 'ORDER BY testimonials.created_at DESC',
