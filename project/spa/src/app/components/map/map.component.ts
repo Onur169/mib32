@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EventService } from 'src/app/services/event.service';
 
+import "node_modules/ol/ol.css";
 import Map from 'ol/Map';
 import View from 'ol/View';
 import OSM from 'ol/source/OSM';
@@ -23,25 +24,35 @@ export class MapComponent implements OnInit {
 
   position: Navigator;
 
-  latitude: number = 51.165691;  //für Deutschland
-  longitude: number = 10.451526;
-  customCoords: number[] = [];
-  //customLong: number = 0;
-  //customLat: number = 0;
+  public latitude: number = 51.165691;  //für Deutschland
+  public longitude: number = 10.451526;
+  public customLat: number = 0;
+  public customLong: number = 0;
+
+  public place: string;
+  public markerLong: number;
+  public markerLat: number;
+  public time: number;
   map: any;
 
 
-  constructor(eventService: EventService) {
-    this.position=navigator
+  constructor(private eventService: EventService) {
+    this.position = navigator,
+    this.place = "kein Streikort";
+    this.markerLat = 0;
+    this.markerLong = 0;
+    this.time = 0;
   }
 
 
   ngOnInit() {
-
     this.getCoords();
-    //console.log(this.customLat, this.customLong);
-  }
 
+    this.getMarker();
+    
+
+    this.inizializeMap();
+  }
 
  private inizializeMap(): void {
     this.map = new Map({
@@ -52,8 +63,8 @@ export class MapComponent implements OnInit {
         })
       ],
       view: new View({
-        center: fromLonLat([this.longitude, this.latitude]),
-        zoom: 6
+        center: fromLonLat([this.customLong, this.customLat]),
+        zoom: 3
       })
     });
   }
@@ -61,19 +72,28 @@ export class MapComponent implements OnInit {
 async getCoords(){
 
     await this.fetchAdress().then(position =>{
-      this.customCoords.push(position.coords.latitude);
-      this.customCoords.push(position.coords.longitude);
+      this.customLat = position.coords.latitude;
+      this.customLong = position.coords.longitude;
     }).catch((err) => {
       console.error(err.message);
     });
 
-    console.log(this.customCoords);
+    console.log(this.customLat, this.customLong);
 }
-
 
   fetchAdress(options?: PositionOptions): Promise<GeolocationPosition>{
     return new Promise((resolve, reject) => {
       navigator.geolocation.getCurrentPosition(resolve, reject, options);
     });
+
+  }
+
+  async getMarker(){
+    await this.eventService.getEvents();
+    console.log(this.eventService.markermanager);
+  }
+
+  checkLongLatOfUser(){
+   // if(this.)
   }
 }

@@ -38,7 +38,8 @@ const materialModules = [
   MatDialogModule,
   MatSnackBarModule,
   MatFormFieldModule,
-  MatInputModule
+  MatInputModule,
+  MatIconModule
 ];
 
 @NgModule({
