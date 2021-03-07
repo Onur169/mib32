@@ -12,30 +12,34 @@
    private id: string;
    private name: string;
    private description: string;
-   private social_media_video_url: string;
-   private start_at: Date;
-   private end_at: Date;
+   private socialMediaVideoUrl: string;
+   private startDate: Date;
+   private endDate: Date;
    private lat: number;
    private lng: number;
+   private locationName: string;
+
 
    constructor(
     id: string,
     name: string,
     description: string,
-    social_media_video_url: string,
-    start_at: Date,
-    end_at: Date,
+    socialMediaVideoUrl: string,
+    startDate: Date,
+    endDate: Date,
     lat: number,
-    lng: number
+    lng: number,
+    locationName: string
      ){
        this.id=id;
        this.name=name;
        this.description=description;
-       this.social_media_video_url=social_media_video_url;
-       this.start_at=start_at;
-       this.end_at=end_at;
+       this.socialMediaVideoUrl=socialMediaVideoUrl;
+       this.startDate=startDate;
+       this.endDate=endDate;
        this.lat=lat;
        this.lng=lng;
+       this.locationName=locationName;
    }
 
     public getId(): string {
@@ -62,28 +66,28 @@
         this.description = description;
     }
 
-    public getSocial_media_video_url(): string {
-        return this.social_media_video_url;
+    public getsocialMediaVideoUrl(): string {
+        return this.socialMediaVideoUrl;
     }
 
-    public setSocial_media_video_url(social_media_video_url: string): void {
-        this.social_media_video_url = social_media_video_url;
+    public setsocialMediaVideoUrl(socialMediaVideoUrl: string): void {
+        this.socialMediaVideoUrl = socialMediaVideoUrl;
     }
 
-    public getStart_at(): Date {
-        return this.start_at;
+    public getstartDate(): Date {
+        return this.startDate;
     }
 
-    public setStart_at(start_at: Date): void {
-        this.start_at = start_at;
+    public setstartDate(startDate: Date): void {
+        this.startDate = startDate;
     }
 
-    public getEnd_at(): Date {
-        return this.end_at;
+    public getendDate(): Date {
+        return this.endDate;
     }
 
-    public setEnd_at(end_at: Date): void {
-        this.end_at = end_at;
+    public setendDate(endDate: Date): void {
+        this.endDate = endDate;
     }
 
     public getLat(): number {

@@ -17,4 +17,5 @@ export interface Demonstration {
     end_at: Date;
     lat: number;
     lng: number;
+    location_name: string;
 }

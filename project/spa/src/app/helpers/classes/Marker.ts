@@ -18,6 +18,10 @@ export class Marker {
   private endDate: Date;
   private lat: number;
   private lng: number;
+  private locationName: string;
+
+
+
 
   constructor(
     id: string,
@@ -26,7 +30,8 @@ export class Marker {
     startDate: Date,
     endDate: Date,
     lat: number,
-    lng: number
+    lng: number,
+    locationName: string
     ){
       this.id=id;
       this.name=name;
@@ -35,6 +40,7 @@ export class Marker {
       this.endDate=endDate;
       this.lat=lat;
       this.lng=lng;
+      this.locationName=locationName;
   }
     public getId(): string {
         return this.id;
@@ -92,7 +98,13 @@ export class Marker {
         this.lng = lng;
     }
 
+    public getLocationName(): string {
+      return this.locationName;
+  }
 
+  public setLocationName(locationName: string): void {
+      this.locationName = locationName;
+  }
 
 
 }

@@ -48,7 +48,8 @@ export class EventService {
             value.start_at,
             value.end_at,
             value.lat,
-            value.lng
+            value.lng,
+            value.location_name
             );
           newThrowbacks.push(newMarker);
         });
