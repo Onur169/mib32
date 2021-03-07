@@ -26,7 +26,8 @@ import { ThrowbackClass } from "./ThrowbackClass";
    * @param newPage -Seitenzahl
    * @param markers -Events
    * **/
-  setnewPage(newPage:number, markers: ThrowbackClass[]): void{
+  setnewPage(newPage:number, maxPages: number,markers: ThrowbackClass[]): void{
+    this.setMaxPages(maxPages);
     this.setCurrentPage(newPage);
     this.pages.set(newPage,  markers);
    }

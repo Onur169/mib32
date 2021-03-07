@@ -39,7 +39,7 @@ export abstract class MapMath {
   }
 
   private checkIfIsInRadius(positionlng:number, positionlat:number, marker: Marker, maxTudeDistance:number): boolean{
-    let space=Math.sqrt((marker.lat-positionlat)*(marker.lat-positionlat)+(marker.lng-positionlng)*(marker.lng-positionlng));
+    let space=Math.sqrt((marker.getLat()-positionlat)*(marker.getLat()-positionlat)+(marker.getLng()-positionlng)*(marker.getLng()-positionlng));
 
     if(space<=maxTudeDistance)return true;
     else return false;

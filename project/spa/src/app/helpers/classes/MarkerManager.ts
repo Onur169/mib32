@@ -8,26 +8,28 @@
  */
 
 import { MapMath } from "../abstracts/MapMath";
+import { ApiConstants } from "../constants/ApiConstants";
 import { Marker } from "./Marker";
+
 
 export class MarkerManager extends MapMath{
 
   public pages: Map<number, Marker[]>=new Map<number, Marker[]>();
-  private current_page: number;
-  private max_pages: number;
+  private currentPage: number;
+  private maxPages: number;
 
   constructor(){
 
     super();
-    this.current_page=1;
-    this.max_pages=1;
+    this.currentPage=1;
+    this.maxPages=1;
   }
 
     /**
    * Prüft, ob es eine weitere Seite gibt.
    * **/
   hasNextPage(): boolean{
-    if(this.current_page<this.max_pages){
+    if(this.currentPage<this.maxPages){
       return true;
     }
     else{
@@ -39,7 +41,7 @@ export class MarkerManager extends MapMath{
    * Prüft, ob es eine vorherige Seite gibt.
    * **/
   hasPreviousPage(): boolean{
-    if(this.current_page>0){
+    if(this.currentPage>0){
       return true;
     }
     else{
@@ -51,30 +53,31 @@ export class MarkerManager extends MapMath{
    * Gibt die nächste Seite aus, sofern existent. Ansonsten wird aktuelle Seite ausgeben. ->Diese Seite übernimmt keine Änderungen.
    * **/
   getNextPage(): Marker[]{
-    if(this.pages.get(++this.current_page) && this.hasNextPage()){
-      return this.pages.get(this.current_page)!;
+    if(this.pages.get(++this.currentPage) && this.hasNextPage()){
+      return this.pages.get(this.currentPage)!;
     }
-    else return this.pages.get(--this.current_page)!;
+    else return this.pages.get(--this.currentPage)!;
   }
 
    /**
    * Gibt die vorherige Seite aus, sofern existent. Ansonsten wird aktuelle Seite ausgeben. ->Diese Seite übernimmt keine Änderungen.
    * **/
   getPreviousPage(): Marker[]{
-    if(this.pages.get(--this.current_page) && this.hasPreviousPage()){
-      return this.pages.get(this.current_page)!;
+    if(this.pages.get(--this.currentPage) && this.hasPreviousPage()){
+      return this.pages.get(this.currentPage)!;
     }
-    else return this.pages.get(++this.current_page)!;
+    else return this.pages.get(++this.currentPage)!;
   }
 
   /**
    * Wenn via http-request eine neue Seite geladen wird, so soll sie hiermit gesetzt werden.
-   * @param new_page -Seitenzahl
+   * @param newPage -Seitenzahl
    * @param markers -Events
    * **/
-  setnewPage(new_page:number, markers: Marker[]): void{
-
-   this.pages.set(new_page,  markers);
+  setnewPage(newPage:number, maxPages:number, markers: Marker[]): void{
+    this.setMaxPages(maxPages);
+    this.setCurrentPage(newPage);
+    this.pages.set(newPage,  markers);
   }
 
   /**
@@ -86,7 +89,7 @@ export class MarkerManager extends MapMath{
 
   //gibt die aktuelle Page aus
   getMarkersByCurrentPage(): Marker[] | undefined{
-    if(this.pages.get(this.current_page))return this.pages.get(this.current_page)!;
+    if(this.pages.get(this.currentPage))return this.pages.get(this.currentPage)!;
     else{
       console.error("Momentan entweder kein Event in Aussicht oder es gab ein Problem beim Abrufen unserer Demos");
       return undefined;
@@ -94,8 +97,8 @@ export class MarkerManager extends MapMath{
   }
 
   //für das Überschreiben
-  setMaxPages(max_pages: number): void{
-    this.max_pages=max_pages;
+  setMaxPages(maxPages: number): void{
+    this.maxPages=maxPages;
   }
 
   /**
@@ -110,20 +113,20 @@ export class MarkerManager extends MapMath{
   }
 
   getPageNumberOfNext(): number{
-    return this.current_page+1;
+    return this.currentPage+1;
   }
 
   getPageNumberOfPrevious(): number{
-    return this.current_page-1;
+    return this.currentPage-1;
   }
 
-  setCurrentPage(current_page: number): void{
-    this.current_page=current_page;
+  setCurrentPage(currentPage: number): void{
+    this.currentPage=currentPage;
   }
 
   //sollte nur für die allererste Abfrage genutzt werden
   getCurrentPage(): number{
-    return this.current_page;
+    return this.currentPage;
   }
 
 }

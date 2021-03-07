@@ -1,9 +1,18 @@
+/**
+ * @param createdBy
+ * Christian Knoth
+ * @param authors
+ * Christian Knoth
+ * @param summary
+ * Der API-Service übergibt die ihm gegebenen Anfragen an das Backend
+ * und übernimmt die grundsätzliche Validitätsüberprüfung der ankommenden Daten.
+ */
+
+
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiConstants } from '../helpers/constants/ApiConstants';
 import { ApiResponse } from '../helpers/interfaces/ApiResponse';
-import { Demonstration } from '../helpers/interfaces/Demonstration';
-import { Throwback } from '../helpers/interfaces/Throwback';
 
 @Injectable({
   providedIn: 'root'
@@ -15,16 +24,17 @@ export class ApiService {
   }
 
   fetch(url: string, params: HttpParams){
-    return new Promise<Demonstration[]|Throwback[]>(async (resolve, reject) => {
-      try{
+    return new Promise<ApiResponse>(async (resolve, reject) => {
 
+      try{
         const RequestUrl=ApiConstants.API_ENDPOINT+url;
 
         let response= await this.http.get<ApiResponse>(RequestUrl, {params:params}).toPromise();
 
-
-
-        resolve(response.data);
+        if(response.ack=="success" && response.data!=undefined){
+          resolve(response);
+        }
+        else reject("ungültige Rückgabe des Datenobjekts");
 
       }catch (error){
         reject(error)
