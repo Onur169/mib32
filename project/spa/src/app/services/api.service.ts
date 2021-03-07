@@ -31,7 +31,7 @@ export class ApiService {
 
         let response= await this.http.get<ApiResponse>(RequestUrl, {params:params}).toPromise();
 
-        if(response.ack=="success" && response.data!=undefined){
+        if(response.ack=="success"){
           resolve(response);
         }
         else reject("ungültige Rückgabe des Datenobjekts");
