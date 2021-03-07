@@ -53,8 +53,8 @@ export class MapComponent implements OnInit {
 
     //this.checkLongLatOfUser();
 
-    this.getMarker();
-    
+   this.getMarker();
+
     this.inizializeMap();
   }
 
@@ -98,6 +98,8 @@ async getCoords(){
   async getMarker(){
     await this.eventService.getPages("current_events");
 
+
+    console.log(this.eventService.markermanager.getMarkers());
   }
 
    /* console.log(this.eventService.markermanager.getMarkers());

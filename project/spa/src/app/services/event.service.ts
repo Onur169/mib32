@@ -35,13 +35,15 @@ export class EventService {
     console.log("huhu",filter, limiter);
     //Wenn es einen Filter gibt z.B current_events...
     if (filter) {
-      let lastDate = this.markermanager
-        .getLastValueOfCurrentPage()
-        .getStartDate();
-      let now = new Date();
 
       //und wenn es ein Limit gibt,...
       if (limiter) {
+
+        let lastDate = this.markermanager
+          .getLastValueOfCurrentPage()
+          .getStartDate();
+        let now = new Date();
+
         //dann gehe bis zum Ende durch
         for (
           let i = this.markermanager.getCurrentPage();
