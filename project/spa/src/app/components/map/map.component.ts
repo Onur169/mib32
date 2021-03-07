@@ -34,6 +34,7 @@ export class MapComponent implements OnInit {
   public markerLong: number;
   public markerLat: number;
   public time: number;
+  public day: Date;
   private  map: any;
 
 
@@ -43,6 +44,7 @@ export class MapComponent implements OnInit {
     this.markerLat = 0;
     this.markerLong = 0;
     this.time = 0;
+    this.day = new Date();
   }
 
 
@@ -65,14 +67,15 @@ export class MapComponent implements OnInit {
         })
       ],
       view: new View({
+        //der Nutzerort wird angezeigt
         center: fromLonLat([this.customLong, this.customLat]),
         zoom: 10
       })
     });
   }
 
+  //speichert Breitengrad und Längengrad des Nutzers
 async getCoords(){
-
     await this.fetchAdress().then(position =>{
       this.customLat = position.coords.latitude;
       this.customLong = position.coords.longitude;
@@ -93,10 +96,15 @@ async getCoords(){
   }
 
   async getMarker(){
-    await this.eventService.getEvents().then(position => {
+    await this.eventService.getPages("current_events");
 
-    });
-    console.log(this.eventService.markermanager);
+  }
+
+   /* console.log(this.eventService.markermanager.getMarkers());
+
+    console.log(this.eventService.markermanager.getNextEvent());
+
+    console.log(this.eventService.markermanager);*
   }
 
   /*checkLongLatOfUser(){
