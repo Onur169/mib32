@@ -17,6 +17,5 @@ export interface Demonstration {
     end_at: Date;
     lat: number;
     lng: number;
-    created_at: Date;
-    deleted_at: Date;
+    location_name: string;
 }

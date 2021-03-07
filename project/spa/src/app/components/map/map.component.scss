@@ -1,6 +1,7 @@
 @import '../../../custom-variables';
 
 #map {
-  height: 700px;
-  width: 50%;
+  height: 40vh;
+  width: 100%;
+  z-index: 1 !important;
 }

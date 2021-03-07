@@ -8,39 +8,103 @@
  */
 
 
-import { Demonstration } from "../interfaces/Demonstration";
 
-export class Marker implements Demonstration {
+export class Marker {
 
-  id: string;
-  name: string;
-  description: string;
-  start_at: Date;
-  end_at: Date;
-  lat: number;
-  lng: number;
-  created_at: Date;
-  deleted_at: Date;
+  private id: string;
+  private name: string;
+  private description: string;
+  private startDate: Date;
+  private endDate: Date;
+  private lat: number;
+  private lng: number;
+  private locationName: string;
+
+
+
 
   constructor(
     id: string,
     name: string,
     description: string,
-    start_at: Date,
-    end_at: Date,
+    startDate: Date,
+    endDate: Date,
     lat: number,
     lng: number,
-    created_at: Date,
-    deleted_at: Date
+    locationName: string
     ){
       this.id=id;
       this.name=name;
       this.description=description;
-      this.start_at=start_at;
-      this.end_at=end_at;
+      this.startDate=startDate;
+      this.endDate=endDate;
       this.lat=lat;
       this.lng=lng;
-      this.created_at=created_at;
-      this.deleted_at=deleted_at;
+      this.locationName=locationName;
   }
+    public getId(): string {
+        return this.id;
+    }
+
+    public setId(id: string): void {
+        this.id = id;
+    }
+
+    public getName(): string {
+        return this.name;
+    }
+
+    public setName(name: string): void {
+        this.name = name;
+    }
+
+    public getDescription(): string {
+        return this.description;
+    }
+
+    public setDescription(description: string): void {
+        this.description = description;
+    }
+
+    public getStartDate(): Date {
+        return this.startDate;
+    }
+
+    public setStartDate(startDate: Date): void {
+        this.startDate = startDate;
+    }
+
+    public getEndDate(): Date {
+        return this.endDate;
+    }
+
+    public setEndDate(endDate: Date): void {
+        this.endDate = endDate;
+    }
+
+    public getLat(): number {
+        return this.lat;
+    }
+
+    public setLat(lat: number): void {
+        this.lat = lat;
+    }
+
+    public getLng(): number {
+        return this.lng;
+    }
+
+    public setLng(lng: number): void {
+        this.lng = lng;
+    }
+
+    public getLocationName(): string {
+      return this.locationName;
+  }
+
+  public setLocationName(locationName: string): void {
+      this.locationName = locationName;
+  }
+
+
 }
