@@ -6,6 +6,7 @@ import View from 'ol/View';
 import OSM from 'ol/source/OSM';
 import TileLayer from 'ol/layer/Tile';
 import { fromLonLat } from 'ol/proj';
+import { resolve } from '@angular/compiler-cli/src/ngtsc/file_system';
 /*import VectorLayer from 'ol/layer/Vector';
 import Icon from 'ol/style/Icon';
 import { viewClassName } from '@angular/compiler';
@@ -36,20 +37,8 @@ export class MapComponent implements OnInit {
 
 
   ngOnInit() {
-    navigator.geolocation.getCurrentPosition((position) => {
-      console.log(position);
-      this.customCoords.push(position.coords.latitude, position.coords.longitude);
-      /*this.customLat = position.coords.latitude;
-      this.customLong = position.coords.longitude;
-      console.log(this.customLat, this.customLong);
-      return this.customLat;*/
-     return this.customCoords;
-    });
 
-    this.inizializeMap();
-
-    console.log(this.customCoords);
-    console.log(this.customCoords[1]);
+    this.getCoords();
     //console.log(this.customLat, this.customLong);
   }
 
@@ -66,6 +55,25 @@ export class MapComponent implements OnInit {
         center: fromLonLat([this.longitude, this.latitude]),
         zoom: 6
       })
+    });
+  }
+
+async getCoords(){
+
+    await this.fetchAdress().then(position =>{
+      this.customCoords.push(position.coords.latitude);
+      this.customCoords.push(position.coords.longitude);
+    }).catch((err) => {
+      console.error(err.message);
+    });
+
+    console.log(this.customCoords);
+}
+
+
+  fetchAdress(options?: PositionOptions): Promise<GeolocationPosition>{
+    return new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(resolve, reject, options);
     });
   }
 }
