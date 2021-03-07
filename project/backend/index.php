@@ -76,10 +76,17 @@
                     }
                 ?>
 
-                <tab-area 
-                    :cols="Object.keys(rows[0])"
-                    :rows="rows"
-                ></tab-area>
+                <tab-area :cols="Object.keys(responseData[0])" :rows="responseData"></tab-area>
+{{prevPageUrl}}
+                <paginator 
+                @on-fetched="recieveFetchedData"
+                :prevPageUrl="prevPageUrl"
+                :nextPageUrl="nextPageUrl"
+                :currentPage="currentPage"
+                :paginatorList="paginatorList"
+                >
+                </paginator>
+                
             </div>
 
         </div>

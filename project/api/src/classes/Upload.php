@@ -8,12 +8,11 @@ class Upload
 {
 
     const RECURSIVE_TOKEN_PATH_LENGTH = 5;
-
-    private $filters;
+    const FORM_DATA_UPLOAD_KEY = "image";
 
     public function __construct()
     {
-        $this->filters = [];
+
     }
 
     public function getRecursiveDirectoryAbsolutePathByToken($mediaToken)
@@ -40,7 +39,6 @@ class Upload
     {
         $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
 
-        // see http://php.net/manual/en/function.random-bytes.php
         //$basename = bin2hex(random_bytes(8));
         $basename = "original";
         $filename = sprintf('%s.%0.8s', $basename, $extension);

@@ -4,16 +4,12 @@ const app = Vue.createApp({
 
         return {
             name: 'Climatestrike API Backend',
-            apiUrl: 'https://api.judoclub-rockenberg.de',
-            apiMainRessource: 'climatestrike',
-            currentRessource: 'events',
-            rows: window.api.data.data,
+            responseData: window.api.data.data,
+            notificationRead: localStorage.getItem("notificationRead") ? localStorage.getItem("notificationRead") : false,
             prevPageUrl: window.api.data.prev_page_url,
             nextPageUrl: window.api.data.next_page_url,
             currentPage: window.api.data.current_page,
-            maxPages: window.api.data.max_pages,
-            paginatorList: [],
-            notificationRead: localStorage.getItem("notificationRead") ? localStorage.getItem("notificationRead") : false,
+            paginatorList: []
         }
 
     },
@@ -21,14 +17,6 @@ const app = Vue.createApp({
     mounted() {
 
         this.init();
-
-    },
-
-    computed: {
-
-        isPrevDisabled() {
-            return this.currentPage <= 1;
-        }
 
     },
 
@@ -46,82 +34,20 @@ const app = Vue.createApp({
 
         },
 
+        recieveFetchedData(fetchObj) {
+
+            this.rows = fetchObj.rows;
+            this.prevPageUrl = fetchObj.prevPageUrl;
+            this.nextPageUrl = fetchObj.nextPageUrl;
+            this.currentPage = fetchObj.currentPage;
+
+            debugger;
+
+        },
+
         notificationHasBeenRead() {
             localStorage.setItem("notificationRead", true);
             this.notificationRead = true;
-        },
-
-        fetch(fetchUrl) {
-
-            return new Promise(async (resolve, reject) => {
-
-                try {
-
-                    response = await fetch(fetchUrl).then(response => response.json());
-
-                    this.rows = response.data;
-                    this.prevPageUrl = response.prev_page_url;
-                    this.nextPageUrl = response.next_page_url;
-                    this.currentPage = response.current_page;
-
-                    resolve(response);
-
-                } catch (error) {
-
-                    reject(error);
-
-                }
-
-            });
-
-        },
-
-        async fetchData(option) {
-
-            const fetchUrl = option == "next" ? this.nextPageUrl : this.prevPageUrl;
-
-            let response = null;
-
-            try {
-
-                response = await this.fetch(fetchUrl);
-
-            } catch (error) {
-                
-                console.log(error);
-
-            }
-
-        },
-
-        async fetchDataByPageNumber(pageNumber) {
-
-            const fetchUrl = `${this.apiUrl}/${this.apiMainRessource}/${this.currentRessource}?page=${pageNumber}`;
-
-            let response = null;
-
-            try {
-
-                response = await this.fetch(fetchUrl);
-
-            } catch (error) {
-                
-                console.log(error);
-
-            }
-
-        },
-
-        loadPrevPage() {
-
-            this.fetchData('prev');
-
-        },
-
-        loadNextPage() {
-
-            this.fetchData('next');
-
         },
 
         async renderTab(tab) {
@@ -145,6 +71,134 @@ const app = Vue.createApp({
 
 });
 
+app.component('paginator', {
+
+    props: ['prevPageUrl', 'nextPageUrl', 'currentPage', 'paginatorList'],
+
+    emits: ['on-fetched'],
+
+    data() {
+
+        return {
+            apiUrl: 'https://api.judoclub-rockenberg.de',
+            apiMainRessource: 'climatestrike',
+            currentRessource: 'events',
+
+            prevPageUrl: this.prevPageUrl,
+            nextPageUrl: this.nextPageUrl,
+            currentPage: this.currentPage,
+
+            maxPages: window.api.data.max_pages
+        }
+
+    },
+
+    methods: {
+
+        isPrevDisabled() {
+            return this.currentPage <= 1;
+        },
+
+        fetch(fetchUrl) {
+
+            return new Promise(async (resolve, reject) => {
+
+                try {
+
+                    response = await fetch(fetchUrl).then(response => response.json());
+
+                    resolve(response);
+
+                } catch (error) {
+
+                    reject(error);
+
+                }
+
+            });
+
+        },
+
+        async fetchData(option) {
+
+            const fetchUrl = option == "next" ? this.nextPageUrl : this.prevPageUrl;
+
+            let response = null;
+
+            try {
+
+                response = await this.fetch(fetchUrl);
+
+                this.$emit('on-fetched', {
+                    rows: response.data,
+                    prevPageUrl: response.prev_page_url,
+                    nextPageUrl: response.next_page_url,
+                    currentPage: response.current_page
+                });
+
+            } catch (error) {
+                
+                console.log(error);
+
+            } 
+
+        },
+
+        async fetchDataByPageNumber(pageNumber) {
+
+            const fetchUrl = `${this.apiUrl}/${this.apiMainRessource}/${this.currentRessource}?page=${pageNumber}`;
+
+            let response = null;
+
+            try {
+
+                response = await this.fetch(fetchUrl);
+
+                this.$emit('on-fetched', {
+                    rows: response.data,
+                    prevPageUrl: response.prev_page_url,
+                    nextPageUrl: response.next_page_url,
+                    currentPage: response.current_page
+                });
+
+            } catch (error) {
+                
+                console.log(error);
+
+            }
+
+        },
+
+        loadPrevPage() {
+
+            this.fetchData('prev');
+
+        },
+
+        loadNextPage() {
+
+            this.fetchData('next');
+
+        },
+
+    },
+
+    template: `
+
+        <nav class="pagination" role="navigation" aria-label="pagination">
+            <a class="pagination-previous" :disabled="isPrevDisabled" @click="loadPrevPage()">Previous</a>
+            <a class="pagination-next" @click="loadNextPage()">Next page</a>
+            <ul class="pagination-list">
+            <li v-for="(paginatorNumber, paginatorIndex) of paginatorList">
+                <a class="pagination-link" @click="fetchDataByPageNumber(paginatorNumber)"
+                :class="{'is-current': paginatorNumber == currentPage}"
+                :aria-label="paginatorNumber">{{paginatorNumber}}</a>
+            </li>
+            </ul>
+        </nav>
+
+    `
+});
 
 app.component('tab-area', {
 
