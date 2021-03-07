@@ -10,6 +10,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { interval, Subscription } from 'rxjs';
+import { Marker } from 'src/app/helpers/classes/Marker';
 import { EventService } from 'src/app/services/event.service';
 
 @Component({
@@ -29,6 +30,7 @@ export class TimerComponent implements OnInit {
   public daysToDday: number;
 
   public gDate: string;
+  public bla: string="";
 
   public hasNewEvent: boolean;
 
@@ -60,7 +62,8 @@ export class TimerComponent implements OnInit {
   async setProperties() {
     await this.eventService.getEvents();
 
-    console.log(this.eventService.markermanager);
+    let x=this.eventService.markermanager.getMarkers().get(1);
+    this.bla=x![1].getLocationName();
 
     console.log(
       new Date(
