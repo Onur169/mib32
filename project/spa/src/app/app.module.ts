@@ -9,6 +9,7 @@ import { LandingpageComponent } from './components/landingpage/landingpage.compo
 
 import { AppRoutingModule } from './modules/app-routing/app-routing.module';
 import { AngularMaterialModule } from './modules/angular-material/angular-material.module';
+//import {OlMapModule} from './modules/ol-map/ol-map.module'
 
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { MapComponent } from './components/map/map.component';
@@ -28,6 +29,7 @@ import { ThrowbacksComponent } from './components/throwbacks/throwbacks.componen
     HttpClientModule,
     AppRoutingModule,
     AngularMaterialModule
+    //OlMapModule
   ],
   providers: [],
   bootstrap: [AppComponent]

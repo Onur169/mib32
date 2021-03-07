@@ -1,20 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { EventService } from 'src/app/services/event.service';
 
-import 'ol/ol.css';
 import Map from 'ol/Map';
 import View from 'ol/View';
-import VectorLayer from 'ol/layer/Vector';
-import Style from 'ol/style/Style';
-import Icon from 'ol/style/Icon';
 import OSM from 'ol/source/OSM';
-import * as olProj from 'ol/proj';
 import TileLayer from 'ol/layer/Tile';
+/*import VectorLayer from 'ol/layer/Vector';
+import Icon from 'ol/style/Icon';
 import { viewClassName } from '@angular/compiler';
-/*import proj4 from 'proj4';
-import {get as getProjection, register} from 'ol/proj';*/
-
-declare var ol: any;
+import {Style, Fill, Stroke} from 'ol/style';
+import { Coordinate } from 'ol/coordinate';*/
 
 @Component({
   selector: 'app-map',
@@ -26,42 +21,42 @@ export class MapComponent implements OnInit {
 
   position: Navigator;
 
-  latitude: number;
-  longitude: number;
-  map: any;
+  latitude: number = 50.426784399999995;  //für Deutschland
+  longitude: number = 8.85863;
+  customCoords: number[] = [];
+  private map!: Map;
+
 
   constructor(eventService: EventService) {
-    this.position=navigator,
-    this.latitude = 10.402658558602,
-    this.longitude = 51.20606218452899;
+    this.position=navigator
   }
+
 
   ngOnInit() {
     navigator.geolocation.getCurrentPosition((position) => {
       console.log(position);
+      this.customCoords.push(position.coords.latitude, position.coords.longitude);
+      return this.customCoords;
     });
 
+    this.inizializeMap();
+
+    console.log(this.customCoords[0]);
+  }
+
+
+ private inizializeMap(): void {
     this.map = new Map({
       target: 'map',
       layers: [
         new TileLayer({
-          source: new OSM()
+         source: new OSM()
         })
       ],
       view: new View({
-        center: olProj.fromLonLat([this.latitude, this.longitude]),
-        zoom: 6
+        center: [this.latitude, this.longitude],
+        zoom: 7
       })
     });
-
-    /*proj4.defs('EPSG:27700', '+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 ' +
-    '+x_0=400000 +y_0=-100000 +ellps=airy ' +
-    '+towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 ' +
-    '+units=m +no_defs');
-    register(proj4);
-    var proj27700 = getProjection('EPSG:27700');
-    proj27700.setExtent([0, 0, 700000, 1300000]);*/
-
   }
-
 }
