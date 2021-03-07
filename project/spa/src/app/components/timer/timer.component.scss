@@ -4,7 +4,7 @@
     background-image: url('../../../assets/timer_background.jpg');
     background-position: 0 100%;
     background-repeat: no-repeat;
-    height: 100%;
+
 }
 
 .display-3{
@@ -14,8 +14,12 @@
 .rounded-circle{
     background-color: rgba(black, 0.35);
     border-width:  0.1vw 0.4vw 0.1vw 0 !important;
-    height: calc(11.5vw + 11.5vh);
-    width: calc(10vw + 10vh);
+    height: 16vw;
+    width: 16vw;
+    min-width: 120px;
+    min-height: 120px;
+    max-width: 240px;
+    max-height: 240px;
 }
 
 .border-info{
@@ -24,77 +28,44 @@
 
 .bg{
     background-color: rgba($primary, 0.2) !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
 }
 
 .text-circle-count{
-    font-size: calc(3vw + 3vh);
+  font-size: 3vw;
 }
 
 .text-circle{
-    font-size: calc(1.3vw + 1.3vh);
+  font-size: 1vw;
 }
 
 .btn-outline-secondary{
+  font-size: 2vw;
    background-color: rgba($primary, 0.2);
-   width: 8rem !important;
-   font-size: 1rem !important;
-   padding: 0.2rem 0 !important;
 }
 
-.btn-outline-secondary:hover{
-    background-color: $primary;
-}
-
-.btn-outline-secondary:focus, .btn-outline-secondary:active {
+.btn-outline-secondary:focus, .btn-outline-secondary:active, .btn-outline-secondary:hover {
     background-color: $primary;
 }
 
 .bg-warning{
-   font-size: calc(1.2vw + 1.2vh);
-    clip-path: polygon(0 0, 100% 0%, 85% 100%, 0% 100%);
-    -webkit-clip-path: polygon(0 0, 100% 0%, 85% 100%, 0% 100%);
-    z-index: 1 !important;
-    width: calc(22vw + 22vh) !important;
-    overflow: auto !important;
-    text-indent: 2rem;
+  font-size: 2vw;
+    clip-path: polygon(0 0, 100% 0%, 88% 100%, 0% 100%);
+    -webkit-clip-path: polygon(0 0, 100% 0%, 88% 100%, 0% 100%);
+    z-index: 1;
+    position: absolute;
+    left: 0;
+    transform: translateY(12vw);
+    width: 34vw !important;
 }
 
-@media (max-width: 500px){
-    .border-info{
-        height: 90% !important;
-    }
 
-    .circle-box{
-        flex-direction: column !important;
-    }
+@media (max-width:576px){
+  .text-circle-count, .text-circle, .bg-warning, .btn-outline-secondary{
+    font-size: 0.8rem;
+  }
+
+  .border-info{
+    border-width: 0 !important;
 }
 
-@media (min-width: 500.01px) and (max-width: 750px){
-    .rounded-circle{
-        height: calc(8.5vw + 8.5vh);
-        width: calc(10vw + 10vh);
-    }  
-}
-
-@media (min-width: 750.01px){
-
-    .rounded-circle{
-        height: 7rem;
-        width: 7rem;
-    } 
-
-    .text-circle-count{
-        font-size: 2.5rem;
-    }
-    
-    .text-circle{
-        font-size: 0.8rem;
-    }
-
-    .btn-outline-secondary{
-        width: 12rem !important;
-        font-size: 1.3rem !important;
-     }
 }

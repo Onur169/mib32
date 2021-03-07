@@ -20,9 +20,6 @@ export class Marker {
   private lng: number;
   private locationName: string;
 
-
-
-
   constructor(
     id: string,
     name: string,
