@@ -12,6 +12,7 @@ class Response
     const CODE_RESPONSE_KEY = "code";
     const MSG_RESPONSE_KEY = "msg";
     const INSERT_ID_RESPONSE_KEY = "insert_id";
+    const MEDIA_INSERT_ID_RESPONSE_KEY = "media_insert_id";
     const UPDATE_ID_RESPONSE_KEY = "update_id";
     const PREV_PAGE_URL_KEY = "prev_page_url";
     const NEXT_PAGE_URL_KEY = "next_page_url";

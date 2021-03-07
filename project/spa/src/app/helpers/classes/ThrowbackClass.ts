@@ -17,26 +17,23 @@ import { Throwback } from "../interfaces/Throwback";
    name: string;
    description: string;
    social_media_video_url: string;
-   events_id: string;
-   created_at: Date;
-   deleted_at: Date;
+   start_at: Date;
+   end_at: Date;
+   lat: number;
+   lng: number;
 
    constructor(
-     id: string,
-     name: string,
-     description: string,
-     social_media_video_url: string,
-     events_id: string,
-     created_at: Date,
-     deleted_at: Date
+     throwback: Throwback
      ){
-       this.id=id;
-       this.name=name;
-       this.description=description;
-       this.social_media_video_url=social_media_video_url;
-       this.events_id=events_id;
-       this.created_at=created_at;
-       this.deleted_at=deleted_at;
+       this.id=throwback.id;
+       this.name=throwback.name;
+       this.description=throwback.description;
+       this.social_media_video_url=throwback.social_media_video_url;
+       this.start_at=throwback.start_at;
+       this.end_at=throwback.end_at;
+       this.lat=throwback.lat;
+       this.lng=throwback.lng;
    }
+
 
  }

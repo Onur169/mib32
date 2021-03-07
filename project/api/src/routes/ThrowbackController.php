@@ -15,6 +15,7 @@ class ThrowbackController
 {
 
     private $db;
+    private $filter;
     private $helper;
     private $container;
 
@@ -23,6 +24,7 @@ class ThrowbackController
         $this->container = $container;
         $this->helper = new Helper();
         $this->db = $this->container->get('Database');
+        $this->filter = $this->container->get('Filter');
     }
 
     public function get(Request $request, Response $response, array $args): Response
@@ -30,13 +32,31 @@ class ThrowbackController
 
         try {
 
+            $params = $request->getQueryParams();
+
+            $usedFilter = $params["filter"] ?? null;
+            $filterSql = $this->filter->build("throwbacks", $usedFilter);
+
             $api = new Api($this->db, $request);
             $prevPageUrl = $api->getPrevPageUrl();
             $nextPageUrl = $api->getNextPageUrl();
 
-            $list = $api->getWithPaginator('SELECT * FROM throwbacks');
+            $sqlWithoutLimit = $api->db()->buildSql(
+                'SELECT throwbacks.id, events.name, throwbacks.description, throwbacks.social_media_video_url, events.start_at, events.end_at, events.lat, events.lng',
+                'FROM events',
+                'INNER JOIN throwbacks ON events.id = throwbacks.events_id',
+                $filterSql,
+                'group by id',
+                'ORDER BY start_at DESC',
+                null
+            );
 
-            $jsonResponse = ResponseBuilder::build(ResponseBuilder::SUCCESS_RESPONSE_VAL, $list, $prevPageUrl, $nextPageUrl);
+            $maxPages = $api->getMaxPages($sqlWithoutLimit);
+
+            $result = $api->getWithPaginator($sqlWithoutLimit);
+            $list = $result[Database::DATA];
+
+            $jsonResponse = ResponseBuilder::build(ResponseBuilder::SUCCESS_RESPONSE_VAL, $list, $prevPageUrl, $nextPageUrl, $maxPages);
 
         } catch (\Throwable $th) {
 

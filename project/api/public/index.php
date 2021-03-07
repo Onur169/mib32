@@ -22,13 +22,20 @@ set_error_handler(function ($severity, $message, $filename, $lineno) {
 
 use App\Classes\Database;
 use App\Classes\Helper;
+use App\Classes\Filter;
 use App\Middleware\CorsMiddleware;
 use App\Routes\EventController;
 use App\Routes\ThrowbackController;
+use App\Routes\TestimonialController;
+use App\Routes\Utf8izeController;
 use DI\Container;
 use Psr\Container\ContainerInterface;
 use Slim\Factory\AppFactory;
 use Slim\Routing\RouteCollectorProxy;
+
+// Filter
+$filter = new Filter();
+$filter->register("current_events", 'NOW() < events.start_at', ['events', 'throwbacks']);
 
 // Create Container using PHP-DI
 $container = new Container();
@@ -46,11 +53,9 @@ try {
     $config = json_decode(file_get_contents(__DIR__ . "/../config.json"), true);
 
     // Set Container
-    $container->set('Database', function (ContainerInterface $container) use ($config) {
-
-        return new Database($config);
-
-    });
+    $container->set('Database', fn(ContainerInterface $container) => new Database($config));
+    $container->set('Filter', fn(ContainerInterface $container) => $filter);
+    $container->set('Config', fn(ContainerInterface $container) => $config);
 
     // Set container to create App with on AppFactory
     AppFactory::setContainer($container);
@@ -81,6 +86,17 @@ try {
 
         // Rückblick Calls
         $group->get('/throwbacks', ThrowbackController::class . ':get');
+
+        // Testimonal Calls
+        $group->post('/testimonials', TestimonialController::class . ':add');
+
+    });
+
+    // Routen definieren
+    $app->group('tools', function (RouteCollectorProxy $group) {
+
+        // Event Calls
+        $group->get('/utf8ize', Utf8izeController::class . ':get');
 
     });
 

@@ -8,8 +8,6 @@ use App\Exception\Messages;
 class Helper
 {
 
-    private $helper;
-
     public function __construct()
     {
     }

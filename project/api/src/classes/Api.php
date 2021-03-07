@@ -20,6 +20,10 @@ class Api
         $this->db = $db;
     }
 
+    public function db() {
+        return $this->db;
+    }
+
     private function getCurrentPage(): int
     {
 
@@ -82,10 +86,13 @@ class Api
 
     }
 
-    public function getMaxPages($table) {
+    public function getMaxPages($sqlWithoutLimit) {
 
-        $maxRows = $this->db->get('SELECT count(id) as max_rows FROM ' . $table);
-        $maxPages = ceil($maxRows[0]->max_rows / $this->db->getItemsToShowPerPage());
+
+        $result = $this->db->get($sqlWithoutLimit);
+        $numRows = $result[Database::NUM_ROWS];
+
+        $maxPages = ceil($numRows / $this->db->getItemsToShowPerPage());
 
         return $maxPages;
 

@@ -8,37 +8,32 @@
 }
 
 .display-3{
-    font-size: 2rem !important;
-    margin-top: 6rem !important;
-    margin-bottom: 2rem !important;
+    font-size: calc(2.2vh + 2.2vw) !important;
 }
 
 .rounded-circle{
     background-color: rgba(black, 0.35);
     border-width:  0.1vw 0.4vw 0.1vw 0 !important;
-    height: 7rem;
-    width: 7rem;
-    margin-right: 0.5rem;
+    height: calc(11.5vw + 11.5vh);
+    width: calc(10vw + 10vh);
 }
 
 .border-info{
     border-width: 0.2rem !important;
 }
 
-.bg-info{
-    background-color: rgba($primary, 0.7) !important;
+.bg{
+    background-color: rgba($primary, 0.2) !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
 }
 
 .text-circle-count{
-    font-size: 2rem;
+    font-size: calc(3vw + 3vh);
 }
 
 .text-circle{
-    font-size: 0.8rem;
-}
-
-.circle-box{
-    margin-bottom: 2rem !important;
+    font-size: calc(1.3vw + 1.3vh);
 }
 
 .btn-outline-secondary{
@@ -57,15 +52,13 @@
 }
 
 .bg-warning{
-    font-size: 1.5rem;
+   font-size: calc(1.2vw + 1.2vh);
     clip-path: polygon(0 0, 100% 0%, 85% 100%, 0% 100%);
     -webkit-clip-path: polygon(0 0, 100% 0%, 85% 100%, 0% 100%);
     z-index: 1 !important;
-    width: 75% !important;
-    left:-2rem !important;
-    margin-top: 4rem !important;
-    text-indent: 4rem;
+    width: calc(22vw + 22vh) !important;
     overflow: auto !important;
+    text-indent: 2rem;
 }
 
 @media (max-width: 500px){
@@ -76,34 +69,28 @@
     .circle-box{
         flex-direction: column !important;
     }
-
-    .rounded-circle{
-        margin-top: 0.3rem !important;
-        height: 6rem;
-        width: 6rem;
-    }
-
-    .bg-warning{
-        font-size: 1rem;
-        width: 80% !important;
-        text-indent: 1rem;
-    }
 }
 
 @media (min-width: 500.01px) and (max-width: 750px){
-    .bg-warning{
-        font-size: 1.2rem;
-        width: 90% !important;
-        padding-right: 2.2rem !important;
-        text-indent: 2rem;
-    }   
+    .rounded-circle{
+        height: calc(8.5vw + 8.5vh);
+        width: calc(10vw + 10vh);
+    }  
 }
 
 @media (min-width: 750.01px){
 
-    .display-3{
-        font-size: 2.5rem !important;
-        margin-top: 8rem !important;
+    .rounded-circle{
+        height: 7rem;
+        width: 7rem;
+    } 
+
+    .text-circle-count{
+        font-size: 2.5rem;
+    }
+    
+    .text-circle{
+        font-size: 0.8rem;
     }
 
     .btn-outline-secondary{

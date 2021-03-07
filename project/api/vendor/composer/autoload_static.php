@@ -190,11 +190,13 @@ class ComposerStaticInitc5817a5945756a0e85745c6bbc6d82b9
     public static $classMap = array (
         'App\\Classes\\Api' => __DIR__ . '/../..' . '/src/classes/Api.php',
         'App\\Classes\\Database' => __DIR__ . '/../..' . '/src/classes/Database.php',
+        'App\\Classes\\Filter' => __DIR__ . '/../..' . '/src/classes/Filter.php',
         'App\\Classes\\Helper' => __DIR__ . '/../..' . '/src/classes/Helper.php',
         'App\\Classes\\Response' => __DIR__ . '/../..' . '/src/classes/Response.php',
         'App\\Exception\\DatabaseException' => __DIR__ . '/../..' . '/src/exception/DatabaseException.php',
         'App\\Middleware\\CorsMiddleware' => __DIR__ . '/../..' . '/src/middleware/CorsMiddleware.php',
         'App\\Routes\\EventController' => __DIR__ . '/../..' . '/src/routes/EventController.php',
+        'App\\Routes\\TestimonialController' => __DIR__ . '/../..' . '/src/routes/TestimonialController.php',
         'App\\Routes\\ThrowbackController' => __DIR__ . '/../..' . '/src/routes/ThrowbackController.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'DI\\Annotation\\Inject' => __DIR__ . '/..' . '/php-di/php-di/src/Annotation/Inject.php',
