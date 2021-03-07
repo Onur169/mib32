@@ -42,7 +42,7 @@ class ThrowbackController
             $nextPageUrl = $api->getNextPageUrl();
 
             $sqlWithoutLimit = $api->db()->buildSql(
-                'SELECT throwbacks.id, events.name, throwbacks.description, throwbacks.social_media_video_url, events.start_at, events.end_at, events.lat, events.lng',
+                'SELECT throwbacks.id, events.name, throwbacks.description, throwbacks.social_media_video_url, events.start_at, events.end_at, events.lat, events.lng, events.location_name',
                 'FROM events',
                 'INNER JOIN throwbacks ON events.id = throwbacks.events_id',
                 $filterSql,

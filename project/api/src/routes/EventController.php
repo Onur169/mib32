@@ -43,7 +43,7 @@ class EventController
             $nextPageUrl = $api->getNextPageUrl();
 
             $sqlWithoutLimit = $api->db()->buildSql(
-                'SELECT id, name, description, start_at, end_at, lat, lng',
+                'SELECT id, name, description, start_at, end_at, lat, lng, location_name',
                 'FROM events',
                 null,
                 $filterSql,
@@ -91,11 +91,12 @@ class EventController
             $endAt = $params["end_at"];
             $lat = $params["lat"];
             $lng = $params["lng"];
+            $locationName = $params["location_name"];
             $createdAt = $now->format('Y-m-d H:i:s');
 
             $insertId = $this->db->insert("events",
-                ["id", "name", "description", "start_at", "end_at", "lat", "lng", "created_at"],
-                [$guidv4, $name, $description, $startAt, $endAt, $lat, $lng, $createdAt]
+                ["id", "name", "description", "start_at", "end_at", "lat", "lng", "location_name", "created_at"],
+                [$guidv4, $name, $description, $startAt, $endAt, $lat, $lng, $locationName, $createdAt]
             );
 
             $guidv4Throwback = $this->helper->guidv4();
