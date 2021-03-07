@@ -15,9 +15,7 @@ export class ThrowbacksComponent implements OnInit {
   }
 
   async setProperties() {
-    await this.throwbackService.fetch(
-      this.throwbackService.throwbackmanager.getCurrentPage()
-      );
+    await this.throwbackService.getThrowbacks();
 
       console.log(this.throwbackService.throwbackmanager.getFirstThrowback());
   }
