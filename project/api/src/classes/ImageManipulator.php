@@ -158,7 +158,7 @@ class ImageManipulator
                 if(!empty($file)) {
 
                     $cutFilePath = explode("uploads/", $file);
-                    $fileUrl = 'https://' .  $_SERVER['SERVER_NAME'] . "/uploads" . $cutFilePath[1];
+                    $fileUrl = 'https://' .  str_replace("api", "uploads", $_SERVER['SERVER_NAME']) . $cutFilePath[1];
 
                 } else {
 
