@@ -28,12 +28,13 @@ export class MapComponent implements OnInit {
   public longitude: number = 10.451526;
   public customLat: number = 0;
   public customLong: number = 0;
+  public Marker: any;
 
   public place: string;
   public markerLong: number;
   public markerLat: number;
   public time: number;
-  map: any;
+  private  map: any;
 
 
   constructor(private eventService: EventService) {
@@ -48,9 +49,10 @@ export class MapComponent implements OnInit {
   ngOnInit() {
     this.getCoords();
 
+    //this.checkLongLatOfUser();
+
     this.getMarker();
     
-
     this.inizializeMap();
   }
 
@@ -64,7 +66,7 @@ export class MapComponent implements OnInit {
       ],
       view: new View({
         center: fromLonLat([this.customLong, this.customLat]),
-        zoom: 3
+        zoom: 10
       })
     });
   }
@@ -75,6 +77,8 @@ async getCoords(){
       this.customLat = position.coords.latitude;
       this.customLong = position.coords.longitude;
     }).catch((err) => {
+      this.customLat = this.latitude;
+      this.longitude = this.longitude;
       console.error(err.message);
     });
 
@@ -89,11 +93,26 @@ async getCoords(){
   }
 
   async getMarker(){
-    await this.eventService.getEvents();
+    await this.eventService.getEvents().then(position => {
+
+    });
     console.log(this.eventService.markermanager);
   }
 
-  checkLongLatOfUser(){
-   // if(this.)
-  }
+  /*checkLongLatOfUser(){
+   if(this.customLong == 0 || this.customLong == undefined && this.customLat == 0 || this.customLat == undefined){
+     this.customLong = this.longitude;
+     this.customLat = this.latitude;
+   }
+  }*/
+
+  /*addMarkersToMap(map: Map ): void {
+    this.eventService.then((res: any) => {
+      for (const c of res.features) {
+        const lat = c.geometry.coordinates[0];
+        const lon = c.geometry.coordinates[1];
+        const marker = L.marker([lon, lat]).addTo(map);
+      }
+    });
+  }*/
 }
