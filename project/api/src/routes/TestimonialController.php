@@ -2,11 +2,13 @@
 
 namespace App\Routes;
 
+use App\Classes\Api;
+use App\Classes\Database;
 use App\Classes\Filter;
 use App\Classes\Helper;
+use App\Classes\ImageManipulator;
 use App\Classes\Response as ResponseBuilder;
 use App\Classes\Upload;
-use App\Classes\ImageManipulator;
 use App\Exception\UploadException;
 use DateTime;
 use Psr\Container\ContainerInterface;
@@ -30,6 +32,63 @@ class TestimonialController
         $this->filter = $this->container->get('Filter');
         $this->upload = new Upload();
         $this->imageManipulator = new ImageManipulator();
+    }
+
+    public function get(Request $request, Response $response, array $args): Response
+    {
+
+        try {
+
+            $params = $request->getQueryParams();
+
+            $usedFilter = $params["filter"] ?? null;
+            $filterSql = $this->filter->build("testimonials", $usedFilter);
+
+            $api = new Api($this->db, $request);
+            $prevPageUrl = $api->getPrevPageUrl();
+            $nextPageUrl = $api->getNextPageUrl();
+
+            $sqlWithoutLimit = $api->db()->buildSql(
+                'SELECT testimonials.id, testimonials.headline, testimonials.description, medias.token, medias.extension',
+                'FROM testimonials',
+                'INNER JOIN medias ON medias.id = testimonials.medias_id',
+                $filterSql,
+                'group by id',
+                'ORDER BY testimonials.created_at DESC',
+                null
+            );
+
+            $maxPages = $api->getMaxPages($sqlWithoutLimit);
+
+            $result = $api->getWithPaginator($sqlWithoutLimit);
+            $list = $result[Database::DATA];
+
+            foreach($list as $listItem) {
+
+                $mediaToken = $listItem->token;
+                $filePath = $this->upload->getRecursiveDirectoryAbsolutePathByToken($mediaToken) . "/original." . $listItem->extension;
+                $images = $this->imageManipulator->getImagesByToken(ImageManipulator::COVER_IMAGE, $filePath, $mediaToken);
+
+                $listItem->images = $images;
+            }
+
+            $jsonResponse = ResponseBuilder::build(ResponseBuilder::SUCCESS_RESPONSE_VAL, $list, $prevPageUrl, $nextPageUrl, $maxPages);
+
+        } catch (\Throwable $th) {
+
+            $jsonResponse = ResponseBuilder::build(ResponseBuilder::ERROR_RESPONSE_KEY, [
+                ResponseBuilder::CODE_RESPONSE_KEY => $th->getCode(),
+                ResponseBuilder::MSG_RESPONSE_KEY => $th->getMessage(),
+            ]);
+
+        } finally {
+
+            $response->getBody()->write($jsonResponse);
+
+            return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
+
+        }
+
     }
 
     public function add(Request $request, Response $response, array $args): Response
@@ -66,12 +125,12 @@ class TestimonialController
                         $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
                         $uploadFilePath = $uploadDirPath . "/" . $filename;
 
-                        $this->imageManipulator->iterateAllBreakpoints(function($currentBreakpoint) use ($uploadFilePath) {
+                        $this->imageManipulator->iterateAllBreakpoints(function ($currentBreakpoint) use ($uploadFilePath) {
 
                             $this->imageManipulator->createImage(ImageManipulator::COVER_IMAGE, $uploadFilePath, $uploadFilePath, $currentBreakpoint);
 
                         });
-                        
+
                         $mediaInsertId = $this->db->insert("medias",
                             ["id", "token", "extension", "created_at"],
                             [$guidv4Medias, $mediaToken, $extension, $createdAt]
@@ -99,7 +158,7 @@ class TestimonialController
                 $insertId = $this->db->insert("testimonials",
                     ["id", "headline", "description", "created_at", "medias_id"],
                     [$guidv4, $headline, $description, $createdAt, $guidv4Medias]
-                 );
+                );
 
             }
 

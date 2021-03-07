@@ -88,6 +88,7 @@ try {
         $group->get('/throwbacks', ThrowbackController::class . ':get');
 
         // Testimonal Calls
+        $group->get('/testimonials', TestimonialController::class . ':get');
         $group->post('/testimonials', TestimonialController::class . ':add');
 
     });

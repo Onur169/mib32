@@ -144,4 +144,42 @@ class ImageManipulator
 
     }
 
+    public function getImagesByToken($type, $filePath, $token) {
+
+        $images = [];
+
+        if(!empty($token)) {
+
+            $this->iterateAllBreakpoints(function($currentBreakpoint) use ($type, $token, $filePath, &$images) {
+                
+                $file = $this->getBreakpointFileName($type, $filePath, $currentBreakpoint);
+                $file = file_exists($file) ? $file : null;
+
+                if(!empty($file)) {
+
+                    $cutFilePath = explode("uploads/", $file);
+                    $fileUrl = 'https://' .  $_SERVER['SERVER_NAME'] . "/uploads" . $cutFilePath[1];
+
+                } else {
+
+                    $fileUrl = null;
+
+                }
+                
+                $images[$currentBreakpoint] = $fileUrl;
+
+            });
+
+        } else {
+
+            $this->iterateAllBreakpoints(function($currentBreakpoint) use ($type, &$images) {
+                $images[$type][$currentBreakpoint] = null;
+            });
+
+        }
+
+        return $images;
+
+    } 
+
 }
