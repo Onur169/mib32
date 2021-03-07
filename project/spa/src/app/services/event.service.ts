@@ -33,7 +33,7 @@ export class EventService {
    */
   async getPages(filter?: string, limiter?: number) {
     console.log("huhu",filter, limiter);
-    //Wenn es einen Filter gibt z.B Current_Page...
+    //Wenn es einen Filter gibt z.B current_events...
     if (filter) {
       let lastDate = this.markermanager
         .getLastValueOfCurrentPage()
@@ -84,6 +84,10 @@ export class EventService {
         const Url = 'events';
 
         let response = await this.api.fetch(Url, params);
+
+        if(response.data==undefined){
+
+        }
 
         let newThrowbacks: Marker[] = [];
 
