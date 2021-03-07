@@ -10,7 +10,6 @@
 
 import { Component, OnInit } from '@angular/core';
 import { interval, Subscription } from 'rxjs';
-import { Marker } from 'src/app/helpers/classes/Marker';
 import { EventService } from 'src/app/services/event.service';
 
 @Component({
@@ -60,7 +59,7 @@ export class TimerComponent implements OnInit {
 
   //hier werden momentan die Events auf der ersten Seite angefragt. aus dem ersten Event wird ein Timer angelegt und das Datum als Property gesetzt
   async setProperties() {
-    await this.eventService.getEvents();
+    await this.eventService.getPages();
 
     let x=this.eventService.markermanager.getMarkers().get(1);
     this.bla=x![1].getLocationName();
@@ -96,6 +95,7 @@ export class TimerComponent implements OnInit {
         hour: 'numeric'
       });
     }
+    console.log(this.eventService.markermanager);
   }
 
   private getTimeDifference(newdate?: Date) {

@@ -8,7 +8,7 @@
  *
  */
 
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Marker } from '../helpers/classes/Marker';
 
@@ -17,31 +17,78 @@ import { Demonstration } from '../helpers/interfaces/Demonstration';
 import { ApiService } from './api.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EventService {
-
   markermanager: MarkerManager;
 
   constructor(private api: ApiService) {
-    this.markermanager=new MarkerManager();
-
+    this.markermanager = new MarkerManager();
   }
 
-  async getEvents(){
+  /**
+   * Diese Funktion führt die Funktion getEvents() aus
+   * @param limiter -Ein optionaler Parameter, der nur solange Seiten abfrage, bis ein Zeitintervall bis zum Start eines Events überschritten wurde.
+   * @param filter -Ein optionaler Filter-Parameter, funktioniert nur, wenn ein Limiter gesetzt wird.
+   */
+  async getPages(filter?: string, limiter?: number) {
+    console.log("huhu",filter, limiter);
+    //Wenn es einen Filter gibt z.B Current_Page...
+    if (filter) {
+      let lastDate = this.markermanager
+        .getLastValueOfCurrentPage()
+        .getStartDate();
+      let now = new Date();
+
+      //und wenn es ein Limit gibt,...
+      if (limiter) {
+        //dann gehe bis zum Ende durch
+        for (
+          let i = this.markermanager.getCurrentPage();
+          i <= this.markermanager.getMaxPages();
+          i++
+        ) {
+          //wenn das Zeit Intervall am ende der Seite überschritten ist, dann stop.
+          if (limiter >= lastDate.getDay() - now.getDay()) {
+            await this.getEvents(i.toString(), filter);
+          } else {
+            break;
+          }
+        }
+      } else {
+        for (
+          let i = this.markermanager.getCurrentPage();
+          i <= this.markermanager.getMaxPages();
+          i++
+        ) {
+          //Wenn es keinen Filter gibt, dann gibt alles sortiert aus
+          await this.getEvents(this.markermanager.getCurrentPage().toString());
+        }
+      }
+    }
+    //wenn es auch keinen Filter gibt, dann gibt nur die akutelle Seite aus
+    else {
+      await this.getEvents(this.markermanager.getCurrentPage().toString());
+    }
+  }
+
+  async getEvents(page: string, filter?: string) {
     return new Promise(async (resolve, reject) => {
-      try{
-        let params= new HttpParams()
-        .set('page', this.markermanager.getCurrentPage().toString());
+      try {
+        let params = new HttpParams().set('page', page);
 
-        const Url='events';
+        if (filter) {
+          params.set('filter', filter);
+        }
 
-        let response= await this.api.fetch(Url, params);
+        const Url = 'events';
 
-        let newThrowbacks: Marker[]=[];
+        let response = await this.api.fetch(Url, params);
+
+        let newThrowbacks: Marker[] = [];
 
         response.data.forEach((value: Demonstration) => {
-          let newMarker=new Marker(
+          let newMarker = new Marker(
             value.id,
             value.name,
             value.description,
@@ -50,18 +97,19 @@ export class EventService {
             value.lat,
             value.lng,
             value.location_name
-            );
+          );
           newThrowbacks.push(newMarker);
         });
-        this.markermanager.setnewPage(response.current_page, response.max_pages, newThrowbacks);
+        this.markermanager.setnewPage(
+          response.current_page,
+          response.max_pages,
+          newThrowbacks
+        );
 
         resolve(response);
-
-      }catch (error){
-        reject(error)
+      } catch (error) {
+        reject(error);
       }
-    })
-
+    });
   }
-
 }

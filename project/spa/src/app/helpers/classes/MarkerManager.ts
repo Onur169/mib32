@@ -8,7 +8,6 @@
  */
 
 import { MapMath } from "../abstracts/MapMath";
-import { ApiConstants } from "../constants/ApiConstants";
 import { Marker } from "./Marker";
 
 
@@ -17,6 +16,9 @@ export class MarkerManager extends MapMath{
   public pages: Map<number, Marker[]>=new Map<number, Marker[]>();
   private currentPage: number;
   private maxPages: number;
+
+
+
 
   constructor(){
 
@@ -127,6 +129,15 @@ export class MarkerManager extends MapMath{
   //sollte nur für die allererste Abfrage genutzt werden
   getCurrentPage(): number{
     return this.currentPage;
+  }
+
+  getLastValueOfCurrentPage(){
+    let  lastMarker=this.pages.get(this.currentPage)!;
+    return lastMarker[lastMarker.length-1];
+  }
+
+  public getMaxPages(): number {
+    return this.maxPages;
   }
 
 }
