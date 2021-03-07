@@ -11,6 +11,14 @@
   border-width: 0.2rem !important;
 }
 
+.bg-info{
+background-color: rgba($info, 0.5) !important;
+}
+
+.lh-1{
+  flex-shrink: 1 !important;
+}
+
 ::ng-deep .mat-focused .mat-form-field-label {
   /*change color of label*/
   color: $primary !important;
@@ -28,4 +36,8 @@
 
 .material-icons{
   color: $primary !important;
+}
+
+mat-slider {
+  width: 100%;
 }
