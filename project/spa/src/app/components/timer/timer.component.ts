@@ -58,20 +58,20 @@ export class TimerComponent implements OnInit {
 
   //hier werden momentan die Events auf der ersten Seite angefragt. aus dem ersten Event wird ein Timer angelegt und das Datum als Property gesetzt
   async setProperties() {
-    await this.eventService.fetch(
-      this.eventService.markermanager.getCurrentPage()
-    );
+    await this.eventService.getEvents();
+
+    console.log(this.eventService.markermanager);
 
     console.log(
       new Date(
-        this.eventService.markermanager.getNextEvent()!.start_at
+        this.eventService.markermanager.getNextEvent()!.getStartDate()
       ).getTime() - this.dateNow.getTime()
     );
 
     if (
-      this.eventService.markermanager.getNextEvent()!.start_at &&
+      this.eventService.markermanager.getNextEvent()!.getStartDate() &&
       new Date(
-        this.eventService.markermanager.getNextEvent()!.start_at
+        this.eventService.markermanager.getNextEvent()!.getStartDate()
       ).getTime() -
         this.dateNow.getTime() >
         0
@@ -79,7 +79,7 @@ export class TimerComponent implements OnInit {
       this.hasNewEvent = true;
 
       let newestDate: Date = new Date(
-        this.eventService.markermanager.getNextEvent()!.start_at!
+        this.eventService.markermanager.getNextEvent()!.getStartDate()!
       );
 
       this.subscription = interval(1000).subscribe((x) => {

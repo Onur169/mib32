@@ -10,10 +10,11 @@
 
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Marker } from '../helpers/classes/Marker';
 
 import { MarkerManager } from '../helpers/classes/MarkerManager';
-import { ApiConstants } from '../helpers/constants/ApiConstants';
-import { EventResponse } from '../helpers/interfaces/EventResponse';
+import { Demonstration } from '../helpers/interfaces/Demonstration';
+import { ApiService } from './api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,24 +23,36 @@ export class EventService {
 
   markermanager: MarkerManager;
 
-  constructor(private http: HttpClient) {
+  constructor(private api: ApiService) {
     this.markermanager=new MarkerManager();
 
   }
 
-  fetch(page: number){
+  async getEvents(){
     return new Promise(async (resolve, reject) => {
       try{
         let params= new HttpParams()
-        .set('page', page.toString());
+        .set('page', this.markermanager.getCurrentPage().toString());
 
-        const RequestUrl=ApiConstants.API_ENDPOINT+'events';
+        const Url='events';
 
-        let response= await this.http.get<EventResponse>(RequestUrl, {params:params}).toPromise();
+        let response= await this.api.fetch(Url, params);
 
-        this.markermanager.setnewPage(response.current_page,response.data);
-        this.markermanager.setMaxPages(response.max_pages);
-        this.markermanager.setCurrentPage(response.current_page);
+        let newThrowbacks: Marker[]=[];
+
+        response.data.forEach((value: Demonstration) => {
+          let newMarker=new Marker(
+            value.id,
+            value.name,
+            value.description,
+            value.start_at,
+            value.end_at,
+            value.lat,
+            value.lng
+            );
+          newThrowbacks.push(newMarker);
+        });
+        this.markermanager.setnewPage(response.current_page, response.max_pages, newThrowbacks);
 
         resolve(response);
 

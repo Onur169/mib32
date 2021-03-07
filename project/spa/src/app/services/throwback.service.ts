@@ -25,14 +25,24 @@ export class ThrowbackService {
 
         const Url='throwbacks';
 
-        let response= await this.api.fetch(Url, params) as Throwback[];
+        let response= await this.api.fetch(Url, params);
 
         let newThrowbacks: ThrowbackClass[]=[];
 
-        response.forEach((value: Throwback) => {
-          newThrowbacks.push(new ThrowbackClass(value));
+        (response.data as Throwback[]).forEach((value: Throwback) => {
+          let newThrowback=new ThrowbackClass(
+            value.id,
+            value.name,
+            value.description,
+            value.social_media_video_url,
+            value.start_at,
+            value.end_at,
+            value.lat,
+            value.lng
+          );
+          newThrowbacks.push(newThrowback);
         });
-        this.throwbackmanager.setnewPage(this.throwbackmanager.getCurrentPage(),newThrowbacks);
+        this.throwbackmanager.setnewPage(response.current_page, response.max_pages,newThrowbacks);
 
         resolve(response);
 
