@@ -5,6 +5,7 @@ import Map from 'ol/Map';
 import View from 'ol/View';
 import OSM from 'ol/source/OSM';
 import TileLayer from 'ol/layer/Tile';
+import { fromLonLat } from 'ol/proj';
 /*import VectorLayer from 'ol/layer/Vector';
 import Icon from 'ol/style/Icon';
 import { viewClassName } from '@angular/compiler';
@@ -24,6 +25,8 @@ export class MapComponent implements OnInit {
   latitude: number = 51.165691;  //für Deutschland
   longitude: number = 10.451526;
   customCoords: number[] = [];
+  //customLong: number = 0;
+  //customLat: number = 0;
   map: any;
 
 
@@ -36,12 +39,18 @@ export class MapComponent implements OnInit {
     navigator.geolocation.getCurrentPosition((position) => {
       console.log(position);
       this.customCoords.push(position.coords.latitude, position.coords.longitude);
-      return this.customCoords;
+      /*this.customLat = position.coords.latitude;
+      this.customLong = position.coords.longitude;
+      console.log(this.customLat, this.customLong);
+      return this.customLat;*/
+     return this.customCoords;
     });
 
     this.inizializeMap();
 
-    console.log(this.customCoords[0]);
+    console.log(this.customCoords);
+    console.log(this.customCoords[1]);
+    //console.log(this.customLat, this.customLong);
   }
 
 
@@ -54,8 +63,8 @@ export class MapComponent implements OnInit {
         })
       ],
       view: new View({
-        center: [this.latitude, this.longitude],
-        zoom: 7
+        center: fromLonLat([this.longitude, this.latitude]),
+        zoom: 6
       })
     });
   }
