@@ -21,10 +21,10 @@ export class MapComponent implements OnInit {
 
   position: Navigator;
 
-  latitude: number = 50.426784399999995;  //für Deutschland
-  longitude: number = 8.85863;
+  latitude: number = 51.165691;  //für Deutschland
+  longitude: number = 10.451526;
   customCoords: number[] = [];
-  private map!: Map;
+  map: any;
 
 
   constructor(eventService: EventService) {
