@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EventService } from 'src/app/services/event.service';
 
+import "node_modules/ol/ol.css";
 import Map from 'ol/Map';
 import View from 'ol/View';
 import OSM from 'ol/source/OSM';
@@ -22,34 +23,39 @@ export class MapComponent implements OnInit {
 
   position: Navigator;
 
-  latitude: number = 51.165691;  //für Deutschland
-  longitude: number = 10.451526;
-  customCoords: number[] = [];
+  private latitude: number = 51.165691;  //für Deutschland
+  private longitude: number = 10.451526;
+  private customCoords: number[] = [];
+
+  private place: string;
+  private markerLong: number;
+  private markerLat: number;
+  private time: number;
   //customLong: number = 0;
   //customLat: number = 0;
   map: any;
 
 
-  constructor(eventService: EventService) {
-    this.position=navigator
+  constructor(private eventService: EventService) {
+    this.position = navigator,
+    this.place = "kein Streikort";
+    this.markerLat = 0;
+    this.markerLong = 0;
+    this.time = 0;
   }
 
 
   ngOnInit() {
-    navigator.geolocation.getCurrentPosition((position) => {
-      console.log(position);
-      this.customCoords.push(position.coords.latitude, position.coords.longitude);
-      /*this.customLat = position.coords.latitude;
-      this.customLong = position.coords.longitude;
-      console.log(this.customLat, this.customLong);
-      return this.customLat;*/
-     return this.customCoords;
-    });
+    this.getGeoCoords();
+
+    this.getMarker();
+    
 
     this.inizializeMap();
 
     console.log(this.customCoords);
-    console.log(this.customCoords[1]);
+    let x: number = this.customCoords[0];
+    console.log(x);
     //console.log(this.customLat, this.customLong);
   }
 
@@ -67,5 +73,23 @@ export class MapComponent implements OnInit {
         zoom: 6
       })
     });
+  }
+
+  getGeoCoords(){
+    navigator.geolocation.getCurrentPosition((position) => {
+      console.log(position);
+      this.customCoords.push(position.coords.latitude);
+      this.customCoords.push(position.coords.longitude);
+      /*this.customLat = position.coords.latitude;
+      this.customLong = position.coords.longitude;
+      console.log(this.customLat, this.customLong);
+      return this.customLat;*/
+     return this.customCoords;
+    });
+  }
+
+  async getMarker(){
+    await this.eventService.getEvents();
+    console.log(this.eventService.markermanager);
   }
 }
