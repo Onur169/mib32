@@ -62,6 +62,15 @@ private static $installed = array (
       ),
       'reference' => '34861658efb9899a6618cef03de46e2a52c80fc0',
     ),
+    'intervention/image' => 
+    array (
+      'pretty_version' => '2.5.1',
+      'version' => '2.5.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'abbf18d5ab8367f96b3205ca3c89fb2fa598c69e',
+    ),
     'laminas/laminas-diactoros' => 
     array (
       'pretty_version' => '2.5.0',

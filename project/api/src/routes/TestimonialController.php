@@ -6,13 +6,12 @@ use App\Classes\Filter;
 use App\Classes\Helper;
 use App\Classes\Response as ResponseBuilder;
 use App\Classes\Upload;
+use App\Classes\ImageManipulator;
 use App\Exception\UploadException;
 use DateTime;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-
-use moveUploadedFile;
 
 class TestimonialController
 {
@@ -21,6 +20,7 @@ class TestimonialController
     private $filter;
     private $helper;
     private $container;
+    private $imageManipulator;
 
     public function __construct(ContainerInterface $container)
     {
@@ -29,6 +29,7 @@ class TestimonialController
         $this->db = $this->container->get('Database');
         $this->filter = $this->container->get('Filter');
         $this->upload = new Upload();
+        $this->imageManipulator = new ImageManipulator();
     }
 
     public function add(Request $request, Response $response, array $args): Response
@@ -56,13 +57,21 @@ class TestimonialController
                 if ($this->upload->prepareUploadDirectoryByToken($mediaToken)) {
 
                     // Hier Datei hochladen / verarbeiten in die versch. Größen / Eintrag in medias-Tabelle
-                    $uploadedFile = $uploadedFiles['image'];
+                    $uploadedFile = $uploadedFiles[Upload::FORM_DATA_UPLOAD_KEY];
 
                     if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
 
-                        $filename = $this->upload->moveUploadedFile($this->upload->getRecursiveDirectoryAbsolutePathByToken($mediaToken), $uploadedFile);
+                        $uploadDirPath = $this->upload->getRecursiveDirectoryAbsolutePathByToken($mediaToken);
+                        $filename = $this->upload->moveUploadedFile($uploadDirPath, $uploadedFile);
                         $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
+                        $uploadFilePath = $uploadDirPath . "/" . $filename;
 
+                        $this->imageManipulator->iterateAllBreakpoints(function($currentBreakpoint) use ($uploadFilePath) {
+
+                            $this->imageManipulator->createImage(ImageManipulator::COVER_IMAGE, $uploadFilePath, $uploadFilePath, $currentBreakpoint);
+
+                        });
+                        
                         $mediaInsertId = $this->db->insert("medias",
                             ["id", "token", "extension", "created_at"],
                             [$guidv4Medias, $mediaToken, $extension, $createdAt]
