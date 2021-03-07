@@ -30,6 +30,10 @@ class Database
 
     }
 
+    public function getHandle() {
+        return $this->handle;
+    }
+
     public function setItemsToShowPerPage($maxItems)
     {
         $this->itemsToShowPerPage = $maxItems;

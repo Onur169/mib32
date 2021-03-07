@@ -40,17 +40,15 @@ class TestimonialController
             $now = new DateTime();
 
             $guidv4 = $this->helper->guidv4();
+            $guidv4Medias = $this->helper->guidv4();
             $headline = $params["headline"];
             $description = $params["description"];
             $createdAt = $now->format('Y-m-d H:i:s');
 
-            $insertId = $this->db->insert("testimonials",
-                ["id", "headline", "description"],
-                [$guidv4, $headline, $description]
-            );
-
             $uploadedFiles = $request->getUploadedFiles();
             $mediaToken = sha1($guidv4);
+            $insertId = null;
+            $mediaInsertId = null;
 
             if (count($uploadedFiles) > 0) {
 
@@ -63,6 +61,17 @@ class TestimonialController
                     if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
 
                         $filename = $this->upload->moveUploadedFile($this->upload->getRecursiveDirectoryAbsolutePathByToken($mediaToken), $uploadedFile);
+                        $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
+
+                        $mediaInsertId = $this->db->insert("medias",
+                            ["id", "token", "extension", "created_at"],
+                            [$guidv4Medias, $mediaToken, $extension, $createdAt]
+                        );
+
+                        $insertId = $this->db->insert("testimonials",
+                            ["id", "headline", "description", "created_at", "medias_id"],
+                            [$guidv4, $headline, $description, $createdAt, $mediaInsertId]
+                        );
 
                     } else {
 
@@ -76,10 +85,18 @@ class TestimonialController
 
                 }
 
+            } else {
+
+                $insertId = $this->db->insert("testimonials",
+                    ["id", "headline", "description", "created_at", "medias_id"],
+                    [$guidv4, $headline, $description, $createdAt, $guidv4Medias]
+                 );
+
             }
 
             $jsonResponse = ResponseBuilder::build(ResponseBuilder::SUCCESS_RESPONSE_VAL, [
                 ResponseBuilder::INSERT_ID_RESPONSE_KEY => $insertId,
+                ResponseBuilder::MEDIA_INSERT_ID_RESPONSE_KEY => $mediaInsertId,
             ]);
 
         } catch (\Throwable $th) {

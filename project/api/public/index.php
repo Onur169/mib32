@@ -27,6 +27,7 @@ use App\Middleware\CorsMiddleware;
 use App\Routes\EventController;
 use App\Routes\ThrowbackController;
 use App\Routes\TestimonialController;
+use App\Routes\Utf8izeController;
 use DI\Container;
 use Psr\Container\ContainerInterface;
 use Slim\Factory\AppFactory;
@@ -54,6 +55,7 @@ try {
     // Set Container
     $container->set('Database', fn(ContainerInterface $container) => new Database($config));
     $container->set('Filter', fn(ContainerInterface $container) => $filter);
+    $container->set('Config', fn(ContainerInterface $container) => $config);
 
     // Set container to create App with on AppFactory
     AppFactory::setContainer($container);
@@ -87,6 +89,14 @@ try {
 
         // Testimonal Calls
         $group->post('/testimonials', TestimonialController::class . ':add');
+
+    });
+
+    // Routen definieren
+    $app->group('tools', function (RouteCollectorProxy $group) {
+
+        // Event Calls
+        $group->get('/utf8ize', Utf8izeController::class . ':get');
 
     });
 
