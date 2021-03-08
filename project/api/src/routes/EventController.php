@@ -48,7 +48,7 @@ class EventController
                 null,
                 $filterSql,
                 'group by id',
-                'ORDER BY start_at DESC',
+                'ORDER BY start_at ASC',
                 null
             );
 
