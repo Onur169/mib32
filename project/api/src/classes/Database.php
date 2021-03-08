@@ -5,6 +5,7 @@ namespace App\Classes;
 use App\Exception\DatabaseException;
 use mysqli;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use App\Classes\Helper;
 
 class Database
 {
@@ -12,6 +13,7 @@ class Database
     protected $handle;
     private $itemsToShowPerPage;
     private $isPagingActive;
+    private $helper;
 
     const NUM_ROWS = "num_rows";
     const DATA = "data";
@@ -27,6 +29,7 @@ class Database
         $this->itemsToShowPerPage = 5;
         $this->isPagingActive = false;
         $this->handle = new mysqli($hostName, $userName, $password, $database);
+        $this->helper = new Helper();
 
     }
 
@@ -96,7 +99,7 @@ class Database
 
         $sql = '
             INSERT INTO ' . $table . ' (' . $columnsStr . ')
-            VALUES (' . htmlentities($valuesStr) . ')
+            VALUES (' . $valuesStr . ')
         ';
 
         $idKey = array_search('id', $columns);
