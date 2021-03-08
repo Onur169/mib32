@@ -2,9 +2,7 @@
 
 #map {
   height: 40vh;
-  width: 100%;
   z-index: 1 !important;
-  pointer-events: none;
 }
 
 .border{
@@ -12,11 +10,25 @@
 }
 
 .bg-info{
-background-color: rgba($info, 0.5) !important;
+background-color: rgba(0,0,0,0.0) !important;
+width: 50vw;
+min-width: 340px;
+height: 80px;
+transform: translateY(-80px);
 }
 
-.lh-1{
-  flex-shrink: 1 !important;
+
+
+::ng-deep .mat-slider-wrapper{
+  background-color:black !important;
+}
+
+::ng-deep .mat-slider-track-wrapper{
+  background-color:$warning !important;
+}
+
+::ng-deep .mat-slider-thumb{
+  background-color:$primary !important;
 }
 
 ::ng-deep .mat-focused .mat-form-field-label {
@@ -27,11 +39,11 @@ background-color: rgba($info, 0.5) !important;
  ::ng-deep.mat-form-field-underline {
   /*change color of underline*/
   background-color:$primary !important;
-} 
+}
 
 ::ng-deep.mat-form-field-ripple {
  /*change color of underline when focused*/
- background-color: $primary !important;;
+ background-color: $primary !important;
 }
 
 .material-icons{
@@ -41,3 +53,5 @@ background-color: rgba($info, 0.5) !important;
 mat-slider {
   width: 100%;
 }
+
+
