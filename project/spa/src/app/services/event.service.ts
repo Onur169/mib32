@@ -51,7 +51,7 @@ export class EventService {
           i++
         ) {
           //wenn das Zeit Intervall am ende der Seite überschritten ist, dann stop.
-          if (limiter >= lastDate.getDay() - now.getDay()) {
+          if (limiter >= new Date(lastDate).getDay() - now.getDay()) {
             await this.getEvents(i.toString(), filter);
           } else {
             break;

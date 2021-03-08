@@ -9,7 +9,7 @@
  */
 
 
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { EventService } from 'src/app/services/event.service';
 
 import 'ol/ol.css';
@@ -18,7 +18,6 @@ import View from 'ol/View';
 import OSM from 'ol/source/OSM';
 import TileLayer from 'ol/layer/Tile';
 import { fromLonLat } from 'ol/proj';
-import { resolve } from '@angular/compiler-cli/src/ngtsc/file_system';
 import { Marker } from 'src/app/helpers/classes/Marker';
 import {
   DragRotateAndZoom,
@@ -39,7 +38,7 @@ import Point from 'ol/geom/Point';
   styleUrls: ['./map.component.scss']
 })
 
-export class MapComponent implements OnInit {
+export class MapComponent implements OnInit, AfterViewInit {
 
   position: Navigator;
 
@@ -74,14 +73,17 @@ export class MapComponent implements OnInit {
     this.day = new Date();
     this.mapSkalaValue=50;
   }
-
-
-  ngOnInit() {
+  ngOnInit(): void {
     this.getCoords();
 
-    this.getMarker();
-    
+    this.getMarker(30);//blubb
+
     this.inizializeMap();
+
+  }
+
+
+  ngAfterViewInit() {
   }
 
  private inizializeMap(): void {
@@ -120,23 +122,17 @@ async getCoords(){
     });
   }
 
-  async getMarker(){
-    await this.eventService.getPages("current_events");
+  async getMarker(limiter: number){
+    await this.eventService.getPages();
+
+    await this.eventService.getPages("current_events", limiter);
 
     this.eventService.markermanager.getMarkers().forEach ( index => {
       this.marker.push(index);
-    })
+    });
 
     this.currentEvent = this.eventService.markermanager.getNextEvent();
 
-    //fitlert alle Events mit dem nächsten Datum aus
-    this.marker.forEach( (value:any) =>{
-      value.filter((startday: any) => {
-        if(startday === this.currentEvent){
-         this.mapMarker.push(startday);
-        }
-      })
-    });
 
     //rechnet die Tage bis zum  nächsten Event aus. Dies ermöglicht später alle Marker des zeitlichen Events abzurufen
    this.limiter = Math.floor( ((new Date (this.currentEvent!.getStartDate()).getTime()) - new Date().getTime()) / ( 1000 * 60 * 60 * 24));
@@ -158,6 +154,8 @@ async getCoords(){
     }
 
     this.addMarkersToMap(this.map!);
+    console.log(this.marker);
+    console.log(this.mapMarker);
   }
 
   //errechnet den Umkreis und gibt die entsprechenden Marker aus
