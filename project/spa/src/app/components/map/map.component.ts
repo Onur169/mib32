@@ -9,7 +9,7 @@
  */
 
 
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { EventService } from 'src/app/services/event.service';
 
 import 'ol/ol.css';
@@ -32,7 +32,6 @@ import Point from 'ol/geom/Point';
 import { Coordinate } from 'ol/coordinate';
 import {Cluster} from 'ol/source';
 import CircleStyle from 'ol/style/Circle';
-import Layer from 'ol/layer/Layer';
 
 @Component({
   selector: 'app-map',
@@ -43,7 +42,7 @@ import Layer from 'ol/layer/Layer';
 export class MapComponent implements OnInit {
 
   position: Navigator;
-  public locationSearch: string | Event = ""; 
+  public locationSearch: string = ""; 
  
 
   public defaultLonLat: Coordinate;//für Deutschland
@@ -282,21 +281,18 @@ mapScreen.getView().setZoom(zoom);
   //Sucht nach den Ort und gibt die Marker aus 
   //die Position der MAp verändert sich nach dem Ort und gibt die Marker dementsprechend raus
   searchLoacation(){
-    console.log(this.locationSearch);
     this.mapMarker = new Array();
-    if(this.locationSearch != null){
+    if(this.locationSearch != ""){
 
      this.marker.forEach( value  => {
        value.filter( value => {
-        if (value.getLocationName() === this.locationSearch){
+        if (value.getLocationName().toLowerCase() === this.locationSearch.toLowerCase()){
           this.mapMarker.push(value);
         }
        });
      });
      this.calculateDistance(this.mapSkalaValue, this.mapMarker[0].getLng(), this.mapMarker[0].getLat());
     }
-    console.log(this.mapMarker);
-   
   }
 
 
