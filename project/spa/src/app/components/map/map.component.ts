@@ -1,13 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { EventService } from 'src/app/services/event.service';
 
-import "node_modules/ol/ol.css";
+import 'ol/ol.css';
 import Map from 'ol/Map';
 import View from 'ol/View';
 import OSM from 'ol/source/OSM';
 import TileLayer from 'ol/layer/Tile';
 import { fromLonLat } from 'ol/proj';
-import { resolve } from '@angular/compiler-cli/src/ngtsc/file_system';
+import {
+  DragRotateAndZoom,
+  defaults as defaultInteractions,
+} from 'ol/interaction';
+import {FullScreen, defaults as defaultControls} from 'ol/control';
 /*import VectorLayer from 'ol/layer/Vector';
 import Icon from 'ol/style/Icon';
 import { viewClassName } from '@angular/compiler';
@@ -35,7 +39,9 @@ export class MapComponent implements OnInit {
   public markerLat: number;
   public time: number;
   public day: Date;
-  private  map: any;
+
+  private map?: Map=undefined;
+  private mapSkalaValue: number;
 
 
   constructor(private eventService: EventService) {
@@ -45,6 +51,7 @@ export class MapComponent implements OnInit {
     this.markerLong = 0;
     this.time = 0;
     this.day = new Date();
+    this.mapSkalaValue=50;
   }
 
 
@@ -60,17 +67,19 @@ export class MapComponent implements OnInit {
 
  private inizializeMap(): void {
     this.map = new Map({
-      target: 'map',
+      controls: defaultControls().extend([new FullScreen()]),
       layers: [
         new TileLayer({
          source: new OSM()
         })
       ],
+      target: 'map',
       view: new View({
         //der Nutzerort wird angezeigt
-        center: fromLonLat([this.customLong, this.customLat]),
+        center: fromLonLat([this.longitude, this.latitude]),
         zoom: 10
-      })
+      }),
+      interactions: defaultInteractions().extend([new DragRotateAndZoom()])
     });
   }
 
@@ -125,4 +134,21 @@ async getCoords(){
       }
     });
   }*/
+
+  formatLabel(value: number) {
+    if (value >= 1000) {
+      console.log(Math.round(value / 1000) + 'k');
+      return Math.round(value / 1000) + 'k';
+    }
+
+    return value;
+  }
+
+  //wird nach jedem Slide neu ausgeführt
+  calculateEvents(value: number|null) {
+    if(value!=null){
+      this.mapSkalaValue=value;
+    }
+
+  }
 }
