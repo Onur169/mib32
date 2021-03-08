@@ -32,6 +32,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatCarouselModule } from '@ngmodule/material-carousel';
 
 const materialModules = [
   BrowserAnimationsModule,
@@ -40,7 +41,8 @@ const materialModules = [
   MatFormFieldModule,
   MatInputModule,
   MatIconModule,
-  MatSliderModule
+  MatSliderModule,
+  MatCarouselModule
 ];
 
 @NgModule({

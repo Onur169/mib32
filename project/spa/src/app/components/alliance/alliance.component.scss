@@ -1,0 +1,16 @@
+.alliance_image{
+border-radius: 20%;
+border-color: gray !important;
+border-width: 3px !important;
+}
+::ng-deep .carousel-control-prev-icon{
+  background-image: url('../../../assets/pictures/alliance/double_arrow-24px.svg');
+  width: 80px;
+  height: 80px;
+  transform: scaleX(-1);
+}
+::ng-deep .carousel-control-next-icon{
+ background-image: url('../../../assets/pictures/alliance/double_arrow-24px.svg');
+ width: 80px;
+ height: 80px;
+}
