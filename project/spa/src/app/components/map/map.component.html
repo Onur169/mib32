@@ -6,8 +6,7 @@
   </div>
   <div class="px-2 px-lg-3 w-50">
     <mat-form-field>
-    <mat-label>Wo möchtest Du mitstreiken?</mat-label>
-    <input matInput placeholder="Suche">
+    <input  matInput placeholder="Wo möchtest Du mitstreiken?" (enter) = searchLoacation() (mouseout) = searchLoacation() [(ngModel)]="locationSearch" (click) = deleteValue()>
     <mat-icon matSuffix>search</mat-icon>
   </mat-form-field>
     </div>
