@@ -47,7 +47,7 @@ class ThrowbackController
                 'INNER JOIN throwbacks ON events.id = throwbacks.events_id',
                 $filterSql,
                 'group by id',
-                'ORDER BY start_at DESC',
+                'ORDER BY start_at ASC',
                 null
             );
 

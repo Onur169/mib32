@@ -49,5 +49,9 @@ class Helper
         }
 
     }
+    
+    public function stripJs($var) {
+        return preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', "", $var);
+    }
 
 }

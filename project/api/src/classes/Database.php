@@ -5,6 +5,7 @@ namespace App\Classes;
 use App\Exception\DatabaseException;
 use mysqli;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use App\Classes\Helper;
 
 class Database
 {
@@ -12,6 +13,7 @@ class Database
     protected $handle;
     private $itemsToShowPerPage;
     private $isPagingActive;
+    private $helper;
 
     const NUM_ROWS = "num_rows";
     const DATA = "data";
@@ -27,6 +29,7 @@ class Database
         $this->itemsToShowPerPage = 5;
         $this->isPagingActive = false;
         $this->handle = new mysqli($hostName, $userName, $password, $database);
+        $this->helper = new Helper();
 
     }
 
@@ -88,15 +91,63 @@ class Database
 
     }
 
+    public function buildSelectSqlByInsertStatement(string $table, array $columns, array $values) {
+
+        $andSql = "";
+        $colValArr = array_combine($columns, $values);
+
+        unset($colValArr["id"]);
+        unset($colValArr["created_at"]);
+        unset($colValArr["deleted_at"]);
+
+        $andStr = ' AND ';
+        foreach($colValArr as $col => $val) {
+            $andSql .= $andStr . $col . '="' . $val . '"' . PHP_EOL;
+        }
+
+        $andSql = substr($andSql, strlen($andStr));
+
+        $sql = '
+        
+            SELECT '.join(",", $columns).'
+            FROM '.$table.'
+            WHERE '.$andSql.'
+        
+        ';
+
+        return $sql;
+
+    }
+
+    public function getInsertIdIfDuplicateRowIsPresent(string $table, array $columns, array $values) {
+
+        $duplicateCheckSql = $this->buildSelectSqlByInsertStatement($table, $columns, $values);
+        $duplicateCheckResult = $this->get($duplicateCheckSql);
+
+        $resultData = $duplicateCheckResult[self::DATA];
+
+        if(count($resultData) > 0) {
+            return $resultData[0]->id;
+        } else {
+            return null;
+        }
+
+    }
+
     public function insert(string $table, array $columns, array $values)
     {
 
         $valuesStr = "'" . join("','", $values) . "'";
         $columnsStr = join(",", $columns);
 
+        $duplicateInsertId = $this->getInsertIdIfDuplicateRowIsPresent($table, $columns, $values);
+        if($duplicateInsertId != null) {
+            return $duplicateInsertId;
+        }
+
         $sql = '
             INSERT INTO ' . $table . ' (' . $columnsStr . ')
-            VALUES (' . htmlentities($valuesStr) . ')
+            VALUES (' . $valuesStr . ')
         ';
 
         $idKey = array_search('id', $columns);
