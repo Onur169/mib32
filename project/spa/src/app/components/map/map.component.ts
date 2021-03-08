@@ -31,6 +31,7 @@ import {Style, Fill, Stroke} from 'ol/style';
 import VectorSource from 'ol/source/Vector';
 import { Feature } from 'ol';
 import Point from 'ol/geom/Point';
+import { Coordinate } from 'ol/coordinate';
 
 @Component({
   selector: 'app-map',
@@ -42,8 +43,10 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   position: Navigator;
 
-  public latitude: number = 51.165691;  //für Deutschland
-  public longitude: number = 10.451526;
+  public defaultLonLat: Coordinate;//für Deutschland
+  public latitude: number;
+  public longitude: number;
+  public customLonLat: Coordinate = [0];
   public customLat: number = 0;
   public customLong: number = 0;
   public marker: Marker[][] = [];
@@ -72,6 +75,9 @@ export class MapComponent implements OnInit, AfterViewInit {
     this.time = 0;
     this.day = new Date();
     this.mapSkalaValue=50;
+    this.latitude = 51.165691;
+    this.longitude = 10.451526;
+    this.defaultLonLat = [this.longitude, this.latitude];
   }
   ngOnInit(): void {
     this.getCoords();
@@ -97,7 +103,7 @@ export class MapComponent implements OnInit, AfterViewInit {
       target: 'map',
       view: new View({
         //der Nutzerort wird angezeigt
-        center: fromLonLat([this.longitude, this.latitude]),
+        center: fromLonLat([8.864802, 50.426027]),
         zoom: 10
       }),
       interactions: defaultInteractions().extend([new DragRotateAndZoom()])
@@ -109,11 +115,13 @@ async getCoords(){
     await this.fetchAdress().then(position =>{
       this.customLat = position.coords.latitude;
       this.customLong = position.coords.longitude;
+      this.customLonLat = [position.coords.latitude, position.coords.longitude];
     }).catch((err) => {
-      this.customLat = this.latitude;
-      this.longitude = this.longitude;
+      this.customLonLat = this.defaultLonLat;
       console.error(err.message);
     });
+
+    console.log(this.customLonLat);
 }
 
   fetchAdress(options?: PositionOptions): Promise<GeolocationPosition>{
@@ -133,29 +141,18 @@ async getCoords(){
 
     this.currentEvent = this.eventService.markermanager.getNextEvent();
 
-
-    //rechnet die Tage bis zum  nächsten Event aus. Dies ermöglicht später alle Marker des zeitlichen Events abzurufen
-   this.limiter = Math.floor( ((new Date (this.currentEvent!.getStartDate()).getTime()) - new Date().getTime()) / ( 1000 * 60 * 60 * 24));
-
-    //sobald es ein Event gibt, dann werden weitere Seiten angefragt
-    if (this.limiter > 0){
-    await this.eventService.getPages("current_events", this.limiter);
-
-     //speichert neue Marker hinzu
+     //filtert alle Einträge nach dem zeitlich nächsten Event und speichert sie in einem extra Array (mapMarker) ab
      this.eventService.markermanager.getMarkers().forEach ( (value, index)  => {
       value.filter( value => {
-       if (value != this.mapMarker[index]){
+       if (value.getStartDate() == this.currentEvent!.getStartDate()){
          this.mapMarker.push(value);
        }
    });
 });  
 
-  console.log(this.mapMarker);
-    }
-
     this.addMarkersToMap(this.map!);
-    console.log(this.marker);
     console.log(this.mapMarker);
+
   }
 
   //errechnet den Umkreis und gibt die entsprechenden Marker aus
