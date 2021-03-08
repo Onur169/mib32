@@ -25,11 +25,13 @@ import {
   defaults as defaultInteractions,
 } from 'ol/interaction';
 import {FullScreen, defaults as defaultControls} from 'ol/control';
-/*import VectorLayer from 'ol/layer/Vector';
+import VectorLayer from 'ol/layer/Vector';
 import Icon from 'ol/style/Icon';
 import { viewClassName } from '@angular/compiler';
 import {Style, Fill, Stroke} from 'ol/style';
-import { Coordinate } from 'ol/coordinate';*/
+import VectorSource from 'ol/source/Vector';
+import { Feature } from 'ol';
+import Point from 'ol/geom/Point';
 
 @Component({
   selector: 'app-map',
@@ -154,6 +156,8 @@ async getCoords(){
    });
 });  
     }
+
+    this.addMarkersToMap(this.map!);
   }
 
   //errechnet den Umkreis und gibt die entsprechenden Marker aus
@@ -164,10 +168,19 @@ async getCoords(){
   //fügt alle Marker, die für den Nutzer in Frage kommen der Map hinzu
   addMarkersToMap(map: Map ): void {
     this.mapMarker.forEach((res: Marker) => {
-        const lat = res.getLat();
-        const lon = res.getLng();
-        //const marker = L.marker([lon, lat]).addTo(map);
-      });
+        let lat = res.getLat();
+        let lon = res.getLng();
+      var layer = new VectorLayer({
+        source: new VectorSource({
+            features: [
+                new Feature({
+                    geometry: new Point(fromLonLat([lon, lat]))
+                })
+            ]
+        })
+    });
+    map.addLayer(layer);
+  });
     }
 
   formatLabel(value: number) {
