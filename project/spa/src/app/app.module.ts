@@ -15,6 +15,7 @@ import { AngularMaterialModule } from './modules/angular-material/angular-materi
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { MapComponent } from './components/map/map.component';
 import { ThrowbacksComponent } from './components/throwbacks/throwbacks.component';
+import { AllianceComponent } from './components/alliance/alliance.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,7 +23,8 @@ import { ThrowbacksComponent } from './components/throwbacks/throwbacks.componen
     LandingpageComponent,
     NavigationComponent,
     MapComponent,
-    ThrowbacksComponent
+    ThrowbacksComponent,
+    AllianceComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
