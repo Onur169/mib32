@@ -43,8 +43,6 @@ export class MapComponent implements OnInit {
 
   position: Navigator;
 
-  circle: number = 0;
-
   public latitude: number = 51.165691;  //für Deutschland
   public longitude: number = 10.451526;
   public customLat: number = 0;
@@ -140,12 +138,12 @@ async getCoords(){
       })
     });
 
-    //rechnet die Tage bis zum nächsten Event aus. Dies ermöglicht später alle Marker des zeitlichen Events abzurufen
+    //rechnet die Tage bis zum  nächsten Event aus. Dies ermöglicht später alle Marker des zeitlichen Events abzurufen
    this.limiter = Math.floor( ((new Date (this.currentEvent!.getStartDate()).getTime()) - new Date().getTime()) / ( 1000 * 60 * 60 * 24));
 
     //sobald es ein Event gibt, dann werden weitere Seiten angefragt
     if (this.limiter > 0){
-    // await this.eventService.getPages("current_events", this.limiter);
+    await this.eventService.getPages("current_events", this.limiter);
 
      //speichert neue Marker hinzu
      this.eventService.markermanager.getMarkers().forEach ( (value, index)  => {
@@ -155,38 +153,49 @@ async getCoords(){
        }
    });
 });  
+
+  console.log(this.mapMarker);
     }
 
     this.addMarkersToMap(this.map!);
   }
 
   //errechnet den Umkreis und gibt die entsprechenden Marker aus
-  CalculateCircle(): Marker[]{
-    return this.eventService.markermanager.getNextEvents(this.customLong, this.customLat, this.mapMarker, this.circle);
+  CalculateCircle(): void{
+    this.mapMarker =  this.eventService.markermanager.getNextEvents(this.customLong, this.customLat, this.mapMarker, this.mapSkalaValue);
+    console.log(this.mapMarker);
   }
 
   //fügt alle Marker, die für den Nutzer in Frage kommen der Map hinzu
   addMarkersToMap(map: Map ): void {
+    this.CalculateCircle();
     this.mapMarker.forEach((res: Marker) => {
         let lat = res.getLat();
         let lon = res.getLng();
-      var layer = new VectorLayer({
+      let  layer = new VectorLayer({
         source: new VectorSource({
             features: [
                 new Feature({
                     geometry: new Point(fromLonLat([lon, lat]))
-                })
-            ]
+                })]
+        }), 
+        style: new Style({
+          image: new Icon({
+            anchor: [0.5, 0.5],
+            //anchorXUnits: "fraction",
+            //anchorYUnits: "fraction",
+            src: "../../assets/location_map_icon.svg"
+          })
         })
-    });
-    map.addLayer(layer);
   });
-    }
+    map.addLayer(layer);
+    });
+  }
 
   formatLabel(value: number) {
     if (value >= 1000) {
-      console.log(Math.round(value / 1000) + 'k');
-      return Math.round(value / 1000) + 'k';
+      console.log(Math.round(value / 1000) + 'km');
+      return Math.round(value / 1000) + 'km';
     }
 
     return value;
