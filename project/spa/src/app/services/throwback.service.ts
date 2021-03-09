@@ -54,7 +54,6 @@ export class ThrowbackService {
         });
         this.throwbackmanager.setnewPage(response.current_page, response.max_pages,newThrowbacks);
 
-        console.log("huhu2",newThrowbacks);
         resolve(newThrowbacks);
 
       }catch (error){

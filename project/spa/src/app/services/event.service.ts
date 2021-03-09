@@ -32,7 +32,6 @@ export class EventService {
    * @param filter -Ein optionaler Filter-Parameter, funktioniert nur, wenn ein Limiter gesetzt wird.
    */
   async getPages(filter?: string, limiter?: number) {
-    console.log("huhu",filter, limiter);
     //Wenn es einen Filter gibt z.B current_events...
     if (filter) {
 

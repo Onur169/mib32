@@ -20,8 +20,6 @@ export class AllianceService {
 
         let response= await this.http.get<Alliance>(RequestUrl).toPromise();
 
-
-        console.log(response.files[1]);
           resolve(response.files);
 
 
