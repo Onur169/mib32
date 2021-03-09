@@ -1,25 +1,35 @@
-
+<div>
   <div class="p-1 p-lg-5">
-    <div>
-      <p class="display-4 text-primary mb-0">Rückblick</p>
-      <p class="text text-primary">Wirf einen Blick in die Vergangenheit und erlebe mit uns noch einmal unsere heroischsten Momente mit.</p>
-    </div>
-
-
-      <div class="py-1 py-lg-5 d-flex justify-content-around flex-wrap">
-
-      <ng-container *ngFor="let throwback of throwbackPage">
-
-      <div class="card" style="width: 18rem;">
-     <!--  <img class="card-img-top" src="..." alt="Card image cap">-->
+    <p class="display-4 text-primary mb-0">Rückblick</p>
+    <p class="text text-primary">
+      Wirf einen Blick in die Vergangenheit und erlebe mit uns noch einmal
+      unsere heroischsten Momente mit.
+    </p>
+  </div>
+  <div class="d-flex justify-content-center">
+    <ngb-pagination
+      (pageChange)="this.getNewPage($event)"
+      [collectionSize]="maxPage"
+      [(page)]="page"
+      [maxSize]="5"
+      [rotate]="false"
+      [boundaryLinks]="true"
+    ></ngb-pagination>
+  </div>
+  <div class="py-1 py-lg-5 d-flex justify-content-around flex-wrap border-top border-bottom border-primary">
+    <ng-container *ngFor="let throwback of throwbackPage">
+      <div class="card" style="width: 18rem">
+        <!--  <img class="card-img-top" src="..." alt="Card image cap">-->
         <div class="card-body">
-          <h5 class="card-title">{{throwback.getName()}}</h5>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
+          <h5 class="card-title">{{ throwback.getName() }}</h5>
+          <p class="card-text">
+            Some quick example text to build on the card title and make up the
+            bulk of the card's content.
+          </p>
+          <a href="#" class="btn btn-outline-danger">Mehr lesen...</a>
         </div>
       </div>
-    </ng-container></div>
-<div class="d-flex justify-content-center">
-  <ngb-pagination (pageChange)="this.getNewPage($event)" [collectionSize]="maxPage" [(page)]="page" [maxSize]="5" [rotate]="false" [boundaryLinks]="true"></ngb-pagination>
-</div>
+    </ng-container>
+  </div>
 
+</div>
