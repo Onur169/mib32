@@ -49,7 +49,7 @@ export class MapComponent implements OnInit {
   public defaultLonLat: Coordinate;//für Deutschland
   public latitude: number;
   public longitude: number;
-  public customLonLat: Coordinate = [0];
+  public customLonLat!: Coordinate;
   public customLat: number = 0;
   public customLong: number = 0;
   public marker: Marker[][] = [];
@@ -82,13 +82,20 @@ export class MapComponent implements OnInit {
   //die Map wird mit personalisiertem Standort befüllt
   //personalisierte Marker werden gesetzt
   ngOnInit(): void {
-    this.getCoords();
+    this.getCoords()
     
     this.getMarker(this.limiter);
   }
 
+  ngAfterContentInit(){
+    this.inizializeMap(this.customLonLat);
+    this.calculateDistance(this.mapSkalaValue);
+  }
+
 //die Map wird mit dem Standort des Nutzers gefüllt
  private inizializeMap(lonLat: Coordinate): void {
+  lonLat = this.checkCoordinate(lonLat);
+  console.log(lonLat);
    this.map = new Map({
       controls: defaultControls().extend([new FullScreen()]),
       layers: [
@@ -115,11 +122,11 @@ async getCoords(){
       this.customLonLat = [position.coords.longitude, position.coords.latitude];
     }).catch((err) => {
       this.customLonLat = this.defaultLonLat;
+      this.customLat = this.latitude;
+      this.customLong = this.longitude;
       console.error(err.message);
     });
-    console.log(this.customLong, this.customLat, this.customLonLat);
-
-    this.inizializeMap(this.customLonLat);
+    this.calculateDistance(this.mapSkalaValue,  this.customLong, this.customLat );
   }
 
   fetchAdress(options?: PositionOptions): Promise<GeolocationPosition>{
@@ -128,6 +135,15 @@ async getCoords(){
     });
   }
 
+  checkCoordinate(lonLat: Coordinate):Coordinate{
+    if(lonLat == undefined){  
+      lonLat = this.defaultLonLat;
+      this.customLonLat = this.defaultLonLat;
+      return lonLat;
+     }else{
+       return lonLat;
+     }
+  }
   //fragt den eventService mit einer festen Anzahl an Zahlen und filtert den Response nach dem zeitlich aukutellen Event 
   //zudem werden personalisierte Marker auf der Map angezeigt
   async getMarker(limiter: number){
@@ -169,7 +185,7 @@ async getCoords(){
   }
 
   //Marker richten sich nach dem Map-Zoom und die Marker werden zusammengefasst angezeigt
- private  async markerCluster(map: Map, marker: Marker[]){
+ private markerCluster(map: Map, marker: Marker[]){
 
   this.mapView = map.getView();
    let zoom =  this.mapView.getZoom();
@@ -204,7 +220,6 @@ let Mname: string;
 let loc: string = "";
 let date: string;
 let text: string[] = new Array(2);
-let clicked: boolean = false; 
 
 text[0] = "Du streikst in ";
 text[1] = "am "
@@ -288,10 +303,9 @@ mapScreen.addOverlay(overlay);
 mapScreen.on('singleclick',  () => {
   content!.innerHTML = '<div><code>' + Mname + '</code> </br>' + text[0] + loc + '</code> </br>' + text[1] + date +  '</code>';
   overlay.setPosition(lonLat);
-  clicked = true;
-  this.place = 'in ' + loc;
-  this.day = 'am ' + date!;
 });
+this.place = 'in ' + loc;
+this.day = 'am ' + date!;
 });
 }
 
