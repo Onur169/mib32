@@ -1,52 +1,50 @@
-@import '../../../custom-variables';
+@import "../../../custom-variables";
 
 #map {
   height: 40vh;
   z-index: 1 !important;
 }
 
-.border{
+.border {
   border-width: 0.2rem !important;
 }
 
-.bg-info{
-background-color: rgba(0,0,0,0.0) !important;
-width: 50vw;
-min-width: 340px;
-height: 80px;
-transform: translateY(-80px);
+.bg-info {
+  background-color: rgba(0, 0, 0, 0) !important;
+  width: 50vw;
+  min-width: 340px;
+  height: 80px;
+  transform: translateY(-80px);
 }
 
-
-
-::ng-deep .mat-slider-wrapper{
-  background-color:black !important;
+::ng-deep .mat-slider-wrapper {
+  background-color: black !important;
 }
 
-::ng-deep .mat-slider-track-wrapper{
-  background-color:$warning !important;
+::ng-deep .mat-slider-track-wrapper {
+  background-color: $warning !important;
 }
 
-::ng-deep .mat-slider-thumb{
-  background-color:$primary !important;
+::ng-deep .mat-slider-thumb {
+  background-color: $primary !important;
 }
 
 ::ng-deep .mat-focused .mat-form-field-label {
   /*change color of label*/
   color: $primary !important;
- }
+}
 
- ::ng-deep.mat-form-field-underline {
+::ng-deep.mat-form-field-underline {
   /*change color of underline*/
-  background-color:$primary !important;
+  background-color: $primary !important;
 }
 
 ::ng-deep.mat-form-field-ripple {
- /*change color of underline when focused*/
- background-color: $primary !important;
+  /*change color of underline when focused*/
+  background-color: $primary !important;
 }
 
-.material-icons{
+.material-icons {
   color: $primary !important;
 }
 
@@ -54,4 +52,46 @@ mat-slider {
   width: 100%;
 }
 
-
+.ol-popup {
+  position: absolute;
+  background-color: white;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #cccccc;
+  bottom: 12px;
+  left: -50px;
+  min-width: 280px;
+  max-width: 50% !important;
+}
+.ol-popup:after,
+.ol-popup:before {
+  top: 100%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+.ol-popup:after {
+  border-top-color: white;
+  border-width: 10px;
+  left: 48px;
+  margin-left: -10px;
+}
+.ol-popup:before {
+  border-top-color: #cccccc;
+  border-width: 11px;
+  left: 48px;
+  margin-left: -11px;
+}
+.ol-popup-closer {
+  text-decoration: none;
+  position: absolute;
+  top: 2px;
+  right: 8px;
+}
+.ol-popup-closer:after {
+  content: "✖";
+}
