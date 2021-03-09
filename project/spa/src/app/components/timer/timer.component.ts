@@ -64,12 +64,6 @@ export class TimerComponent implements OnInit {
     let x=this.eventService.markermanager.getMarkers().get(1);
     this.bla=x![1].getLocationName();
 
-    console.log(
-      new Date(
-        this.eventService.markermanager.getNextEvent()!.getStartDate()
-      ).getTime() - this.dateNow.getTime()
-    );
-
     if (
       this.eventService.markermanager.getNextEvent()!.getStartDate() &&
       new Date(
@@ -95,7 +89,6 @@ export class TimerComponent implements OnInit {
         hour: 'numeric'
       });
     }
-    console.log(this.eventService.markermanager);
   }
 
   private getTimeDifference(newdate?: Date) {

@@ -37,7 +37,6 @@ export class AllianceComponent implements OnInit {
       this.alliances.push(temp);
     }
 
-    console.log(this.alliances);
   }
 }
 

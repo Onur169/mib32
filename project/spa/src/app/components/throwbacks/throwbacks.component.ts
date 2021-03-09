@@ -32,12 +32,10 @@ export class ThrowbacksComponent implements OnInit {
 
     this.throwbackPage=await this.throwbackService.getThrowbacks(page);
     this.setMaxPage();
-    console.log(this.throwbackPage, this.maxPage);
   }
 
   setMaxPage(){
     this.maxPage=this.throwbackService.throwbackmanager.getMaxPages()*10;
-    console.log(this.maxPage);
   }
 
 }
