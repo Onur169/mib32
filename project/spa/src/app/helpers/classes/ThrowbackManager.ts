@@ -13,12 +13,15 @@ import { ThrowbackClass } from "./ThrowbackClass";
 
    public pages: Map<number, ThrowbackClass[]>=new Map<number, ThrowbackClass[]>();
    private currentPage: number;
-   private max_pages: number;
+   private maxPages: number;
+
+
+
 
    constructor(){
 
      this.currentPage=1;
-     this.max_pages=1;
+     this.maxPages=1;
    }
 
      /**
@@ -44,8 +47,8 @@ import { ThrowbackClass } from "./ThrowbackClass";
   }
 
      //für das Überschreiben
-  setMaxPages(max_pages: number): void{//Onur rausnehmen
-    this.max_pages=max_pages;
+  setMaxPages(maxPages: number): void{//Onur rausnehmen
+    this.maxPages=maxPages;
   }
 
   setCurrentPage(currentPage: number): void{
@@ -57,5 +60,13 @@ import { ThrowbackClass } from "./ThrowbackClass";
       return this.currentPage;
     }
 
+    getPageValue(page:number): ThrowbackClass[]|undefined{
+
+      return this.pages.get(page)
+    }
+
+    public getMaxPages(): number {
+      return this.maxPages;
+    }
 
  }

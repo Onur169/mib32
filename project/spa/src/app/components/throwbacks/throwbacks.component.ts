@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ThrowbackClass } from 'src/app/helpers/classes/ThrowbackClass';
 import { ThrowbackService } from 'src/app/services/throwback.service';
 
 @Component({
@@ -8,16 +9,35 @@ import { ThrowbackService } from 'src/app/services/throwback.service';
 })
 export class ThrowbacksComponent implements OnInit {
 
-  constructor(private throwbackService: ThrowbackService) { }
+  throwbackPage: ThrowbackClass[];
+  maxPage=0;
+  page=1;
+
+  constructor(private throwbackService: ThrowbackService) {
+
+    this.throwbackPage=[];
+   }
 
   ngOnInit() {
-    this.setProperties();
+   this.setProperties();
   }
 
   async setProperties() {
-    await this.throwbackService.getThrowbacks();
+  this.throwbackPage=await this.throwbackService.getThrowbacks();
 
-     // console.log(this.throwbackService.throwbackmanager);
+   this.setMaxPage();
+  }
+
+  async getNewPage(page: number){
+
+    this.throwbackPage=await this.throwbackService.getThrowbacks(page);
+    this.setMaxPage();
+    console.log(this.throwbackPage, this.maxPage);
+  }
+
+  setMaxPage(){
+    this.maxPage=this.throwbackService.throwbackmanager.getMaxPages()*10;
+    console.log(this.maxPage);
   }
 
 }

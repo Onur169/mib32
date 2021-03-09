@@ -106,7 +106,9 @@
         this.lng = lng;
     }
 
-
+    public getLocationName(): string {
+      return this.locationName;
+    }
 
 
  }

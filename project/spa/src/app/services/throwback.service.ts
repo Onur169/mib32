@@ -17,13 +17,22 @@ export class ThrowbackService {
 
   }
 
-  async getThrowbacks(){
-    return new Promise(async (resolve, reject) => {
+  async getThrowbacks(page?: number){
+    return new Promise<ThrowbackClass[]>(async (resolve, reject) => {
       try{
+        if(page && (this.throwbackmanager.getPageValue(page)!=undefined)){
+          this.throwbackmanager.setCurrentPage(page);
+          return resolve(this.throwbackmanager.getPageValue(page)!);
+        }
         let params= new HttpParams()
         .set('page', this.throwbackmanager.getCurrentPage().toString());
 
+        if(page){
+          params=params.set('page', page.toString());//.set reicht nicht, muss neu zugewiesen werden
+        }
+
         const Url='throwbacks';
+
 
         let response= await this.api.fetch(Url, params);
 
@@ -45,7 +54,8 @@ export class ThrowbackService {
         });
         this.throwbackmanager.setnewPage(response.current_page, response.max_pages,newThrowbacks);
 
-        resolve(response);
+        console.log("huhu2",newThrowbacks);
+        resolve(newThrowbacks);
 
       }catch (error){
         reject(error)
