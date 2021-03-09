@@ -9,7 +9,7 @@
  */
 
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { EventService } from 'src/app/services/event.service';
 
 import 'ol/ol.css';
@@ -17,7 +17,7 @@ import Map from 'ol/Map';
 import View from 'ol/View';
 import OSM from 'ol/source/OSM';
 import TileLayer from 'ol/layer/Tile';
-import { fromLonLat } from 'ol/proj';
+import { fromLonLat} from 'ol/proj';
 import { Marker } from 'src/app/helpers/classes/Marker';
 import {
   DragRotateAndZoom,
@@ -32,6 +32,7 @@ import Point from 'ol/geom/Point';
 import { Coordinate } from 'ol/coordinate';
 import {Cluster} from 'ol/source';
 import CircleStyle from 'ol/style/Circle';
+
 
 @Component({
   selector: 'app-map',
@@ -58,9 +59,8 @@ export class MapComponent implements OnInit {
   public limiter = 0;
   public mapView: View = new View ();
 
-  public place: string;
-  public time: number;
-  public day: Date;
+  public place: string = "";
+  public day: string = "";
 
   private map?: Map=undefined;
   private mapSkalaValue: number;
@@ -71,9 +71,6 @@ export class MapComponent implements OnInit {
     ) {
 
     this.position = navigator,
-    this.place = "kein Streikort";
-    this.time = 0;
-    this.day = new Date();
     this.mapSkalaValue=50;
     this.latitude = 51.165691;
     this.longitude = 10.451526;
@@ -131,17 +128,6 @@ async getCoords(){
     });
   }
 
-  async getMap(map: Map): Promise<View>{
-    return new Promise(async (resolve, reject) => {
-      try{
-        let newMapView = await map.getView();
-        resolve(newMapView);
-      } catch (error) {
-        reject(error);
-    };
-  });
-}
-
   //fragt den eventService mit einer festen Anzahl an Zahlen und filtert den Response nach dem zeitlich aukutellen Event 
   //zudem werden personalisierte Marker auf der Map angezeigt
   async getMarker(limiter: number){
@@ -185,7 +171,7 @@ async getCoords(){
   //Marker richten sich nach dem Map-Zoom und die Marker werden zusammengefasst angezeigt
  private  async markerCluster(map: Map, marker: Marker[]){
 
-  this.mapView = await this.getMap(map);
+  this.mapView = map.getView();
    let zoom =  this.mapView.getZoom();
 
    switch (zoom) {
@@ -211,6 +197,18 @@ private markerClusterFill(marker: Marker[], distance:number, zoom:number, mapScr
 //alle Marker werden dargestellt
 let features = new Array(marker.length);
 let lonLat: Coordinate;
+let container = document.getElementById('popup');
+let content = document.getElementById('popup-content');
+let closer = document.getElementById('popup-closer');
+let Mname: string;
+let loc: string = "";
+let date: string;
+let text: string[] = new Array(2);
+let clicked: boolean = false; 
+
+text[0] = "Du streikst in ";
+text[1] = "am "
+
 marker.forEach( (value, index: number) => {
 lonLat = fromLonLat([value.getLng(), value.getLat()]);
 features[index] = new Feature({
@@ -218,6 +216,16 @@ features[index] = new Feature({
     name: value.getLocationName(),
     population: 4000,
     rainfall: 500,
+    popupAnchor: [0,-15],
+});
+
+Mname = value.getName();
+loc = value.getLocationName();
+date = new Date(value.getStartDate()).toLocaleDateString('de-DE', {
+  weekday: 'long' /*, year: 'numeric'*/,
+  month: 'long',
+  day: 'numeric',
+  hour: 'numeric'
 });
 
 let source = new VectorSource({
@@ -229,16 +237,21 @@ distance: distance,
 source: source,
 });
 
-/*let element = document.getElementById('popup');
+var overlay = new Overlay({
+  element: container!,
 
-var popup = new Overlay({
-  element: element,
-  positioning: 'bottom-center',
-  stopEvent: false,
-  offset: [0, -50],
-});*/
+  autoPan: true,
+  autoPanAnimation: {
+    duration: 250,
+  },
+});
 
-//mapScreen.addOverlay(popup);
+
+closer!.onclick = function () {
+  overlay.setPosition(undefined);
+  closer!.blur();
+  return false;
+};
 
 let styleCache: any[] = [] ;
 let clusters = new VectorLayer({
@@ -269,12 +282,18 @@ return style;
 
 mapScreen.addLayer(clusters);
 mapScreen.getView().setZoom(zoom);
+mapScreen.addOverlay(overlay);
 
 
+mapScreen.on('singleclick',  () => {
+  content!.innerHTML = '<div><code>' + Mname + '</code> </br>' + text[0] + loc + '</code> </br>' + text[1] + date +  '</code>';
+  overlay.setPosition(lonLat);
+  clicked = true;
+  this.place = 'in ' + loc;
+  this.day = 'am ' + date!;
+});
 });
 }
-
-
 
   formatLabel(value: number) {
     if (value >= 1000) {
@@ -312,7 +331,6 @@ mapScreen.getView().setZoom(zoom);
      this.calculateDistance(this.mapSkalaValue, this.mapMarker[0].getLng(), this.mapMarker[0].getLat());
     }
   }
-
 
   //löscht den Wert aus dem Inputfenster
   deleteValue(){
