@@ -25,9 +25,9 @@ import {
 } from 'ol/interaction';
 import {FullScreen, defaults as defaultControls} from 'ol/control';
 import VectorLayer from 'ol/layer/Vector';
-import {Style, Fill, Stroke, Text} from 'ol/style';
+import {Style, Fill, Text} from 'ol/style';
 import VectorSource from 'ol/source/Vector';
-import { Feature } from 'ol';
+import { Feature, Overlay } from 'ol';
 import Point from 'ol/geom/Point';
 import { Coordinate } from 'ol/coordinate';
 import {Cluster} from 'ol/source';
@@ -213,7 +213,11 @@ let features = new Array(marker.length);
 let lonLat: Coordinate;
 marker.forEach( (value, index: number) => {
 lonLat = fromLonLat([value.getLng(), value.getLat()]);
-features[index] = new Feature(new Point(lonLat));
+features[index] = new Feature({
+    geometry: new Point(lonLat),
+    name: value.getLocationName(),
+    population: 4000,
+    rainfall: 500,
 });
 
 let source = new VectorSource({
@@ -225,6 +229,17 @@ distance: distance,
 source: source,
 });
 
+/*let element = document.getElementById('popup');
+
+var popup = new Overlay({
+  element: element,
+  positioning: 'bottom-center',
+  stopEvent: false,
+  offset: [0, -50],
+});*/
+
+//mapScreen.addOverlay(popup);
+
 let styleCache: any[] = [] ;
 let clusters = new VectorLayer({
 source: clusterSource,
@@ -233,11 +248,8 @@ let size: number = feature.get('features').length;
 let style = styleCache[size];
 if (!style) {
   style = new Style({
-    image: new CircleStyle({
-      radius: 15,
-      stroke: new Stroke({
-        color: '#CA054D',
-      }),
+    image:new CircleStyle({
+      radius: 12,
       fill: new Fill({
         color: '#CA054D',
       }),
@@ -257,7 +269,12 @@ return style;
 
 mapScreen.addLayer(clusters);
 mapScreen.getView().setZoom(zoom);
-  }
+
+
+});
+}
+
+
 
   formatLabel(value: number) {
     if (value >= 1000) {
@@ -280,6 +297,7 @@ mapScreen.getView().setZoom(zoom);
 
   //Sucht nach den Ort und gibt die Marker aus 
   //die Position der MAp verändert sich nach dem Ort und gibt die Marker dementsprechend raus
+//TODO: alert wenn keine Events in der Stadt vorhanden sind
   searchLoacation(){
     this.mapMarker = new Array();
     if(this.locationSearch != ""){
@@ -296,6 +314,7 @@ mapScreen.getView().setZoom(zoom);
   }
 
 
+  //löscht den Wert aus dem Inputfenster
   deleteValue(){
     this.locationSearch = "";
   }
