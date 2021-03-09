@@ -335,15 +335,12 @@ this.day = 'am ' + date!;
     this.mapMarker = new Array();
     if(this.locationSearch != ""){
 
-      console.log(this.mapMarker);
-
      this.mapMarker.forEach( value  => {
         if (value.getLocationName().toLowerCase() === this.locationSearch.toLowerCase()){
           this.mapMarker.push(value);
         }
        });
     }
-    console.log(this.mapMarker);
 
     if(this.mapMarker.length > 0){
       this.calculateDistance(this.mapSkalaValue, this.mapMarker[0].getLng(), this.mapMarker[0].getLat());
