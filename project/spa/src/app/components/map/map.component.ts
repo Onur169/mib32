@@ -44,6 +44,7 @@ export class MapComponent implements OnInit {
 
   position: Navigator;
   public locationSearch: string = ""; 
+  public error: string = "";
  
 
   public defaultLonLat: Coordinate;//für Deutschland
@@ -165,7 +166,6 @@ async getCoords(){
        }
    });
 });
-
     this.calculateDistance(this.mapSkalaValue);
   }
 
@@ -335,14 +335,20 @@ this.day = 'am ' + date!;
     this.mapMarker = new Array();
     if(this.locationSearch != ""){
 
-     this.marker.forEach( value  => {
-       value.filter( value => {
+      console.log(this.mapMarker);
+
+     this.mapMarker.forEach( value  => {
         if (value.getLocationName().toLowerCase() === this.locationSearch.toLowerCase()){
           this.mapMarker.push(value);
         }
        });
-     });
-     this.calculateDistance(this.mapSkalaValue, this.mapMarker[0].getLng(), this.mapMarker[0].getLat());
+    }
+    console.log(this.mapMarker);
+
+    if(this.mapMarker.length > 0){
+      this.calculateDistance(this.mapSkalaValue, this.mapMarker[0].getLng(), this.mapMarker[0].getLat());
+    }else{
+      this.error = "Leider finden in dieser Stadt momentan keine Streiks statt. Schaue bitte zu einem späteren Zeitpunkt vorbei";
     }
   }
 
