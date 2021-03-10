@@ -135,9 +135,12 @@ export class MapComponent implements OnInit {
 
   //Zuweisung der Coordinaten damit die Map mit Coordinaten befüllt werden kann
   checkCoordinate(lonLat: Coordinate):Coordinate{
-    if(lonLat)return lonLat;
+    if(lonLat == undefined){
       this.customLonLat = this.defaultLonLat;
       return lonLat = this.defaultLonLat;
+    }else{
+      return lonLat;
+    }
   }
 
   //fragt den eventService mit einer festen Anzahl an Zahlen und filtert den Response nach dem zeitlich aukutellen Event
