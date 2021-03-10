@@ -69,7 +69,7 @@ export class EventService {
     }
     //wenn es auch keinen Filter gibt, dann gibt nur die akutelle Seite aus
     else {
-      await this.getEvents(this.markermanager.getCurrentPage().toString());
+      await this.getEvents(this.markermanager.getCurrentPage().toString(),"current_events");
     }
   }
 
@@ -79,7 +79,7 @@ export class EventService {
         let params = new HttpParams().set('page', page);
 
         if (filter) {
-          params.set('filter', filter);
+          params=params.set('filter', filter);
         }
 
         const Url = 'events';
