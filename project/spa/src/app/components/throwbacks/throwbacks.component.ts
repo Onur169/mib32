@@ -62,20 +62,18 @@ export class ThrowbacksComponent implements OnInit {
       console.log('ich habe was');
 
       let newthrowback: ThrowbackClass[] = [];
-      let a: ThrowbackClass[]= []
+      let letters: number = 70;
+      let desc: string = " ";
 
-      //muss auch weg
       throwback.forEach((value) => {
-        value.setDescription(
-          "Some quick example text to build on the card title and make up thebulk of the card's content.asdfdlkjglhöjölgfdnsabhhsgadfjkglhöjh,gmfddnsjbhhhdchikjaiofjjvnkldanlagnasdfklgöhölgkfdjshaghsjkdlfSome quick example text to build on the card title and make up the bulk of the card's content.asdfdlkjgl höjölgfdnsabhhsgadfj kglhöjh,gmfddn sjbhhhdchikja iofjjvnkldanlagna sdfklgöhölgkfd jshaghsjkdlf"
-        );
-        a.push(value);
-      });
-      //bis hierhin
-
-      a.forEach((value) => {
-        value.setDescription(value.getDescription().slice(0, 70));
-        console.log(value.getDescription())
+        value.setDescription(value.getDescription().slice(0, letters));
+        while(value.getDescription().slice(-1)  != " "){
+          for (let i = 0; i <= letters; i++){
+            desc = value.getDescription().slice(0, letters-1);
+            value.setDescription(desc);
+          }
+        }
+        console.log(value.getDescription());
         newthrowback.push(value);
       });
       console.log(newthrowback);
