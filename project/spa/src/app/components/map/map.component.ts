@@ -43,9 +43,9 @@ import CircleStyle from 'ol/style/Circle';
 export class MapComponent implements OnInit {
 
   position: Navigator;
-  public locationSearch: string = ""; 
+  public locationSearch: string = "";
   public error: string = "";
- 
+
 
   public defaultLonLat: Coordinate;//für Deutschland
   public latitude: number;
@@ -84,7 +84,7 @@ export class MapComponent implements OnInit {
   //personalisierte Marker werden gesetzt
   ngOnInit(): void {
     this.getCoords()
-    
+
     this.getMarker(this.limiter);
   }
 
@@ -137,7 +137,7 @@ async getCoords(){
   }
 
   checkCoordinate(lonLat: Coordinate):Coordinate{
-    if(lonLat == undefined){  
+    if(lonLat == undefined){
       lonLat = this.defaultLonLat;
       this.customLonLat = this.defaultLonLat;
       return lonLat;
@@ -145,7 +145,14 @@ async getCoords(){
        return lonLat;
      }
   }
-  //fragt den eventService mit einer festen Anzahl an Zahlen und filtert den Response nach dem zeitlich aukutellen Event 
+/*
+  checkCoordinate(lonLat: Coordinate):Coordinate{
+    if(lonLat)return lonLat;
+      this.customLonLat = this.defaultLonLat;
+      return lonLat = this.defaultLonLat;
+  }
+*/
+  //fragt den eventService mit einer festen Anzahl an Zahlen und filtert den Response nach dem zeitlich aukutellen Event
   //zudem werden personalisierte Marker auf der Map angezeigt
   async getMarker(limiter: number){
     await this.eventService.getPages();
@@ -177,10 +184,10 @@ async getCoords(){
       coords = fromLonLat([lon!, lat!]) ;
       this.mapDistanceMarker =  this.eventService.markermanager.getNextEvents(lon!, lat!, this.mapMarker, scala);
       this.map!.getView().setCenter(coords);
-      this.markerCluster(this.map!, this.mapMarker); 
+      this.markerCluster(this.map!, this.mapMarker);
     }else{
       this.mapDistanceMarker =  this.eventService.markermanager.getNextEvents(this.customLong, this.customLat, this.mapMarker, scala);
-      this.markerCluster(this.map!, this.mapMarker); 
+      this.markerCluster(this.map!, this.mapMarker);
     }
   }
 
@@ -328,7 +335,7 @@ this.day = 'am ' + date!;
     this.calculateDistance(this.mapSkalaValue);
   }
 
-  //Sucht nach den Ort und gibt die Marker aus 
+  //Sucht nach den Ort und gibt die Marker aus
   //die Position der MAp verändert sich nach dem Ort und gibt die Marker dementsprechend raus
 //TODO: alert wenn keine Events in der Stadt vorhanden sind
   searchLoacation(){
