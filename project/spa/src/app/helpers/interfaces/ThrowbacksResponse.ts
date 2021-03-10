@@ -11,12 +11,11 @@
 
 import { ThrowbackClass } from "../classes/ThrowbackClass";
 
-
  export interface ThrowbacksResponse {
-   ack: string,
-   data: ThrowbackClass[],
-   prev_page_url: string,
-   next_page_url: string,
-   current_page: number,
-   max_pages: number
+   ack: string;
+   data: ThrowbackClass[];
+   prev_page_url: string;
+   next_page_url: string;
+   current_page: number;
+   max_pages: number;
  }
