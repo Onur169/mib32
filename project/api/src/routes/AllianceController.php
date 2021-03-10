@@ -15,7 +15,7 @@ use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-class TestimonialController
+class AllianceController
 {
 
     private $db;
@@ -42,19 +42,19 @@ class TestimonialController
             $params = $request->getQueryParams();
 
             $usedFilter = $params["filter"] ?? null;
-            $filterSql = $this->filter->build("testimonials", $usedFilter);
+            $filterSql = $this->filter->build("alliances", $usedFilter);
 
             $api = new Api($this->db, $request);
             $prevPageUrl = $api->getPrevPageUrl();
             $nextPageUrl = $api->getNextPageUrl();
 
             $sqlWithoutLimit = $api->db()->buildSql(
-                'SELECT testimonials.id, testimonials.headline, testimonials.description, medias.token, medias.extension',
-                'FROM testimonials',
-                'LEFT JOIN medias ON medias.id = testimonials.medias_id',
+                'SELECT alliances.id, alliances.name, alliances.url, medias.token, medias.extension',
+                'FROM alliances',
+                'LEFT JOIN medias ON medias.id = alliances.medias_id',
                 $filterSql,
                 'group by id',
-                'ORDER BY testimonials.created_at ASC',
+                'ORDER BY alliances.created_at ASC',
                 null
             );
 
@@ -101,8 +101,8 @@ class TestimonialController
 
             $guidv4 = $this->helper->guidv4();
             $guidv4Medias = $this->helper->guidv4();
-            $headline = $params["headline"];
-            $description = $params["description"];
+            $name = $params["name"];
+            $url = $params["url"];
             $createdAt = $now->format('Y-m-d H:i:s');
 
             $uploadedFiles = $request->getUploadedFiles();
@@ -112,11 +112,11 @@ class TestimonialController
 
             if (count($uploadedFiles) > 0) {
 
-                $insertAndMediaId = $this->upload->processUpload($uploadedFiles, $mediaToken, $guidv4, $guidv4Medias, function($guidv4, $mediaInsertId, $createdAt) use ($headline, $description) {
+                $insertAndMediaId = $this->upload->processUpload($uploadedFiles, $mediaToken, $guidv4, $guidv4Medias, function($guidv4, $mediaInsertId, $createdAt) use ($name, $url) {
 
-                    return $this->db->insert("testimonials",
-                        ["id", "headline", "description", "created_at", "medias_id"],
-                        [$guidv4, $headline, $description, $createdAt, $mediaInsertId]
+                    return $this->db->insert("alliances",
+                        ["id", "name", "url", "created_at", "medias_id"],
+                        [$guidv4, $name, $url, $createdAt, $mediaInsertId]
                     );
                     
                 });
@@ -126,9 +126,9 @@ class TestimonialController
 
             } else {
 
-                $insertId = $this->db->insert("testimonials",
-                    ["id", "headline", "description", "created_at", "medias_id"],
-                    [$guidv4, $headline, $description, $createdAt, $guidv4Medias]
+                $insertId = $this->db->insert("alliances",
+                    ["id", "name", "url", "created_at", "medias_id"],
+                    [$guidv4, $name, $url, $createdAt, $guidv4Medias]
                 );
 
             }

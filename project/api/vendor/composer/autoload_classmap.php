@@ -17,6 +17,7 @@ return array(
     'App\\Exception\\ToolException' => $baseDir . '/src/exception/ToolException.php',
     'App\\Exception\\UploadException' => $baseDir . '/src/exception/UploadException.php',
     'App\\Middleware\\CorsMiddleware' => $baseDir . '/src/middleware/CorsMiddleware.php',
+    'App\\Routes\\AllianceController' => $baseDir . '/src/routes/AllianceController.php',
     'App\\Routes\\EventController' => $baseDir . '/src/routes/EventController.php',
     'App\\Routes\\TestimonialController' => $baseDir . '/src/routes/TestimonialController.php',
     'App\\Routes\\ThrowbackController' => $baseDir . '/src/routes/ThrowbackController.php',
