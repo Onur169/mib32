@@ -155,6 +155,7 @@ export class MapComponent implements OnInit {
     this.currentEvent = this.eventService.markermanager.getNextEvent();
 
     //filtert alle Einträge nach dem zeitlich nächsten Event und speichert sie in einem extra Array (mapMarker) ab
+    //zeigt die Marker an 
     this.eventService.markermanager.getMarkers().forEach((value, index) => {
       value.filter((value) => {
         if (value.getStartDate() == this.currentEvent!.getStartDate()) {
@@ -162,6 +163,7 @@ export class MapComponent implements OnInit {
         }
       });
     });
+    this.calculateDistance(this.mapSkalaValue);
   }
 
     /**
