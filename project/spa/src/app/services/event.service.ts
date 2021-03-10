@@ -92,7 +92,7 @@ export class EventService {
 
         let newThrowbacks: Marker[] = [];
 
-        response.data.forEach((value: Demonstration) => {
+        (response.data as Demonstration[]).forEach((value: Demonstration) => {
           let newMarker = new Marker(
             value.id,
             value.name,
