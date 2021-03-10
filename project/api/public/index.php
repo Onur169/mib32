@@ -93,7 +93,8 @@ try {
         $group->post('/testimonials', TestimonialController::class . ':add');
 
         // Alliance Calls
-        $group->post('/alliance', AllianceController::class . ':add');
+        $group->get('/alliances', AllianceController::class . ':get');
+        $group->post('/alliances', AllianceController::class . ':add');
 
     });
 

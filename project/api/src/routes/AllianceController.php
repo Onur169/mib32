@@ -34,6 +34,63 @@ class AllianceController
         $this->imageManipulator = new ImageManipulator();
     }
 
+    public function get(Request $request, Response $response, array $args): Response
+    {
+
+        try {
+
+            $params = $request->getQueryParams();
+
+            $usedFilter = $params["filter"] ?? null;
+            $filterSql = $this->filter->build("alliances", $usedFilter);
+
+            $api = new Api($this->db, $request);
+            $prevPageUrl = $api->getPrevPageUrl();
+            $nextPageUrl = $api->getNextPageUrl();
+
+            $sqlWithoutLimit = $api->db()->buildSql(
+                'SELECT alliances.id, alliances.name, alliances.url, medias.token, medias.extension',
+                'FROM alliances',
+                'LEFT JOIN medias ON medias.id = alliances.medias_id',
+                $filterSql,
+                'group by id',
+                'ORDER BY alliances.created_at ASC',
+                null
+            );
+
+            $maxPages = $api->getMaxPages($sqlWithoutLimit);
+
+            $result = $api->getWithPaginator($sqlWithoutLimit);
+            $list = $result[Database::DATA];
+
+            foreach($list as $listItem) {
+
+                $mediaToken = $listItem->token;
+                $filePath = $this->upload->getRecursiveDirectoryAbsolutePathByToken($mediaToken) . "/original." . $listItem->extension;
+                $images = $this->imageManipulator->getImagesByToken(ImageManipulator::COVER_IMAGE, $filePath, $mediaToken);
+
+                $listItem->images = $images;
+            }
+
+            $jsonResponse = ResponseBuilder::build(ResponseBuilder::SUCCESS_RESPONSE_VAL, $list, $prevPageUrl, $nextPageUrl, $maxPages);
+
+        } catch (\Throwable $th) {
+
+            $jsonResponse = ResponseBuilder::build(ResponseBuilder::ERROR_RESPONSE_KEY, [
+                ResponseBuilder::CODE_RESPONSE_KEY => $th->getCode(),
+                ResponseBuilder::MSG_RESPONSE_KEY => $th->getMessage(),
+            ]);
+
+        } finally {
+
+            $response->getBody()->write($jsonResponse);
+
+            return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
+
+        }
+
+    }
+
     public function add(Request $request, Response $response, array $args): Response
     {
 
