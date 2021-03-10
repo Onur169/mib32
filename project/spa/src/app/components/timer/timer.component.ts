@@ -54,7 +54,7 @@ export class TimerComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.setProperties();
+   this.setProperties();
   }
 
   //hier werden momentan die Events auf der ersten Seite angefragt. aus dem ersten Event wird ein Timer angelegt und das Datum als Property gesetzt
