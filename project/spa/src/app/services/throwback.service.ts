@@ -12,7 +12,7 @@ import { ApiService } from './api.service';
 export class ThrowbackService {
   throwbackmanager: ThrowbackManager;
 
-  constructor(private http: HttpClient, private api: ApiService) {
+  constructor(private api: ApiService) {
     this.throwbackmanager=new ThrowbackManager();
 
   }
