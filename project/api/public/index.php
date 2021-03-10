@@ -27,6 +27,7 @@ use App\Middleware\CorsMiddleware;
 use App\Routes\EventController;
 use App\Routes\ThrowbackController;
 use App\Routes\TestimonialController;
+use App\Routes\AllianceController;
 use App\Routes\Utf8izeController;
 use DI\Container;
 use Psr\Container\ContainerInterface;
@@ -90,6 +91,9 @@ try {
         // Testimonal Calls
         $group->get('/testimonials', TestimonialController::class . ':get');
         $group->post('/testimonials', TestimonialController::class . ':add');
+
+        // Alliance Calls
+        $group->post('/alliance', AllianceController::class . ':add');
 
     });
 
