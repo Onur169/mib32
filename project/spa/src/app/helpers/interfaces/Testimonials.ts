@@ -9,23 +9,18 @@
  *
  */
 
- export interface TestimonialsImageSize{
+ export interface TestimonialImages{
   small: string;
   medium: string;
   large: string;
 }
 
 
-export interface TestimonialsImage{
-  cover_image: TestimonialsImageSize;
-
-}
-
  export interface Testimonial {
   id: string;
   headline: string;
   description: string;
   token: string;
-  extension: null;
-  images: TestimonialsImageSize;
+  extension: string;
+  images: TestimonialImages;
 }
