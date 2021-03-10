@@ -44,7 +44,7 @@ import { TestimonialClass } from "./TestimonialClass";
       /**
        * Gibt die nächste Seite aus, sofern existent. Ansonsten wird aktuelle Seite ausgeben. ->Diese Seite übernimmt keine Änderungen.
        * **/
-      getNextPage(): TestimonialClass[]{
+      getNextPageValue(): TestimonialClass[]{
         if(this.pages.get(++this.currentPage) && this.hasNextPage()){
           return this.pages.get(this.currentPage)!;
         }
@@ -54,7 +54,7 @@ import { TestimonialClass } from "./TestimonialClass";
        /**
        * Gibt die vorherige Seite aus, sofern existent. Ansonsten wird aktuelle Seite ausgeben. ->Diese Seite übernimmt keine Änderungen.
        * **/
-      getPreviousPage(): TestimonialClass[]{
+      getPreviousPageValue(): TestimonialClass[]{
         if(this.pages.get(--this.currentPage) && this.hasPreviousPage()){
           return this.pages.get(this.currentPage)!;
         }
@@ -134,6 +134,24 @@ import { TestimonialClass } from "./TestimonialClass";
 
       getMaxPages(): number {
         return this.maxPages;
+      }
+
+      getAllValues(): TestimonialClass[]{
+        let testimonials:TestimonialClass[]=[];
+        this.pages.forEach(page =>{
+          page.forEach(testimonial => {
+            testimonials.push(testimonial);
+          })
+        })
+        return testimonials;
+      }
+
+      getNextPage(): number{
+        return this.currentPage+1;
+      }
+
+      getPreviousPage(): number{
+        return this.currentPage-1;
       }
 
    constructor(){

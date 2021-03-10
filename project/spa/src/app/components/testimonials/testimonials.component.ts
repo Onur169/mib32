@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { TestimonialClass } from 'src/app/helpers/classes/TestimonialClass';
+import { TestimonialManager } from 'src/app/helpers/classes/TestimonialManager';
 import { TestimonialService } from 'src/app/services/testimonial.service';
 
 @Component({
@@ -8,7 +10,11 @@ import { TestimonialService } from 'src/app/services/testimonial.service';
 })
 export class TestimonialsComponent implements OnInit {
 
-  constructor(private testimonialService: TestimonialService) { }
+  allTestimonials: TestimonialClass[]=[];
+
+  constructor(private testimonialService: TestimonialService) {
+
+  }
 
   ngOnInit(): void {
     this.getTestimonials();
@@ -16,8 +22,26 @@ export class TestimonialsComponent implements OnInit {
 
   async getTestimonials(){
 
+   let manager=this.testimonialService.testimonialManager;
+
     await this.testimonialService.fetchTestimonials();
-    console.log(this.testimonialService.testimonialManager.getTestimonialsByCurrentPage());
+    if(manager.getPageValue(manager.getCurrentPage())){
+
+      this.iterateTestimonials();
+    }
+    console.log(this.allTestimonials)
+  }
+
+  async iterateTestimonials(){
+    let manager=this.testimonialService.testimonialManager;
+
+    if(manager.hasNextPage()){
+      await this.testimonialService.fetchTestimonials(manager.getNextPage());
+      this.iterateTestimonials();
+    }
+    else{
+      this.allTestimonials=manager.getAllValues();
+    }
   }
 
 }
