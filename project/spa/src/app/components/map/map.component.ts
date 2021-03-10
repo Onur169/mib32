@@ -96,7 +96,6 @@ export class MapComponent implements OnInit {
 //die Map wird mit dem Standort des Nutzers gefüllt
  private inizializeMap(lonLat: Coordinate): void {
   lonLat = this.checkCoordinate(lonLat);
-  console.log(lonLat);
    this.map = new Map({
       controls: defaultControls().extend([new FullScreen()]),
       layers: [
