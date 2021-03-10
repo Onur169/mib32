@@ -30,7 +30,7 @@ class TestimonialController
         $this->helper = new Helper();
         $this->db = $this->container->get('Database');
         $this->filter = $this->container->get('Filter');
-        $this->upload = new Upload();
+        $this->upload = new Upload($this->db);
         $this->imageManipulator = new ImageManipulator();
     }
 
@@ -112,46 +112,17 @@ class TestimonialController
 
             if (count($uploadedFiles) > 0) {
 
-                // Bei Upload auch Eintrag in die medias-Tabelle [TODO]
-                if ($this->upload->prepareUploadDirectoryByToken($mediaToken)) {
+                $insertAndMediaId = $this->upload->processUpload($uploadedFiles, $mediaToken, $guidv4, $guidv4Medias, function($guidv4, $mediaInsertId, $createdAt) use ($headline, $description) {
 
-                    // Hier Datei hochladen / verarbeiten in die versch. Größen / Eintrag in medias-Tabelle
-                    $uploadedFile = $uploadedFiles[Upload::FORM_DATA_UPLOAD_KEY];
+                    return $this->db->insert("testimonials",
+                        ["id", "headline", "description", "created_at", "medias_id"],
+                        [$guidv4, $headline, $description, $createdAt, $mediaInsertId]
+                    );
+                    
+                });
 
-                    if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
-
-                        $uploadDirPath = $this->upload->getRecursiveDirectoryAbsolutePathByToken($mediaToken);
-                        $filename = $this->upload->moveUploadedFile($uploadDirPath, $uploadedFile);
-                        $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
-                        $uploadFilePath = $uploadDirPath . "/" . $filename;
-
-                        $this->imageManipulator->iterateAllBreakpoints(function ($currentBreakpoint) use ($uploadFilePath) {
-
-                            $this->imageManipulator->createImage(ImageManipulator::COVER_IMAGE, $uploadFilePath, $uploadFilePath, $currentBreakpoint);
-
-                        });
-
-                        $mediaInsertId = $this->db->insert("medias",
-                            ["id", "token", "extension", "created_at"],
-                            [$guidv4Medias, $mediaToken, $extension, $createdAt]
-                        );
-
-                        $insertId = $this->db->insert("testimonials",
-                            ["id", "headline", "description", "created_at", "medias_id"],
-                            [$guidv4, $headline, $description, $createdAt, $mediaInsertId]
-                        );
-
-                    } else {
-
-                        throw new UploadException(UploadException::UPLOAD_WAS_NOT_SUCCESSFUL);
-
-                    }
-
-                } else {
-
-                    throw new UploadException(UploadException::UPLOAD_DIR_COULD_NOT_BE_PREPARED);
-
-                }
+                $insertId = $insertAndMediaId[Upload::INSERT_ID];
+                $mediaInsertId = $insertAndMediaId[Upload::MEDIA_INSERT_ID];
 
             } else {
 
