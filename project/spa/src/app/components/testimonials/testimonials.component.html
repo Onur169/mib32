@@ -1,1 +1,23 @@
-<p>testimonials works!</p>
+<div>
+  <div class="p-1 p-lg-5">
+    <p class="display-4 text-primary mb-0">Was andere über uns berichten.</p>
+    <p class="text text-primary">
+      Wirf einen Blick in die Vergangenheit und erlebe mit uns noch einmal
+      unsere heroischsten Momente mit.
+    </p>
+  </div>
+  <div class="d-flex flex-wrap">
+    <ng-container *ngFor="let testimonial of allTestimonials">
+      <div class="card bg-primary text-white m-1 m-md-4">
+        <!--  <img class="card-img-top" src="..." alt="Card image cap">-->
+        <div class="card-body">
+          <h5 class="card-title">{{ testimonial.getHeadline() }}</h5>
+          <p class="card-text">
+            {{ testimonial.getDescription() }}
+          </p>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+</div>
