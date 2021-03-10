@@ -16,20 +16,44 @@
       [boundaryLinks]="true"
     ></ngb-pagination>
   </div>
-  <div class="py-1 py-lg-5 d-flex justify-content-around flex-wrap border-top border-bottom border-primary">
+  <div class="py-1 py-lg-5 flex-wrap flex-lg-nowrap d-flex justify-content-around border-top border-bottom border-primary">
+   <!-- <ng-container *ngFor="let throwback of throwbacks"> -->
     <ng-container *ngFor="let throwback of throwbackPage">
-      <div class="card" style="width: 18rem">
+      <div class="row m-1 row-md-6 card" style="width: 18rem">
         <!--  <img class="card-img-top" src="..." alt="Card image cap">-->
         <div class="card-body">
-          <h5 class="card-title">{{ throwback.getName() }}</h5>
-          <p class="card-text">
+          <h5 class="card-title h3 mb-1">{{ throwback.getName() }}</h5>
+          <p class="card-subtitle h-6 text-info">{{throwback.getstartDate() | date:'dd.MM.YYYY' }}</p>
+          <p class="card-text h-3 pt-2">
             Some quick example text to build on the card title and make up the
             bulk of the card's content.
           </p>
+          <div class="text-center">
           <a href="#" class="btn btn-outline-danger">Mehr lesen...</a>
+        </div>
         </div>
       </div>
     </ng-container>
+    <div class="row m-1 row-md-6 card" style="width: 18rem">
+      <!--  <img class="card-img-top" src="..." alt="Card image cap">-->
+      <div class="card-body">
+        <h5 class="card-title h3 mb-1">Hallo</h5>
+        <p class="card-subtitle h-6 text-info">nein</p>
+        <p class="card-text h-3 pt-2">
+          Some quick example text to build on the card title and make up the
+          bulk of the card's content.asdfdlkjglhöjölgfdnsabhhsgadfjkglhöjh,gmfddnsjbhhhdchikjaiofjjvnkldanlagnasdfklgöhölgkfdjshaghsjkdlf
+          Some quick example text to build on the card title and make up the
+          bulk of the card's content.asdfdlkjglhöjölgfdnsabhhsgadfjkglhöjh,gmfddnsjbhhhdchikjaiofjjvnkldanlagnasdfklgöhölgkfdjshaghsjkdlf
+          Some quick example text to build on the card title and make up the
+          bulk of the card's content.asdfdlkjglhöjölgfdnsabhhsgadfjkglhöjh,gmfddnsjbhhhdchikjaiofjjvnkldanlagnasdfklgöhölgkfdjshaghsjkdlf
+          Some quick example text to build on the card title and make up the
+          bulk of the card's content.asdfdlkjglhöjölgfdnsabhhsgadfjkglhöjh,gmfddnsjbhhhdchikjaiofjjvnkldanlagnasdfklgöhölgkfdjshaghsjkdlf
+        </p>
+        <div class="text-center">
+        <a href="#" class="btn btn-outline-danger">Mehr lesen...</a>
+      </div>
+      </div>
+    </div>
   </div>
 
 </div>

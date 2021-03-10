@@ -15,6 +15,7 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 import { MapComponent } from './components/map/map.component';
 import { ThrowbacksComponent } from './components/throwbacks/throwbacks.component';
 import { AllianceComponent } from './components/alliance/alliance.component';
+
 @NgModule({
   declarations: [
     AppComponent,
