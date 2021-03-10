@@ -134,11 +134,9 @@ export class MapComponent implements OnInit {
 
   //Zuweisung der Coordinaten damit die Map mit Coordinaten befüllt werden kann
   checkCoordinate(lonLat: Coordinate): Coordinate {
-    if (lonLat == undefined) {
-      lonLat = this.defaultLonLat;
-      this.customLonLat = this.defaultLonLat;
-      return lonLat;
-    } else {
+    if (lonLat) return lonLat;
+    else {
+      lonLat = this.customLonLat = this.defaultLonLat;
       return lonLat;
     }
   }
@@ -164,11 +162,14 @@ export class MapComponent implements OnInit {
         }
       });
     });
-    //Marker werden gesetzt
-    this.calculateDistance(this.mapSkalaValue);
   }
 
-  //errechnet den Umkreis und gibt die entsprechenden Marker aus
+    /**
+   *printed alle Marker auf der Map, die sich innerhalb des ausgewählten Radius befinden
+   *@param scala -die Entfernung in Km
+   *@param lon -optionaler Parameter, der Breitengrad des eigenen Standorts kann mitgegeben werden
+   *@param lat -optionaler Parameter, der Längengrad des eigenen Standorts kann mitgegeben werden
+  **/
   private calculateDistance(scala: number, lon?: number, lat?: number): void {
     this.mapDistanceMarker = this.mapMarker;
     let coords: Coordinate;
