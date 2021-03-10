@@ -39,8 +39,9 @@ import CircleStyle from 'ol/style/Circle';
 })
 export class MapComponent implements OnInit {
   position: Navigator;
-  public locationSearch: string = '';
-  public error: string = '';
+  public locationSearch: string = "";
+  public error: string = "";
+
 
   public defaultLonLat: Coordinate; //für Deutschland
   public latitude: number;
@@ -133,13 +134,12 @@ export class MapComponent implements OnInit {
   }
 
   //Zuweisung der Coordinaten damit die Map mit Coordinaten befüllt werden kann
-  checkCoordinate(lonLat: Coordinate): Coordinate {
-    if (lonLat) return lonLat;
-    else {
-      lonLat = this.customLonLat = this.defaultLonLat;
-      return lonLat;
-    }
+  checkCoordinate(lonLat: Coordinate):Coordinate{
+    if(lonLat)return lonLat;
+      this.customLonLat = this.defaultLonLat;
+      return lonLat = this.defaultLonLat;
   }
+
   //fragt den eventService mit einer festen Anzahl an Zahlen und filtert den Response nach dem zeitlich aukutellen Event
   //zudem werden personalisierte Marker auf der Map angezeigt
   async getMarker(limiter: number) {

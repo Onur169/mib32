@@ -9,15 +9,13 @@
  *
  */
 
- import { Demonstration } from "./Demonstration";
 import { Testimonial } from "./Testimonials";
-import { Throwback } from "./Throwback";
 
- export interface ApiResponse {
-   ack: string;
-   data: Demonstration[] | Throwback[]| Testimonial[];
-   prev_page_url: string;
-   next_page_url: string;
-   current_page: number;
-   max_pages: number;
+ export interface TestimonialsResponse {
+   ack: string,
+   data: Testimonial[],
+   prev_page_url: string,
+   next_page_url: string,
+   current_page: number,
+   max_pages: number
  }

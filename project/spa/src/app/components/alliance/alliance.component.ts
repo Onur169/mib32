@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatCarousel, MatCarouselComponent } from '@ngmodule/material-carousel';
-import { Alliance, AllianceProps } from 'src/app/helpers/interfaces/Alliance';
+import { AllianceProps } from 'src/app/helpers/interfaces/Alliance';
 import { AllianceService } from 'src/app/services/alliance.service';
 @Component({
   selector: 'app-alliance',
