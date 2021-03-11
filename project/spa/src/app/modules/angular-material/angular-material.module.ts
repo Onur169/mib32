@@ -42,7 +42,8 @@ const materialModules = [
   MatInputModule,
   MatIconModule,
   MatSliderModule,
-  MatCarouselModule
+  MatCarouselModule,
+  MatTabsModule
 ];
 
 @NgModule({
