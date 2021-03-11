@@ -17,6 +17,7 @@ import { MapComponent } from './components/map/map.component';
 import { ThrowbacksComponent } from './components/throwbacks/throwbacks.component';
 import { AllianceComponent } from './components/alliance/alliance.component';
 import { TestimonialsComponent } from './components/testimonials/testimonials.component';
+import { FaqComponent } from './components/faq/faq.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { TestimonialsComponent } from './components/testimonials/testimonials.co
     MapComponent,
     ThrowbacksComponent,
     AllianceComponent,
-    TestimonialsComponent
+    TestimonialsComponent,
+    FaqComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
