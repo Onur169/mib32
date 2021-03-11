@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule} from '@angular/forms';
+import { DatePipe } from '@angular/common'
 
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -16,6 +17,7 @@ import { MapComponent } from './components/map/map.component';
 import { ThrowbacksComponent } from './components/throwbacks/throwbacks.component';
 import { AllianceComponent } from './components/alliance/alliance.component';
 import { TestimonialsComponent } from './components/testimonials/testimonials.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,7 +37,7 @@ import { TestimonialsComponent } from './components/testimonials/testimonials.co
     AngularMaterialModule,
     FormsModule
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

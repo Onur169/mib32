@@ -27,6 +27,7 @@ use App\Middleware\CorsMiddleware;
 use App\Routes\EventController;
 use App\Routes\ThrowbackController;
 use App\Routes\TestimonialController;
+use App\Routes\AllianceController;
 use App\Routes\Utf8izeController;
 use DI\Container;
 use Psr\Container\ContainerInterface;
@@ -35,7 +36,7 @@ use Slim\Routing\RouteCollectorProxy;
 
 // Filter
 $filter = new Filter();
-$filter->register("current_events", 'NOW() < events.start_at', ['events', 'throwbacks']);
+$filter->register("current_events", 'NOW() < events.start_at', ['events']);
 
 // Create Container using PHP-DI
 $container = new Container();
@@ -90,6 +91,10 @@ try {
         // Testimonal Calls
         $group->get('/testimonials', TestimonialController::class . ':get');
         $group->post('/testimonials', TestimonialController::class . ':add');
+
+        // Alliance Calls
+        $group->get('/alliances', AllianceController::class . ':get');
+        $group->post('/alliances', AllianceController::class . ':add');
 
     });
 
