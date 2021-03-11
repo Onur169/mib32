@@ -1,8 +1,7 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ThrowbackClass } from '../helpers/classes/ThrowbackClass';
 import { ThrowbackManager } from '../helpers/classes/ThrowbackManager';
-import { Demonstration } from '../helpers/interfaces/Demonstration';
 import { Throwback } from '../helpers/interfaces/Throwback';
 import { ApiService } from './api.service';
 
@@ -14,6 +13,28 @@ export class ThrowbackService {
 
   constructor(private api: ApiService) {
     this.throwbackmanager=new ThrowbackManager();
+
+  }
+
+  async getallThrowbacks(){
+
+    return new Promise<ThrowbackClass[]>(async (resolve, reject) => {
+      try{
+
+        if(this.throwbackmanager.getFirstThrowback()==undefined){
+          await this.getThrowbacks();
+        }
+        for(let i=1; i<= this.throwbackmanager.getMaxPages(); i++){
+          await this.getThrowbacks(i);
+        }
+
+
+        resolve(this.throwbackmanager.getallThrowbacksAsArray());
+
+      }catch (error){
+        reject(error)
+      }
+    })
 
   }
 

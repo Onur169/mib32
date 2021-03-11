@@ -8,7 +8,7 @@
   </div>
   <div class="d-flex justify-content-center">
     <ngb-pagination
-      (pageChange)="this.getNewPage($event)"
+      (pageChange)="this.setNewPage($event)"
       [collectionSize]="maxPage"
       [(page)]="page"
       [maxSize]="5"

@@ -1,0 +1,37 @@
+@import "../../../custom-variables";
+
+.bg{
+background-image: url("./../../../assets/pictures/active/actice_bg.png");
+background-repeat: no-repeat;
+background-position: right;
+//background-size: cover;
+height: 90vh;
+
+}
+
+#box{
+  width: 25vw;
+  min-width: 400px;
+}
+
+.window{
+  transform: translateY(-50px);
+}
+
+#first_button{
+  border-width: 4px !important;
+}
+
+@media(max-width: 768px){
+  .bg{
+    max-height: 400px;
+   justify-content: center !important;
+   background-image: none;
+   //background-color: $secondary;
+  }
+  .window{
+    transform: translateY(-30px);
+  }
+
+}
+
