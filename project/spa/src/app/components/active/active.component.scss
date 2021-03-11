@@ -1,3 +1,5 @@
+@import "../../../custom-variables";
+
 .bg{
 background-image: url("./../../../assets/pictures/active/actice_bg.png");
 background-repeat: no-repeat;
@@ -5,6 +7,11 @@ background-position: right;
 //background-size: cover;
 height: 90vh;
 
+}
+
+#box{
+  width: 25vw;
+  min-width: 400px;
 }
 
 .window{
@@ -19,6 +26,8 @@ height: 90vh;
   .bg{
     max-height: 400px;
    justify-content: center !important;
+   background-image: none;
+   background-color: $secondary;
   }
   .window{
     transform: translateY(-30px);
