@@ -11,12 +11,9 @@ import { ThrowbackClass } from "./ThrowbackClass";
 
  export class ThrowbackManager{
 
-   public pages: Map<number, ThrowbackClass[]>=new Map<number, ThrowbackClass[]>();
+   public pages=new Map<number, ThrowbackClass[]>();
    private currentPage: number;
    private maxPages: number;
-
-
-
 
    constructor(){
 
@@ -41,7 +38,6 @@ import { ThrowbackClass } from "./ThrowbackClass";
   getFirstThrowback(): ThrowbackClass | undefined{
     if(this.pages.get(1))return this.pages.get(1)![0];
     else {
-      console.error("Momentan gibt es entweder nichts zu berichten oder es gab ein Problem beim Abrufen unserer Rückblicke");
       return undefined;
     }
   }
@@ -65,8 +61,67 @@ import { ThrowbackClass } from "./ThrowbackClass";
       return this.pages.get(page)
     }
 
-    public getMaxPages(): number {
+    getMaxPages(): number {
       return this.maxPages;
+    }
+
+    getallThrowbacksAsArray(): ThrowbackClass[]{
+      let throwbacks: ThrowbackClass[]=[];
+      this.pages.forEach((page:ThrowbackClass[]) => {
+        page.forEach((throwback: ThrowbackClass)=>{
+          throwbacks.push(throwback);
+        })
+      })
+      return throwbacks;
+    }
+
+    calculateSize(numberOfThrowbacksInview: number, throwbacks: ThrowbackClass[]){
+     let numberOfThrowbacks=throwbacks.length;
+     console.log("inview",numberOfThrowbacksInview,"anzahl",numberOfThrowbacks)
+
+     return Math.ceil(numberOfThrowbacks/numberOfThrowbacksInview);
+    }
+
+    reCreatePages(numberOfThrowbacksInview: number):Map<number, ThrowbackClass[]>{
+
+      let allThrowbacks=this.getallThrowbacksAsArray();
+      let filterdThrowbacks=this.filterByDate(allThrowbacks);
+      console.log("filter",filterdThrowbacks);
+
+      let size=this.calculateSize(numberOfThrowbacksInview,filterdThrowbacks);
+      console.log("size",size);
+
+      let nextPage=0;
+
+      let pages=new Map<number, ThrowbackClass[]>();
+
+      for(let i=1; i<=size; i++){
+
+       let temp: ThrowbackClass[]=[];
+        for(let j=0; j<=numberOfThrowbacksInview-1; j++){
+          if(filterdThrowbacks[j+nextPage]){
+          temp.push(filterdThrowbacks[j+nextPage]);
+          pages.set(i,temp);
+        }
+        else{
+          break;
+        }
+
+        }
+        nextPage+=5;
+      }
+      return pages;
+    }
+
+    filterByDate(throwbacks: ThrowbackClass[]){
+      let today= new Date();
+      let filtered: ThrowbackClass[]=[];
+      throwbacks.filter((value) => {
+        if (new Date(value.getstartDate()).getTime() < today.getTime()) {
+          filtered.push(value);
+        }
+      });;
+      return filtered;
     }
 
  }
