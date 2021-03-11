@@ -1,3 +1,4 @@
+<div>
 <div class="p-1 p-lg-5">
   <div class="mb-2 mb-md-5">
     <p class="display-4 text-primary mb-0">Was andere über uns berichten.</p>
@@ -6,10 +7,11 @@
       unsere heroischsten Momente mit.
     </p>
   </div>
-  <div class="d-inline-flex row mx-0 justify-content-center">
+</div>
+  <div class="d-inline-flex row mx-0 justify-content-around allCards py-2 py-md-4">
     <ng-container *ngFor="let testimonial of allTestimonials">
       <div class="row-12 row-sm-10 row flex-wrap p-2 p-sm-3 p-md-4 p-lg-3 p-xl-4 ">
-      <div class="card border">
+      <div class="card">
         <img class="card-img-top" srcset="{{testimonial.getImages().getSmall()}} 576w, {{testimonial.getImages().getMedium()}} 720w, {{testimonial.getImages().getLarge()}} 960w" alt="Card image cap">
         <div class="card-body p-0">
           <h5 class="bg-primary text-white card-title p-1 p-md-3">{{ testimonial.getHeadline() }}</h5>
@@ -21,5 +23,6 @@
     </div>
     </ng-container>
   </div>
-
 </div>
+
+
