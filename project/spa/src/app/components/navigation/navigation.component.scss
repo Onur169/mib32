@@ -1,6 +1,14 @@
-nav{
-  background-color: white;
+@import "../../../custom-variables";
+
+a:hover{
+  color: $info;
 }
-a{
-  color: 485E61;
+
+.btn{
+  outline: none;
+}
+
+.sticky-top{
+  position: -webkit-sticky; 
+  z-index: 2000;
 }
