@@ -86,12 +86,10 @@ import { ThrowbackClass } from "./ThrowbackClass";
 
       let allThrowbacks=this.getallThrowbacksAsArray();
       let filterdThrowbacks=this.filterByDate(allThrowbacks);
-      console.log("filter",filterdThrowbacks);
 
       let size=this.calculateSize(numberOfThrowbacksInview,filterdThrowbacks);
-      console.log("size",size);
 
-      let nextPage=0;
+      let newPage=0;
 
       let pages=new Map<number, ThrowbackClass[]>();
 
@@ -99,8 +97,8 @@ import { ThrowbackClass } from "./ThrowbackClass";
 
        let temp: ThrowbackClass[]=[];
         for(let j=0; j<=numberOfThrowbacksInview-1; j++){
-          if(filterdThrowbacks[j+nextPage]){
-          temp.push(filterdThrowbacks[j+nextPage]);
+          if(filterdThrowbacks[j+newPage]){
+          temp.push(filterdThrowbacks[j+newPage]);
           pages.set(i,temp);
         }
         else{
@@ -108,7 +106,7 @@ import { ThrowbackClass } from "./ThrowbackClass";
         }
 
         }
-        nextPage+=5;
+        newPage+=5;
       }
       return pages;
     }

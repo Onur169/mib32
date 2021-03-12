@@ -18,6 +18,7 @@ import { ThrowbacksComponent } from './components/throwbacks/throwbacks.componen
 import { AllianceComponent } from './components/alliance/alliance.component';
 import { TestimonialsComponent } from './components/testimonials/testimonials.component';
 import { ActiveComponent } from './components/active/active.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { ActiveComponent } from './components/active/active.component';
     ThrowbacksComponent,
     AllianceComponent,
     TestimonialsComponent,
-    ActiveComponent
+    ActiveComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
