@@ -9,7 +9,11 @@
   <div class="d-flex flex-wrap justify-content-center">
     <ng-container *ngFor="let testimonial of allTestimonials">
       <div class="card m-1 m-md-4">
-        <img class="card-img-top" srcset="{{testimonial.getImages().getSmall()}} 576w, {{testimonial.getImages().getMedium()}} 720w, {{testimonial.getImages().getLarge()}} 960w" alt="Card image cap">
+        <img class="card-img-top" src="{{testimonial.getImages().getSmall()}}" srcset="
+        {{testimonial.getImages().getSmall()}} 600w,
+        {{testimonial.getImages().getMedium()}} 750w,
+        {{testimonial.getImages().getLarge()}} 1000w"
+        alt="Card image cap">
         <div class="card-body p-0">
           <h5 class="bg-primary text-white card-title p-1 p-md-3">{{ testimonial.getHeadline() }}</h5>
           <p class="card-text">
