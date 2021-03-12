@@ -1,4 +1,15 @@
 .card> img{
-  width: 40vw;
+  width: calc(10vh + 10vw);
+  height: calc(13vh + 13vw);
+  object-fit: cover;
+  object-position: 0 0;
   min-width: 300px;
+}
+
+.border{
+  border-width: 0.2rem !important;
+}
+
+.allCards{
+  background-color: #e0dfde52;
 }

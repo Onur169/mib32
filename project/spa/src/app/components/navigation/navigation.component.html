@@ -1,10 +1,29 @@
-<nav class="navbar navbar-expand-sm bg-light navbar-light d-flex justify-content-end">
-  <ul class="navbar-nav">
-    <li class="nav-item mx-3">
-      <a class="nav-link h4" href="#">Infos</a>
-    </li>
-    <li class="nav-item mr-5">
-      <a class="nav-link h4" href="#">Spenden</a>
-    </li>
+<div class="sticky-top w-100">
+  <div class="d-flex justify-content-end bg-white p-1 p-md-3">
+  <ul ngbNav #nav="ngbNav">
+  <div ngbDropdown class="d-inline-block">
+    <div class="btn text-primary nav-item" id="dropdownBasic1" ngbDropdownToggle>Home</div>
+    <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="text-primary">
+      <a ngbDropdownItem href="timer">Countdown</a>
+      <a ngbDropdownItem href="map">Karte</a>
+      <a ngbDropdownItem href="rueckblick">Rückblick</a>
+      <a ngbDropdownItem href="buendnis">Bündnis</a>
+      <a ngbDropdownItem href="persoenlichkeiten">Personen</a>
+      <a ngbDropdownItem href="faq">FAQ</a>
+      <a ngbDropdownItem href="spenden">Spende</a>
+    </div>
+  </div>
+
+  <li class="nav-item">
+    <a class="nav-link" href="https://www.klima-streik.org/infos" target="_blank">Infos</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="https://www.klima-streik.org/helfen/spenden" target="_blank">Spenden</a>
+  </li>
   </ul>
-</nav>
+  <div [ngbNavOutlet]="nav"></div>
+</div>
+</div>
+
+
+
