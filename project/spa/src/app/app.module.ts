@@ -20,6 +20,7 @@ import { TestimonialsComponent } from './components/testimonials/testimonials.co
 import { FaqComponent } from './components/faq/faq.component';
 import { ActiveComponent } from './components/active/active.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { FilleroneComponent } from './components/filler/fillerone/fillerone.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { FooterComponent } from './components/footer/footer.component';
     ActiveComponent,
     FooterComponent,
     FaqComponent,
-    ActiveComponent
+    ActiveComponent,
+    FilleroneComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
