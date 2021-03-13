@@ -23,9 +23,9 @@ export class AllianceComponent implements OnInit {
 
   async fillAlliances(){
     let files=await this.allianceService.fetchAlliance();
-    for(let i=0; i<=files.length-1;i+=4){
+    for(let i=0; i<=files.length-1;i+=3){
       let temp: AllianceProps[]=[];
-      for(let j=0; j<=3;j++){
+      for(let j=0; j<=2;j++){
       if((i+j)==files.length){
         break;
       }
