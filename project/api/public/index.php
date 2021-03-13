@@ -27,6 +27,7 @@ use App\Middleware\CorsMiddleware;
 use App\Routes\EventController;
 use App\Routes\ThrowbackController;
 use App\Routes\TestimonialController;
+use App\Routes\SocialMediaController;
 use App\Routes\AllianceController;
 use App\Routes\Utf8izeController;
 use DI\Container;
@@ -95,6 +96,13 @@ try {
         // Alliance Calls
         $group->get('/alliances', AllianceController::class . ':get');
         $group->post('/alliances', AllianceController::class . ':add');
+
+        // Social-Media Calls
+        $group->post('/socialmedia', SocialMediaController::class . ':add');
+        $group->get('/socialmedia', SocialMediaController::class . ':get');
+
+        // Social-Media-Stat Calls
+        $group->post('/socialmedia/{id}/hashtagstat', SocialMediaController::class . ':addStat');
 
     });
 

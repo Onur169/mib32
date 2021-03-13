@@ -19,6 +19,7 @@ return array(
     'App\\Middleware\\CorsMiddleware' => $baseDir . '/src/middleware/CorsMiddleware.php',
     'App\\Routes\\AllianceController' => $baseDir . '/src/routes/AllianceController.php',
     'App\\Routes\\EventController' => $baseDir . '/src/routes/EventController.php',
+    'App\\Routes\\SocialMediaController' => $baseDir . '/src/routes/SocialMediaController.php',
     'App\\Routes\\TestimonialController' => $baseDir . '/src/routes/TestimonialController.php',
     'App\\Routes\\ThrowbackController' => $baseDir . '/src/routes/ThrowbackController.php',
     'App\\Routes\\Utf8izeController' => $baseDir . '/src/routes/Utf8izeController.php',
