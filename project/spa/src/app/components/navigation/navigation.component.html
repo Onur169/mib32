@@ -1,16 +1,16 @@
-<div class="sticky-top w-100">
+<div class="fixed-top w-100">
   <div class="d-flex justify-content-end bg-white p-1 p-md-3">
   <ul ngbNav #nav="ngbNav">
   <div ngbDropdown class="d-inline-block">
     <div class="btn text-primary nav-item" id="dropdownBasic1" ngbDropdownToggle>Home</div>
     <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="text-primary">
-      <a ngbDropdownItem href="timer">Countdown</a>
-      <a ngbDropdownItem href="map">Karte</a>
-      <a ngbDropdownItem href="rueckblick">Rückblick</a>
-      <a ngbDropdownItem href="buendnis">Bündnis</a>
-      <a ngbDropdownItem href="persoenlichkeiten">Personen</a>
-      <a ngbDropdownItem href="faq">FAQ</a>
-      <a ngbDropdownItem href="spenden">Spende</a>
+      <a ngbDropdownItem routerLink="Home/Timer">Countdown</a>
+      <a ngbDropdownItem href="#Karte">Karte</a>
+      <a ngbDropdownItem href="#Rückblick">Rückblick</a>
+      <a ngbDropdownItem href="#Bündnis">Bündnis</a>
+      <a ngbDropdownItem href="#Testimonials">Personen</a>
+      <a ngbDropdownItem href="#FAQ">FAQ</a>
+      <a ngbDropdownItem href="#Aktiv">Spende</a>
     </div>
   </div>
 
