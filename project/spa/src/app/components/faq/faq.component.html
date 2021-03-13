@@ -1,61 +1,98 @@
 <div class="p-1 p-lg-5">
   <p class="display-4 text-primary mb-0">FAQ</p>
-  <p class="text text-primary">Noch etwas unklar? Kein Problem!</p>
+  <p class="text-primary">Noch etwas unklar? Kein Problem!</p>
 
-  <div class="text-center">
-    <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
-      <ngb-panel title="Aktion in Deiner Nähe">
-        <ng-template ngbPanelContent>
-          Alle angekündigten Aktionen findest Du auf der
-          <a href="#map" class="text-info"> Karte. </a>
-          Am einfachsten gibst Du den Namen Deiner Stadt direkt in die
-          Suchleiste der Karte ein.
-        </ng-template>
-      </ngb-panel>
+    <div class="d-flex justify-content-center row w-100 h-50 flex-lg-nowrap">
+      <div class="col-6 col-sm-3 col-md-3 col-lg bg-primary text-center m-2">
+        <span class="material-icons text-secondary pt-2">
+          map
+          </span>
+          <p class="text-white">Du weißt nicht wie Du nach Streiks suchen kannst?</p>
+      </div>
 
-      <ngb-panel title="Deine Aktion in die Karte aufnehmen">
-          <hr>
-        <ng-template ngbPanelContent>
-          Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus
-          terry richardson ad squid. 3 wolf moon officia aute, non cupidatat
-          skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
-          Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid
-          single-origin coffee nulla assumenda shoreditch et. Nihil anim
-          keffiyeh helvetica, craft beer labore wes anderson cred nesciunt
-          sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
-          occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt
-          you probably haven't heard of them accusamus labore sustainable VHS.
-        </ng-template>
-      </ngb-panel>
+      <div class="col-6 col-sm-3 col-md-3 col-lg bg-primary text-center m-2">
+        <span class="material-icons text-secondary pt-2">
+          add_location_alt
+          </span>
+          <p class="text-white">Möchtest du eine Aktion auf die Karte aufnehmen?</p>
+      </div>
+      <div class="col-6 col-sm-3 col-md-3 col-lg bg-primary text-center m-2">
+        <span class="material-icons text-secondary pt-2">
+          not_listed_location
+          </span>
+          <p class="text-white">Du findest keine Infos zu einer Aktion?</p>
+      </div>
+      <div class="col-6 col-sm-3 col-md-3 col-lg bg-primary text-center m-2">
+        <span class="material-icons text-secondary pt-2">
+          person_off
+          </span>
+          <p class="text-white">Du bist verhindert und kannst nicht teilnehmen?</p>
+      </div>
+      <div onclick="window.open('https://www.klima-streik.org/corona-hinweise', 'new_window')" class="col-6 col-sm-3 col-md-3 col-lg bg-primary text-center m-2 different">
+        <span class="material-icons text-secondary pt-2">
+          coronavirus
+          </span>
+          <p class="text-white">So kannst Du auch in dieser Situation mitmachen!</p>
+      </div>
 
-      <ngb-panel title="Aktion in Deiner Stadt hat noch keine Infos">
-        <ng-template ngbPanelContent>
-          Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus
-          terry richardson ad squid. 3 wolf moon officia aute, non cupidatat
-          skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
-          Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid
-          single-origin coffee nulla assumenda shoreditch et. Nihil anim
-          keffiyeh helvetica, craft beer labore wes anderson cred nesciunt
-          sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
-          occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt
-          you probably haven't heard of them accusamus labore sustainable VHS.
-        </ng-template>
-      </ngb-panel>
+    </div>
 
-      <ngb-panel title="Du kannst nicht dabei sein? Dann mach so mit!">
-        <ng-template ngbPanelContent>
-          Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus
-          terry richardson ad squid. 3 wolf moon officia aute, non cupidatat
-          skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
-          Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid
-          single-origin coffee nulla assumenda shoreditch et. Nihil anim
-          keffiyeh helvetica, craft beer labore wes anderson cred nesciunt
-          sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
-          occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt
-          you probably haven't heard of them accusamus labore sustainable VHS.
-        </ng-template>
-      </ngb-panel>
-    </ngb-accordion>
+    <p class="mt-3">Diese Antworten haben wir für Dich zusammengestellt:</p>
+
+    <div class="w-90">
+        <ngb-accordion #acc="ngbAccordion">
+          <ngb-panel title="Aktion in Deiner Nähe">
+            <ng-template ngbPanelContent>
+              Alle angekündigten Aktionen findest Du auf der
+              <a href="map" class="text-info"> Karte. </a>
+              Am einfachsten gibst Du den Namen Deiner Stadt direkt in die
+              Suchleiste der Karte ein.
+            </ng-template>
+          </ngb-panel>
+    
+          <ngb-panel title="Deine Aktion in die Karte aufnehmen">
+            <ng-template ngbPanelContent>
+              Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus
+              terry richardson ad squid. 3 wolf moon officia aute, non cupidatat
+              skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
+              Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid
+              single-origin coffee nulla assumenda shoreditch et. Nihil anim
+              keffiyeh helvetica, craft beer labore wes anderson cred nesciunt
+              sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
+              occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt
+              you probably haven't heard of them accusamus labore sustainable VHS.
+            </ng-template>
+          </ngb-panel>
+    
+          <ngb-panel title="Aktion in Deiner Stadt hat noch keine Infos">
+            <ng-template ngbPanelContent>
+              Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus
+              terry richardson ad squid. 3 wolf moon officia aute, non cupidatat
+              skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
+              Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid
+              single-origin coffee nulla assumenda shoreditch et. Nihil anim
+              keffiyeh helvetica, craft beer labore wes anderson cred nesciunt
+              sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
+              occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt
+              you probably haven't heard of them accusamus labore sustainable VHS.
+            </ng-template>
+          </ngb-panel>
+    
+          <ngb-panel title="Du kannst nicht dabei sein? Dann mach so mit!">
+            <ng-template ngbPanelContent>
+              Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus
+              terry richardson ad squid. 3 wolf moon officia aute, non cupidatat
+              skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
+              Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid
+              single-origin coffee nulla assumenda shoreditch et. Nihil anim
+              keffiyeh helvetica, craft beer labore wes anderson cred nesciunt
+              sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
+              occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt
+              you probably haven't heard of them accusamus labore sustainable VHS.
+            </ng-template>
+          </ngb-panel>
+        </ngb-accordion>
+      </div>
 
     <div class="mt-3 mt-md-5">
       <p class="text-primary">
@@ -63,23 +100,16 @@
         gerne mit dir ins Gespräch. Dazu hast du folgende Möglichkeiten:
       </p>
       <div
-        class="d-flex row-lg-12 flex-wrap flex-sm-nowrap justify-content-center"
-      >
-        <div class="col-12 col-sm-4 col-md text-center m-2">
+        class="d-flex row justify-content-center">
+        <div class="text-center m-2 col-12 col-sm">
           <p class="m-1 text-primary">Die gewöhnliche Lösung</p>
-          <a href="#" class="btn btn-primary p-2">Schreibe eine Mail</a>
+          <a href="#" class="btn btn-primary p-2 w-75">Schreibe eine Mail</a>
         </div>
-        <div class="col-12 col-sm-3 col-md text-center m-2">
-          <p class="m-1 text-primary">Die bequeme Lösung</p>
-          <a href="#" class="btn btn-primary p-2"
-            >Nutze unser Kontaktformular</a
-          >
-        </div>
-        <div class="col-12 col-sm-4 col-md text-center m-2">
+        <div class="text-center m-2 col-12 col-sm">
           <p class="m-1 text-primary">Die direkte Lösung</p>
-          <a href="#" class="btn btn-primary p-2">Ruf uns an</a>
+          <a href="#" class="btn btn-primary p-2 w-75">Ruf uns an</a>
         </div>
       </div>
-    </div>
-  </div>
+</div>
+
 </div>
