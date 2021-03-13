@@ -1,12 +1,12 @@
 <div>
-  <div class="p-1 p-lg-5">
+  <div class="p-2 p-lg-5">
     <p class="display-4 text-primary mb-0">Rückblick</p>
     <p class="text text-primary">
       Wirf einen Blick in die Vergangenheit und erlebe mit uns noch einmal
       unsere heroischsten Momente mit.
     </p>
   </div>
-  <div class="d-flex justify-content-center">
+  <div *ngIf="throwbackPages.size>1" class="grey_container d-flex justify-content-center py-1 py-md-4">
     <ngb-pagination
       (pageChange)="this.setNewPage($event)"
       [collectionSize]="maxPage"
@@ -17,7 +17,8 @@
     ></ngb-pagination>
   </div>
   <div
-    class="py-1 py-lg-5 flex-wrap flex-lg-nowrap d-flex justify-content-around border-top border-bottom border-primary">
+
+    class="grey_container mb-2 mb-md-4 py-1 py-md-3 flex-wrap flex-lg-nowrap d-flex justify-content-around">
     <ng-container *ngFor="let throwback of throwbacks">
       <div class="row m-1 row-md-6 card">
         <!--  <img class="card-img-top" src="..." alt="Card image cap">-->
