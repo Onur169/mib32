@@ -206,6 +206,7 @@ class ComposerStaticInitc5817a5945756a0e85745c6bbc6d82b9
         'App\\Middleware\\CorsMiddleware' => __DIR__ . '/../..' . '/src/middleware/CorsMiddleware.php',
         'App\\Routes\\AllianceController' => __DIR__ . '/../..' . '/src/routes/AllianceController.php',
         'App\\Routes\\EventController' => __DIR__ . '/../..' . '/src/routes/EventController.php',
+        'App\\Routes\\SocialMediaController' => __DIR__ . '/../..' . '/src/routes/SocialMediaController.php',
         'App\\Routes\\TestimonialController' => __DIR__ . '/../..' . '/src/routes/TestimonialController.php',
         'App\\Routes\\ThrowbackController' => __DIR__ . '/../..' . '/src/routes/ThrowbackController.php',
         'App\\Routes\\Utf8izeController' => __DIR__ . '/../..' . '/src/routes/Utf8izeController.php',

@@ -120,7 +120,6 @@ async function warningLog(str, headline = null) {
 
                             } else {
 
-
                                 return new Promise(resolve => {
                                     reject(null);
                                 });
