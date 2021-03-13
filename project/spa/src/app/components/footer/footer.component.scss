@@ -1,0 +1,15 @@
+@import "../../../custom-variables";
+
+#logo{
+  width: 100px;
+}
+
+.line{
+  width: 2px;
+}
+
+#cutter{
+  border: $primary 2px solid;
+  width: 90vw;
+  min-width: 360px;
+}

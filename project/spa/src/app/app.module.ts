@@ -17,6 +17,10 @@ import { MapComponent } from './components/map/map.component';
 import { ThrowbacksComponent } from './components/throwbacks/throwbacks.component';
 import { AllianceComponent } from './components/alliance/alliance.component';
 import { TestimonialsComponent } from './components/testimonials/testimonials.component';
+import { FaqComponent } from './components/faq/faq.component';
+import { ActiveComponent } from './components/active/active.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { FilleroneComponent } from './components/filler/fillerone/fillerone.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +31,12 @@ import { TestimonialsComponent } from './components/testimonials/testimonials.co
     MapComponent,
     ThrowbacksComponent,
     AllianceComponent,
-    TestimonialsComponent
+    TestimonialsComponent,
+    ActiveComponent,
+    FooterComponent,
+    FaqComponent,
+    ActiveComponent,
+    FilleroneComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
