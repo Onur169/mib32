@@ -1,0 +1,15 @@
+{
+  "name": "social_bot",
+  "version": "1.0.0",
+  "description": "Dieser Bot loggt sich in Socialplatforms wie Facebook ein und scraped Daten",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Onur Sahin",
+  "license": "ISC",
+  "dependencies": {
+    "node-emoji": "^1.10.0",
+    "puppeteer": "^8.0.0"
+  }
+}
