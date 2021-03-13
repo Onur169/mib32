@@ -101,6 +101,9 @@ try {
         $group->post('/socialmedia', SocialMediaController::class . ':add');
         $group->get('/socialmedia', SocialMediaController::class . ':get');
 
+        // Social-Media-Stat Calls
+        $group->post('/socialmedia/{id}/hashtagstat', SocialMediaController::class . ':addStat');
+
     });
 
     // Routen definieren

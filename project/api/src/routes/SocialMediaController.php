@@ -126,4 +126,43 @@ class SocialMediaController
 
     }
 
+    public function addStat(Request $request, Response $response, array $args): Response
+    {
+
+        try {
+
+            $params = $request->getQueryParams();
+            $now = new DateTime();
+
+            $guidv4 = $this->helper->guidv4();
+            $socialMediaTypesId = $args['id'];
+            $hashtag = preg_replace('/\s+/', '', $params["hashtag"]);
+            $createdAt = $now->format('Y-m-d H:i:s');
+
+            $insertId = $this->db->insert("social_media_hashtag_stats",
+                ["id", "hashtag", "counter", "social_media_types_id", "created_at"],
+                [$guidv4, $hashtag, 0, $socialMediaTypesId, $createdAt]
+            );
+
+            $jsonResponse = ResponseBuilder::build(ResponseBuilder::SUCCESS_RESPONSE_VAL, [
+                ResponseBuilder::INSERT_ID_RESPONSE_KEY => $insertId,
+            ]);
+
+        } catch (\Throwable $th) {
+
+            $jsonResponse = ResponseBuilder::build(ResponseBuilder::ERROR_RESPONSE_KEY, [
+                ResponseBuilder::CODE_RESPONSE_KEY => $th->getCode(),
+                ResponseBuilder::MSG_RESPONSE_KEY => $th->getMessage(),
+            ]);
+
+        } finally {
+
+            $response->getBody()->write($jsonResponse);
+
+            return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
+
+        }
+
+    }
+
 }
