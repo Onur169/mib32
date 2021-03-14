@@ -103,6 +103,7 @@ try {
 
         // Social-Media-Stat Calls
         $group->post('/socialmedia/{id}/hashtagstat', SocialMediaController::class . ':addStat');
+        $group->get('/socialmedia/hashtagstat', SocialMediaController::class . ':getStat');
 
     });
 

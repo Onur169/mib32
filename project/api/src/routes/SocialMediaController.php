@@ -126,6 +126,55 @@ class SocialMediaController
 
     }
 
+    public function getStat(Request $request, Response $response, array $args): Response
+    {
+
+        try {
+
+            $params = $request->getQueryParams();
+
+            $usedFilter = $params["filter"] ?? null;
+            $filterSql = $this->filter->build("social_media_types", $usedFilter);
+
+            $api = new Api($this->db, $request);
+            $prevPageUrl = $api->getPrevPageUrl();
+            $nextPageUrl = $api->getNextPageUrl();
+
+            $sqlWithoutLimit = $api->db()->buildSql(
+                'SELECT social_media_hashtag_stats.id, social_media_hashtag_stats.hashtag, social_media_hashtag_stats.counter, social_media_types.name',
+                'FROM social_media_hashtag_stats',
+                'INNER JOIN social_media_types ON social_media_types.id = social_media_hashtag_stats.social_media_types_id',
+                $filterSql,
+                'group by id',
+                'ORDER BY social_media_types.name ASC',
+                null
+            );
+        
+            $maxPages = $api->getMaxPages($sqlWithoutLimit);
+
+            $result = $api->getWithPaginator($sqlWithoutLimit);
+            $list = $result[Database::DATA];
+
+            $jsonResponse = ResponseBuilder::build(ResponseBuilder::SUCCESS_RESPONSE_VAL, $list, $prevPageUrl, $nextPageUrl, $maxPages);
+
+        } catch (\Throwable $th) {
+
+            $jsonResponse = ResponseBuilder::build(ResponseBuilder::ERROR_RESPONSE_KEY, [
+                ResponseBuilder::CODE_RESPONSE_KEY => $th->getCode(),
+                ResponseBuilder::MSG_RESPONSE_KEY => $th->getMessage()
+            ]);
+
+        } finally {
+
+            $response->getBody()->write($jsonResponse);
+
+            return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
+
+        }
+
+    }
+
+
     public function addStat(Request $request, Response $response, array $args): Response
     {
 

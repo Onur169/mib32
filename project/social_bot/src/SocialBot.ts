@@ -1,5 +1,5 @@
 
-import { SocialMedia } from "./SocialMedia";
+import { SocialMedia } from "./interfaces/SocialMedia";
 import * as emoji from 'node-emoji';
 import * as puppeteer from 'puppeteer';
 
