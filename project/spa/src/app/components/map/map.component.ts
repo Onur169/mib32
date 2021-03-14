@@ -57,10 +57,10 @@ export class MapComponent implements OnInit {
   public currentEvent: Marker | undefined = undefined;
   public limiter = 0;
   public mapView: View = new View();
-  public hasEventMarker: boolean = false;
 
   public place: string = '';
   public day: string = '';
+  public hasEventMarker: boolean = true;
 
   private map?: Map = undefined;
   private mapSkalaValue: number;
@@ -85,10 +85,8 @@ export class MapComponent implements OnInit {
   }
 
   ngAfterContentInit() {
-    if(this.hasEventMarker == true){
-      this.inizializeMap(this.customLonLat, 6);
-      this.calculateDistance(this.mapSkalaValue);
-    }
+    this.inizializeMap(this.customLonLat, 6);
+    this.calculateDistance(this.mapSkalaValue);
   }
 
   //die Map wird mit dem Standort des Nutzers gefüllt
@@ -173,8 +171,9 @@ export class MapComponent implements OnInit {
         }
       });
     });
+    this.checkEventMarker(this.mapMarker);
     this.calculateDistance(this.mapSkalaValue, 12);
-    this.checkMarker(this.mapMarker);
+
   }
 
     /**
@@ -338,7 +337,7 @@ export class MapComponent implements OnInit {
       mapScreen.addOverlay(overlay);
 
       //beim Klicken auf die Map erscheint ein Popup mit einem bestimmten Inhalt
-      mapScreen.on('click', () => {
+      mapScreen.on('singleclick', () => {
         content!.innerHTML =
           '<div><code>' +
           Mname +
@@ -408,7 +407,7 @@ export class MapComponent implements OnInit {
     this.locationSearch = '';
   }
 
-checkMarker(marker: Marker[]){
+checkEventMarker(marker:Marker[]):void{
   if(marker == []){
     this.hasEventMarker = false;
   }else{
