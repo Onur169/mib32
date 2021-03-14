@@ -14,6 +14,7 @@ import { Marker } from '../helpers/classes/Marker';
 
 import { MarkerManager } from '../helpers/classes/MarkerManager';
 import { Demonstration } from '../helpers/interfaces/Demonstration';
+import { EventResponse } from '../helpers/interfaces/EventResponse';
 import { ApiService } from './api.service';
 
 @Injectable({
@@ -74,7 +75,7 @@ export class EventService {
   }
 
   async getEvents(page: string, filter?: string) {
-    return new Promise(async (resolve, reject) => {
+    return new Promise<EventResponse>(async (resolve, reject) => {
       try {
         let params = new HttpParams().set('page', page);
 
@@ -88,6 +89,7 @@ export class EventService {
 
         if(response.data==undefined){
 
+          console.log("no existing events")
         }
 
         let newThrowbacks: Marker[] = [];
@@ -111,7 +113,7 @@ export class EventService {
           newThrowbacks
         );
 
-        resolve(response);
+        resolve(response as EventResponse);
       } catch (error) {
         reject(error);
       }
