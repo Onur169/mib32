@@ -8,6 +8,11 @@
   background-color: $info !important;
 }
 
+.info-box{
+  min-width: 9rem;
+  min-height: 9rem;
+}
+
 ::ng-deep .accordion {
   .card {
     margin-bottom: 0 !important;
@@ -61,14 +66,3 @@
   }
 }
 
-.range-accordion .btn-link {
-  text-decoration-line: none;
-}
-
-::ng-deep .accordion-shadow .card.open {
-  border-radius: 0.571rem;
-  margin: 10px 0;
-  border: 0;
-  box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.1) !important;
-  background-color: dodgerblue;
-}
