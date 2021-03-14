@@ -29,7 +29,7 @@ export class TestimonialsComponent implements OnInit {
 
       this.iterateTestimonials();
     }
-    console.log(this.allTestimonials)
+    console.log(this.allTestimonials);
   }
 
   async iterateTestimonials(){
