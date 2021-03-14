@@ -8,13 +8,17 @@
  *
  */
 
+ export interface AllianceImages{
+  small: string;
+  medium: string;
+  large: string;
+}
 
- export interface AllianceProps {
-   src: string;
+ export interface Alliance {
+   id: string;
    name: string;
    url: string;
+   token: string;
+   extension: string;
+   images: AllianceImages;
  }
-
- export interface Alliance{
-  files: AllianceProps[];
-}

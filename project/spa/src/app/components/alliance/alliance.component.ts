@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AllianceProps } from 'src/app/helpers/interfaces/Alliance';
+import { AllianceClass } from 'src/app/helpers/classes/AllianceClass';
 import { AllianceService } from 'src/app/services/alliance.service';
 @Component({
   selector: 'app-alliance',
@@ -8,7 +8,7 @@ import { AllianceService } from 'src/app/services/alliance.service';
 })
 export class AllianceComponent implements OnInit {
 
-  public alliances: AllianceProps[][]=[];
+  public alliances: Map<number,AllianceClass[]>=new Map();
 
 
   constructor(private allianceService: AllianceService) {
@@ -17,26 +17,16 @@ export class AllianceComponent implements OnInit {
 
 
   ngOnInit(): void {
-
     this.fillAlliances();
   }
-
   async fillAlliances(){
-    let files=await this.allianceService.fetchAlliance();
-    for(let i=0; i<=files.length-1;i+=3){
-      let temp: AllianceProps[]=[];
-      for(let j=0; j<=2;j++){
-      if((i+j)==files.length){
-        break;
-      }
-      else{
-        temp.push(files[i+j])
-      }
-      }
-      this.alliances.push(temp);
-    }
-
+   await this.allianceService.getAlliances();
+/*
+*/
+    this.alliances=this.allianceService.getManyAlliancesAsPages(2);
+    console.log("test", this.alliances);
   }
+
 }
 
 

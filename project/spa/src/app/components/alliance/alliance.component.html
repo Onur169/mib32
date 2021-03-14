@@ -6,14 +6,14 @@
   </p>
 
   <ngb-carousel class="carousel py-1 py-lg-5 border-0">
-    <ng-template *ngFor="let page of alliances" ngbSlide>
+    <ng-template *ngFor="let page of alliances | keyvalue" ngbSlide>
       <div class="d-flex justify-content-center flex-wrap">
-        <ng-container *ngFor="let icon of page">
-          <a class="m-1 m-md-4" href="{{ icon.url }}"
+        <ng-container *ngFor="let icon of page.value">
+          <a class="m-1 m-md-4" href="{{ icon.getPath() }}"
             ><img
               class="border border-primary alliance_image"
-              src="{{ icon.src }}"
-              alt="{{ icon.name }}"
+              src="{{ icon.getPicture().getLarge() }}"
+              alt="{{ icon.getName() }}"
           /></a>
         </ng-container>
       </div>
