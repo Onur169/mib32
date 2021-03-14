@@ -8,23 +8,23 @@
     </p>
   </div>
 </div>
-  <div class="d-inline-flex row mx-0 justify-content-around allCards py-2 py-md-4">
-    <ng-container *ngFor="let testimonial of allTestimonials">
-      <div class="card m-1 m-md-4">
-        <img class="card-img-top" src="{{testimonial.getImages().getSmall()}}" srcset="
-        {{testimonial.getImages().getSmall()}} 600w,
-        {{testimonial.getImages().getMedium()}} 750w,
-        {{testimonial.getImages().getLarge()}} 1000w"
-        alt="Card image cap">
-        <div class="card-body p-0">
-          <h5 class="bg-primary text-white card-title p-1 p-md-3">{{ testimonial.getHeadline() }}</h5>
-          <p class="card-text pb-2 pl-2">
-            {{ testimonial.getDescription() }}
-          </p>
-        </div>
+<div class="d-inline-flex row mx-0 justify-content-center px-0 allCards py-2 py-md-2">
+  <ng-container *ngFor="let testimonial of allTestimonials">
+    <div class="card m-1 m-md-3 m-md-5">
+      <img class="card-img-top" src="{{testimonial.getImages().getSmall()}}" srcset="
+      {{testimonial.getImages().getSmall()}} 600w,
+      {{testimonial.getImages().getMedium()}} 750w,
+      {{testimonial.getImages().getLarge()}} 1000w"
+      alt="Card image cap">
+      <div class="card-body p-0">
+        <h5 class="bg-primary text-white card-title p-1 p-md-3">{{ testimonial.getHeadline() }}</h5>
+        <p class="card-text pb-2 pl-2">
+          {{ testimonial.getDescription() }}
+        </p>
       </div>
-    </ng-container>
-  </div>
+    </div>
+  </ng-container>
+</div>
 </div>
 
 
