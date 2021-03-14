@@ -1,6 +1,6 @@
 .card> img{
   width: calc(10vw + 10vh);
-  height: calc(7vw + 7vh);
+  height: calc(11vw + 11vh);
   object-fit: cover;
   object-position: 0 0;
   min-width: 300px;
@@ -12,8 +12,4 @@
 
 .allCards{
   background-color: #e0dfde52;
-}
-
-.bg-primary{
-  margin-top: -60px;
 }
