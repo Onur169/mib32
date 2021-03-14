@@ -1,5 +1,6 @@
 {
   "name": "social_bot",
+  "module": "es6",
   "version": "1.0.0",
   "description": "Dieser Bot loggt sich in Socialplatforms wie Facebook ein und scraped Daten",
   "main": "index.js",
