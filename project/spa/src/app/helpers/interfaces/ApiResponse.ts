@@ -9,13 +9,14 @@
  *
  */
 
- import { Demonstration } from "./Demonstration";
+ import { Alliance } from "./Alliance";
+import { Demonstration } from "./Demonstration";
 import { Testimonial } from "./Testimonials";
 import { Throwback } from "./Throwback";
 
  export interface ApiResponse {
    ack: string;
-   data: Demonstration[] | Throwback[]| Testimonial[];
+   data: Demonstration[] | Throwback[]| Testimonial[]| Alliance[];
    prev_page_url: string;
    next_page_url: string;
    current_page: number;
