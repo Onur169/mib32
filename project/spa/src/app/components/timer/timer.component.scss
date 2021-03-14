@@ -4,6 +4,7 @@
     background-image: url('../../../assets/timer_background.jpg');
     background-position: 0 100%;
     background-repeat: no-repeat;
+    height: 100vh;
 
 }
 
@@ -52,9 +53,7 @@
     clip-path: polygon(0 0, 100% 0%, 88% 100%, 0% 100%);
     -webkit-clip-path: polygon(0 0, 100% 0%, 88% 100%, 0% 100%);
     z-index: 1;
-    position: absolute;
-    left: 0;
-    transform: translateY(12vw);
+    transform: translateY(-6vw);
     width: 34vw !important;
 }
 

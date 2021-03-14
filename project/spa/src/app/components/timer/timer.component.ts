@@ -7,6 +7,7 @@
  * Die Timer-Komponente erfüllt sämtliche Aufgaben zur Darstellung unseres Timer-Features
  * (und lässt momentan die erste Seite des Paginators seitens der API laden).
  */
+ import { gsap } from "gsap";
 
 import { Component, OnInit } from '@angular/core';
 import { interval, Subscription } from 'rxjs';
@@ -21,7 +22,7 @@ export class TimerComponent implements OnInit {
   private subscription: Subscription;
 
   public dateNow = new Date();
-  public dDay = new Date('Jan 01 2021 00:00:00');
+  public dDay = new Date();
   public timeDifference: number;
   public secondsToDday: number;
   public minutesToDday: number;
@@ -89,6 +90,7 @@ export class TimerComponent implements OnInit {
         hour: 'numeric'
       });
     }
+    this.slideEffect();
   }
 
   private getTimeDifference(newdate?: Date) {
@@ -123,5 +125,14 @@ export class TimerComponent implements OnInit {
           this.SecondsInAMinute *
           this.hoursInADay)
     );
+  }
+
+  ////////////////////GSAP/////////////////////
+  slideEffect(){
+    var tl = gsap.timeline();
+
+    tl.to({}, 1, {});
+    tl.from("#banner" ,{duration: 1, x: -800, ease: "power1.out"});//0.0 sec
+
   }
 }

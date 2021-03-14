@@ -7,6 +7,8 @@
  * Die Map-Komponente erfüllt sämtliche Aufgaben zur Darstellung unserer Map-Features
  * (und lässt momentan erst erste Seite des Paginators seitens der API laden und lädt die anderen Seiten nach).
  */
+ import { gsap } from "gsap";
+ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import { Component, OnInit } from '@angular/core';
 import { EventService } from 'src/app/services/event.service';
@@ -67,25 +69,27 @@ export class MapComponent implements OnInit {
     this.latitude = 51.165691;
     this.longitude = 10.451526;
     this.defaultLonLat = [this.longitude, this.latitude];
-    this.limiter = 30;
+    this.limiter = 50;
   }
 
   //personalisierter Standort wird abgefragt
   //die Map wird mit personalisiertem Standort befüllt
   //personalisierte Marker werden gesetzt
   ngOnInit(): void {
+    gsap.registerPlugin(ScrollTrigger);
+    this.scrollUp();
     this.getCoords();
 
-    this.getMarker(this.limiter);
+    this.getMarker(this.limiter, 8);
   }
 
   ngAfterContentInit() {
-    this.inizializeMap(this.customLonLat);
+    this.inizializeMap(this.customLonLat, 6);
     this.calculateDistance(this.mapSkalaValue);
   }
 
   //die Map wird mit dem Standort des Nutzers gefüllt
-  private inizializeMap(lonLat: Coordinate): void {
+  private inizializeMap(lonLat: Coordinate, zoom:number): void {
     lonLat = this.checkCoordinate(lonLat);
     this.map = new Map({
       controls: defaultControls().extend([new FullScreen()]),
@@ -98,7 +102,7 @@ export class MapComponent implements OnInit {
       view: new View({
         //der Nutzerort wird angezeigt
         center: fromLonLat(lonLat),
-        zoom: 10,
+        zoom: zoom,
       }),
       interactions: defaultInteractions().extend([new DragRotateAndZoom()]),
     });
@@ -124,7 +128,7 @@ export class MapComponent implements OnInit {
       });
 
     //entweder werden Marker von einem Default value geladen oder von dem Standort des Nutzers
-    this.calculateDistance(this.mapSkalaValue, this.customLong, this.customLat);
+    this.calculateDistance(this.mapSkalaValue, this.customLong, this.customLat, 9);
   }
 
   fetchAdress(options?: PositionOptions): Promise<GeolocationPosition> {
@@ -145,7 +149,7 @@ export class MapComponent implements OnInit {
 
   //fragt den eventService mit einer festen Anzahl an Zahlen und filtert den Response nach dem zeitlich aukutellen Event
   //zudem werden personalisierte Marker auf der Map angezeigt
-  async getMarker(limiter: number) {
+  async getMarker(limiter: number, zoom:number) {
     await this.eventService.getPages();
 
     await this.eventService.getPages('current_events', limiter);
@@ -158,7 +162,7 @@ export class MapComponent implements OnInit {
     this.currentEvent = this.eventService.markermanager.getNextEvent();
 
     //filtert alle Einträge nach dem zeitlich nächsten Event und speichert sie in einem extra Array (mapMarker) ab
-    //zeigt die Marker an 
+    //zeigt die Marker an
     this.eventService.markermanager.getMarkers().forEach((value, index) => {
       value.filter((value) => {
         if (value.getStartDate() == this.currentEvent!.getStartDate()) {
@@ -166,7 +170,7 @@ export class MapComponent implements OnInit {
         }
       });
     });
-    this.calculateDistance(this.mapSkalaValue);
+    this.calculateDistance(this.mapSkalaValue, 12);
   }
 
     /**
@@ -174,8 +178,9 @@ export class MapComponent implements OnInit {
    *@param scala -die Entfernung in Km
    *@param lon -optionaler Parameter, der Breitengrad des eigenen Standorts kann mitgegeben werden
    *@param lat -optionaler Parameter, der Längengrad des eigenen Standorts kann mitgegeben werden
+   *@param zoom -optionaler Parameter, Möglichkeit den Zoom mitzugeben
   **/
-  private calculateDistance(scala: number, lon?: number, lat?: number): void {
+  private calculateDistance(scala: number, lon?: number, lat?: number, zoom?: number): void {
     this.mapDistanceMarker = this.mapMarker;
     let coords: Coordinate;
     if (lon != undefined && lat != undefined) {
@@ -188,6 +193,9 @@ export class MapComponent implements OnInit {
       );
       this.map!.getView().setCenter(coords);
       this.markerCluster(this.map!, this.mapMarker);
+      if(zoom){
+        this.map!.getView().setZoom(zoom);
+      }
     } else {
       this.mapDistanceMarker = this.eventService.markermanager.getNextEvents(
         this.customLong,
@@ -229,7 +237,7 @@ export class MapComponent implements OnInit {
     distance: number,
     zoom: number,
     mapScreen: Map
-  ) {    
+  ) {
 
     let features = new Array(marker.length);
     let lonLat: Coordinate;
@@ -238,7 +246,7 @@ export class MapComponent implements OnInit {
     let container = document.getElementById('popup');
     let content = document.getElementById('popup-content');
     let closer = document.getElementById('popup-closer');
-    
+
     let Mname: string;
     let loc: string = '';
     let date: string;
@@ -394,5 +402,25 @@ export class MapComponent implements OnInit {
   //löscht den Wert aus dem Inputfenster
   deleteValue() {
     this.locationSearch = '';
+  }
+
+
+
+  ////////////////////GSAP///////////////////
+
+
+  scrollUp(){
+    var tl=gsap.from(".display-4",{
+      scrollTrigger: {
+        trigger:".search_input",
+        start:"bottom 90%",
+        end:"bottom 70%",
+        scrub: true,
+        markers: true,
+        toggleActions:"restart pause reverse pause" //wenn sichtbar, wenn nicht sichtbar, wenn wieder zurück
+      },
+      y: -100,
+      opacity:0
+    });
   }
 }

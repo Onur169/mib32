@@ -21,18 +21,19 @@ import { TimerComponent } from 'src/app/components/timer/timer.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/Home', pathMatch: 'full' },
-  {path: 'Home', component: LandingpageComponent},
-  {path: 'timer', component: TimerComponent},
-  {path: 'map', component: MapComponent},
-  {path: 'spenden', component: ActiveComponent},
-  {path: 'buendnis', component: AllianceComponent},
-  {path: 'persoenlichkeiten', component: TestimonialsComponent},
-  {path: 'faq', component: FaqComponent},
-  {path: 'rueckblick', component: ThrowbacksComponent}
-];
+  {path: 'Home', component: LandingpageComponent },
+    {path: '#Timer', component: TimerComponent},
+    {path: '#Karte', component: MapComponent},
+    {path: '#Rückblick', component: ThrowbacksComponent},
+    {path: '#Bündnis', component: AllianceComponent},
+    {path: '#Testimonials', component: TestimonialsComponent},
+    {path: '#FAQ', component: FaqComponent},
+    {path: '#Aktiv', component: ActiveComponent}
 
+
+]
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { anchorScrolling: 'enabled'})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

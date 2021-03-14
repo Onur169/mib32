@@ -21,6 +21,8 @@ import { FaqComponent } from './components/faq/faq.component';
 import { ActiveComponent } from './components/active/active.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { FilleroneComponent } from './components/filler/fillerone/fillerone.component';
+import { FillertwoComponent } from './components/filler/fillertwo/fillertwo.component';
+import { FillerthreeComponent } from './components/filler/fillerthree/fillerthree.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import { FilleroneComponent } from './components/filler/fillerone/fillerone.comp
     FooterComponent,
     FaqComponent,
     ActiveComponent,
-    FilleroneComponent
+    FilleroneComponent,
+    FillertwoComponent,
+    FillerthreeComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
