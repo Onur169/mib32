@@ -31,6 +31,7 @@ export class TestimonialsComponent implements OnInit {
       this.iterateTestimonials();
     }
     this.checkTestimonials(this.allTestimonials);
+    console.log(this.allTestimonials);
   }
 
   async iterateTestimonials(){

@@ -1,168 +1,162 @@
-//const puppeteer = require('puppeteer');
+const path = require("path");
+const fs = require('fs');
+const cliSelect = require('cli-select');
+const chalk = require('chalk');
 
 import * as puppeteer from 'puppeteer';
+import Api from './Api';
+import { Response } from './enums/Response';
 
-const fs = require('fs');
-
-const cookiesPath = './cookies.json';
-const configPath = './config.json';
-
-const config = require(configPath);
-
-const debug = false;
+const cookiesPath = path.join(__dirname) + '/cookies.json';
+const configPath = path.join(__dirname) + '/config.json';
+const debug = true;
 const SLEEP_24_HOURS = 1000 * 60 * 24;
 
-const hashtagToSearch = 'Klima';
-const actionDelay = 10;
-const facebookUrl = 'https://www.facebook.com';
-const facebookLoginUrl = `${facebookUrl}/login/`;
-const facebookHashtagSearchPage = `${facebookUrl}/hashtag/${hashtagToSearch}`;
-const facebookEmailSelector = '#email';
-const facebookPasswordSelector = '#pass';
-const facebookLoginButtonSelector = '#loginbutton';
-const facebookCookieAcceptButtonSelector = '[title*="akzeptieren"]';
-const hasLoggedInSelector = 'form[action*="logout.php"]';
+import FacebookBot from './FacebookBot';
+import { HashtagStat } from './interfaces/HashtagStat';
 
 /*
     networkidle0 comes handy for SPAs that load resources with fetch requests.
     networkidle2 comes handy for pages that do long-polling or any other side activity.
 */
 
-import { sleep, successLog, errorLog, warningLog, getHashtagCountForFacebook } from './functions';
-
 (async () => {
+
+    let socialBot = null;
+    let api = new Api();
+    let selectedId = null;
+    let selectedSocialMediaType = null;
+    let selectedHashtag = null;
+    let allowedSocialMediaTypes = ["facebook", "twitter"];
 
     try {
 
-        console.clear();
-        successLog("Starte den Bot!");
+        let list = await api.fetch("socialmedia/hashtagstat?page=1", Response.GET);
 
-        let browser = await puppeteer.launch({
-            headless: false
-        });
-        let page = await browser.newPage();
+        if(list.ack === Response.AckSuccess) {
 
-        let acceptCookies = async () => {
+            let data = list.data as HashtagStat[];
+            let options = [];
 
-            try {
-
-                let result = await page.waitForSelector(facebookCookieAcceptButtonSelector, {
-                    timeout: actionDelay
-                });
-
-                await result.click();
-
-                Promise.resolve(result);
-
-            } catch (error) {
-
-                Promise.reject(error);
-
+            for(let currentHashtagStat of data) {
+                options.push(`#${currentHashtagStat.hashtag} - ${currentHashtagStat.name}`); 
             }
 
-        };
+            await cliSelect({
+                values: options,
+                valueRenderer: (value, selected) => {
+                    if (selected) {
+                        return chalk.underline(value);
+                    }
+                    return value;
+                },
+            }).then((response) => {
 
-        let cookies = null;
+                selectedId = data[response.id].id;
+                selectedSocialMediaType = data[response.id].name;
+                selectedHashtag = data[response.id].hashtag;
 
-        try {
-            cookies = require(cookiesPath);
-        } catch (error) {
-            fs.writeFileSync(cookiesPath, '{}');
-            cookies = require(cookiesPath);
-        }
+            }).catch(() => {
 
-        if (Object.keys(cookies).length) {
+                throw new Error("Cancelled");
 
-            warningLog("Du hast dich vorher schonmal eingeloggt! Gehe direkt zur Hashtag-Suchseite!");
-
-            await page.setCookie(...cookies);
-
-            await page.goto(facebookHashtagSearchPage, {
-                waitUntil: 'networkidle2'
             });
-
-            let hashtagCount = await getHashtagCountForFacebook(page);
-
-            successLog(`Der Hashtagcount für ${hashtagToSearch} lautet: ${hashtagCount}`);
 
         } else {
 
-            warningLog("Du bist nicht eingeloggt! Wir loggen uns jetzt ein.");
+            throw new Error("Api fail");
 
-            await page.goto(facebookLoginUrl, {
-                waitUntil: 'networkidle0'
+        }
+
+        if(allowedSocialMediaTypes.includes(selectedSocialMediaType)) {
+
+            let browser = await puppeteer.launch({
+                headless: false
             });
-
-            await acceptCookies().then(result => {
-                successLog("Cookie erfolgreich akzeptiert!");
-            }).catch(error => {
-                throw new Error("Cookie konnte nicht akzeptiert werden!")
-            });
-
-            await page.type(facebookEmailSelector, config.username, {
-                delay: actionDelay
-            });
-
-            successLog("Usernamen eingegeben!");
-
-            await page.type(facebookPasswordSelector, config.password, {
-                delay: actionDelay
-            });
-
-            successLog("Passwort eingegeben!");
-
-            await page.click(facebookLoginButtonSelector);
-
-            successLog("Formular abgesendet!");
-
-            await page.waitForNavigation({
-                waitUntil: 'networkidle0',
-                timeout: actionDelay
-            });
-
-            successLog("Gehe jetzt auf die Hashtag-Suchseite!");
-            await page.goto(facebookHashtagSearchPage, {
-                waitUntil: 'networkidle2'
-            });
-
+    
+            let page = await browser.newPage();
+    
+            let cookies = null;
+            let config = null;
+    
             try {
-
-                await page.waitForSelector(hasLoggedInSelector);
-
-                successLog("Erfolgreich eingeloggt!");
-
-                let currentCookies = await page.cookies();
-
-                successLog("Cookies ausgelesen!");
-
-                fs.writeFileSync(cookiesPath, JSON.stringify(currentCookies));
-
-                successLog("Cookies gespeichert!");
-
-                let hashtagCount = await getHashtagCountForFacebook(page);
-
-                successLog(`Der Hashtagcount für ${hashtagToSearch} lautet: ${hashtagCount}`);
-
+    
+                cookies = require(cookiesPath);
+                config = require(configPath);
+    
             } catch (error) {
-
-                throw new Error("Der Bot konnte sich nicht in Facebook einloggen!");
-
+    
+                fs.writeFileSync(cookiesPath, '{}');
+    
+                cookies = require(cookiesPath);
+                config = require(configPath);
+    
             }
 
+            switch (selectedSocialMediaType) {
+                case 'facebook':
+                    socialBot = new FacebookBot(page, cookies, config, selectedHashtag);
+                    break;
+                /*
+                case 'twitter':
+                    socialBot = new TwitterBot(page, cookies, config);
+                    break;
+                */
+                default:
+                    throw new Error("Unknown social media type");
+                    break;
+            }
+
+            console.clear();
+            socialBot.successLog(`Starte den Bot für den Hashtag #${selectedHashtag} - ${selectedSocialMediaType}!`);
+
+            if (Object.keys(cookies).length) {
+    
+                let count = await socialBot.scrapeAfterLogin();
+
+                socialBot.successLog(`Der Hashtagcount für ${socialBot.getHashtagToSearch()} lautet: ${count}`);
+
+                let list = await api.fetch(`socialmedia/${selectedId}/hashtagstat?counter=${count}`, Response.PUT);
+
+                if(list.ack == Response.AckSuccess) {
+                    socialBot.successLog(`Der Hashtagcount von ${count} wurde durch die API geupdated!`);
+                } else {
+                    socialBot.errorLog(`Der Hashtagcount von ${count} wurde NICHT durch die API geupdated!`);
+                }
+    
+            } else {
+    
+                let count = await socialBot.loginAndScrape(fs, cookiesPath);
+    
+                let list = await api.fetch(`socialmedia/${selectedId}/hashtagstat?counter=${count}`, Response.PUT);
+                
+                if(list.ack == Response.AckSuccess) {
+                    socialBot.successLog(`Der Hashtagcount von ${count} wurde durch die API geupdated!`);
+                } else {
+                    socialBot.errorLog(`Der Hashtagcount von ${count} wurde NICHT durch die API geupdated!`);
+                }
+    
+            }
+
+        } else {
+
+            throw new Error("Not supported social media type");
+                
         }
 
     } catch (error) {
 
-        errorLog(error);
+        //socialBot.errorLog(error);
 
         process.exit(1);
 
     } finally {
 
+        /*
         if (debug) {
-            warningLog("Script wird angehalten. Strg+C um Script zu beenden.")
-            await sleep(SLEEP_24_HOURS);
-        }
+            socialBot.warningLog("Script wird angehalten. Strg+C um Script zu beenden.")
+            await socialBot.sleep(SLEEP_24_HOURS);
+        }*/
 
         process.exit(0);
 

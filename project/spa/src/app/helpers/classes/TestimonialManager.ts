@@ -103,6 +103,37 @@ import { TestimonialClass } from "./TestimonialClass";
           return undefined;
         }
       }
+      /**
+       * Bau eine Map nach den gewünschten Einträgen an elementen pro Seite nach.
+       * **/
+      getManyAlliancesAsPages(elementsPerPage: number): Map<number,TestimonialClass[]>{
+
+        let allValues=this.getAllValues();
+
+        let pageCounter: number=Math.round(allValues.length/elementsPerPage);
+      //  console.log("pageCounter",pageCounter,"alliances.length", this.alliances.length,"lementsPerPage", elementsPerPage);
+
+
+        let paginator: Map<number,TestimonialClass[]>=new Map();
+
+        let pageValue=0;
+    /**/let newTestimonialOfPage: TestimonialClass[]=[];
+        for(let page=0; page<pageCounter; page++){
+          newTestimonialOfPage=[];
+          for(let alliance=0; alliance<=elementsPerPage-1; alliance++){
+
+            if(allValues[pageValue+alliance]){
+              newTestimonialOfPage.push(allValues[pageValue+alliance]);
+            paginator.set(page, newTestimonialOfPage);
+            }
+            else break;
+          }
+          pageValue+=elementsPerPage;
+        }
+
+
+        return paginator;
+      }
 
 
     getPageValue(page:number): TestimonialClass[]|undefined{

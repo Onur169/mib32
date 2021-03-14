@@ -38,6 +38,8 @@ use Slim\Routing\RouteCollectorProxy;
 // Filter
 $filter = new Filter();
 $filter->register("current_events", 'NOW() < events.start_at', ['events']);
+$filter->register("only_facebook", 'social_media_types.name = "facebook"', ['social_media_hashtag_stats']);
+$filter->register("only_twitter", 'social_media_types.name = "twitter"', ['social_media_hashtag_stats']);
 
 // Create Container using PHP-DI
 $container = new Container();
@@ -103,6 +105,8 @@ try {
 
         // Social-Media-Stat Calls
         $group->post('/socialmedia/{id}/hashtagstat', SocialMediaController::class . ':addStat');
+        $group->get('/socialmedia/hashtagstat', SocialMediaController::class . ':getStat');
+        $group->put('/socialmedia/{id}/hashtagstat', SocialMediaController::class . ':editStat');
 
     });
 
