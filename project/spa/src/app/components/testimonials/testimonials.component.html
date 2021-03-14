@@ -8,9 +8,10 @@
     </p>
   </div>
 </div>
-<div class="d-inline-flex row mx-0 justify-content-center px-0 allCards py-2 py-md-2">
+<div *ngIf="hasTestimonials; else elseBlock">
+<div class="d-inline-flex row mx-0 justify-content-center px-0 allCards py-2 py-lg-4">
   <ng-container *ngFor="let testimonial of allTestimonials">
-    <div class="card m-1 m-md-3 m-md-5">
+    <div class="card m-1 m-md-3 mx-lg-4">
       <img class="card-img-top" src="{{testimonial.getImages().getSmall()}}" srcset="
       {{testimonial.getImages().getSmall()}} 600w,
       {{testimonial.getImages().getMedium()}} 750w,
@@ -27,4 +28,7 @@
 </div>
 </div>
 
-
+<ng-template #elseBlock>
+  <div class="text bg-primary text-white fs-2 text-center py-4 px-3">Wir sind bemüt Dir eine Liste zusammenzustellen, die Dir die Auskunft gibt, was über uns erzählt wird</div>
+</ng-template>
+</div>

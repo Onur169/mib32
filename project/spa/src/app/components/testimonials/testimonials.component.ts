@@ -11,6 +11,7 @@ import { TestimonialService } from 'src/app/services/testimonial.service';
 export class TestimonialsComponent implements OnInit {
 
   allTestimonials: TestimonialClass[]=[];
+  hasTestimonials: boolean = false;
 
   constructor(private testimonialService: TestimonialService) {
 
@@ -29,7 +30,7 @@ export class TestimonialsComponent implements OnInit {
 
       this.iterateTestimonials();
     }
-    console.log(this.allTestimonials)
+    this.checkTestimonials(this.allTestimonials);
   }
 
   async iterateTestimonials(){
@@ -42,6 +43,14 @@ export class TestimonialsComponent implements OnInit {
     else{
       this.allTestimonials=manager.getAllValues();
     }
+
   }
 
+  checkTestimonials(testimonials: TestimonialClass[]){
+    if(testimonials == []){
+      this.hasTestimonials = false;
+    }else{
+      this.hasTestimonials = true;
+    }
+  }
 }
