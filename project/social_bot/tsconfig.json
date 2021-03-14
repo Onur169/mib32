@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "module": "commonjs",
+        "baseUrl": "./",
+        "rootDir": "./src", 
+        "moduleResolution": "node",
+        "noImplicitAny": false,
+        "allowJs": true,
+        "outDir": "./dist",
+        "paths": {
+            "app/*": ["./*"],
+            "src/*": ["./src/*"]
+        }
+    },
+    "include": [
+        "node_modules/@types/puppeteer/index.d.ts"
+      ]
+}
