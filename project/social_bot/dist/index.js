@@ -9,9 +9,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-let path = require("path");
-const puppeteer = require("puppeteer");
+const path = require("path");
 const fs = require('fs');
+const cliSelect = require('cli-select');
+const chalk = require('chalk');
+const puppeteer = require("puppeteer");
+const Api_1 = require("./Api");
+const Response_1 = require("./enums/Response");
 const cookiesPath = path.join(__dirname) + '/cookies.json';
 const configPath = path.join(__dirname) + '/config.json';
 const debug = true;
@@ -23,32 +27,93 @@ const FacebookBot_1 = require("./FacebookBot");
 */
 (() => __awaiter(void 0, void 0, void 0, function* () {
     let socialBot = null;
+    let api = new Api_1.default();
+    let selectedId = null;
+    let selectedSocialMediaType = null;
+    let selectedHashtag = null;
+    let allowedSocialMediaTypes = ["facebook", "twitter"];
     try {
-        let browser = yield puppeteer.launch({
-            headless: false
-        });
-        let page = yield browser.newPage();
-        let cookies = null;
-        let config = null;
-        try {
-            cookies = require(cookiesPath);
-            config = require(configPath);
-        }
-        catch (error) {
-            fs.writeFileSync(cookiesPath, '{}');
-            cookies = require(cookiesPath);
-            config = require(configPath);
-        }
-        socialBot = new FacebookBot_1.default(page, cookies, config);
-        console.clear();
-        socialBot.successLog("Starte den Bot!");
-        if (Object.keys(cookies).length) {
-            let count = yield socialBot.scrapeAfterLogin();
-            socialBot.successLog(`Der Hashtagcount für ${socialBot.getHashtagToSearch()} lautet: ${count}`);
+        let list = yield api.fetch("socialmedia/hashtagstat?page=1", Response_1.Response.GET);
+        if (list.ack === Response_1.Response.AckSuccess) {
+            let data = list.data;
+            let options = [];
+            for (let currentHashtagStat of data) {
+                options.push(`#${currentHashtagStat.hashtag} - ${currentHashtagStat.name}`);
+            }
+            yield cliSelect({
+                values: options,
+                valueRenderer: (value, selected) => {
+                    if (selected) {
+                        return chalk.underline(value);
+                    }
+                    return value;
+                },
+            }).then((response) => {
+                selectedId = data[response.id].id;
+                selectedSocialMediaType = data[response.id].name;
+                selectedHashtag = data[response.id].hashtag;
+            }).catch(() => {
+                throw new Error("Cancelled");
+            });
         }
         else {
-            let count = yield socialBot.loginAndScrape(fs, cookiesPath);
-            socialBot.successLog(`Der Hashtagcount für ${socialBot.getHashtagToSearch()} lautet: ${count}`);
+            throw new Error("Api fail");
+        }
+        if (allowedSocialMediaTypes.includes(selectedSocialMediaType)) {
+            let browser = yield puppeteer.launch({
+                headless: false
+            });
+            let page = yield browser.newPage();
+            let cookies = null;
+            let config = null;
+            try {
+                cookies = require(cookiesPath);
+                config = require(configPath);
+            }
+            catch (error) {
+                fs.writeFileSync(cookiesPath, '{}');
+                cookies = require(cookiesPath);
+                config = require(configPath);
+            }
+            switch (selectedSocialMediaType) {
+                case 'facebook':
+                    socialBot = new FacebookBot_1.default(page, cookies, config, selectedHashtag);
+                    break;
+                /*
+                case 'twitter':
+                    socialBot = new TwitterBot(page, cookies, config);
+                    break;
+                */
+                default:
+                    throw new Error("Unknown social media type");
+                    break;
+            }
+            console.clear();
+            socialBot.successLog(`Starte den Bot für den Hashtag #${selectedHashtag} - ${selectedSocialMediaType}!`);
+            if (Object.keys(cookies).length) {
+                let count = yield socialBot.scrapeAfterLogin();
+                socialBot.successLog(`Der Hashtagcount für ${socialBot.getHashtagToSearch()} lautet: ${count}`);
+                let list = yield api.fetch(`socialmedia/${selectedId}/hashtagstat?counter=${count}`, Response_1.Response.PUT);
+                if (list.ack == Response_1.Response.AckSuccess) {
+                    socialBot.successLog(`Der Hashtagcount von ${count} wurde durch die API geupdated!`);
+                }
+                else {
+                    socialBot.errorLog(`Der Hashtagcount von ${count} wurde NICHT durch die API geupdated!`);
+                }
+            }
+            else {
+                let count = yield socialBot.loginAndScrape(fs, cookiesPath);
+                let list = yield api.fetch(`socialmedia/${selectedId}/hashtagstat?counter=${count}`, Response_1.Response.PUT);
+                if (list.ack == Response_1.Response.AckSuccess) {
+                    socialBot.successLog(`Der Hashtagcount von ${count} wurde durch die API geupdated!`);
+                }
+                else {
+                    socialBot.errorLog(`Der Hashtagcount von ${count} wurde NICHT durch die API geupdated!`);
+                }
+            }
+        }
+        else {
+            throw new Error("Not supported social media type");
         }
     }
     catch (error) {

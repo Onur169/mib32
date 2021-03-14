@@ -134,7 +134,7 @@ class SocialMediaController
             $params = $request->getQueryParams();
 
             $usedFilter = $params["filter"] ?? null;
-            $filterSql = $this->filter->build("social_media_types", $usedFilter);
+            $filterSql = $this->filter->build("social_media_hashtag_stats", $usedFilter);
 
             $api = new Api($this->db, $request);
             $prevPageUrl = $api->getPrevPageUrl();
@@ -195,6 +195,43 @@ class SocialMediaController
 
             $jsonResponse = ResponseBuilder::build(ResponseBuilder::SUCCESS_RESPONSE_VAL, [
                 ResponseBuilder::INSERT_ID_RESPONSE_KEY => $insertId,
+            ]);
+
+        } catch (\Throwable $th) {
+
+            $jsonResponse = ResponseBuilder::build(ResponseBuilder::ERROR_RESPONSE_KEY, [
+                ResponseBuilder::CODE_RESPONSE_KEY => $th->getCode(),
+                ResponseBuilder::MSG_RESPONSE_KEY => $th->getMessage(),
+            ]);
+
+        } finally {
+
+            $response->getBody()->write($jsonResponse);
+
+            return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
+
+        }
+
+    }
+
+    public function editStat(Request $request, Response $response, array $args): Response
+    {
+
+        try {
+
+            $params = $request->getQueryParams();
+
+            $id = $args['id'];
+            $counter = (int) $params["counter"];
+
+            $updateArray = [
+                "counter" => $counter
+            ];
+
+            $updateId = $this->db->update("social_media_hashtag_stats", $id, $updateArray);
+
+            $jsonResponse = ResponseBuilder::build(ResponseBuilder::SUCCESS_RESPONSE_VAL, [
+                ResponseBuilder::UPDATE_ID_RESPONSE_KEY => $updateId,
             ]);
 
         } catch (\Throwable $th) {

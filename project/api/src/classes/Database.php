@@ -164,6 +164,8 @@ class Database
     public function update(string $table, string $id, array $updateArray)
     {
         
+        // TODO: nicht existierende id = exception throwen
+
         $columnWithValues = [];
         
         foreach($updateArray as $updateKey => $updateValue) {

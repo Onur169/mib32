@@ -11,14 +11,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const SocialBot_1 = require("./SocialBot");
 class FacebookBot extends SocialBot_1.default {
-    constructor(page, cookies, config) {
+    constructor(page, cookies, config, hashTagToSearch) {
         super(page, cookies, config);
         this.page = page;
         this.cookies = cookies;
         this.config = config;
         this.url = 'https://www.facebook.com';
         this.loginUrl = `${this.url}/login/`;
-        this.hashtagToSearch = 'Klima';
+        this.hashtagToSearch = hashTagToSearch;
         this.hashtagSearchPageUrl = `${this.url}/hashtag/${this.hashtagToSearch}`;
         this.emailSelector = '#email';
         this.passwordSelector = '#pass';

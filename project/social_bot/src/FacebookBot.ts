@@ -18,7 +18,7 @@ class FacebookBot extends SocialBot {
     cookies: any;
     config: any;
 
-    constructor(page: puppeteer.Page, cookies: any, config: any) {
+    constructor(page: puppeteer.Page, cookies: any, config: any, hashTagToSearch: string) {
 
         super(page, cookies, config);
 
@@ -28,7 +28,7 @@ class FacebookBot extends SocialBot {
 
         this.url = 'https://www.facebook.com';
         this.loginUrl = `${this.url}/login/`;
-        this.hashtagToSearch = 'Klima';
+        this.hashtagToSearch = hashTagToSearch;
         this.hashtagSearchPageUrl = `${this.url}/hashtag/${this.hashtagToSearch}`;
         this.emailSelector = '#email';
         this.passwordSelector = '#pass';
