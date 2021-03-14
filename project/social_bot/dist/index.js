@@ -1,5 +1,4 @@
 "use strict";
-//const puppeteer = require('puppeteer');
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -10,10 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+let path = require("path");
 const puppeteer = require("puppeteer");
 const fs = require('fs');
-const cookiesPath = './cookies.json';
-const configPath = './config.json';
+const cookiesPath = path.join(__dirname) + '/cookies.json';
+const configPath = path.join(__dirname) + '/config.json';
 const debug = true;
 const SLEEP_24_HOURS = 1000 * 60 * 24;
 const FacebookBot_1 = require("./FacebookBot");
@@ -52,14 +52,15 @@ const FacebookBot_1 = require("./FacebookBot");
         }
     }
     catch (error) {
-        socialBot.errorLog(error);
+        //socialBot.errorLog(error);
         process.exit(1);
     }
     finally {
+        /*
         if (debug) {
-            socialBot.warningLog("Script wird angehalten. Strg+C um Script zu beenden.");
-            yield socialBot.sleep(SLEEP_24_HOURS);
-        }
+            socialBot.warningLog("Script wird angehalten. Strg+C um Script zu beenden.")
+            await socialBot.sleep(SLEEP_24_HOURS);
+        }*/
         process.exit(0);
     }
 }))();

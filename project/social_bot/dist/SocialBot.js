@@ -62,17 +62,14 @@ class SocialBot {
     }
     scrapeAfterLogin() {
         return __awaiter(this, void 0, void 0, function* () {
-            this.successLog("Gehe jetzt auf die Hashtag-Suchseite!!");
             try {
+                this.warningLog("Du hast dich vorher schonmal eingeloggt! Gehe direkt zur Hashtag-Suchseite!");
+                yield this.page.setCookie(...this.cookies);
                 yield this.page.goto(this.hashtagSearchPageUrl, {
                     waitUntil: 'networkidle2'
                 });
                 yield this.page.waitForSelector(this.hasLoggedInSelector);
                 this.successLog("Erfolgreich eingeloggt!");
-                this.successLog("Gehe zur Hashtagsuch Seite!");
-                yield this.page.goto(this.hashtagSearchPageUrl, {
-                    waitUntil: 'networkidle2'
-                });
                 let hashtagCount = yield this.getHashtagCount();
                 return new Promise(resolve => {
                     resolve(hashtagCount);
@@ -89,7 +86,7 @@ class SocialBot {
     loginAndScrape(fs, cookiesPath) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                //this.warningLog("Du bist nicht eingeloggt! Wir loggen uns jetzt ein.");
+                this.warningLog("Du bist nicht eingeloggt! Wir loggen uns jetzt ein.");
                 yield this.page.goto(this.loginUrl, {
                     waitUntil: 'networkidle0'
                 });

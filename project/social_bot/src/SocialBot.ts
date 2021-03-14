@@ -80,9 +80,10 @@ class SocialBot implements SocialMedia{
 
     public async scrapeAfterLogin(): Promise<number> {
 
-        this.successLog("Gehe jetzt auf die Hashtag-Suchseite!!");
-
         try {
+
+            this.warningLog("Du hast dich vorher schonmal eingeloggt! Gehe direkt zur Hashtag-Suchseite!");
+            await this.page.setCookie(...this.cookies);
 
             await this.page.goto(this.hashtagSearchPageUrl, {
                 waitUntil: 'networkidle2'
@@ -91,12 +92,6 @@ class SocialBot implements SocialMedia{
             await this.page.waitForSelector(this.hasLoggedInSelector);
 
             this.successLog("Erfolgreich eingeloggt!");
-
-            this.successLog("Gehe zur Hashtagsuch Seite!");
-
-            await this.page.goto(this.hashtagSearchPageUrl, {
-                waitUntil: 'networkidle2'
-            });
     
             let hashtagCount = await this.getHashtagCount();
 
@@ -120,7 +115,7 @@ class SocialBot implements SocialMedia{
 
         try {
             
-            //this.warningLog("Du bist nicht eingeloggt! Wir loggen uns jetzt ein.");
+            this.warningLog("Du bist nicht eingeloggt! Wir loggen uns jetzt ein.");
 
             await this.page.goto(this.loginUrl, {
                 waitUntil: 'networkidle0'
