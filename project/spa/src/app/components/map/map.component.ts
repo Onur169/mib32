@@ -7,7 +7,7 @@
  * Die Map-Komponente erfüllt sämtliche Aufgaben zur Darstellung unserer Map-Features
  * (und lässt momentan erst erste Seite des Paginators seitens der API laden und lädt die anderen Seiten nach).
  */
- import { gsap } from "gsap";
+ import { gsap } from 'gsap';
  import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import { Component, OnInit } from '@angular/core';
@@ -416,11 +416,13 @@ export class MapComponent implements OnInit {
         start:"bottom 90%",
         end:"bottom 70%",
         scrub: true,
-        markers: true,
+        markers: false,
         toggleActions:"restart pause reverse pause" //wenn sichtbar, wenn nicht sichtbar, wenn wieder zurück
       },
       y: -100,
       opacity:0
     });
+
+
   }
 }
