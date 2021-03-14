@@ -7,6 +7,8 @@
  * Die Map-Komponente erfüllt sämtliche Aufgaben zur Darstellung unserer Map-Features
  * (und lässt momentan erst erste Seite des Paginators seitens der API laden und lädt die anderen Seiten nach).
  */
+ import { gsap } from "gsap";
+ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import { Component, OnInit } from '@angular/core';
 import { EventService } from 'src/app/services/event.service';
@@ -74,6 +76,8 @@ export class MapComponent implements OnInit {
   //die Map wird mit personalisiertem Standort befüllt
   //personalisierte Marker werden gesetzt
   ngOnInit(): void {
+    gsap.registerPlugin(ScrollTrigger);
+    this.scrollUp();
     this.getCoords();
 
     this.getMarker(this.limiter, 8);
@@ -158,7 +162,7 @@ export class MapComponent implements OnInit {
     this.currentEvent = this.eventService.markermanager.getNextEvent();
 
     //filtert alle Einträge nach dem zeitlich nächsten Event und speichert sie in einem extra Array (mapMarker) ab
-    //zeigt die Marker an 
+    //zeigt die Marker an
     this.eventService.markermanager.getMarkers().forEach((value, index) => {
       value.filter((value) => {
         if (value.getStartDate() == this.currentEvent!.getStartDate()) {
@@ -233,7 +237,7 @@ export class MapComponent implements OnInit {
     distance: number,
     zoom: number,
     mapScreen: Map
-  ) {    
+  ) {
 
     let features = new Array(marker.length);
     let lonLat: Coordinate;
@@ -242,7 +246,7 @@ export class MapComponent implements OnInit {
     let container = document.getElementById('popup');
     let content = document.getElementById('popup-content');
     let closer = document.getElementById('popup-closer');
-    
+
     let Mname: string;
     let loc: string = '';
     let date: string;
@@ -398,5 +402,25 @@ export class MapComponent implements OnInit {
   //löscht den Wert aus dem Inputfenster
   deleteValue() {
     this.locationSearch = '';
+  }
+
+
+
+  ////////////////////GSAP///////////////////
+
+
+  scrollUp(){
+    var tl=gsap.from(".display-4",{
+      scrollTrigger: {
+        trigger:".search_input",
+        start:"bottom 90%",
+        end:"bottom 70%",
+        scrub: true,
+        markers: true,
+        toggleActions:"restart pause reverse pause" //wenn sichtbar, wenn nicht sichtbar, wenn wieder zurück
+      },
+      y: -100,
+      opacity:0
+    });
   }
 }

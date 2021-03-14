@@ -6,7 +6,7 @@
     </div>
     <div class="px-2 px-lg-3 w-50">
       <mat-form-field>
-      <input  matInput placeholder="Wo möchtest Du mitstreiken?" (enter) = searchLoacation() (mouseout) = searchLoacation() [(ngModel)]="locationSearch" (click) = deleteValue()>
+      <input id="search_input"  matInput placeholder="Wo möchtest Du mitstreiken?" (enter) = searchLoacation() (mouseout) = searchLoacation() [(ngModel)]="locationSearch" (click) = deleteValue()>
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
       </div>
@@ -18,7 +18,7 @@
         <div id="popup-content"></div>
         </div>
     </div>
-  <div class="d-flex">
+  <div class="d-flex justify-content-center">
   <div class="bg-info px-3">
     <mat-slider #mapSlider value="50" min="10" max="150" tickInterval="10" thumbLabel [displayWith]="formatLabel" (pointerup)="calculateEvents(mapSlider.value)"></mat-slider>
     <div class="d-flex justify-content-between">
@@ -27,8 +27,8 @@
   </div>
   </div>
   </div>
-  <div class="d-flex justify-content-center m-0 m-md-4">
-  <div class="border border-info w-50 p-3 p-md-2">
+  <div class="d-flex justify-content-center m-2 mb-md-5">
+  <div class="border border-primary w-50 p-3 p-md-2">
     <div class="text display-5 text-primary text-center p-2 p-lg-1">Dein nächster Streik:</div>
     <div class="text display-5 text-primary text-center p-0 p-lg-1">{{ day }} {{ place }}</div>
   </div>
