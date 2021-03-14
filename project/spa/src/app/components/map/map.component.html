@@ -4,6 +4,8 @@
       <p class="display-4 text-primary mb-0">Mach mit!</p>
       <p class="text text-primary">Schaue bitte wo wir für Dich den nächsten Streik rausgefunden haben.</p>
     </div>
+
+    <div *ngIf="hasEventMarker; else elseBlock">
     <div class="px-2 px-lg-3 w-50">
       <mat-form-field>
       <input id="search_input"  matInput placeholder="Wo möchtest Du mitstreiken?" (enter) = searchLoacation() (mouseout) = searchLoacation() [(ngModel)]="locationSearch" (click) = deleteValue()>
@@ -11,7 +13,6 @@
     </mat-form-field>
       </div>
       <div class="text-primary"> {{ error }}</div>
-    </div>
     <div id="map" class="map mt-3">
       <div id="popup" class="ol-popup">
         <a href="#" id="popup-closer" class="ol-popup-closer"></a>
@@ -33,5 +34,11 @@
     <div class="text display-5 text-primary text-center p-0 p-lg-1">{{ day }} {{ place }}</div>
   </div>
 </div>
+</div>
+
+<ng-template #elseBlock>
+  <div class="text bg-primary text-white fs-2 text-center py-4 px-3">Leider haben wir noch keine Aktionen zum kommenden Streik. Bitte schaue zu einem späteren Zeitpunkt vorbei</div>
+</ng-template>
+
   </div>
 
