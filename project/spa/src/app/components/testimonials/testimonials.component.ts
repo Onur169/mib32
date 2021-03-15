@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { TestimonialClass } from 'src/app/helpers/classes/TestimonialClass';
 import { TestimonialService } from 'src/app/services/testimonial.service';
 
+import { gsap } from 'gsap';
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 @Component({
   selector: 'app-testimonials',
   templateUrl: './testimonials.component.html',
@@ -53,8 +55,10 @@ export class TestimonialsComponent implements OnInit {
     if (manager.hasNextPage()) {
       await this.testimonialService.fetchTestimonials(manager.getNextPage());
       await this.iterateTestimonials();
-    } else {
-      this.allTestimonials = manager.getAllValues();
+    }
+    else{
+      this.allTestimonials=manager.getAllValues();
+      ScrollTrigger.refresh(true);
     }
   }
 

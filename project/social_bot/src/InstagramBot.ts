@@ -2,7 +2,7 @@ import SocialBot from "./SocialBot";
 import * as puppeteer from 'puppeteer';
 import { SocialType } from "./enums/SocialType";
 
-class FacebookBot extends SocialBot {
+class InstagramBot extends SocialBot {
 
     url: string;
     loginUrl: string;
@@ -24,21 +24,21 @@ class FacebookBot extends SocialBot {
 
         super(page, cookies, config);
 
-        this.type = SocialType.Facebook;
+        this.type = SocialType.Instagram;
 
         this.page = page;
         this.cookies = cookies;
         this.config = config;
 
-        this.url = 'https://www.facebook.com';
-        this.loginUrl = `${this.url}/login/`;
+        this.url = 'https://www.instagram.com';
+        this.loginUrl = null;
         this.hashtagToSearch = hashTagToSearch;
-        this.hashtagSearchPageUrl = `${this.url}/hashtag/${this.hashtagToSearch}`;
-        this.emailSelector = '#email';
-        this.passwordSelector = '#pass';
-        this.loginButtonSelector = '#loginbutton';
-        this.acceptButtonSelector = '[title*="akzeptieren"]';
-        this.hasLoggedInSelector = 'form[action*="logout.php"]';
+        this.hashtagSearchPageUrl = `${this.url}/explore/tags/${this.hashtagToSearch}`;
+        this.emailSelector = null;
+        this.passwordSelector = null;
+        this.loginButtonSelector = null;
+        this.acceptButtonSelector = null;
+        this.hasLoggedInSelector = null;
         
     }
 
@@ -50,7 +50,12 @@ class FacebookBot extends SocialBot {
     
                 let indicatorString = 'gepostet';
                 let items = Array.from(document.querySelectorAll("span"));
+
+                return new Promise(resolve => {
+                    resolve(99999);
+                });
                 
+                /*
                 for (let item of items) {
     
                     let itemContent = item.textContent;
@@ -77,6 +82,7 @@ class FacebookBot extends SocialBot {
                     }
     
                 }
+                */
     
                 return new Promise(reject => {
                     reject(null);
@@ -101,4 +107,4 @@ class FacebookBot extends SocialBot {
 }
 
 
-export default FacebookBot;
+export default InstagramBot;

@@ -1,12 +1,12 @@
-<div class="p-1 p-lg-5">
-  <p class="display-4 text-primary mb-0">Bündnis</p>
-  <p class="text text-primary">
+<div class="p-2 p-lg-5">
+  <p id="alliance_head" class="display-4 text-primary mb-0">Bündnis</p>
+  <p id="alliance_cover" class="text text-primary">
     Unsere Interessen sind global. Leider können wir nicht die ganze Welt bereisen. dennoch haben wir auf unserer bisherigen Reise Freunde gefunden,
     die und helfen. Schau doch mal bei einem von ihnen vorbei.
   </p>
 
   <div *ngIf="hasAlliance; else elseBlock">
-  <ngb-carousel class="carousel py-1 py-lg-5 border-0">
+  <ngb-carousel class="carousel py-1 py-lg-5 border-0 d-flex align-items-center">
     <ng-template *ngFor="let page of alliances | keyvalue" ngbSlide>
       <div class="d-flex justify-content-center flex-wrap">
         <ng-container *ngFor="let icon of page.value">

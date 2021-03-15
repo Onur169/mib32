@@ -13,14 +13,14 @@ const path = require("path");
 const fs = require('fs');
 const cliSelect = require('cli-select');
 const chalk = require('chalk');
+const debug = true;
+const SLEEP_24_HOURS = 1000 * 60 * 24;
 const puppeteer = require("puppeteer");
 const Api_1 = require("./Api");
 const Response_1 = require("./enums/Response");
-const cookiesPath = path.join(__dirname) + '/cookies.json';
-const configPath = path.join(__dirname) + '/config.json';
-const debug = true;
-const SLEEP_24_HOURS = 1000 * 60 * 24;
+const SocialType_1 = require("./enums/SocialType");
 const FacebookBot_1 = require("./FacebookBot");
+const InstagramBot_1 = require("./InstagramBot");
 /*
     networkidle0 comes handy for SPAs that load resources with fetch requests.
     networkidle2 comes handy for pages that do long-polling or any other side activity.
@@ -31,7 +31,7 @@ const FacebookBot_1 = require("./FacebookBot");
     let selectedId = null;
     let selectedSocialMediaType = null;
     let selectedHashtag = null;
-    let allowedSocialMediaTypes = ["facebook", "twitter"];
+    let allowedSocialMediaTypes = [SocialType_1.SocialType.Facebook, SocialType_1.SocialType.Instagram];
     try {
         let list = yield api.fetch("socialmedia/hashtagstat?page=1", Response_1.Response.GET);
         if (list.ack === Response_1.Response.AckSuccess) {
@@ -66,6 +66,8 @@ const FacebookBot_1 = require("./FacebookBot");
             let page = yield browser.newPage();
             let cookies = null;
             let config = null;
+            const configPath = path.join(__dirname) + '/config.json';
+            const cookiesPath = `${path.join(__dirname)}/${selectedSocialMediaType}_cookies.json`;
             try {
                 cookies = require(cookiesPath);
                 config = require(configPath);
@@ -79,18 +81,16 @@ const FacebookBot_1 = require("./FacebookBot");
                 case 'facebook':
                     socialBot = new FacebookBot_1.default(page, cookies, config, selectedHashtag);
                     break;
-                /*
                 case 'twitter':
-                    socialBot = new TwitterBot(page, cookies, config);
+                    socialBot = new InstagramBot_1.default(page, cookies, config, selectedHashtag);
                     break;
-                */
                 default:
                     throw new Error("Unknown social media type");
                     break;
             }
             console.clear();
             socialBot.successLog(`Starte den Bot für den Hashtag #${selectedHashtag} - ${selectedSocialMediaType}!`);
-            if (Object.keys(cookies).length) {
+            if (Object.keys(cookies).length && socialBot.hasLoggedInSelector != null) {
                 let count = yield socialBot.scrapeAfterLogin();
                 socialBot.successLog(`Der Hashtagcount für ${socialBot.getHashtagToSearch()} lautet: ${count}`);
                 let list = yield api.fetch(`socialmedia/${selectedId}/hashtagstat?counter=${count}`, Response_1.Response.PUT);

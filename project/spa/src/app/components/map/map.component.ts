@@ -299,7 +299,7 @@ export class MapComponent implements OnInit {
         },
       });
 
- 
+
 
       //style des Markers wird definiert
       let styleCache: any[] = [];
@@ -339,7 +339,7 @@ export class MapComponent implements OnInit {
         return false;
       };
 
-      //beim Klicken auf die Map erscheint ein Popup mit einem bestimmten Inhalt 
+      //beim Klicken auf die Map erscheint ein Popup mit einem bestimmten Inhalt
     mapScreen.on('click', function (event) {
       var coordinate = event.coordinate;
       if (mapScreen.hasFeatureAtPixel(event.pixel) === true) {

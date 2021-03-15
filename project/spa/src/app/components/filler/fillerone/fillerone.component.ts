@@ -26,7 +26,7 @@ export class FilleroneComponent implements OnInit {
         start:"top 90%",
         end:"center 60%",
         scrub: true,
-        markers: true,
+        markers: false,
         toggleActions:"restart pause reverse pause" //wenn sichtbar, wenn nicht sichtbar, wenn wieder zurück
       },
       opacity:0
@@ -35,15 +35,13 @@ export class FilleroneComponent implements OnInit {
     var t2=gsap.from("#fillerone_box",{
       scrollTrigger: {
         trigger:"#fillerone_box",
-        start:"top 80%",
-        end:"top 50%",
-        scrub: true,
-        markers: false,
-        toggleActions:"restart pause reverse pause" //wenn sichtbar, wenn nicht sichtbar, wenn wieder zurück
-      },
-      x: -1000,
-      opacity:0
-    });
-
+        start:"top 75%",
+            end:"top 50%",
+            scrub: true,
+            markers: false,
+            toggleActions:"restart pause reverse pause" //wenn sichtbar, wenn nicht sichtbar, wenn wieder zurück
+          },
+          x: -500
+        });
   }
 }

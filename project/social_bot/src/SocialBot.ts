@@ -2,6 +2,7 @@
 import { SocialMedia } from "./interfaces/SocialMedia";
 import * as emoji from 'node-emoji';
 import * as puppeteer from 'puppeteer';
+import { SocialType } from "./enums/SocialType";
 
 class SocialBot implements SocialMedia{
 
@@ -15,6 +16,7 @@ class SocialBot implements SocialMedia{
     hasLoggedInSelector: string;
     hashtagToSearch: string;
     actionDelay: number;
+    type: SocialType;
 
     protected page: puppeteer.Page = null;
     protected cookies: any = null;
@@ -85,8 +87,10 @@ class SocialBot implements SocialMedia{
             this.warningLog("Du hast dich vorher schonmal eingeloggt! Gehe direkt zur Hashtag-Suchseite!");
             await this.page.setCookie(...this.cookies);
 
+            // An dieser Stelle können Videos zu einem Timeout unter "networkidle2" führen
+            // Mit domcontentloaded können wir den Wert abgreifen unabhängig welche weiteren Ressourcen geladen werden
             await this.page.goto(this.hashtagSearchPageUrl, {
-                waitUntil: 'networkidle2'
+                waitUntil: 'domcontentloaded'
             });
 
             await this.page.waitForSelector(this.hasLoggedInSelector);
@@ -127,13 +131,13 @@ class SocialBot implements SocialMedia{
                 throw new Error("Cookie konnte nicht akzeptiert werden!")
             });
     
-            await this.page.type(this.emailSelector, this.config.username, {
+            await this.page.type(this.emailSelector, this.config[this.type].username, {
                 delay: this.actionDelay
             });
     
             this.successLog("Usernamen eingegeben!");
     
-            await this.page.type(this.passwordSelector, this.config.password, {
+            await this.page.type(this.passwordSelector, this.config[this.type].password, {
                 delay: this.actionDelay
             });
     
@@ -158,8 +162,10 @@ class SocialBot implements SocialMedia{
     
             this.successLog("Gehe zur Hashtagsuch Seite!");
     
+            // An dieser Stelle können Videos zu einem Timeout unter "networkidle2" führen
+            // Mit domcontentloaded können wir den Wert abgreifen unabhängig welche weiteren Ressourcen geladen werden
             await this.page.goto(this.hashtagSearchPageUrl, {
-                waitUntil: 'networkidle2'
+                waitUntil: 'domcontentloaded'
             });
     
             let hashtagCount = await this.getHashtagCount();
