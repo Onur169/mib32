@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { TestimonialClass } from 'src/app/helpers/classes/TestimonialClass';
 import { TestimonialService } from 'src/app/services/testimonial.service';
 
+import { gsap } from 'gsap';
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 @Component({
   selector: 'app-testimonials',
   templateUrl: './testimonials.component.html',
@@ -44,8 +46,10 @@ export class TestimonialsComponent implements OnInit {
       await this.iterateTestimonials();
     }
     this.checkTestimonials(this.allTestimonials);
-    console.log(this.allTestimonials);
     this.getTestimonialsSet();
+
+
+
   }
 
   async iterateTestimonials(){
@@ -57,6 +61,7 @@ export class TestimonialsComponent implements OnInit {
     }
     else{
       this.allTestimonials=manager.getAllValues();
+      ScrollTrigger.refresh(true);
     }
   }
 

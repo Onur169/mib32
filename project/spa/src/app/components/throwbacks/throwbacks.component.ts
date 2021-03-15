@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, Renderer2, ViewChildren } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ThrowbackClass } from 'src/app/helpers/classes/ThrowbackClass';
 import { ThrowbackService } from 'src/app/services/throwback.service';
 
@@ -24,8 +24,8 @@ export class ThrowbacksComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.setProperties();
 
+    this.setProperties();
   }
 
   ngAfterViewInit(){
