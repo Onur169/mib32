@@ -21,6 +21,7 @@ export class AllianceComponent implements OnInit {
   }
 
   public alliances: Map<number, AllianceClass[]> = new Map();
+  hasAlliance: boolean = false;
 
   constructor(private allianceService: AllianceService) {
     this.getScreenSize();

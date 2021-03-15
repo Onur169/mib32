@@ -5,6 +5,7 @@
     die und helfen. Schau doch mal bei einem von ihnen vorbei.
   </p>
 
+  <div *ngIf="hasAlliance; else elseBlock">
   <ngb-carousel class="carousel py-1 py-lg-5 border-0">
     <ng-template *ngFor="let page of alliances | keyvalue" ngbSlide>
       <div class="d-flex justify-content-center flex-wrap">
@@ -19,4 +20,9 @@
       </div>
     </ng-template>
   </ngb-carousel>
+</div>
+
+<ng-template #elseBlock>
+  <div class="text bg-primary text-white fs-2 text-center py-4 px-3">Wir sind bemüht unsere Partner aufzulisten. Schaue später vorbei.</div>
+</ng-template>
 </div>
