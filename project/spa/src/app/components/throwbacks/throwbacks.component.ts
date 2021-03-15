@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, Renderer2, ViewChildren } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ThrowbackClass } from 'src/app/helpers/classes/ThrowbackClass';
 import { ThrowbackService } from 'src/app/services/throwback.service';
 
@@ -24,8 +24,8 @@ export class ThrowbacksComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.setProperties();
 
+    this.setProperties();
   }
 
   ngAfterViewInit(){
@@ -121,5 +121,17 @@ export class ThrowbacksComponent implements OnInit {
           opacity:0
         });
 
+        var t3=gsap.from(".card",{
+          scrollTrigger: {
+            trigger:".card",
+            start:"bottom 90%",
+            end:"bottom 70%",
+            scrub: true,
+            markers: false,
+            toggleActions:"restart pause reverse pause"
+          },
+
+          y:-100
+        });
       }
 }
