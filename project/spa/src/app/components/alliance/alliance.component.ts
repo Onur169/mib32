@@ -17,7 +17,7 @@ export class AllianceComponent implements OnInit {
   getScreenSize(event?: any) {
     this.scrHeight = window.innerHeight;
     this.scrWidth = window.innerWidth;
-    console.log(this.scrHeight, this.scrWidth);
+    //console.log(this.scrHeight, this.scrWidth);
   }
 
   public alliances: Map<number, AllianceClass[]> = new Map();
@@ -31,11 +31,8 @@ export class AllianceComponent implements OnInit {
   }
   async fillAlliances() {
     await this.allianceService.getAlliances();
-    /*
-     */
-    //this.alliances = this.allianceService.getManyAlliancesAsPages(3);
+
     this.createAllianceSet(this.scrWidth);
-    console.log('test', this.alliances);
   }
 
   //gibt soviele Partner, wie die Breite des Bildschirms es erlaubt

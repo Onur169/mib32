@@ -20,7 +20,7 @@ private maxPages: number;
 
   getManyAlliancesAsPages(elementsPerPage: number): Map<number,AllianceClass[]>{
     let pageCounter: number=Math.round(this.alliances.length/elementsPerPage);
-    console.log("pageCounter",pageCounter,"alliances.length", this.alliances.length,"lementsPerPage", elementsPerPage);
+    //console.log("pageCounter",pageCounter,"alliances.length", this.alliances.length,"lementsPerPage", elementsPerPage);
 
 
     let paginator: Map<number,AllianceClass[]>=new Map();
@@ -28,14 +28,14 @@ private maxPages: number;
     let pageValue=0;
 /**/let bla: AllianceClass[]=[];
     for(let page=0; page<pageCounter; page++){
-      console.log("neue Seite");
+      //console.log("neue Seite");
       bla=[];
       for(let alliance=0; alliance<=elementsPerPage-1; alliance++){
 
         if(this.alliances[pageValue+alliance]){
         bla.push(this.alliances[pageValue+alliance]);
         paginator.set(page, bla);
-        console.log("paginator an der Stelle",page ,"wird befüllt");
+        //console.log("paginator an der Stelle",page ,"wird befüllt");
         }
         else break;
       }
@@ -105,7 +105,7 @@ private maxPages: number;
           let img=new AllianceImageClass(alli.images.small,alli.images.medium,alli.images.large)
           newAlliancePage.push(new AllianceClass(img,alli.url,alli.name));
         });
-        console.log(response);
+        //console.log(response);
 
         this.maxPages=response.max_pages;
           resolve(newAlliancePage);
