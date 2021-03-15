@@ -19,6 +19,7 @@ export class TestimonialsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getTestimonials();
+    this.scrollUp();
   }
 
   async getTestimonials(){
@@ -54,4 +55,10 @@ export class TestimonialsComponent implements OnInit {
       this.hasTestimonials = true;
     }
   }
+
+    ////////////////////GSAP///////////////////
+
+
+    scrollUp(){}
+
 }
