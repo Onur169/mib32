@@ -2,6 +2,7 @@
 import { SocialMedia } from "./interfaces/SocialMedia";
 import * as emoji from 'node-emoji';
 import * as puppeteer from 'puppeteer';
+import { SocialType } from "./enums/SocialType";
 
 class SocialBot implements SocialMedia{
 
@@ -15,6 +16,7 @@ class SocialBot implements SocialMedia{
     hasLoggedInSelector: string;
     hashtagToSearch: string;
     actionDelay: number;
+    type: SocialType;
 
     protected page: puppeteer.Page = null;
     protected cookies: any = null;
@@ -127,13 +129,13 @@ class SocialBot implements SocialMedia{
                 throw new Error("Cookie konnte nicht akzeptiert werden!")
             });
     
-            await this.page.type(this.emailSelector, this.config.username, {
+            await this.page.type(this.emailSelector, this.config[this.type].username, {
                 delay: this.actionDelay
             });
     
             this.successLog("Usernamen eingegeben!");
     
-            await this.page.type(this.passwordSelector, this.config.password, {
+            await this.page.type(this.passwordSelector, this.config[this.type].password, {
                 delay: this.actionDelay
             });
     

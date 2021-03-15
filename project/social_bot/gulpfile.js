@@ -14,7 +14,7 @@ const distFolder = './dist/';
 const entryJsFiles = './src/**/*.{js,ts}';
 
 function copyConfigFiles() {
-    return src(['./src/config.json', './src/cookies.json'])
+    return src(['./src/config.json', './src/*_cookies.json'])
         .pipe(dest(distFolder));
 }
 

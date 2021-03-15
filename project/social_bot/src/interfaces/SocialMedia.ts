@@ -1,3 +1,5 @@
+import { SocialType } from "../enums/SocialType";
+
 export interface SocialMedia {
     url: string,
     loginUrl: string,
@@ -9,5 +11,6 @@ export interface SocialMedia {
     hasLoggedInSelector: string,
     hashtagToSearch: string,
     actionDelay: number,
+    type: SocialType,
     getHashtagCount: () => {}
 }

@@ -3,16 +3,15 @@ const fs = require('fs');
 const cliSelect = require('cli-select');
 const chalk = require('chalk');
 
-import * as puppeteer from 'puppeteer';
-import Api from './Api';
-import { Response } from './enums/Response';
-
-const cookiesPath = path.join(__dirname) + '/cookies.json';
-const configPath = path.join(__dirname) + '/config.json';
 const debug = true;
 const SLEEP_24_HOURS = 1000 * 60 * 24;
 
+import * as puppeteer from 'puppeteer';
+import Api from './Api';
+import { Response } from './enums/Response';
+import { SocialType } from './enums/SocialType';
 import FacebookBot from './FacebookBot';
+import InstagramBot from './InstagramBot';
 import { HashtagStat } from './interfaces/HashtagStat';
 
 /*
@@ -27,7 +26,7 @@ import { HashtagStat } from './interfaces/HashtagStat';
     let selectedId = null;
     let selectedSocialMediaType = null;
     let selectedHashtag = null;
-    let allowedSocialMediaTypes = ["facebook", "twitter"];
+    let allowedSocialMediaTypes = [SocialType.Facebook, SocialType.Instagram];
 
     try {
 
@@ -79,6 +78,9 @@ import { HashtagStat } from './interfaces/HashtagStat';
             let cookies = null;
             let config = null;
     
+            const configPath = path.join(__dirname) + '/config.json';
+            const cookiesPath = `${path.join(__dirname)}/${selectedSocialMediaType}_cookies.json`;
+
             try {
     
                 cookies = require(cookiesPath);
@@ -97,11 +99,9 @@ import { HashtagStat } from './interfaces/HashtagStat';
                 case 'facebook':
                     socialBot = new FacebookBot(page, cookies, config, selectedHashtag);
                     break;
-                /*
                 case 'twitter':
-                    socialBot = new TwitterBot(page, cookies, config);
+                    socialBot = new InstagramBot(page, cookies, config, selectedHashtag);
                     break;
-                */
                 default:
                     throw new Error("Unknown social media type");
                     break;
@@ -110,7 +110,7 @@ import { HashtagStat } from './interfaces/HashtagStat';
             console.clear();
             socialBot.successLog(`Starte den Bot für den Hashtag #${selectedHashtag} - ${selectedSocialMediaType}!`);
 
-            if (Object.keys(cookies).length) {
+            if (Object.keys(cookies).length && socialBot.hasLoggedInSelector != null) {
     
                 let count = await socialBot.scrapeAfterLogin();
 

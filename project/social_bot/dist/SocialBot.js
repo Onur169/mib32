@@ -95,11 +95,11 @@ class SocialBot {
                 }).catch(error => {
                     throw new Error("Cookie konnte nicht akzeptiert werden!");
                 });
-                yield this.page.type(this.emailSelector, this.config.username, {
+                yield this.page.type(this.emailSelector, this.config[this.type].username, {
                     delay: this.actionDelay
                 });
                 this.successLog("Usernamen eingegeben!");
-                yield this.page.type(this.passwordSelector, this.config.password, {
+                yield this.page.type(this.passwordSelector, this.config[this.type].password, {
                     delay: this.actionDelay
                 });
                 this.successLog("Passwort eingegeben!");
