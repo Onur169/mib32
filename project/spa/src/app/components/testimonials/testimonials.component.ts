@@ -46,7 +46,7 @@ export class TestimonialsComponent implements OnInit {
     }
     this.checkTestimonials(this.allTestimonials);
     console.log(this.allTestimonials);
-    this.getTesitimonialsSet();
+    this.getTestimonialsSet();
   }
 
   async iterateTestimonials(){
@@ -72,7 +72,7 @@ export class TestimonialsComponent implements OnInit {
     }
   }
 
-  getTesitimonialsSet(){
+  getTestimonialsSet(){
     console.log("hallo");
     if(this.scrWidth < 576){
       this.setOfTestimonials = this.testimonialService.testimonialManager.getManyTestimonialsAsPages(2); 
