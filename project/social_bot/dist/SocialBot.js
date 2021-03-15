@@ -65,8 +65,10 @@ class SocialBot {
             try {
                 this.warningLog("Du hast dich vorher schonmal eingeloggt! Gehe direkt zur Hashtag-Suchseite!");
                 yield this.page.setCookie(...this.cookies);
+                // An dieser Stelle können Videos zu einem Timeout unter "networkidle2" führen
+                // Mit domcontentloaded können wir den Wert abgreifen unabhängig welche weiteren Ressourcen geladen werden
                 yield this.page.goto(this.hashtagSearchPageUrl, {
-                    waitUntil: 'networkidle2'
+                    waitUntil: 'domcontentloaded'
                 });
                 yield this.page.waitForSelector(this.hasLoggedInSelector);
                 this.successLog("Erfolgreich eingeloggt!");
@@ -114,8 +116,10 @@ class SocialBot {
                 fs.writeFileSync(cookiesPath, JSON.stringify(currentCookies));
                 this.successLog("Cookies gespeichert!");
                 this.successLog("Gehe zur Hashtagsuch Seite!");
+                // An dieser Stelle können Videos zu einem Timeout unter "networkidle2" führen
+                // Mit domcontentloaded können wir den Wert abgreifen unabhängig welche weiteren Ressourcen geladen werden
                 yield this.page.goto(this.hashtagSearchPageUrl, {
-                    waitUntil: 'networkidle2'
+                    waitUntil: 'domcontentloaded'
                 });
                 let hashtagCount = yield this.getHashtagCount();
                 return new Promise(resolve => {
