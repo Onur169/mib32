@@ -83,8 +83,5 @@ export class AllianceComponent implements OnInit {
           opacity:0
         });
 
-
-
-
       }
 }
