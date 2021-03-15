@@ -9,10 +9,13 @@
   </div>
 </div>
 <div *ngIf="hasTestimonials; else elseBlock">
-<div class="d-inline-flex row mx-0 justify-content-center px-0 allCards py-2 py-lg-4">
-  <ng-container *ngFor="let testimonial of allTestimonials">
-    <div class="card m-1 m-md-3 mx-lg-4">
-      <img class="card-img-top" src="{{testimonial.getImages().getSmall()}}" srcset="
+<!--<div class="d-inline-flex row mx-0 justify-content-center px-0 allCards py-2 py-lg-4">-->
+  <div class="d-flex row mx-0 justify-content-center px-0 allCards py-2 py-lg-4">
+  <div *ngFor="let page of setOfTestimonials | keyvalue">
+  <ng-container *ngFor="let testimonial of page.value">
+    <div class="col-12 col-sm-4">
+    <div class="card m-1">
+      <img class="card-img-top w-100" src="{{testimonial.getImages().getSmall()}}" srcset="
       {{testimonial.getImages().getSmall()}} 600w,
       {{testimonial.getImages().getMedium()}} 750w,
       {{testimonial.getImages().getLarge()}} 1000w"
@@ -24,11 +27,16 @@
         </p>
       </div>
     </div>
+  </div>
   </ng-container>
+</div>
+</div>
+<div class="text-center allCards pb-3">
+  <button type="button" class="btn btn-outline-warning" (click)=" getTesitimonialsSet()">mehr anzeigen</button>
 </div>
 </div>
 
 <ng-template #elseBlock>
-  <div class="text bg-primary text-white fs-2 text-center py-4 px-3">Wir sind bemüt Dir eine Liste zusammenzustellen, die Dir die Auskunft gibt, was über uns erzählt wird</div>
+  <div class="text bg-primary text-white fs-2 text-center py-4 px-3">Unsere Partner werden demnächst angezeigt.Schau bitte später vorbei</div>
 </ng-template>
 </div>
