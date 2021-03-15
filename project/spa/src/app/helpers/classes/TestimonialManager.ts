@@ -106,30 +106,35 @@ import { TestimonialClass } from "./TestimonialClass";
       /**
        * Bau eine Map nach den gewünschten Einträgen an elementen pro Seite nach.
        * **/
-      getManyAlliancesAsPages(elementsPerPage: number): Map<number,TestimonialClass[]>{
-
+      getManyTestimonialsAsPages(elementsPerPage: number): Map<number,TestimonialClass[]>{
+        console.log(elementsPerPage);
         let allValues=this.getAllValues();
 
+        console.log("komm",allValues);
+
         let pageCounter: number=Math.round(allValues.length/elementsPerPage);
-      //  console.log("pageCounter",pageCounter,"alliances.length", this.alliances.length,"lementsPerPage", elementsPerPage);
+      console.log("pageCounter",pageCounter,"allValues.length", allValues.length,"lementsPerPage", elementsPerPage);
 
 
         let paginator: Map<number,TestimonialClass[]>=new Map();
 
         let pageValue=0;
-    /**/let newTestimonialOfPage: TestimonialClass[]=[];
-        for(let page=0; page<pageCounter; page++){
-          newTestimonialOfPage=[];
-          for(let alliance=0; alliance<=elementsPerPage-1; alliance++){
+        /**/let bla: TestimonialClass[]=[];
+            for(let page=0; page<pageCounter; page++){
+              //console.log("neue Seite");
+              bla=[];
+              for(let alliance=0; alliance<=elementsPerPage-1; alliance++){
 
-            if(allValues[pageValue+alliance]){
-              newTestimonialOfPage.push(allValues[pageValue+alliance]);
-            paginator.set(page, newTestimonialOfPage);
+                if(allValues[pageValue+alliance]){
+                bla.push(allValues[pageValue+alliance]);
+                paginator.set(page, bla);
+                //console.log("paginator an der Stelle",page ,"wird befüllt");
+                }
+                else break;
+              }
+              pageValue+=elementsPerPage;
             }
-            else break;
-          }
-          pageValue+=elementsPerPage;
-        }
+
 
 
         return paginator;
@@ -168,10 +173,12 @@ import { TestimonialClass } from "./TestimonialClass";
       }
 
       getAllValues(): TestimonialClass[]{
+        console.log("pages",this.pages);
         let testimonials:TestimonialClass[]=[];
         this.pages.forEach(page =>{
           page.forEach(testimonial => {
             testimonials.push(testimonial);
+            console.log("push", testimonial);
           })
         })
         return testimonials;
