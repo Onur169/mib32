@@ -299,11 +299,7 @@ export class MapComponent implements OnInit {
         },
       });
 
-      closer!.onclick = function () {
-        overlay.setPosition(undefined);
-        closer!.blur();
-        return false;
-      };
+ 
 
       //style des Markers wird definiert
       let styleCache: any[] = [];
@@ -335,13 +331,18 @@ export class MapComponent implements OnInit {
 
       //hier werden alle Daten in die Map geladen
       mapScreen.addLayer(clusters);
-      mapScreen.getView().setZoom(zoom);
       mapScreen.addOverlay(overlay);
 
+      closer!.onclick = function () {
+        overlay.setPosition(undefined);
+        closer!.blur();
+        return false;
+      };
+
       //beim Klicken auf die Map erscheint ein Popup mit einem bestimmten Inhalt 
-    mapScreen.on('singleclick', function (event) {
+    mapScreen.on('click', function (event) {
+      var coordinate = event.coordinate;
       if (mapScreen.hasFeatureAtPixel(event.pixel) === true) {
-          var coordinate = event.coordinate;
           content!.innerHTML =  '<div><code>' +
           Mname +
           '</code> </br>' +
@@ -352,11 +353,15 @@ export class MapComponent implements OnInit {
           date +
           '</code>';
           overlay.setPosition(coordinate);
+          mapScreen.getView().setCenter(coordinate);
       } else {
           overlay.setPosition(undefined);
           closer!.blur();
       }
     });
+
+    mapScreen.getView().setZoom(zoom);
+
     this.place = 'in ' + loc;
     this.day = 'am ' + date!;
   });
