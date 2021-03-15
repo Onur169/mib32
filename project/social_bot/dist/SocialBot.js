@@ -60,11 +60,19 @@ class SocialBot {
             setTimeout(resolve, ms);
         });
     }
+    isWithoutLogin() {
+        return typeof (this.hasLoggedInSelector) === 'undefined' || this.hasLoggedInSelector == null;
+    }
+    isCookiesEmpty() {
+        return Object.keys(this.cookies).length == 0;
+    }
     scrapeAfterLogin() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 this.warningLog("Du hast dich vorher schonmal eingeloggt! Gehe direkt zur Hashtag-Suchseite!");
-                yield this.page.setCookie(...this.cookies);
+                if (!this.isCookiesEmpty()) {
+                    yield this.page.setCookie(...this.cookies);
+                }
                 // An dieser Stelle können Videos zu einem Timeout unter "networkidle2" führen
                 // Mit domcontentloaded können wir den Wert abgreifen unabhängig welche weiteren Ressourcen geladen werden
                 yield this.page.goto(this.hashtagSearchPageUrl, {

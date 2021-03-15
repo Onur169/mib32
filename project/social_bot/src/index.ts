@@ -99,7 +99,7 @@ import { HashtagStat } from './interfaces/HashtagStat';
                 case 'facebook':
                     socialBot = new FacebookBot(page, cookies, config, selectedHashtag);
                     break;
-                case 'twitter':
+                case 'instagram':
                     socialBot = new InstagramBot(page, cookies, config, selectedHashtag);
                     break;
                 default:
@@ -110,8 +110,8 @@ import { HashtagStat } from './interfaces/HashtagStat';
             console.clear();
             socialBot.successLog(`Starte den Bot für den Hashtag #${selectedHashtag} - ${selectedSocialMediaType}!`);
 
-            if (Object.keys(cookies).length && socialBot.hasLoggedInSelector != null) {
-    
+            if (Object.keys(cookies).length || socialBot.isWithoutLogin()) {
+
                 let count = await socialBot.scrapeAfterLogin();
 
                 socialBot.successLog(`Der Hashtagcount für ${socialBot.getHashtagToSearch()} lautet: ${count}`);
@@ -125,9 +125,9 @@ import { HashtagStat } from './interfaces/HashtagStat';
                 }
     
             } else {
-    
+
                 let count = await socialBot.loginAndScrape(fs, cookiesPath);
-    
+
                 let list = await api.fetch(`socialmedia/${selectedId}/hashtagstat?counter=${count}`, Response.PUT);
                 
                 if(list.ack == Response.AckSuccess) {
