@@ -336,10 +336,11 @@ export class MapComponent implements OnInit {
       mapScreen.getView().setZoom(zoom);
       mapScreen.addOverlay(overlay);
 
-      //beim Klicken auf die Map erscheint ein Popup mit einem bestimmten Inhalt
-      mapScreen.on('singleclick', () => {
-        content!.innerHTML =
-          '<div><code>' +
+      //beim Klicken auf die Map erscheint ein Popup mit einem bestimmten Inhalt 
+    mapScreen.on('singleclick', function (event) {
+      if (mapScreen.hasFeatureAtPixel(event.pixel) === true) {
+          var coordinate = event.coordinate;
+          content!.innerHTML =  '<div><code>' +
           Mname +
           '</code> </br>' +
           text[0] +
@@ -348,11 +349,15 @@ export class MapComponent implements OnInit {
           text[1] +
           date +
           '</code>';
-        overlay.setPosition(lonLat);
-      });
-      this.place = 'in ' + loc;
-      this.day = 'am ' + date!;
+          overlay.setPosition(coordinate);
+      } else {
+          overlay.setPosition(undefined);
+          closer!.blur();
+      }
     });
+    this.place = 'in ' + loc;
+    this.day = 'am ' + date!;
+  });
   }
 
   //Hilfsfunktion um den Umkreis im Browser richtig darzusstellen
