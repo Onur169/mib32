@@ -132,7 +132,8 @@ export class TimerComponent implements OnInit {
     var tl = gsap.timeline();
 
     tl.to({}, 1, {});
-    tl.from("#banner" ,{duration: 1, x: -800, ease: "power1.out"});//0.0 sec
+    tl.to("#content_box" ,{duration: 1, opacity: 1, ease: "power1.out"});//0.0 sec
+    tl.to("#banner" ,{duration: 1, x: 0, opacity:1 , ease: "power1.out"});//0.0 sec  from to
 
   }
 }

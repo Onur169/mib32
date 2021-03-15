@@ -1,14 +1,14 @@
 <div>
   <div class="p-2 p-lg-5">
     <div>
-      <p class="display-4 text-primary mb-0">Mach mit!</p>
-      <p class="text text-primary">Schaue bitte wo wir für Dich den nächsten Streik rausgefunden haben.</p>
+      <p id="map_head" class="display-4 text-primary mb-0">Mach mit!</p>
+      <p id="map_cover" class="text text-primary">Schaue bitte wo wir für Dich den nächsten Streik rausgefunden haben.</p>
     </div>
 
     <div *ngIf="hasEventMarker; else elseBlock">
-    <div class="px-2 px-lg-3 w-50">
+    <div id="map_search" class="px-2 px-lg-3 w-50">
       <mat-form-field>
-      <input id="search_input"  matInput placeholder="Wo möchtest Du mitstreiken?" (enter) = searchLoacation() (mouseout) = searchLoacation() [(ngModel)]="locationSearch" (click) = deleteValue()>
+      <input matInput placeholder="Wo möchtest Du mitstreiken?" (enter) = searchLoacation() (mouseout) = searchLoacation() [(ngModel)]="locationSearch" (click) = deleteValue()>
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
       </div>
@@ -29,7 +29,7 @@
   </div>
   </div>
   </div>
-  <div class="d-flex justify-content-center m-2 mb-md-5">
+  <div id="next_demo" class="d-flex justify-content-center m-2 mb-md-5">
   <div class="border border-primary w-lg-50 w-90 p-3 p-md-2">
     <div class="text text-primary text-center p-2 p-lg-1 event-text">Dein nächster Streik:</div>
     <div class="text text-primary text-center p-0 p-lg-1 event-text">{{ day }} {{ place }}</div>

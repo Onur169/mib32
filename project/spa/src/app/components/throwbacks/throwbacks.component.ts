@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, Renderer2, ViewChildren } from '@angular/core';
 import { ThrowbackClass } from 'src/app/helpers/classes/ThrowbackClass';
 import { ThrowbackService } from 'src/app/services/throwback.service';
 
+import { gsap } from 'gsap';
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 @Component({
   selector: 'app-throwbacks',
   templateUrl: './throwbacks.component.html',
@@ -13,6 +15,8 @@ export class ThrowbacksComponent implements OnInit {
   maxPage = 0;
   page = 1;
 
+
+
   constructor(
     private throwbackService: ThrowbackService
   ) {
@@ -21,6 +25,12 @@ export class ThrowbacksComponent implements OnInit {
 
   ngOnInit() {
     this.setProperties();
+
+  }
+
+  ngAfterViewInit(){
+
+    this.scrollUp();
   }
 
   async setProperties() {
@@ -29,6 +39,7 @@ export class ThrowbacksComponent implements OnInit {
     this.throwbackPages = this.throwbackService.throwbackmanager.reCreatePages(5);
     this.setNewPage(1);
     this.setMaxPage(this.throwbackPages.size);
+
   }
 
   setMaxPage(size: number) {
@@ -76,4 +87,39 @@ export class ThrowbacksComponent implements OnInit {
 
     return filtered;
   }
+
+      ////////////////////GSAP///////////////////
+
+
+      scrollUp(){
+
+    gsap.registerPlugin(ScrollTrigger);
+
+        var tl=gsap.from("#throwback_head",{
+          scrollTrigger: {
+            trigger:"#throwback_head",
+            start:"bottom 90%",
+            end:"bottom 70%",
+            scrub: true,
+            markers: false,
+            toggleActions:"restart pause reverse pause" //wenn sichtbar, wenn nicht sichtbar, wenn wieder zurück
+          },
+          y: -100,
+          opacity:0
+        });
+
+        var t2=gsap.from("#throwback_cover",{
+          scrollTrigger: {
+            trigger:"#throwback_cover",
+            start:"bottom 90%",
+            end:"bottom 70%",
+            scrub: true,
+            markers: false,
+            toggleActions:"restart pause reverse pause"
+          },
+
+          opacity:0
+        });
+
+      }
 }

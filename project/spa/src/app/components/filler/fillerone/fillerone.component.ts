@@ -17,9 +17,24 @@ export class FilleroneComponent implements OnInit {
 
 
   scrollUp(){
-    var tl=gsap.from(".intro",{
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    var t1=gsap.from("#fillerone_bg",{
       scrollTrigger: {
-        trigger:".intro",
+        trigger:"#fillerone_bg",
+        start:"top 90%",
+        end:"center 60%",
+        scrub: true,
+        markers: true,
+        toggleActions:"restart pause reverse pause" //wenn sichtbar, wenn nicht sichtbar, wenn wieder zurück
+      },
+      opacity:0
+    });
+
+    var t2=gsap.from("#fillerone_box",{
+      scrollTrigger: {
+        trigger:"#fillerone_box",
         start:"top 80%",
         end:"top 50%",
         scrub: true,
@@ -30,16 +45,5 @@ export class FilleroneComponent implements OnInit {
       opacity:0
     });
 
-    var t2=gsap.from(".filler_bg",{
-      scrollTrigger: {
-        trigger:".filler_bg",
-        start:"top 90%",
-        end:"center 60%",
-        scrub: true,
-        markers: true,
-        toggleActions:"restart pause reverse pause" //wenn sichtbar, wenn nicht sichtbar, wenn wieder zurück
-      },
-      opacity:0
-    });
   }
 }

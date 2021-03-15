@@ -77,16 +77,16 @@ export class MapComponent implements OnInit {
   //die Map wird mit personalisiertem Standort befüllt
   //personalisierte Marker werden gesetzt
   ngOnInit(): void {
-    gsap.registerPlugin(ScrollTrigger);
-    this.scrollUp();
     this.getCoords();
-
     this.getMarker(this.limiter, 8);
   }
 
   ngAfterContentInit() {
     this.inizializeMap(this.customLonLat, 6);
     this.calculateDistance(this.mapSkalaValue);
+  }
+  ngAfterViewInit(){
+    this.scrollUp();
   }
 
   //die Map wird mit dem Standort des Nutzers gefüllt
@@ -130,6 +130,8 @@ export class MapComponent implements OnInit {
 
     //entweder werden Marker von einem Default value geladen oder von dem Standort des Nutzers
     this.calculateDistance(this.mapSkalaValue, this.customLong, this.customLat, 9);
+
+
   }
 
   fetchAdress(options?: PositionOptions): Promise<GeolocationPosition> {
@@ -424,9 +426,12 @@ checkEventMarker(marker:Marker[]):void{
 
 
   scrollUp(){
-    var tl=gsap.from(".display-4",{
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    var tl=gsap.from("#map_head",{
       scrollTrigger: {
-        trigger:".search_input",
+        trigger:"#map_head",
         start:"bottom 90%",
         end:"bottom 70%",
         scrub: true,
@@ -437,6 +442,45 @@ checkEventMarker(marker:Marker[]):void{
       opacity:0
     });
 
+
+    var t2=gsap.from("#map_cover",{
+      scrollTrigger: {
+        trigger:"#map_cover",
+        start:"bottom 90%",
+        end:"bottom 70%",
+        scrub: true,
+        markers: false,
+        toggleActions:"restart pause reverse pause"
+      },
+
+      opacity:0
+    });
+
+
+    var t3=gsap.from("#map_search",{
+      scrollTrigger: {
+        trigger:"#map_search",
+        start:"bottom 90%",
+        end:"bottom 70%",
+        scrub: true,
+        markers: false,
+        toggleActions:"restart pause reverse pause"
+      },
+      opacity:0
+    });
+
+
+    var t4=gsap.from("#next_demo",{
+      scrollTrigger: {
+        trigger:"#next_demo",
+        start:"bottom 90%",
+        end:"bottom 70%",
+        scrub: true,
+        markers: false,
+        toggleActions:"restart pause reverse pause"
+      },
+      scale:0.6
+    });
 
   }
 }

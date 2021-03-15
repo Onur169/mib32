@@ -32,7 +32,6 @@ export class TestimonialsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getTestimonials();
-
   }
 
   async getTestimonials(){
@@ -42,7 +41,7 @@ export class TestimonialsComponent implements OnInit {
     await this.testimonialService.fetchTestimonials();
     if(manager.getPageValue(manager.getCurrentPage())){
 
-      this.iterateTestimonials();
+      await this.iterateTestimonials();
     }
     this.checkTestimonials(this.allTestimonials);
     console.log(this.allTestimonials);
@@ -54,14 +53,11 @@ export class TestimonialsComponent implements OnInit {
 
     if(manager.hasNextPage()){
       await this.testimonialService.fetchTestimonials(manager.getNextPage());
-      this.iterateTestimonials();
+      await this.iterateTestimonials();
     }
     else{
       this.allTestimonials=manager.getAllValues();
     }
-
-    console.log(this.allTestimonials);
-
   }
 
   checkTestimonials(testimonials: TestimonialClass[]){
@@ -75,14 +71,14 @@ export class TestimonialsComponent implements OnInit {
   getTestimonialsSet(){
     console.log("hallo");
     if(this.scrWidth < 576){
-      this.setOfTestimonials = this.testimonialService.testimonialManager.getManyTestimonialsAsPages(2); 
-      console.log(this.setOfTestimonials);
+      this.setOfTestimonials = this.testimonialService.testimonialManager.getManyTestimonialsAsPages(2);
+      console.log("small",this.setOfTestimonials);
     }else if(this.scrWidth >= 576 && this.scrWidth < 768){
-      this.setOfTestimonials = this.testimonialService.testimonialManager.getManyTestimonialsAsPages(4); 
-      console.log(this.setOfTestimonials);
+      this.setOfTestimonials = this.testimonialService.testimonialManager.getManyTestimonialsAsPages(4);
+      console.log("medium",this.setOfTestimonials);
     }else{
-      this.setOfTestimonials = this.testimonialService.testimonialManager.getManyTestimonialsAsPages(6); 
-      console.log(this.setOfTestimonials);
+      this.setOfTestimonials = this.testimonialService.testimonialManager.getManyTestimonialsAsPages(6);
+      console.log("large",this.setOfTestimonials);
     }
   }
 }

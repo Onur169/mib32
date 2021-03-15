@@ -110,7 +110,7 @@ import { TestimonialClass } from "./TestimonialClass";
         console.log(elementsPerPage);
         let allValues=this.getAllValues();
 
-        console.log(allValues);
+        console.log("komm",allValues);
 
         let pageCounter: number=Math.round(allValues.length/elementsPerPage);
       console.log("pageCounter",pageCounter,"allValues.length", allValues.length,"lementsPerPage", elementsPerPage);
@@ -124,7 +124,7 @@ import { TestimonialClass } from "./TestimonialClass";
               //console.log("neue Seite");
               bla=[];
               for(let alliance=0; alliance<=elementsPerPage-1; alliance++){
-        
+
                 if(allValues[pageValue+alliance]){
                 bla.push(allValues[pageValue+alliance]);
                 paginator.set(page, bla);
@@ -134,8 +134,7 @@ import { TestimonialClass } from "./TestimonialClass";
               }
               pageValue+=elementsPerPage;
             }
-         
-        console.log(paginator);
+
 
 
         return paginator;
@@ -174,10 +173,12 @@ import { TestimonialClass } from "./TestimonialClass";
       }
 
       getAllValues(): TestimonialClass[]{
+        console.log("pages",this.pages);
         let testimonials:TestimonialClass[]=[];
         this.pages.forEach(page =>{
           page.forEach(testimonial => {
             testimonials.push(testimonial);
+            console.log("push", testimonial);
           })
         })
         return testimonials;

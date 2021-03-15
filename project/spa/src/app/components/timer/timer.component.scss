@@ -10,7 +10,15 @@
 }
 
 .display-3{
-    font-size: calc(2.2vh + 2.2vw) !important;
+    font-size: 5vh  !important;
+}
+
+#content_box,#banner{
+  opacity: 0;
+}
+
+#banner{
+  transform: translateX(-800px);
 }
 
 .rounded-circle{
@@ -66,6 +74,10 @@
 
   .border-info{
     border-width: 0 !important;
+}
+#content_box,#banner{
+  opacity: 1;
+  transform: translateX(0);
 }
 
 }
