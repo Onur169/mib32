@@ -25,8 +25,6 @@ export class TestimonialsComponent implements OnInit {
   allTestimonials: TestimonialClass[] = [];
   public setTestimonials: TestimonialClass[] = [];
   hasTestimonials: boolean = false;
-  countButtonClick: number = 0;
-  hasMore: boolean = false;
 
   public setOfTestimonials: Map<number, TestimonialClass[]> = new Map();
 
@@ -46,7 +44,7 @@ export class TestimonialsComponent implements OnInit {
       await this.iterateTestimonials();
     }
     this.checkTestimonials(this.allTestimonials);
-    this.getTestimonialsSet(this.countButtonClick);
+    this.getTestimonialsSet();
   }
 
   async iterateTestimonials() {
@@ -70,36 +68,23 @@ export class TestimonialsComponent implements OnInit {
     }
   }
 
-  getTestimonialsSet(count: number) {
+  getTestimonialsSet() {
     let testi: Map<number, TestimonialClass[]> = new Map();
-    this.hasMore = false;
     if (this.scrWidth < 576 && this.scrWidth < 768) {
       testi = this.testimonialService.testimonialManager.getManyTestimonialsAsPages(2);
-      if(testi.get(count)){
-        this.setOfTestimonials.set(count, testi.get(count)!);
-        //console.log(this.setOfTestimonials.get(count));
-        this.hasMore = true;
+      if(testi.get(0)){
+        this.setOfTestimonials.set(0, testi.get(0)!);
       }
-      console.log('small');
     } else if (this.scrWidth >=768 && this.scrWidth < 992) {
         testi = this.testimonialService.testimonialManager.getManyTestimonialsAsPages(3);
-        if(testi.get(count)){
-          this.setOfTestimonials.set(count, testi.get(count)!);
-          //console.log(this.setOfTestimonials.get(count));
-          this.hasMore = true;
+        if(testi.get(0)){
+          this.setOfTestimonials.set(0, testi.get(0)!);
         }
-        console.log('middle');
     } else{
       testi = this.testimonialService.testimonialManager.getManyTestimonialsAsPages(4);
-      if(testi.get(count)){
-        this.setOfTestimonials.set(count, testi.get(count)!);
-        //console.log(this.setOfTestimonials.get(count));
-        this.hasMore = true;
+      if(testi.get(0)){
+        this.setOfTestimonials.set(0, testi.get(0)!);
       }
     }
-  }
-
-  count() {
-  this.getTestimonialsSet(this.countButtonClick++);
   }
 }
