@@ -3,8 +3,9 @@ import { SocialMedia } from "./interfaces/SocialMedia";
 import * as emoji from 'node-emoji';
 import * as puppeteer from 'puppeteer';
 import { SocialType } from "./enums/SocialType";
+import { SocialBotOption } from "./enums/SocialBotOption";
 
-class SocialBot implements SocialMedia{
+class SocialBot implements SocialMedia {
 
     url: string;
     loginUrl: string;
@@ -17,6 +18,7 @@ class SocialBot implements SocialMedia{
     hashtagToSearch: string;
     actionDelay: number;
     type: SocialType;
+    socialBotOption: SocialBotOption;
 
     protected page: puppeteer.Page = null;
     protected cookies: any = null;
@@ -126,7 +128,7 @@ class SocialBot implements SocialMedia{
 
     }
 
-    public async loginAndScrape(fs, cookiesPath): Promise<number> {
+    public async loginAndScrape(fs: any, cookiesPath: string, socialBotOption: SocialBotOption): Promise<number> {
 
         try {
             
@@ -233,9 +235,25 @@ class SocialBot implements SocialMedia{
 
         try {
 
-            let result = await this.page.waitForSelector(this.acceptButtonSelector, {
-                timeout: this.actionDelay
-            });
+            let result = null;
+
+            switch (this.socialBotOption) {
+                case SocialBotOption.WaitForSelectorViaSelector:
+                    result = await this.page.waitForSelector(this.acceptButtonSelector, {
+                        timeout: this.actionDelay
+                    });
+                    break;
+                case SocialBotOption.WaitForSelectorViaFunction:
+                    result = await this.page.waitForFunction(this.acceptButtonSelector, {
+                        timeout: this.actionDelay
+                    });
+                    break;
+                default:
+                    result = await this.page.waitForSelector(this.acceptButtonSelector, {
+                        timeout: this.actionDelay
+                    });
+                    break;
+            }
 
             await result.click();
 

@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const emoji = require("node-emoji");
+const SocialBotOption_1 = require("./enums/SocialBotOption");
 class SocialBot {
     constructor(page, cookies, config) {
         this.page = null;
@@ -93,7 +94,7 @@ class SocialBot {
             }
         });
     }
-    loginAndScrape(fs, cookiesPath) {
+    loginAndScrape(fs, cookiesPath, socialBotOption) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 this.warningLog("Du bist nicht eingeloggt! Wir loggen uns jetzt ein.");
@@ -172,9 +173,24 @@ class SocialBot {
     acceptCookies() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                let result = yield this.page.waitForSelector(this.acceptButtonSelector, {
-                    timeout: this.actionDelay
-                });
+                let result = null;
+                switch (this.socialBotOption) {
+                    case SocialBotOption_1.SocialBotOption.WaitForSelectorViaSelector:
+                        result = yield this.page.waitForSelector(this.acceptButtonSelector, {
+                            timeout: this.actionDelay
+                        });
+                        break;
+                    case SocialBotOption_1.SocialBotOption.WaitForSelectorViaFunction:
+                        result = yield this.page.waitForFunction(this.acceptButtonSelector, {
+                            timeout: this.actionDelay
+                        });
+                        break;
+                    default:
+                        result = yield this.page.waitForSelector(this.acceptButtonSelector, {
+                            timeout: this.actionDelay
+                        });
+                        break;
+                }
                 yield result.click();
                 Promise.resolve(result);
             }

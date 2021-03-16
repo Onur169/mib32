@@ -24,6 +24,7 @@ export class AllianceComponent implements OnInit {
   }
 
   public alliances: Map<number, AllianceClass[]> = new Map();
+  hasAlliance: boolean = false;
 
   constructor(private allianceService: AllianceService, private viewport: ViewportService) {
     this.getScreenSize();
@@ -47,10 +48,13 @@ export class AllianceComponent implements OnInit {
     //kleiner als der xs Breakpoint
     if(srcWidth < 576){
       this.alliances = this.allianceService.getManyAlliancesAsPages(1);
+      if(this.alliances)this.hasAlliance = true;
     }else if(srcWidth >=576 && srcWidth < 768){
       this.alliances = this.allianceService.getManyAlliancesAsPages(2);
+      if(this.alliances)this.hasAlliance = true;
     }else{
       this.alliances = this.allianceService.getManyAlliancesAsPages(3);
+      if(this.alliances)this.hasAlliance = true;
     }
   }
 

@@ -15,6 +15,7 @@ export class ThrowbacksComponent implements OnInit {
   throwbacks: ThrowbackClass[];
   maxPage = 0;
   page = 1;
+  hasThrowback: boolean = false;
 
 
 
@@ -27,6 +28,10 @@ export class ThrowbacksComponent implements OnInit {
   ngOnInit() {
 
     this.setProperties();
+
+    if(this.throwbacks){
+      this.hasThrowback =true;
+    }
   }
 
   ngAfterViewInit(){
@@ -71,9 +76,7 @@ export class ThrowbacksComponent implements OnInit {
 
         //geht den string zu einem Wort durch
         while (value.getDescription().slice(-1) != ' ') {
-          console.log('hallo');
           desc = value.getDescription().slice(0, letters - 1);
-          console.log(desc);
           value.setDescription(desc);
           letters--;
         }
@@ -85,7 +88,6 @@ export class ThrowbacksComponent implements OnInit {
         filtered.push(value);
       }
     });
-
     return filtered;
   }
 

@@ -1,6 +1,7 @@
 import SocialBot from "./SocialBot";
 import * as puppeteer from 'puppeteer';
 import { SocialType } from "./enums/SocialType";
+import { SocialBotOption } from "./enums/SocialBotOption";
 
 class InstagramBot extends SocialBot {
 
@@ -15,6 +16,7 @@ class InstagramBot extends SocialBot {
     hashtagToSearch: string;
     actionDelay: number;
     type: SocialType;
+    socialBotOption: SocialBotOption;
 
     page: puppeteer.Page;
     cookies: any;
@@ -24,21 +26,21 @@ class InstagramBot extends SocialBot {
 
         super(page, cookies, config);
 
-        this.type = SocialType.Instagram;
-
         this.page = page;
         this.cookies = cookies;
         this.config = config;
 
         this.url = 'https://www.instagram.com';
-        this.loginUrl = null;
+        this.loginUrl = `${this.url}/accounts/login/`;
         this.hashtagToSearch = hashTagToSearch;
         this.hashtagSearchPageUrl = `${this.url}/explore/tags/${this.hashtagToSearch}`;
-        this.emailSelector = null;
-        this.passwordSelector = null;
-        this.loginButtonSelector = null;
-        this.acceptButtonSelector = null;
-        this.hasLoggedInSelector = null;
+        this.emailSelector = '[name=username]';
+        this.passwordSelector = '[name=password]';
+        this.loginButtonSelector = 'button[type=submit]';
+        this.hasLoggedInSelector = '[action*="logout.php"]';
+        this.type = SocialType.Instagram;
+        this.socialBotOption = SocialBotOption.WaitForSelectorViaFunction;
+        this.acceptButtonSelector = 'Array.from(document.querySelectorAll("button")).filter(el => el.innerText.toString().includes("Akzeptieren"))[0]';
         
     }
 
@@ -48,46 +50,24 @@ class InstagramBot extends SocialBot {
     
             let result = await this.page.evaluate(() => {
     
-                let indicatorString = 'gepostet';
-                let items = Array.from(document.querySelectorAll("span"));
+                let item = document.querySelector("span > span") as HTMLElement;
 
-                return new Promise(resolve => {
-                    resolve(99999);
-                });
-                
-                /*
-                for (let item of items) {
-    
-                    let itemContent = item.textContent;
-                    console.log(itemContent, itemContent.includes(indicatorString));
-    
-                    if (itemContent.includes(indicatorString)) {
-    
-                        let onlyNumbers = parseFloat(itemContent.replace(/\D/g, ''));
-    
-                        if (Number.isFinite(onlyNumbers)) {
-    
-                            return new Promise(resolve => {
-                                resolve(onlyNumbers);
-                            });
-    
-                        } else {
-    
-                            return new Promise(reject => {
-                                reject(null);
-                            });
-    
-                        }
-    
-                    }
-    
+                let onlyNumbers = parseFloat(item.innerText.replace(/\D/g, ''));
+
+                if (Number.isFinite(onlyNumbers)) {
+
+                    return new Promise(resolve => {
+                        resolve(onlyNumbers);
+                    });
+
+                } else {
+
+                    return new Promise(reject => {
+                        reject(null);
+                    });
+
                 }
-                */
-    
-                return new Promise(reject => {
-                    reject(null);
-                });
-    
+
             });
     
             return new Promise(resolve => {
