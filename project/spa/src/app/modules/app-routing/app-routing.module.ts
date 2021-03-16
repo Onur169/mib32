@@ -9,31 +9,25 @@
 
 import { NgModule } from '@angular/core';
 
-import { Routes, RouterModule } from '@angular/router';
-import { ActiveComponent } from 'src/app/components/active/active.component';
-import { AllianceComponent } from 'src/app/components/alliance/alliance.component';
-import { FaqComponent } from 'src/app/components/faq/faq.component';
+import { Routes, RouterModule, ExtraOptions } from '@angular/router';
 import { LandingpageComponent } from 'src/app/components/landingpage/landingpage.component';
-import { MapComponent } from 'src/app/components/map/map.component';
-import { TestimonialsComponent } from 'src/app/components/testimonials/testimonials.component';
-import { ThrowbacksComponent } from 'src/app/components/throwbacks/throwbacks.component';
-import { TimerComponent } from 'src/app/components/timer/timer.component';
+
+
+const routerOptions: ExtraOptions = {
+  scrollPositionRestoration: 'enabled',
+  anchorScrolling: 'enabled',
+  scrollOffset: [0, 64],
+  useHash: true,
+  onSameUrlNavigation: "reload",
+  enableTracing: true,
+};
 
 const routes: Routes = [
   { path: '', redirectTo: '/Home', pathMatch: 'full' },
-  {path: 'Home', component: LandingpageComponent },
-    {path: '#Timer', component: TimerComponent},
-    {path: '#Karte', component: MapComponent},
-    {path: '#Rückblick', component: ThrowbacksComponent},
-    {path: '#Bündnis', component: AllianceComponent},
-    {path: '#Testimonials', component: TestimonialsComponent},
-    {path: '#FAQ', component: FaqComponent},
-    {path: '#Aktiv', component: ActiveComponent}
-
-
+  {path: 'Home', component: LandingpageComponent }
 ]
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { anchorScrolling: 'enabled'})],
+  imports: [RouterModule.forRoot(routes, routerOptions)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
