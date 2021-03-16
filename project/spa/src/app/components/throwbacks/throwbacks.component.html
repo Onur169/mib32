@@ -6,35 +6,38 @@
       unsere heroischsten Momente mit.
     </p>
   </div>
-  <div *ngIf="throwbackPages.size>1" class="grey_container d-flex justify-content-center py-1 py-md-4">
-    <ngb-pagination
-      (pageChange)="this.setNewPage($event)"
-      [collectionSize]="maxPage"
-      [(page)]="page"
-      [maxSize]="5"
-      [rotate]="false"
-      [boundaryLinks]="true"
-    ></ngb-pagination>
-  </div>
-  <div
-
-    class="grey_container mb-2 mb-md-4 py-1 py-md-3 flex-wrap flex-lg-nowrap d-flex justify-content-around">
-    <ng-container *ngFor="let throwback of throwbacks">
-      <div class="row m-1 row-md-6 card">
-        <!--  <img class="card-img-top" src="..." alt="Card image cap">-->
-        <div class="card-body">
-          <h5 class="card-title h3 mb-1">{{ throwback.getName() }}</h5>
-          <p class="card-subtitle h-6 text-info">
-            {{ throwback.getstartDate() | date: "dd.MM.YYYY" }}
-          </p>
-          <p class="card-text h-3 pt-2">
-            {{ throwback.getDescription() }}
-          </p>
-          <div class="text-center">
-            <a href="#" class="btn btn-outline-danger">Mehr lesen...</a>
+  <div *ngIf="hasThrowback; else elseBlock">
+    <div *ngIf="throwbackPages.size > 1" class="grey_container d-flex justify-content-center py-1 py-md-4">
+      <ngb-pagination
+        (pageChange)="this.setNewPage($event)"
+        [collectionSize]="maxPage"
+        [(page)]="page"
+        [maxSize]="5"
+        [rotate]="false"
+        [boundaryLinks]="true"
+      ></ngb-pagination>
+    </div>
+    <div class="grey_container mb-2 mb-md-4 py-1 py-md-3 flex-wrap flex-lg-nowrap d-flex justify-content-around">
+      <ng-container *ngFor="let throwback of throwbacks">
+        <div class="row m-1 row-md-6 card">
+          <!--  <img class="card-img-top" src="..." alt="Card image cap">-->
+          <div class="card-body">
+            <h5 class="card-title h3 mb-1">{{ throwback.getName() }}</h5>
+            <p class="card-subtitle h-6 text-info">
+              {{ throwback.getstartDate() | date: "dd.MM.YYYY" }}
+            </p>
+            <p class="card-text h-3 pt-2">
+              {{ throwback.getDescription() }}
+            </p>
+            <div class="text-center">
+              <a href="#" class="btn btn-outline-danger">Mehr lesen...</a>
+            </div>
           </div>
         </div>
-      </div>
-    </ng-container>
+      </ng-container>
+    </div>
   </div>
+  <ng-template #elseBlock>
+    <div class="text bg-primary text-white fs-2 text-center py-4 px-3 mb-2 mb-lg-5">Wir pfeilen noch an unseren Rückblicken. Bald wirst du hier was sehen. Schaue bitte später vorbei.</div>
+  </ng-template>
 </div>
