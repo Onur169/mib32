@@ -13,7 +13,7 @@ const path = require("path");
 const fs = require('fs');
 const cliSelect = require('cli-select');
 const chalk = require('chalk');
-const debug = true;
+const debug = false;
 const SLEEP_24_HOURS = 1000 * 60 * 24;
 const puppeteer = require("puppeteer");
 const Api_1 = require("./Api");
@@ -21,6 +21,7 @@ const Response_1 = require("./enums/Response");
 const SocialType_1 = require("./enums/SocialType");
 const FacebookBot_1 = require("./FacebookBot");
 const InstagramBot_1 = require("./InstagramBot");
+const Log_1 = require("./Log");
 /*
     networkidle0 comes handy for SPAs that load resources with fetch requests.
     networkidle2 comes handy for pages that do long-polling or any other side activity.
@@ -32,6 +33,7 @@ const InstagramBot_1 = require("./InstagramBot");
     let selectedSocialMediaType = null;
     let selectedHashtag = null;
     let allowedSocialMediaTypes = [SocialType_1.SocialType.Facebook, SocialType_1.SocialType.Instagram];
+    let log = new Log_1.default();
     try {
         let list = yield api.fetch("socialmedia/hashtagstat?page=1", Response_1.Response.GET);
         if (list.ack === Response_1.Response.AckSuccess) {
@@ -61,7 +63,10 @@ const InstagramBot_1 = require("./InstagramBot");
         }
         if (allowedSocialMediaTypes.includes(selectedSocialMediaType)) {
             let browser = yield puppeteer.launch({
-                headless: false
+                headless: false,
+                args: [
+                    '--disable-web-security',
+                ]
             });
             let page = yield browser.newPage();
             let cookies = null;
@@ -89,26 +94,26 @@ const InstagramBot_1 = require("./InstagramBot");
                     break;
             }
             console.clear();
-            socialBot.successLog(`Starte den Bot für den Hashtag #${selectedHashtag} - ${selectedSocialMediaType}!`);
+            log.successLog(`Starte den Bot für den Hashtag #${selectedHashtag} - ${selectedSocialMediaType}!`);
             if (Object.keys(cookies).length || socialBot.isWithoutLogin()) {
                 let count = yield socialBot.scrapeAfterLogin();
-                socialBot.successLog(`Der Hashtagcount für ${socialBot.getHashtagToSearch()} lautet: ${count}`);
+                log.successLog(`Der Hashtagcount für ${socialBot.getHashtagToSearch()} lautet: ${count}`);
                 let list = yield api.fetch(`socialmedia/${selectedId}/hashtagstat?counter=${count}`, Response_1.Response.PUT);
                 if (list.ack == Response_1.Response.AckSuccess) {
-                    socialBot.successLog(`Der Hashtagcount von ${count} wurde durch die API geupdated!`);
+                    log.successLog(`Der Hashtagcount von ${count} wurde durch die API geupdated!`);
                 }
                 else {
-                    socialBot.errorLog(`Der Hashtagcount von ${count} wurde NICHT durch die API geupdated!`);
+                    log.errorLog(`Der Hashtagcount von ${count} wurde NICHT durch die API geupdated!`);
                 }
             }
             else {
                 let count = yield socialBot.loginAndScrape(fs, cookiesPath);
                 let list = yield api.fetch(`socialmedia/${selectedId}/hashtagstat?counter=${count}`, Response_1.Response.PUT);
                 if (list.ack == Response_1.Response.AckSuccess) {
-                    socialBot.successLog(`Der Hashtagcount von ${count} wurde durch die API geupdated!`);
+                    log.successLog(`Der Hashtagcount von ${count} wurde durch die API geupdated!`);
                 }
                 else {
-                    socialBot.errorLog(`Der Hashtagcount von ${count} wurde NICHT durch die API geupdated!`);
+                    log.errorLog(`Der Hashtagcount von ${count} wurde NICHT durch die API geupdated!`);
                 }
             }
         }
@@ -117,12 +122,12 @@ const InstagramBot_1 = require("./InstagramBot");
         }
     }
     catch (error) {
-        socialBot.errorLog(error);
+        log.errorLog(error);
         process.exit(1);
     }
     finally {
         if (debug) {
-            socialBot.warningLog("Script wird angehalten. Strg+C um Script zu beenden.");
+            log.warningLog("Script wird angehalten. Strg+C um Script zu beenden.");
             yield socialBot.sleep(SLEEP_24_HOURS);
         }
         process.exit(0);

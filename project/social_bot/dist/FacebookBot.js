@@ -29,6 +29,7 @@ class FacebookBot extends SocialBot_1.default {
         this.type = SocialType_1.SocialType.Facebook;
         this.socialBotOption = SocialBotOption_1.SocialBotOption.WaitForSelectorViaSelector;
         this.acceptButtonSelector = '[title*="akzeptieren"]';
+        //this.actionDelay = 10;
     }
     getHashtagCount() {
         return __awaiter(this, void 0, void 0, function* () {
