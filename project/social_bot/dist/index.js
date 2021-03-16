@@ -81,7 +81,7 @@ const InstagramBot_1 = require("./InstagramBot");
                 case 'facebook':
                     socialBot = new FacebookBot_1.default(page, cookies, config, selectedHashtag);
                     break;
-                case 'twitter':
+                case 'instagram':
                     socialBot = new InstagramBot_1.default(page, cookies, config, selectedHashtag);
                     break;
                 default:
@@ -90,7 +90,7 @@ const InstagramBot_1 = require("./InstagramBot");
             }
             console.clear();
             socialBot.successLog(`Starte den Bot für den Hashtag #${selectedHashtag} - ${selectedSocialMediaType}!`);
-            if (Object.keys(cookies).length && socialBot.hasLoggedInSelector != null) {
+            if (Object.keys(cookies).length || socialBot.isWithoutLogin()) {
                 let count = yield socialBot.scrapeAfterLogin();
                 socialBot.successLog(`Der Hashtagcount für ${socialBot.getHashtagToSearch()} lautet: ${count}`);
                 let list = yield api.fetch(`socialmedia/${selectedId}/hashtagstat?counter=${count}`, Response_1.Response.PUT);

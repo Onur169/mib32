@@ -80,12 +80,23 @@ class SocialBot implements SocialMedia{
         });
     }
 
+    public isWithoutLogin() {
+        return typeof(this.hasLoggedInSelector) === 'undefined' || this.hasLoggedInSelector == null;
+    }
+
+    public isCookiesEmpty() {
+        return Object.keys(this.cookies).length == 0;
+    }
+
     public async scrapeAfterLogin(): Promise<number> {
 
         try {
 
             this.warningLog("Du hast dich vorher schonmal eingeloggt! Gehe direkt zur Hashtag-Suchseite!");
-            await this.page.setCookie(...this.cookies);
+
+            if(!this.isCookiesEmpty()) {
+                await this.page.setCookie(...this.cookies);
+            }
 
             // An dieser Stelle können Videos zu einem Timeout unter "networkidle2" führen
             // Mit domcontentloaded können wir den Wert abgreifen unabhängig welche weiteren Ressourcen geladen werden
