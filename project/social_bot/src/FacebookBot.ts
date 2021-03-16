@@ -41,6 +41,7 @@ class FacebookBot extends SocialBot {
         this.type = SocialType.Facebook;
         this.socialBotOption = SocialBotOption.WaitForSelectorViaSelector;
         this.acceptButtonSelector = '[title*="akzeptieren"]';
+        //this.actionDelay = 10;
         
     }
 

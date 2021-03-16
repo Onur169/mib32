@@ -1,9 +1,10 @@
 
 import { SocialMedia } from "./interfaces/SocialMedia";
-import * as emoji from 'node-emoji';
 import * as puppeteer from 'puppeteer';
 import { SocialType } from "./enums/SocialType";
 import { SocialBotOption } from "./enums/SocialBotOption";
+
+import Log from "./Log";
 
 class SocialBot implements SocialMedia {
 
@@ -20,6 +21,8 @@ class SocialBot implements SocialMedia {
     type: SocialType;
     socialBotOption: SocialBotOption;
 
+    log: Log;
+
     protected page: puppeteer.Page = null;
     protected cookies: any = null;
     protected config: any = null;
@@ -28,6 +31,7 @@ class SocialBot implements SocialMedia {
         this.page = page;
         this.cookies = cookies;
         this.config = config;
+        this.log = new Log();
     }
 
     public getHashtagCount(): Promise<number>{
@@ -94,7 +98,7 @@ class SocialBot implements SocialMedia {
 
         try {
 
-            this.warningLog("Du hast dich vorher schonmal eingeloggt! Gehe direkt zur Hashtag-Suchseite!");
+            this.log.warningLog("Du hast dich vorher schonmal eingeloggt! Gehe direkt zur Hashtag-Suchseite!");
 
             if(!this.isCookiesEmpty()) {
                 await this.page.setCookie(...this.cookies);
@@ -108,7 +112,7 @@ class SocialBot implements SocialMedia {
 
             await this.page.waitForSelector(this.hasLoggedInSelector);
 
-            this.successLog("Erfolgreich eingeloggt!");
+            this.log.successLog("Erfolgreich eingeloggt!");
     
             let hashtagCount = await this.getHashtagCount();
 
@@ -118,7 +122,7 @@ class SocialBot implements SocialMedia {
 
         } catch (error) {
 
-            this.errorLog(error);
+            this.log.errorLog(error);
 
             return new Promise(reject => {
                 reject(-1);
@@ -128,18 +132,18 @@ class SocialBot implements SocialMedia {
 
     }
 
-    public async loginAndScrape(fs: any, cookiesPath: string, socialBotOption: SocialBotOption): Promise<number> {
+    public async loginAndScrape(fs: any, cookiesPath: string): Promise<number> {
 
         try {
             
-            this.warningLog("Du bist nicht eingeloggt! Wir loggen uns jetzt ein.");
+            this.log.warningLog("Du bist nicht eingeloggt! Wir loggen uns jetzt ein.");
 
             await this.page.goto(this.loginUrl, {
                 waitUntil: 'networkidle0'
             });
     
             await this.acceptCookies().then(result => {
-                this.successLog("Cookie erfolgreich akzeptiert!");
+                this.log.successLog("Cookie erfolgreich akzeptiert!");
             }).catch(error => {
                 throw new Error("Cookie konnte nicht akzeptiert werden!")
             });
@@ -148,17 +152,17 @@ class SocialBot implements SocialMedia {
                 delay: this.actionDelay
             });
     
-            this.successLog("Usernamen eingegeben!");
+            this.log.successLog("Usernamen eingegeben!");
     
             await this.page.type(this.passwordSelector, this.config[this.type].password, {
                 delay: this.actionDelay
             });
     
-            this.successLog("Passwort eingegeben!");
+            this.log.successLog("Passwort eingegeben!");
     
             await this.page.click(this.loginButtonSelector);
     
-            this.successLog("Formular abgesendet!");
+            this.log.successLog("Formular abgesendet!");
     
             await this.page.waitForNavigation({
                 waitUntil: 'networkidle0',
@@ -167,13 +171,13 @@ class SocialBot implements SocialMedia {
 
             let currentCookies = await this.page.cookies();
 
-            this.successLog("Cookies ausgelesen!");
+            this.log.successLog("Cookies ausgelesen!");
 
             fs.writeFileSync(cookiesPath, JSON.stringify(currentCookies));
 
-            this.successLog("Cookies gespeichert!");
+            this.log.successLog("Cookies gespeichert!");
     
-            this.successLog("Gehe zur Hashtagsuch Seite!");
+            this.log.successLog("Gehe zur Hashtagsuch Seite!");
     
             // An dieser Stelle können Videos zu einem Timeout unter "networkidle2" führen
             // Mit domcontentloaded können wir den Wert abgreifen unabhängig welche weiteren Ressourcen geladen werden
@@ -196,40 +200,10 @@ class SocialBot implements SocialMedia {
         }
 
     }
-    
-    public async successLog(str: string, headline?: string) {
-    
-        let _headline = headline ? `${headline}` : "";
-    
-        console.log(`${emoji.get('heavy_check_mark')}  ${_headline}: ${str}`);
-    
-    }
-    
-    public async errorLog(str: string, headline?: string) {
-    
-        let _headline = headline ? `${headline}` : "";
-    
-        console.log(`${emoji.get('skull_and_crossbones')}  ${_headline}: ${str}`);
-    
-    }
-    
-    public async warningLog(str: string, headline?: string) {
-    
-        let _headline = headline ? `${headline}` : "";
-    
-        console.log(`${emoji.get('warning')}  ${_headline}: ${str}`);
-    
-    }
 
     public async getCookies(): Promise<puppeteer.Protocol.Network.Cookie[]> {
         return this.page.cookies();
     }
-    
-    /*
-    async getHashtagCountForFacebook() {
- 
-    }
-    */
 
     public async acceptCookies() {
 
@@ -266,7 +240,6 @@ class SocialBot implements SocialMedia {
         }
 
     }
-
 
 }
 

@@ -9,8 +9,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const emoji = require("node-emoji");
 const SocialBotOption_1 = require("./enums/SocialBotOption");
+const Log_1 = require("./Log");
 class SocialBot {
     constructor(page, cookies, config) {
         this.page = null;
@@ -19,6 +19,7 @@ class SocialBot {
         this.page = page;
         this.cookies = cookies;
         this.config = config;
+        this.log = new Log_1.default();
     }
     getHashtagCount() {
         return new Promise(resolve => {
@@ -70,7 +71,7 @@ class SocialBot {
     scrapeAfterLogin() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                this.warningLog("Du hast dich vorher schonmal eingeloggt! Gehe direkt zur Hashtag-Suchseite!");
+                this.log.warningLog("Du hast dich vorher schonmal eingeloggt! Gehe direkt zur Hashtag-Suchseite!");
                 if (!this.isCookiesEmpty()) {
                     yield this.page.setCookie(...this.cookies);
                 }
@@ -80,51 +81,51 @@ class SocialBot {
                     waitUntil: 'domcontentloaded'
                 });
                 yield this.page.waitForSelector(this.hasLoggedInSelector);
-                this.successLog("Erfolgreich eingeloggt!");
+                this.log.successLog("Erfolgreich eingeloggt!");
                 let hashtagCount = yield this.getHashtagCount();
                 return new Promise(resolve => {
                     resolve(hashtagCount);
                 });
             }
             catch (error) {
-                this.errorLog(error);
+                this.log.errorLog(error);
                 return new Promise(reject => {
                     reject(-1);
                 });
             }
         });
     }
-    loginAndScrape(fs, cookiesPath, socialBotOption) {
+    loginAndScrape(fs, cookiesPath) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                this.warningLog("Du bist nicht eingeloggt! Wir loggen uns jetzt ein.");
+                this.log.warningLog("Du bist nicht eingeloggt! Wir loggen uns jetzt ein.");
                 yield this.page.goto(this.loginUrl, {
                     waitUntil: 'networkidle0'
                 });
                 yield this.acceptCookies().then(result => {
-                    this.successLog("Cookie erfolgreich akzeptiert!");
+                    this.log.successLog("Cookie erfolgreich akzeptiert!");
                 }).catch(error => {
                     throw new Error("Cookie konnte nicht akzeptiert werden!");
                 });
                 yield this.page.type(this.emailSelector, this.config[this.type].username, {
                     delay: this.actionDelay
                 });
-                this.successLog("Usernamen eingegeben!");
+                this.log.successLog("Usernamen eingegeben!");
                 yield this.page.type(this.passwordSelector, this.config[this.type].password, {
                     delay: this.actionDelay
                 });
-                this.successLog("Passwort eingegeben!");
+                this.log.successLog("Passwort eingegeben!");
                 yield this.page.click(this.loginButtonSelector);
-                this.successLog("Formular abgesendet!");
+                this.log.successLog("Formular abgesendet!");
                 yield this.page.waitForNavigation({
                     waitUntil: 'networkidle0',
                     timeout: this.actionDelay
                 });
                 let currentCookies = yield this.page.cookies();
-                this.successLog("Cookies ausgelesen!");
+                this.log.successLog("Cookies ausgelesen!");
                 fs.writeFileSync(cookiesPath, JSON.stringify(currentCookies));
-                this.successLog("Cookies gespeichert!");
-                this.successLog("Gehe zur Hashtagsuch Seite!");
+                this.log.successLog("Cookies gespeichert!");
+                this.log.successLog("Gehe zur Hashtagsuch Seite!");
                 // An dieser Stelle können Videos zu einem Timeout unter "networkidle2" führen
                 // Mit domcontentloaded können wir den Wert abgreifen unabhängig welche weiteren Ressourcen geladen werden
                 yield this.page.goto(this.hashtagSearchPageUrl, {
@@ -142,34 +143,11 @@ class SocialBot {
             }
         });
     }
-    successLog(str, headline) {
-        return __awaiter(this, void 0, void 0, function* () {
-            let _headline = headline ? `${headline}` : "";
-            console.log(`${emoji.get('heavy_check_mark')}  ${_headline}: ${str}`);
-        });
-    }
-    errorLog(str, headline) {
-        return __awaiter(this, void 0, void 0, function* () {
-            let _headline = headline ? `${headline}` : "";
-            console.log(`${emoji.get('skull_and_crossbones')}  ${_headline}: ${str}`);
-        });
-    }
-    warningLog(str, headline) {
-        return __awaiter(this, void 0, void 0, function* () {
-            let _headline = headline ? `${headline}` : "";
-            console.log(`${emoji.get('warning')}  ${_headline}: ${str}`);
-        });
-    }
     getCookies() {
         return __awaiter(this, void 0, void 0, function* () {
             return this.page.cookies();
         });
     }
-    /*
-    async getHashtagCountForFacebook() {
- 
-    }
-    */
     acceptCookies() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
