@@ -117,15 +117,14 @@ const InstagramBot_1 = require("./InstagramBot");
         }
     }
     catch (error) {
-        //socialBot.errorLog(error);
+        socialBot.errorLog(error);
         process.exit(1);
     }
     finally {
-        /*
         if (debug) {
-            socialBot.warningLog("Script wird angehalten. Strg+C um Script zu beenden.")
-            await socialBot.sleep(SLEEP_24_HOURS);
-        }*/
+            socialBot.warningLog("Script wird angehalten. Strg+C um Script zu beenden.");
+            yield socialBot.sleep(SLEEP_24_HOURS);
+        }
         process.exit(0);
     }
 }))();

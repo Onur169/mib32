@@ -1,3 +1,4 @@
+import { SocialBotOption } from "../enums/SocialBotOption";
 import { SocialType } from "../enums/SocialType";
 
 export interface SocialMedia {
@@ -12,5 +13,6 @@ export interface SocialMedia {
     hashtagToSearch: string,
     actionDelay: number,
     type: SocialType,
+    socialBotOption: SocialBotOption,
     getHashtagCount: () => {}
 }

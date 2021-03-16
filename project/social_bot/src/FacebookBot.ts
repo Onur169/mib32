@@ -1,6 +1,7 @@
 import SocialBot from "./SocialBot";
 import * as puppeteer from 'puppeteer';
 import { SocialType } from "./enums/SocialType";
+import { SocialBotOption } from "./enums/SocialBotOption";
 
 class FacebookBot extends SocialBot {
 
@@ -15,6 +16,7 @@ class FacebookBot extends SocialBot {
     hashtagToSearch: string;
     actionDelay: number;
     type: SocialType;
+    socialBotOption: SocialBotOption;
 
     page: puppeteer.Page;
     cookies: any;
@@ -23,8 +25,6 @@ class FacebookBot extends SocialBot {
     constructor(page: puppeteer.Page, cookies: any, config: any, hashTagToSearch: string) {
 
         super(page, cookies, config);
-
-        this.type = SocialType.Facebook;
 
         this.page = page;
         this.cookies = cookies;
@@ -37,8 +37,10 @@ class FacebookBot extends SocialBot {
         this.emailSelector = '#email';
         this.passwordSelector = '#pass';
         this.loginButtonSelector = '#loginbutton';
-        this.acceptButtonSelector = '[title*="akzeptieren"]';
         this.hasLoggedInSelector = 'form[action*="logout.php"]';
+        this.type = SocialType.Facebook;
+        this.socialBotOption = SocialBotOption.WaitForSelectorViaSelector;
+        this.acceptButtonSelector = '[title*="akzeptieren"]';
         
     }
 
