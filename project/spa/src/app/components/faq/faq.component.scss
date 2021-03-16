@@ -43,15 +43,7 @@
       }
     }
 
-    .btn-link:active {
-      .small {
-        transform: rotate(-180deg) !important;
-        color: $secondary;
-      }
-    }
-
-    .small:hover,
-    .small:focus {
+    .small:hover {
       transform: rotate(-180deg) !important;
       color: $secondary;
     }
