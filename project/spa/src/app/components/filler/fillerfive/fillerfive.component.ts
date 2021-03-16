@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { gsap } from 'gsap';
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ViewportService } from 'src/app/services/viewport.service';
 
 @Component({
   selector: 'app-fillerfive',
@@ -10,10 +11,10 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 })
 export class FillerfiveComponent implements OnInit {
 
-  constructor() { }
+  constructor(private viewport: ViewportService) { }
 
   ngOnInit(): void {
-    this.scrollUp();
+    if(!this.viewport.getIsMobile())this.scrollUp();
   }
 
 
