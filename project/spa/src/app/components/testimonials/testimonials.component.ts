@@ -39,6 +39,10 @@ export class TestimonialsComponent implements OnInit {
     this.getTestimonials();
   }
 
+  ngAfterViewInit(){
+    this.scrollUp();
+  }
+
   async getTestimonials() {
     let manager = this.testimonialService.testimonialManager;
 
@@ -103,4 +107,40 @@ export class TestimonialsComponent implements OnInit {
   count() {
   this.getTestimonialsSet(this.countButtonClick++);
   }
+
+
+        ////////////////////GSAP///////////////////
+
+
+        scrollUp(){
+
+          gsap.registerPlugin(ScrollTrigger);
+
+              var tl=gsap.from("#testimonials_head",{
+                scrollTrigger: {
+                  trigger:"#testimonials_head",
+                  start:"bottom 90%",
+                  end:"bottom 70%",
+                  scrub: true,
+                  markers: false,
+                  toggleActions:"restart pause reverse pause" //wenn sichtbar, wenn nicht sichtbar, wenn wieder zurück
+                },
+                y: -100,
+                opacity:0
+              });
+
+              var t2=gsap.from("#testimonials_cover",{
+                scrollTrigger: {
+                  trigger:"#testimonials_cover",
+                  start:"bottom 90%",
+                  end:"bottom 70%",
+                  scrub: true,
+                  markers: false,
+                  toggleActions:"restart pause reverse pause"
+                },
+
+                opacity:0
+              });
+
+            }
 }
