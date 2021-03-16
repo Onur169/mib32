@@ -5,6 +5,7 @@ import { AllianceService } from 'src/app/services/alliance.service';
 
 import { gsap } from 'gsap';
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ViewportService } from 'src/app/services/viewport.service';
 @Component({
   selector: 'app-alliance',
   templateUrl: './alliance.component.html',
@@ -25,7 +26,7 @@ export class AllianceComponent implements OnInit {
   public alliances: Map<number, AllianceClass[]> = new Map();
   hasAlliance: boolean = false;
 
-  constructor(private allianceService: AllianceService) {
+  constructor(private allianceService: AllianceService, private viewport: ViewportService) {
     this.getScreenSize();
   }
 
@@ -39,7 +40,7 @@ export class AllianceComponent implements OnInit {
   }
 
   ngAfterViewInit(){
-    this.scrollUp();
+    if(!this.viewport.getIsMobile())this.scrollUp();
   }
 
   //gibt soviele Partner, wie die Breite des Bildschirms es erlaubt

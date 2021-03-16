@@ -5,6 +5,7 @@ import { TestimonialService } from 'src/app/services/testimonial.service';
 
 import { gsap } from 'gsap';
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ViewportService } from 'src/app/services/viewport.service';
 @Component({
   selector: 'app-testimonials',
   templateUrl: './testimonials.component.html',
@@ -28,7 +29,7 @@ export class TestimonialsComponent implements OnInit {
 
   public setOfTestimonials: Map<number, TestimonialClass[]> = new Map();
 
-  constructor(private testimonialService: TestimonialService) {
+  constructor(private testimonialService: TestimonialService, private viewport: ViewportService) {
     this.getScreenSize();
   }
 

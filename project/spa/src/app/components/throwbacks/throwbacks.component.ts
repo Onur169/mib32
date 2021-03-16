@@ -4,6 +4,7 @@ import { ThrowbackService } from 'src/app/services/throwback.service';
 
 import { gsap } from 'gsap';
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ViewportService } from 'src/app/services/viewport.service';
 @Component({
   selector: 'app-throwbacks',
   templateUrl: './throwbacks.component.html',
@@ -19,7 +20,7 @@ export class ThrowbacksComponent implements OnInit {
 
 
   constructor(
-    private throwbackService: ThrowbackService
+    private throwbackService: ThrowbackService, private viewport: ViewportService
   ) {
     this.throwbacks = [];
   }
@@ -35,7 +36,7 @@ export class ThrowbacksComponent implements OnInit {
 
   ngAfterViewInit(){
 
-    this.scrollUp();
+    if(!this.viewport.getIsMobile())this.scrollUp();
   }
 
   async setProperties() {

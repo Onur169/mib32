@@ -9,9 +9,10 @@
  */
  import { gsap } from "gsap";
 
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { interval, Subscription } from 'rxjs';
 import { EventService } from 'src/app/services/event.service';
+import { ViewportService } from "src/app/services/viewport.service";
 
 @Component({
   selector: 'app-timer',
@@ -39,7 +40,7 @@ export class TimerComponent implements OnInit {
   private minutesInAnHour: number = 60;
   private SecondsInAMinute: number = 60;
 
-  constructor(private eventService: EventService) {
+  constructor(private eventService: EventService, private viewport: ViewportService) {
     this.timeDifference = 0;
     this.secondsToDday = 0;
     this.minutesToDday = 0;
@@ -90,7 +91,7 @@ export class TimerComponent implements OnInit {
         hour: 'numeric'
       });
     }
-    this.slideEffect();
+    if(!this.viewport.getIsMobile())this.slideEffect();
   }
 
   private getTimeDifference(newdate?: Date) {
@@ -128,6 +129,7 @@ export class TimerComponent implements OnInit {
   }
 
   ////////////////////GSAP/////////////////////
+  @HostListener('window:resize', ['$event'])
   slideEffect(){
     var tl = gsap.timeline();
 

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { gsap } from 'gsap';
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ViewportService } from 'src/app/services/viewport.service';
 @Component({
   selector: 'app-fillerthree',
   templateUrl: './fillerthree.component.html',
@@ -9,14 +10,14 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 })
 export class FillerthreeComponent implements OnInit {
 
-  constructor() { }
+  constructor(private viewport: ViewportService) { }
 
   ngOnInit(): void {
 
   }
 
   ngAfterViewInit(){
-    this.scrollUp();
+    if(!this.viewport.getIsMobile())this.scrollUp();
   }
 
 

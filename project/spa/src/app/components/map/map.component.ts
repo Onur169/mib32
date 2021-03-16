@@ -33,6 +33,7 @@ import Point from 'ol/geom/Point';
 import { Coordinate } from 'ol/coordinate';
 import { Cluster } from 'ol/source';
 import CircleStyle from 'ol/style/Circle';
+import { ViewportService } from 'src/app/services/viewport.service';
 
 @Component({
   selector: 'app-map',
@@ -65,7 +66,7 @@ export class MapComponent implements OnInit {
   private map?: Map = undefined;
   private mapSkalaValue: number;
 
-  constructor(private eventService: EventService) {
+  constructor(private eventService: EventService, private viewport: ViewportService) {
     (this.position = navigator), (this.mapSkalaValue = 50);
     this.latitude = 51.165691;
     this.longitude = 10.451526;
@@ -86,7 +87,7 @@ export class MapComponent implements OnInit {
     this.calculateDistance(this.mapSkalaValue);
   }
   ngAfterViewInit(){
-    this.scrollUp();
+    if(!this.viewport.getIsMobile())this.scrollUp();
   }
 
   //die Map wird mit dem Standort des Nutzers gefüllt
