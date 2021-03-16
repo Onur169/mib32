@@ -5,13 +5,13 @@ import { TestimonialService } from 'src/app/services/testimonial.service';
 
 import { gsap } from 'gsap';
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ViewportService } from 'src/app/services/viewport.service';
 @Component({
   selector: 'app-testimonials',
   templateUrl: './testimonials.component.html',
-  styleUrls: ['./testimonials.component.scss']
+  styleUrls: ['./testimonials.component.scss'],
 })
 export class TestimonialsComponent implements OnInit {
-
   scrHeight: any;
   scrWidth: any;
 
@@ -23,12 +23,13 @@ export class TestimonialsComponent implements OnInit {
     //console.log(this.scrHeight, this.scrWidth);
   }
 
-  allTestimonials: TestimonialClass[]=[];
+  allTestimonials: TestimonialClass[] = [];
+  public setTestimonials: TestimonialClass[] = [];
   hasTestimonials: boolean = false;
 
   public setOfTestimonials: Map<number, TestimonialClass[]> = new Map();
 
-  constructor(private testimonialService: TestimonialService) {
+  constructor(private testimonialService: TestimonialService, private viewport: ViewportService) {
     this.getScreenSize();
   }
 
@@ -36,26 +37,21 @@ export class TestimonialsComponent implements OnInit {
     this.getTestimonials();
   }
 
-  async getTestimonials(){
-
-   let manager=this.testimonialService.testimonialManager;
+  async getTestimonials() {
+    let manager = this.testimonialService.testimonialManager;
 
     await this.testimonialService.fetchTestimonials();
-    if(manager.getPageValue(manager.getCurrentPage())){
-
+    if (manager.getPageValue(manager.getCurrentPage())) {
       await this.iterateTestimonials();
     }
     this.checkTestimonials(this.allTestimonials);
     this.getTestimonialsSet();
-
-
-
   }
 
-  async iterateTestimonials(){
-    let manager=this.testimonialService.testimonialManager;
+  async iterateTestimonials() {
+    let manager = this.testimonialService.testimonialManager;
 
-    if(manager.hasNextPage()){
+    if (manager.hasNextPage()) {
       await this.testimonialService.fetchTestimonials(manager.getNextPage());
       await this.iterateTestimonials();
     }
@@ -65,25 +61,31 @@ export class TestimonialsComponent implements OnInit {
     }
   }
 
-  checkTestimonials(testimonials: TestimonialClass[]){
-    if(testimonials == []){
+  checkTestimonials(testimonials: TestimonialClass[]) {
+    if (testimonials == []) {
       this.hasTestimonials = false;
-    }else{
+    } else {
       this.hasTestimonials = true;
     }
   }
 
-  getTestimonialsSet(){
-    console.log("hallo");
-    if(this.scrWidth < 576){
-      this.setOfTestimonials = this.testimonialService.testimonialManager.getManyTestimonialsAsPages(2);
-      console.log("small",this.setOfTestimonials);
-    }else if(this.scrWidth >= 576 && this.scrWidth < 768){
-      this.setOfTestimonials = this.testimonialService.testimonialManager.getManyTestimonialsAsPages(4);
-      console.log("medium",this.setOfTestimonials);
-    }else{
-      this.setOfTestimonials = this.testimonialService.testimonialManager.getManyTestimonialsAsPages(6);
-      console.log("large",this.setOfTestimonials);
+  getTestimonialsSet() {
+    let testi: Map<number, TestimonialClass[]> = new Map();
+    if (this.scrWidth < 576 && this.scrWidth < 768) {
+      testi = this.testimonialService.testimonialManager.getManyTestimonialsAsPages(2);
+      if(testi.get(0)){
+        this.setOfTestimonials.set(0, testi.get(0)!);
+      }
+    } else if (this.scrWidth >=768 && this.scrWidth < 992) {
+        testi = this.testimonialService.testimonialManager.getManyTestimonialsAsPages(3);
+        if(testi.get(0)){
+          this.setOfTestimonials.set(0, testi.get(0)!);
+        }
+    } else{
+      testi = this.testimonialService.testimonialManager.getManyTestimonialsAsPages(4);
+      if(testi.get(0)){
+        this.setOfTestimonials.set(0, testi.get(0)!);
+      }
     }
   }
 }

@@ -107,13 +107,10 @@ import { TestimonialClass } from "./TestimonialClass";
        * Bau eine Map nach den gewünschten Einträgen an elementen pro Seite nach.
        * **/
       getManyTestimonialsAsPages(elementsPerPage: number): Map<number,TestimonialClass[]>{
-        console.log(elementsPerPage);
+
         let allValues=this.getAllValues();
 
-        console.log("komm",allValues);
-
         let pageCounter: number=Math.round(allValues.length/elementsPerPage);
-      console.log("pageCounter",pageCounter,"allValues.length", allValues.length,"lementsPerPage", elementsPerPage);
 
 
         let paginator: Map<number,TestimonialClass[]>=new Map();
@@ -121,7 +118,6 @@ import { TestimonialClass } from "./TestimonialClass";
         let pageValue=0;
         /**/let bla: TestimonialClass[]=[];
             for(let page=0; page<pageCounter; page++){
-              //console.log("neue Seite");
               bla=[];
               for(let alliance=0; alliance<=elementsPerPage-1; alliance++){
 
@@ -135,7 +131,7 @@ import { TestimonialClass } from "./TestimonialClass";
               pageValue+=elementsPerPage;
             }
 
-
+            //console.log(paginator);
 
         return paginator;
       }
@@ -173,12 +169,11 @@ import { TestimonialClass } from "./TestimonialClass";
       }
 
       getAllValues(): TestimonialClass[]{
-        console.log("pages",this.pages);
+
         let testimonials:TestimonialClass[]=[];
         this.pages.forEach(page =>{
           page.forEach(testimonial => {
             testimonials.push(testimonial);
-            console.log("push", testimonial);
           })
         })
         return testimonials;

@@ -1,10 +1,10 @@
-.card> img{
+/*.card> img{
   width: calc(10vw + 10vh);
   height: calc(11vw + 11vh);
   object-fit: cover;
   object-position: 0 0;
   min-width: 300px;
-}
+}*/
 
 .border{
   border-width: 0.2rem !important;
@@ -12,4 +12,10 @@
 
 .allCards{
   background-color: #e0dfde52;
+}
+
+@media(max-width: 576px){
+  .card-box{
+    flex-direction: column;
+  }
 }

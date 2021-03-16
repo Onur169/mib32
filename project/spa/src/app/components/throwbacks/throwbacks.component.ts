@@ -4,6 +4,7 @@ import { ThrowbackService } from 'src/app/services/throwback.service';
 
 import { gsap } from 'gsap';
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ViewportService } from 'src/app/services/viewport.service';
 @Component({
   selector: 'app-throwbacks',
   templateUrl: './throwbacks.component.html',
@@ -14,11 +15,12 @@ export class ThrowbacksComponent implements OnInit {
   throwbacks: ThrowbackClass[];
   maxPage = 0;
   page = 1;
+  hasThrowback: boolean = false;
 
 
 
   constructor(
-    private throwbackService: ThrowbackService
+    private throwbackService: ThrowbackService, private viewport: ViewportService
   ) {
     this.throwbacks = [];
   }
@@ -26,11 +28,15 @@ export class ThrowbacksComponent implements OnInit {
   ngOnInit() {
 
     this.setProperties();
+
+    if(this.throwbacks){
+      this.hasThrowback =true;
+    }
   }
 
   ngAfterViewInit(){
 
-    this.scrollUp();
+    if(!this.viewport.getIsMobile())this.scrollUp();
   }
 
   async setProperties() {
@@ -70,9 +76,7 @@ export class ThrowbacksComponent implements OnInit {
 
         //geht den string zu einem Wort durch
         while (value.getDescription().slice(-1) != ' ') {
-          console.log('hallo');
           desc = value.getDescription().slice(0, letters - 1);
-          console.log(desc);
           value.setDescription(desc);
           letters--;
         }
@@ -84,7 +88,6 @@ export class ThrowbacksComponent implements OnInit {
         filtered.push(value);
       }
     });
-
     return filtered;
   }
 

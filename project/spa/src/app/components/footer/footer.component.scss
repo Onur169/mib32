@@ -13,3 +13,8 @@
   width: 90vw;
   min-width: 360px;
 }
+
+div > a:hover{
+  text-decoration: none;
+  color: $warning !important;
+}
