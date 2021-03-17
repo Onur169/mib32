@@ -37,22 +37,32 @@ class InstagramBot extends SocialBot {
         this.emailSelector = '[name=username]';
         this.passwordSelector = '[name=password]';
         this.loginButtonSelector = 'button[type=submit]';
-        this.hasLoggedInSelector = '[action*="logout.php"]';
+        this.hasLoggedInSelector = 'img[alt*="Profilbild"]';
         this.type = SocialType.Instagram;
         this.socialBotOption = SocialBotOption.WaitForSelectorViaFunction;
         this.acceptButtonSelector = 'Array.from(document.querySelectorAll("button")).filter(el => el.innerText.toString().includes("Akzeptieren"))[0]';
+        //this.actionDelay = 1;
         
     }
 
     async getHashtagCount(): Promise<number> {
 
         try {
+            
+            if(super.isCookiesEmpty()) {
+
+                // Nur nicht-eingeloggt anwenden
+                await this.page.waitForNavigation({
+                    waitUntil: 'domcontentloaded'
+                });
+
+            }
     
             let result = await this.page.evaluate(() => {
-    
-                let item = document.querySelector("span > span") as HTMLElement;
 
-                let onlyNumbers = parseFloat(item.innerText.replace(/\D/g, ''));
+                let item = document.querySelector("span > span");
+
+                let onlyNumbers = parseFloat(item.innerHTML.replace(/\D/g, ''));
 
                 if (Number.isFinite(onlyNumbers)) {
 

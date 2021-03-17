@@ -27,33 +27,28 @@ export class ThrowbacksComponent implements OnInit {
   page = 1;
   hasThrowback: boolean = false;
 
-  constructor(
-    private throwbackService: ThrowbackService, private viewport: ViewportService
-  ) {
+  constructor(private throwbackService: ThrowbackService, private viewport: ViewportService) {
     this.throwbacks = [];
   }
 
   ngOnInit() {
-
-    this.setProperties();
-
-    if(this.throwbacks){
-      this.hasThrowback =true;
-    }
+   this.setProperties();
   }
 
   ngAfterViewInit(){
-
     if(!this.viewport.getIsMobile())this.scrollUp();
   }
 
   async setProperties() {
 
-    await this.throwbackService.getallThrowbacks();
+   await this.throwbackService.getallThrowbacks();
     this.throwbackPages = this.throwbackService.throwbackmanager.reCreatePages(5);
     this.setNewPage(1);
     this.setMaxPage(this.throwbackPages.size);
 
+    if(this.throwbacks.length > 0){
+      this.hasThrowback =true;
+    }
   }
 
   setMaxPage(size: number) {

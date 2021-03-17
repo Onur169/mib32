@@ -3,7 +3,7 @@ const fs = require('fs');
 const cliSelect = require('cli-select');
 const chalk = require('chalk');
 
-const debug = true;
+const debug = false;
 const SLEEP_24_HOURS = 1000 * 60 * 24;
 
 import * as puppeteer from 'puppeteer';
@@ -13,6 +13,7 @@ import { SocialType } from './enums/SocialType';
 import FacebookBot from './FacebookBot';
 import InstagramBot from './InstagramBot';
 import { HashtagStat } from './interfaces/HashtagStat';
+import Log from './Log';
 
 /*
     networkidle0 comes handy for SPAs that load resources with fetch requests.
@@ -27,6 +28,7 @@ import { HashtagStat } from './interfaces/HashtagStat';
     let selectedSocialMediaType = null;
     let selectedHashtag = null;
     let allowedSocialMediaTypes = [SocialType.Facebook, SocialType.Instagram];
+    let log = new Log();
 
     try {
 
@@ -70,7 +72,10 @@ import { HashtagStat } from './interfaces/HashtagStat';
         if(allowedSocialMediaTypes.includes(selectedSocialMediaType)) {
 
             let browser = await puppeteer.launch({
-                headless: false
+                headless: false,
+                args: [
+                    '--disable-web-security',
+                ]
             });
     
             let page = await browser.newPage();
@@ -108,20 +113,20 @@ import { HashtagStat } from './interfaces/HashtagStat';
             }
 
             console.clear();
-            socialBot.successLog(`Starte den Bot für den Hashtag #${selectedHashtag} - ${selectedSocialMediaType}!`);
+            log.successLog(`Starte den Bot für den Hashtag #${selectedHashtag} - ${selectedSocialMediaType}!`);
 
             if (Object.keys(cookies).length || socialBot.isWithoutLogin()) {
 
                 let count = await socialBot.scrapeAfterLogin();
 
-                socialBot.successLog(`Der Hashtagcount für ${socialBot.getHashtagToSearch()} lautet: ${count}`);
+                log.successLog(`Der Hashtagcount für ${socialBot.getHashtagToSearch()} lautet: ${count}`);
 
                 let list = await api.fetch(`socialmedia/${selectedId}/hashtagstat?counter=${count}`, Response.PUT);
 
                 if(list.ack == Response.AckSuccess) {
-                    socialBot.successLog(`Der Hashtagcount von ${count} wurde durch die API geupdated!`);
+                    log.successLog(`Der Hashtagcount von ${count} wurde durch die API geupdated!`);
                 } else {
-                    socialBot.errorLog(`Der Hashtagcount von ${count} wurde NICHT durch die API geupdated!`);
+                    log.errorLog(`Der Hashtagcount von ${count} wurde NICHT durch die API geupdated!`);
                 }
     
             } else {
@@ -131,9 +136,9 @@ import { HashtagStat } from './interfaces/HashtagStat';
                 let list = await api.fetch(`socialmedia/${selectedId}/hashtagstat?counter=${count}`, Response.PUT);
                 
                 if(list.ack == Response.AckSuccess) {
-                    socialBot.successLog(`Der Hashtagcount von ${count} wurde durch die API geupdated!`);
+                    log.successLog(`Der Hashtagcount von ${count} wurde durch die API geupdated!`);
                 } else {
-                    socialBot.errorLog(`Der Hashtagcount von ${count} wurde NICHT durch die API geupdated!`);
+                    log.errorLog(`Der Hashtagcount von ${count} wurde NICHT durch die API geupdated!`);
                 }
     
             }
@@ -146,14 +151,14 @@ import { HashtagStat } from './interfaces/HashtagStat';
 
     } catch (error) {
 
-        socialBot.errorLog(error);
+        log.errorLog(error);
 
         process.exit(1);
 
     } finally {
 
         if (debug) {
-            socialBot.warningLog("Script wird angehalten. Strg+C um Script zu beenden.")
+            log.warningLog("Script wird angehalten. Strg+C um Script zu beenden.")
             await socialBot.sleep(SLEEP_24_HOURS);
         }
 

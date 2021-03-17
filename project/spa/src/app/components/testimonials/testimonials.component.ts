@@ -111,7 +111,6 @@ export class TestimonialsComponent implements OnInit {
         this.hasMore = true;
       }
     }
-    ScrollTrigger.refresh(true);
   }
 
   count() {
