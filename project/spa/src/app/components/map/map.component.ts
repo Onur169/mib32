@@ -75,7 +75,7 @@ export class MapComponent implements OnInit {
   }
 
   async buildMap(){
-    await this.initMap(6);
+    await this.initMap(10);
     await this.renderMap(50);
 
   }
@@ -239,10 +239,13 @@ if(zoom){
         return false;
       };
 
+      console.log("bla");
       //beim Klicken auf die Map erscheint ein Popup mit einem bestimmten Inhalt
+
     mapScreen.on('click',  (event) => {
       var coordinate = event.coordinate;
-      if (mapScreen.hasFeatureAtPixel(event.pixel) === true) {
+      if (mapScreen.hasFeatureAtPixel(event.pixel)) {
+        console.log("locationname",value.getLocationName(),"startdate",value.getStartDate());
           content!.innerHTML =  '<div><code>' +
          value.getName() +
           '</code> </br>' +
