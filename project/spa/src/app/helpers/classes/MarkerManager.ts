@@ -18,9 +18,6 @@ export class MarkerManager extends MapMath{
   private currentPage: number;
   private maxPages: number;
 
-
-
-
   constructor(){
 
     super();
