@@ -1,3 +1,14 @@
+/**
+ * @param createdBy
+ * Christian Knoth
+ * @param authors
+ * Christian Knoth
+ * @param summary
+ * Der alliance-Service beantragt für die testimonial-Komponente die Daten zu den Testimonials vom api-Service.
+ *
+ */
+
+
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TestimonialClass, TestimonialsImageClass } from '../helpers/classes/TestimonialClass';

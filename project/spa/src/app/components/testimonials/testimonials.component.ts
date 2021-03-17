@@ -1,3 +1,12 @@
+/**
+ * @param createdBy
+ * Christian Knoth
+ * @param authors
+ * Anna Glomb, Christian Knoth
+ * @param summary
+ * Die Testimonial-Komponente erfüllt sämtliche Aufgaben zur Darstellung unseres Testimonial-Features und
+ * bezieht ihre dargestellten Daten aus dem testimonial-Service.
+ */
 import { HostListener } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { TestimonialClass } from 'src/app/helpers/classes/TestimonialClass';
@@ -26,6 +35,8 @@ export class TestimonialsComponent implements OnInit {
   allTestimonials: TestimonialClass[] = [];
   public setTestimonials: TestimonialClass[] = [];
   hasTestimonials: boolean = false;
+  countButtonClick: number = 0;
+  hasMore: boolean = false;
 
   public setOfTestimonials: Map<number, TestimonialClass[]> = new Map();
 
@@ -37,6 +48,10 @@ export class TestimonialsComponent implements OnInit {
     this.getTestimonials();
   }
 
+  ngAfterViewInit(){
+    if(!this.viewport.getIsMobile())this.scrollUp();
+  }
+
   async getTestimonials() {
     let manager = this.testimonialService.testimonialManager;
 
@@ -45,7 +60,7 @@ export class TestimonialsComponent implements OnInit {
       await this.iterateTestimonials();
     }
     this.checkTestimonials(this.allTestimonials);
-    this.getTestimonialsSet();
+    this.getTestimonialsSet(this.countButtonClick);
   }
 
   async iterateTestimonials() {
@@ -69,23 +84,72 @@ export class TestimonialsComponent implements OnInit {
     }
   }
 
-  getTestimonialsSet() {
+  getTestimonialsSet(count: number) {
     let testi: Map<number, TestimonialClass[]> = new Map();
+    this.hasMore = false;
     if (this.scrWidth < 576 && this.scrWidth < 768) {
       testi = this.testimonialService.testimonialManager.getManyTestimonialsAsPages(2);
-      if(testi.get(0)){
-        this.setOfTestimonials.set(0, testi.get(0)!);
+      if(testi.get(count)){
+        this.setOfTestimonials.set(count, testi.get(count)!);
+        //console.log(this.setOfTestimonials.get(count));
+        this.hasMore = true;
       }
+      console.log('small');
     } else if (this.scrWidth >=768 && this.scrWidth < 992) {
         testi = this.testimonialService.testimonialManager.getManyTestimonialsAsPages(3);
-        if(testi.get(0)){
-          this.setOfTestimonials.set(0, testi.get(0)!);
+        if(testi.get(count)){
+          this.setOfTestimonials.set(count, testi.get(count)!);
+          //console.log(this.setOfTestimonials.get(count));
+          this.hasMore = true;
         }
+        console.log('middle');
     } else{
       testi = this.testimonialService.testimonialManager.getManyTestimonialsAsPages(4);
-      if(testi.get(0)){
-        this.setOfTestimonials.set(0, testi.get(0)!);
+      if(testi.get(count)){
+        this.setOfTestimonials.set(count, testi.get(count)!);
+        //console.log(this.setOfTestimonials.get(count));
+        this.hasMore = true;
       }
     }
   }
+
+  count() {
+  this.getTestimonialsSet(this.countButtonClick++);
+  }
+
+
+        ////////////////////GSAP///////////////////
+
+
+        scrollUp(){
+
+          gsap.registerPlugin(ScrollTrigger);
+
+              var tl=gsap.from("#testimonials_head",{
+                scrollTrigger: {
+                  trigger:"#testimonials_head",
+                  start:"bottom 90%",
+                  end:"bottom 70%",
+                  scrub: true,
+                  markers: false,
+                  toggleActions:"restart pause reverse pause" //wenn sichtbar, wenn nicht sichtbar, wenn wieder zurück
+                },
+                y: -100,
+                opacity:0
+              });
+
+              var t2=gsap.from("#testimonials_cover",{
+                scrollTrigger: {
+                  trigger:"#testimonials_cover",
+                  start:"bottom 90%",
+                  end:"bottom 70%",
+                  scrub: true,
+                  markers: false,
+                  toggleActions:"restart pause reverse pause"
+                },
+
+                opacity:0
+              });
+
+            }
 }

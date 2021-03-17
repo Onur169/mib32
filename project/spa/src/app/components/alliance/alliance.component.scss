@@ -1,12 +1,10 @@
 .alliance_image{
-  width: 14vw;
+  width: 14rem;
   min-width: 80px;
 border-radius: 20%;
 border-color: gray !important;
 border-width: 3px !important;
 }
-
-
 
 ::ng-deep .carousel-control-prev-icon{
   background-image: url('../../../assets/pictures/alliance/double_arrow-24px.svg');
@@ -29,7 +27,24 @@ border-width: 3px !important;
   height: 300px;
 }
 
-@media(max-width: 768px){
+@media (min-width: 768px) and (max-width: 992px){
+  .alliance_image{
+    width: 10rem;
+  }
+}
+
+@media(min-width: 576px) and (max-width: 767px){
+  .carousel{
+    outline: none ;
+    height: 200px;
+  }
+
+  .alliance_image{
+    width: 10rem;
+  }
+}
+
+@media(max-width: 575.99px){
   .carousel{
     outline: none ;
     height: 200px;

@@ -4,7 +4,7 @@
  * @param authors
  * Christian Knoth
  * @param summary
- * Der Event Service beschafft die Daten zu den aktuell gelisteten Klimastreiks von der API.
+ * Der Event Service beschafft die Daten zu den aktuell gelisteten Klimastreiks für die timer-Komponente und der map-Komponente vom api-Service.
  *
  */
 

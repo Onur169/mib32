@@ -1,3 +1,12 @@
+/**
+ * @param createdBy
+ * Christian Knoth
+ * @param authors
+ * Christian Knoth, Anna Glomb
+ * @param summary
+ * Die Throwback-Komponente erfüllt sämtliche Aufgaben zur Darstellung unseres Rückblick-Features und
+ * bezieht ihre dargestellten Daten aus dem throwback-Service.
+ */
 import { Component, OnInit } from '@angular/core';
 import { ThrowbackClass } from 'src/app/helpers/classes/ThrowbackClass';
 import { ThrowbackService } from 'src/app/services/throwback.service';
@@ -11,41 +20,35 @@ import { ViewportService } from 'src/app/services/viewport.service';
   styleUrls: ['./throwbacks.component.scss'],
 })
 export class ThrowbacksComponent implements OnInit {
+
   throwbackPages = new Map<number, ThrowbackClass[]>();
   throwbacks: ThrowbackClass[];
   maxPage = 0;
   page = 1;
   hasThrowback: boolean = false;
 
-
-
-  constructor(
-    private throwbackService: ThrowbackService, private viewport: ViewportService
-  ) {
+  constructor(private throwbackService: ThrowbackService, private viewport: ViewportService) {
     this.throwbacks = [];
   }
 
   ngOnInit() {
-
-    this.setProperties();
-
-    if(this.throwbacks){
-      this.hasThrowback =true;
-    }
+   this.setProperties();
   }
 
   ngAfterViewInit(){
-
     if(!this.viewport.getIsMobile())this.scrollUp();
   }
 
   async setProperties() {
 
-    await this.throwbackService.getallThrowbacks();
+   await this.throwbackService.getallThrowbacks();
     this.throwbackPages = this.throwbackService.throwbackmanager.reCreatePages(5);
     this.setNewPage(1);
     this.setMaxPage(this.throwbackPages.size);
 
+    if(this.throwbacks.length > 0){
+      this.hasThrowback =true;
+    }
   }
 
   setMaxPage(size: number) {

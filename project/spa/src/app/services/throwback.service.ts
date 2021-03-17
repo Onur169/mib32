@@ -1,3 +1,13 @@
+/**
+ * @param createdBy
+ * Christian Knoth
+ * @param authors
+ * Christian Knoth
+ * @param summary
+ * Der alliance-Service beantragt für die alliance-Komponente die Daten zu den Bündnissen vom api-Service.
+ *
+ */
+
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ThrowbackClass } from '../helpers/classes/ThrowbackClass';
@@ -18,7 +28,7 @@ export class ThrowbackService {
 
   async getallThrowbacks(){
 
-    return new Promise<ThrowbackClass[]>(async (resolve, reject) => {
+    return new Promise<ThrowbackClass[]>(async (resolve, reject)=>  {
       try{
 
         if(this.throwbackmanager.getFirstThrowback()==undefined){

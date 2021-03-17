@@ -4,7 +4,8 @@
  * @param authors
  * Christian Knoth
  * @param summary
- * Die ThrowManager-Klasse repräsentiert alle aktuell angefragten Rückblicke und wird im Rahmen der Throwback-Komponente genutzt.
+ * Die ThrowManager-Klasse repräsentiert alle aktuell angefragten Rückblicke, bietet Formatierungsmöglichkeiten der Daten
+ * und wird im Rahmen der Throwback-Komponente genutzt.
  */
 
 import { ThrowbackClass } from "./ThrowbackClass";

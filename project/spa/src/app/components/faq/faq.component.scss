@@ -31,7 +31,6 @@
     button:hover {
       color: $secondary;
       .small {
-        transform: rotate(-180deg) !important;
         color: $secondary;
       }
     }
@@ -44,7 +43,6 @@
     }
 
     .small:hover {
-      transform: rotate(-180deg) !important;
       color: $secondary;
     }
 

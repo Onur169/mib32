@@ -1,3 +1,13 @@
+/**
+ * @param createdBy
+ * Christian Knoth
+ * @param authors
+ * Christian Knoth
+ * @param summary
+ * Der alliance-Service beantragt für die alliance-Komponente die Daten zu den Bündnissen vom api-Service.
+ *
+ */
+
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AllianceClass, AllianceImageClass } from '../helpers/classes/AllianceClass';
@@ -20,22 +30,18 @@ private maxPages: number;
 
   getManyAlliancesAsPages(elementsPerPage: number): Map<number,AllianceClass[]>{
     let pageCounter: number=Math.round(this.alliances.length/elementsPerPage);
-    //console.log("pageCounter",pageCounter,"alliances.length", this.alliances.length,"lementsPerPage", elementsPerPage);
-
 
     let paginator: Map<number,AllianceClass[]>=new Map();
 
     let pageValue=0;
-/**/let bla: AllianceClass[]=[];
+    let newAlliances: AllianceClass[]=[];
     for(let page=0; page<pageCounter; page++){
-      //console.log("neue Seite");
-      bla=[];
+      newAlliances=[];
       for(let alliance=0; alliance<=elementsPerPage-1; alliance++){
 
         if(this.alliances[pageValue+alliance]){
-        bla.push(this.alliances[pageValue+alliance]);
-        paginator.set(page, bla);
-        //console.log("paginator an der Stelle",page ,"wird befüllt");
+          newAlliances.push(this.alliances[pageValue+alliance]);
+        paginator.set(page, newAlliances);
         }
         else break;
       }

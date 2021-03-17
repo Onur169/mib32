@@ -12,12 +12,12 @@ import { ViewportService } from 'src/app/services/viewport.service';
   styleUrls: ['./alliance.component.scss'],
 })
 export class AllianceComponent implements OnInit {
-  scrHeight: any;
-  scrWidth: any;
+  scrHeight: number = 0;
+  scrWidth: number = 0;
 
   //zeigt den Viewport an
   @HostListener('window:resize', ['$event'])
-  getScreenSize(event?: any) {
+  getScreenSize() {
     this.scrHeight = window.innerHeight;
     this.scrWidth = window.innerWidth;
     //console.log(this.scrHeight, this.scrWidth);
@@ -44,18 +44,17 @@ export class AllianceComponent implements OnInit {
   }
 
   //gibt soviele Partner, wie die Breite des Bildschirms es erlaubt
-  createAllianceSet(srcWidth: number, ) {
+  createAllianceSet(srcWidth: number) {
     //kleiner als der xs Breakpoint
     if(srcWidth < 576){
       this.alliances = this.allianceService.getManyAlliancesAsPages(1);
-      if(this.alliances)this.hasAlliance = true;
     }else if(srcWidth >=576 && srcWidth < 768){
       this.alliances = this.allianceService.getManyAlliancesAsPages(2);
-      if(this.alliances)this.hasAlliance = true;
     }else{
       this.alliances = this.allianceService.getManyAlliancesAsPages(3);
-      if(this.alliances)this.hasAlliance = true;
     }
+
+    if(this.alliances.size > 0 )this.hasAlliance = true;
   }
 
   scrollUp(){
