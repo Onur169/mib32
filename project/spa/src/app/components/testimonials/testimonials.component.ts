@@ -21,22 +21,21 @@ import { ViewportService } from 'src/app/services/viewport.service';
   styleUrls: ['./testimonials.component.scss'],
 })
 export class TestimonialsComponent implements OnInit {
-  scrHeight: any;
-  scrWidth: any;
+  scrHeight: number = 0;
+  scrWidth: number = 0;
 
   //zeigt den Viewport an
   @HostListener('window:resize', ['$event'])
-  getScreenSize(event?: any) {
+  getScreenSize() {
     this.scrHeight = window.innerHeight;
     this.scrWidth = window.innerWidth;
-    //console.log(this.scrHeight, this.scrWidth);
   }
 
   allTestimonials: TestimonialClass[] = [];
   public setTestimonials: TestimonialClass[] = [];
-  hasTestimonials: boolean = false;
+  hasTestimonials: boolean = true;
   countButtonClick: number = 0;
-  hasMore: boolean = false;
+  hasMore: boolean = true;
 
   public setOfTestimonials: Map<number, TestimonialClass[]> = new Map();
 
