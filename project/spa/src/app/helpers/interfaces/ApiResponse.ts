@@ -4,8 +4,8 @@
  * @param authors
  * Christian Knoth
  * @param summary
- * Das Demonsration-Inferface gibt die Attribute eines Events vor und wird im Rahmen der Timer- und der Event-Komponente genutzt.
- * Ebenso für den Typ-sicheren Empfang eines Events.
+ * Das API-Inferface gibt die möglichen Attribute einer Antwort als Demonstrations-, Throwback, Testimonial- oder
+ * Alliance Interfaces vor und wird im Rahmen der entsprechenden Komponenten genutzt.
  *
  */
 

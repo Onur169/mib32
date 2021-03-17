@@ -4,7 +4,8 @@
  * @param authors
  * Christian Knoth
  * @param summary
- * Die MarkerManager-Klasse repräsentiert alle aktuell angefragten Events und wird im Rahmen der Timer- und der Event-Komponente genutzt.
+ * Die MarkerManager-Klasse repräsentiert alle aktuell angefragten Rückblicke, bietet Formatierungsmöglichkeiten der Daten
+ * und wird im Rahmen der Timer- und der Event-Komponente genutzt.
  */
 
 import { MapMath } from "../abstracts/MapMath";

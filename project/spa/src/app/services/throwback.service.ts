@@ -28,7 +28,7 @@ export class ThrowbackService {
 
   async getallThrowbacks(){
 
-    return new Promise<ThrowbackClass[]>(async (resolve, reject) => {
+    return new Promise<ThrowbackClass[]>(async (resolve, reject)=>  {
       try{
 
         if(this.throwbackmanager.getFirstThrowback()==undefined){
