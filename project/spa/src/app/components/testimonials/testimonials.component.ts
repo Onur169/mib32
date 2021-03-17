@@ -34,9 +34,9 @@ export class TestimonialsComponent implements OnInit {
 
   allTestimonials: TestimonialClass[] = [];
   public setTestimonials: TestimonialClass[] = [];
-  hasTestimonials: boolean = true;
+  hasTestimonials: boolean = false;
   countButtonClick: number = 0;
-  hasMore: boolean = true;
+  hasMore: boolean = false;
 
   public setOfTestimonials: Map<number, TestimonialClass[]> = new Map();
 
@@ -77,10 +77,10 @@ export class TestimonialsComponent implements OnInit {
   }
 
   checkTestimonials(testimonials: TestimonialClass[]) {
-    if (testimonials == []) {
-      this.hasTestimonials = false;
-    } else {
+    if (testimonials.length > 0) {
       this.hasTestimonials = true;
+    } else {
+      this.hasTestimonials = false;
     }
   }
 
