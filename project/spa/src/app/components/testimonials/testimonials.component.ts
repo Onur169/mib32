@@ -1,3 +1,12 @@
+/**
+ * @param createdBy
+ * Christian Knoth
+ * @param authors
+ * Anna Glomb, Christian Knoth
+ * @param summary
+ * Die Testimonial-Komponente erfüllt sämtliche Aufgaben zur Darstellung unseres Testimonial-Features und
+ * bezieht ihre dargestellten Daten aus dem testimonial-Service.
+ */
 import { HostListener } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { TestimonialClass } from 'src/app/helpers/classes/TestimonialClass';
@@ -40,7 +49,7 @@ export class TestimonialsComponent implements OnInit {
   }
 
   ngAfterViewInit(){
-    this.scrollUp();
+    if(!this.viewport.getIsMobile())this.scrollUp();
   }
 
   async getTestimonials() {
@@ -102,6 +111,7 @@ export class TestimonialsComponent implements OnInit {
         this.hasMore = true;
       }
     }
+    ScrollTrigger.refresh(true);
   }
 
   count() {

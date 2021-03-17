@@ -4,9 +4,9 @@
  * @param authors
  * Christian Knoth
  * @param summary
- * Die Marker-Klasse repräsentiert ein instanziertes Event und wird im Rahmen der Timer- und der Event-Komponente genutzt.
+ * Die Alliance-Klasse repräsentiert ein instanziertes Bündnis mit ihren unterschiedlich responsiv angepassten Bildern und
+ * wird im Rahmen der Alliance-Komponente genutzt.
  */
-
  export class AllianceImageClass{
 
   private small: string;
@@ -24,7 +24,6 @@
   public getLarge(): string {
     return this.large;
   }
-
 
   constructor(small: string, medium: string, large: string){
     this.small=small;
