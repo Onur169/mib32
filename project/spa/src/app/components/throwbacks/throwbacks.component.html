@@ -6,8 +6,8 @@
       unsere heroischsten Momente mit.
     </p>
   </div>
-  <div *ngIf="hasThrowback; else elseBlock">
-    <div *ngIf="throwbackPages.size > 1" class="grey_container d-flex justify-content-center py-1 py-md-4">
+  <div *ngIf="hasThrowback; else elseBlock" class="grey_container mb-4 h-100">
+    <div *ngIf="throwbackPages.size > 1" class=" d-flex justify-content-center py-1 py-md-4">
       <ngb-pagination
         (pageChange)="this.setNewPage($event)"
         [collectionSize]="maxPage"
@@ -17,12 +17,12 @@
         [boundaryLinks]="true"
       ></ngb-pagination>
     </div>
-    <div class="grey_container mb-2 mb-md-4 py-1 py-md-3 flex-wrap flex-lg-nowrap d-flex justify-content-around">
+    <div class="d-flex flex-wrap flex-lg-nowrap d-flex justify-content-around">
       <ng-container *ngFor="let throwback of throwbacks">
         <div class="row m-1 row-md-6 card">
           <!--  <img class="card-img-top" src="..." alt="Card image cap">-->
           <div class="card-body">
-            <h5 class="card-title h3 mb-1">{{ throwback.getName() }}</h5>
+            <h5 class="card-title h4 mb-1">{{ throwback.getName() }}</h5>
             <p class="card-subtitle h-6 text-info">
               {{ throwback.getstartDate() | date: "dd.MM.YYYY" }}
             </p>
