@@ -1,36 +1,22 @@
 @import "../../../custom-variables";
-
+/*
 .bg{
+
 background-image: url("./../../../assets/pictures/active/actice_bg.png");
 background-repeat: no-repeat;
 background-position: right;
 //background-size: cover;
-height: 90vh;
+height: 60vh;
+min-height: 400px;
 
 }
-
+*/
 #box{
-  width: 25vw;
+
   min-width: 360px;
 }
 
-.window{
-  transform: translateY(-50px);
+.btn{
+  width: 12vw;
+  height: 12vw;
 }
-
-#first_button{
-  border-width: 4px !important;
-}
-
-@media(max-width: 768px){
-  .bg{
-    max-height: 400px;
-   justify-content: center !important;
-   background-image: none;
-  }
-  .window{
-    transform: translateY(-30px);
-  }
-
-}
-
