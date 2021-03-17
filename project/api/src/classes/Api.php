@@ -28,8 +28,9 @@ class Api
     {
 
         $queryParams = $this->request->getQueryParams();
+        $currentPage = isset($queryParams["page"]) ? (int) $queryParams["page"] : 1;
 
-        return (int) $queryParams["page"] ?? 1;
+        return $currentPage;
 
     }
 

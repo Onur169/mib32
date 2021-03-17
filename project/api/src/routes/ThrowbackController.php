@@ -47,6 +47,7 @@ class ThrowbackController
                 'INNER JOIN throwbacks ON events.id = throwbacks.events_id',
                 $filterSql,
                 'group by id',
+                null,
                 'ORDER BY start_at ASC',
                 null
             );
@@ -55,6 +56,15 @@ class ThrowbackController
 
             $result = $api->getWithPaginator($sqlWithoutLimit);
             $list = $result[Database::DATA];
+
+            foreach($list as $listItem) {
+
+                $description = $listItem->description;
+                $descriptionShortened = $this->helper->shortenText($description);
+
+                $listItem->description_shortened = $descriptionShortened;
+
+            }
 
             $jsonResponse = ResponseBuilder::build(ResponseBuilder::SUCCESS_RESPONSE_VAL, $list, $prevPageUrl, $nextPageUrl, $maxPages);
 
