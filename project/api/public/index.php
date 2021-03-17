@@ -88,8 +88,9 @@ try {
         $group->post('/events', EventController::class . ':add');
         $group->put('/events/{id}', EventController::class . ':edit');
 
-        // Rückblick Calls
+        // Throwback Calls
         $group->get('/throwbacks', ThrowbackController::class . ':get');
+        $group->put('/throwbacks/{id}', ThrowbackController::class . ':edit');
 
         // Testimonal Calls
         $group->get('/testimonials', TestimonialController::class . ':get');

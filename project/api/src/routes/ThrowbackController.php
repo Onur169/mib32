@@ -75,4 +75,43 @@ class ThrowbackController
 
     }
 
+    public function edit(Request $request, Response $response, array $args): Response
+    {
+
+        try {
+
+            $params = $request->getQueryParams();
+
+            $id = $args['id'];
+            $description = $params["description"];
+            $socialMediaVideoUrl = $params["social_media_video_url"];
+
+            $updateArray = [
+                "description" => $description,
+                "social_media_video_url" => $socialMediaVideoUrl
+            ];
+
+            $updateId = $this->db->update("throwbacks", $id, $updateArray);
+
+            $jsonResponse = ResponseBuilder::build(ResponseBuilder::SUCCESS_RESPONSE_VAL, [
+                ResponseBuilder::UPDATE_ID_RESPONSE_KEY => $updateId,
+            ]);
+
+        } catch (\Throwable $th) {
+
+            $jsonResponse = ResponseBuilder::build(ResponseBuilder::ERROR_RESPONSE_KEY, [
+                ResponseBuilder::CODE_RESPONSE_KEY => $th->getCode(),
+                ResponseBuilder::MSG_RESPONSE_KEY => $th->getMessage(),
+            ]);
+
+        } finally {
+
+            $response->getBody()->write($jsonResponse);
+
+            return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
+
+        }
+
+    }
+
 }
