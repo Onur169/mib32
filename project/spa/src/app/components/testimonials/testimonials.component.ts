@@ -15,6 +15,7 @@ import { TestimonialService } from 'src/app/services/testimonial.service';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ViewportService } from 'src/app/services/viewport.service';
+import { DomSanitizer } from '@angular/platform-browser';
 @Component({
   selector: 'app-testimonials',
   templateUrl: './testimonials.component.html',
@@ -40,7 +41,7 @@ export class TestimonialsComponent implements OnInit {
 
   public setOfTestimonials: Map<number, TestimonialClass[]> = new Map();
 
-  constructor(private testimonialService: TestimonialService, private viewport: ViewportService) {
+  constructor(private testimonialService: TestimonialService, private viewport: ViewportService, public domsanitizer: DomSanitizer) {
     this.getScreenSize();
   }
 
