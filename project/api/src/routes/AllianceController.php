@@ -54,6 +54,7 @@ class AllianceController
                 'LEFT JOIN medias ON medias.id = alliances.medias_id',
                 $filterSql,
                 'group by id',
+                null,
                 'ORDER BY alliances.created_at ASC',
                 null
             );

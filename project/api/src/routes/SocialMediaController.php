@@ -42,23 +42,12 @@ class SocialMediaController
             $prevPageUrl = $api->getPrevPageUrl();
             $nextPageUrl = $api->getNextPageUrl();
 
-            /*
-            $sqlWithoutLimit = $api->db()->buildSql(
-                'SELECT social_media_hashtag_stats.id, social_media_hashtag_stats.hashtag, social_media_hashtag_stats.counter, social_media_types.name',
-                'FROM social_media_hashtag_stats',
-                'INNER JOIN social_media_types ON social_media_types.id = social_media_hashtag_stats.social_media_types_id',
-                $filterSql,
-                'group by id',
-                'ORDER BY social_media_types.name ASC',
-                null
-            );
-            */
-        
             $sqlWithoutLimit = $api->db()->buildSql(
                 'SELECT *',
                 'FROM social_media_types',
                 null,
                 $filterSql,
+                null,
                 null,
                 'ORDER BY name ASC',
                 null
@@ -146,6 +135,7 @@ class SocialMediaController
                 'INNER JOIN social_media_types ON social_media_types.id = social_media_hashtag_stats.social_media_types_id',
                 $filterSql,
                 'group by id',
+                null,
                 'ORDER BY social_media_types.name ASC',
                 null
             );

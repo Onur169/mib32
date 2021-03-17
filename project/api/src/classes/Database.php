@@ -186,7 +186,7 @@ class Database
 
     }
 
-    public function buildSql(?string $selectPart, ?string $fromPart, ?string $joinPart, ?string $wherePart, ?string $groupByPart, ?string $orderByPart, ?string $limitPart) {
+    public function buildSql(?string $selectPart, ?string $fromPart, ?string $joinPart, ?string $wherePart, ?string $groupByPart, ?string $havingPart, ?string $orderByPart, ?string $limitPart) {
 
         $args = func_get_args();
 
