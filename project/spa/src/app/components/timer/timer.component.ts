@@ -31,7 +31,7 @@ export class TimerComponent implements OnInit {
   public daysToDday: number;
 
   public gDate: string;
-  public bla: string="";
+  public location: string="";
 
   public hasNewEvent: boolean;
 
@@ -61,30 +61,27 @@ export class TimerComponent implements OnInit {
 
   //hier werden momentan die Events auf der ersten Seite angefragt. aus dem ersten Event wird ein Timer angelegt und das Datum als Property gesetzt
   async setProperties() {
-    await this.eventService.getPages();
 
-    let x=this.eventService.markermanager.getMarkers().get(1);
-    this.bla=x![1].getLocationName();
+    let timer=await this.eventService.getFirstValue();
+
+    this.location=timer.getLocationName();
+    let startTime=new Date(timer.getStartDate());
 
     if (
-      this.eventService.markermanager.getNextEvent()!.getStartDate() &&
+      startTime &&
       new Date(
-        this.eventService.markermanager.getNextEvent()!.getStartDate()
+        startTime
       ).getTime() -
         this.dateNow.getTime() >
         0
     ) {
       this.hasNewEvent = true;
 
-      let newestDate: Date = new Date(
-        this.eventService.markermanager.getNextEvent()!.getStartDate()!
-      );
-
       this.subscription = interval(1000).subscribe((x) => {
-        this.getTimeDifference(newestDate);
+        this.getTimeDifference(startTime);
       });
 
-      this.gDate = newestDate.toLocaleDateString('de-DE', {
+      this.gDate =  startTime.toLocaleDateString('de-DE', {
         weekday: 'long' /*, year: 'numeric'*/,
         month: 'long',
         day: 'numeric',
