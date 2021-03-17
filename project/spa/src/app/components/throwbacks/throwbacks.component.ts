@@ -48,7 +48,11 @@ export class ThrowbacksComponent implements OnInit {
 
     if(this.throwbacks.length > 0){
       this.hasThrowback =true;
+    }else{
+      this.hasThrowback = false;
     }
+
+this.preThrowback(this.throwbacks);
   }
 
   setMaxPage(size: number) {
