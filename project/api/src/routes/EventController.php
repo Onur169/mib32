@@ -102,7 +102,7 @@ class EventController
             $guidv4Throwback = $this->helper->guidv4();
             $insertThrowbackId = $this->db->insert("throwbacks",
                 ["id", "description", "social_media_video_url", "events_id", "created_at"],
-                [$guidv4Throwback, "", "", $guidv4, $createdAt]
+                [$guidv4Throwback, $description, "", $guidv4, $createdAt]
             );
 
             $jsonResponse = ResponseBuilder::build(ResponseBuilder::SUCCESS_RESPONSE_VAL, [
