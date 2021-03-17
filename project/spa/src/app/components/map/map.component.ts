@@ -43,7 +43,7 @@ import Geometry from 'ol/geom/Geometry';
 })
 export class MapComponent implements OnInit {
 
-  private userPosition: Coordinate=[10.451526, 51.165691];
+  private userPosition: Coordinate=[8.665360, 50.591690];
 
   private mapView: View = new View();
   private map: any;
@@ -88,9 +88,9 @@ export class MapComponent implements OnInit {
 
     /*Setze bei Berechtigung den eigenen Marker, wenn nicht dann den default Wert*/
     let newCoords: Coordinate=await this.getCoords() as Coordinate;
-    if(newCoords){
+    /*if(newCoords){
      this.userPosition=newCoords;
-    }
+    }*/
 
      this.map= new Map({
       controls: defaultControls().extend([new FullScreen()]),
@@ -102,7 +102,7 @@ export class MapComponent implements OnInit {
       target: 'map',
       view: new View({
         //der Nutzerort wird angezeigt
-        center: this.userPosition,
+        center: fromLonLat(this.userPosition),
         zoom: zoom,
       }),
       interactions: defaultInteractions().extend([new DragRotateAndZoom()]),
@@ -142,12 +142,12 @@ async renderMap(radius: number){
     this.mapView = this.map.getView();
     let zoom = this.mapView.getZoom();
 
-    let distance=0;
+    let distance=10;
 
 if(zoom){
     //je nach dem wie die Map zu sehen ist werden Marker zusammengefasst und ausgegeben
     if(zoom>0 && zoom <= 8){
-      distance = 300;
+      distance = 20;
     }else if(zoom > 8 && zoom <=10){
       distance = 50;
     }
@@ -195,7 +195,7 @@ if(zoom){
         element: container!,
         autoPan: true,
         autoPanAnimation: {
-          duration: 250,
+          duration: 500,
         },
       });
 
@@ -211,7 +211,7 @@ if(zoom){
           if (!style) {
             style = new Style({
               image: new CircleStyle({
-                radius: 12,
+                radius: 15,
                 fill: new Fill({
                   color: '#CA054D',
                 }),

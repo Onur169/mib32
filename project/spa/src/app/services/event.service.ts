@@ -36,8 +36,11 @@ export class EventService {
     //Wenn es einen Filter gibt z.B current_events...
     return new Promise<Marker[]>(async (resolve, reject) => {
 try{
+
+  this.markermanager=new MarkerManager();
     await this.getEvents(filter, longitude, latitude, radius,this.markermanager.getCurrentPage().toString());
 
+    if(this.markermanager.hasNextPage()){
         //dann gehe bis zum Ende durch
         for (
           let i = this.markermanager.getCurrentPage();
@@ -45,7 +48,9 @@ try{
           i++
         ) {
           await this.getEvents(filter, longitude, latitude, radius,i.toString());
+          if(!this.markermanager.hasNextPage)break;
         }
+      }
           resolve(this.markermanager.getallMarkersAsArray());
 
       }catch(error){
@@ -57,12 +62,15 @@ try{
   async getEvents(filter: string, longitude: number, latitude: number, radius: number, page: string) {
     return new Promise<void>(async (resolve, reject) => {
       try {
+
         let params = new HttpParams()
         .set('page', page)
         .set('lng', longitude.toString())
         .set('lat', latitude.toString())
-        .set('radius', radius.toString())
+        .set('radius_km', radius.toString())
         .set('filter', filter);
+
+        //console.log("params", params);
 
         const Url = 'events';
 
@@ -95,6 +103,8 @@ try{
           newThrowbacks
         );
 
+
+
         resolve();
       } catch (error) {
         reject(error);
@@ -120,8 +130,6 @@ try{
         }
 
         let firstMarkerValues=response.data[0] as Demonstration;
-
-
           let newMarker = new Marker(
             firstMarkerValues.id,
             firstMarkerValues.name,

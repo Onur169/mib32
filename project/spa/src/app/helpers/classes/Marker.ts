@@ -34,8 +34,8 @@ export class Marker {
     lat: number,
     lng: number,
     locationName: string,
-    descriptionShortened: string,
-    distanceMeters: string
+    distanceMeters: string,
+    descriptionShortened: string
     ){
       this.id=id;
       this.name=name;
@@ -45,8 +45,8 @@ export class Marker {
       this.lat=lat;
       this.lng=lng;
       this.locationName=locationName;
-      this.descriptionShortened=descriptionShortened;
       this.distanceMeters=distanceMeters;
+      this.descriptionShortened=descriptionShortened;
   }
     public getId(): string {
         return this.id;
