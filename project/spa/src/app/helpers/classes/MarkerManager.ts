@@ -137,8 +137,18 @@ export class MarkerManager extends MapMath{
     return lastMarker[lastMarker.length-1];
   }
 
-  public getMaxPages(): number {
+  getMaxPages(): number {
     return this.maxPages;
+  }
+
+  getallMarkersAsArray(): Marker[]{
+    let markers: Marker[]=[];
+    this.pages.forEach((page:Marker[]) => {
+      page.forEach((throwback: Marker)=>{
+        markers.push(throwback);
+      })
+    })
+    return markers;
   }
 
 }

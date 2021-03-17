@@ -15,6 +15,8 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 class EventController
 {
 
+    const DEFAULT_RADIUS_METERS = 10000;
+
     private $db;
     private $filter;
     private $helper;
@@ -34,28 +36,48 @@ class EventController
         try {
 
             $params = $request->getQueryParams();
+            $lat = $params["lat"] ?? null;
+            $lng = $params["lng"] ?? null;
+            $radiusKm = $params["radius_km"] ?? null;
+            $radiusMeters = isset($radiusKm) ? (float) $radiusKm * 1000 : self::DEFAULT_RADIUS_METERS;
 
             $usedFilter = $params["filter"] ?? null;
             $filterSql = $this->filter->build("events", $usedFilter);
+
+            $distanceField = isset($lat) && isset($lng) && isset($radiusKm) ? ', ST_Distance_Sphere( point(lng, lat), point('.$lng.', '.$lat.') ) as distance_meters' : '';
+            $havingWhere = $distanceField == '' ? '' : 'having distance_meters <= ' . $radiusMeters;
 
             $api = new Api($this->db, $request);
             $prevPageUrl = $api->getPrevPageUrl();
             $nextPageUrl = $api->getNextPageUrl();
 
             $sqlWithoutLimit = $api->db()->buildSql(
-                'SELECT id, name, description, start_at, end_at, lat, lng, location_name',
+                'SELECT id, name, description, start_at, end_at, lat, lng, location_name' . $distanceField,
                 'FROM events',
                 null,
                 $filterSql,
                 'group by id',
+                $havingWhere,
                 'ORDER BY start_at ASC',
                 null
             );
+
+            //var_dump($sqlWithoutLimit);exit;
 
             $maxPages = $api->getMaxPages($sqlWithoutLimit);
 
             $result = $api->getWithPaginator($sqlWithoutLimit);
             $list = $result[Database::DATA];
+
+            foreach($list as $listItem) {
+
+                $description = $listItem->description;
+                $descriptionShortened = $this->helper->shortenText($description);
+
+                $listItem->description_shortened = $descriptionShortened;
+
+            }
+
 
             $jsonResponse = ResponseBuilder::build(ResponseBuilder::SUCCESS_RESPONSE_VAL, $list, $prevPageUrl, $nextPageUrl, $maxPages);
 

@@ -19,6 +19,11 @@ export class Marker {
   private lat: number;
   private lng: number;
   private locationName: string;
+  private descriptionShortened: string;
+  private distanceMeters: string;
+
+
+
 
   constructor(
     id: string,
@@ -28,7 +33,9 @@ export class Marker {
     endDate: Date,
     lat: number,
     lng: number,
-    locationName: string
+    locationName: string,
+    descriptionShortened: string,
+    distanceMeters: string
     ){
       this.id=id;
       this.name=name;
@@ -38,6 +45,8 @@ export class Marker {
       this.lat=lat;
       this.lng=lng;
       this.locationName=locationName;
+      this.descriptionShortened=descriptionShortened;
+      this.distanceMeters=distanceMeters;
   }
     public getId(): string {
         return this.id;
@@ -103,5 +112,11 @@ export class Marker {
       this.locationName = locationName;
   }
 
+  public getDescriptionShortened(): string {
+    return this.descriptionShortened;
+  }
 
+  public getDistanceMeters(): string {
+    return this.distanceMeters;
+  }
 }

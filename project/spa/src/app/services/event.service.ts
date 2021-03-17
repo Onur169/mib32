@@ -32,17 +32,11 @@ export class EventService {
    * @param limiter -Ein optionaler Parameter, der nur solange Seiten abfrage, bis ein Zeitintervall bis zum Start eines Events überschritten wurde.
    * @param filter -Ein optionaler Filter-Parameter, funktioniert nur, wenn ein Limiter gesetzt wird.
    */
-  async getPages(filter?: string, limiter?: number) {
+  async getPages(filter: string, longitude: number, latitude: number, radius: number) {
     //Wenn es einen Filter gibt z.B current_events...
-    if (filter) {
-
-      //und wenn es ein Limit gibt,...
-      if (limiter) {
-
-        let lastDate = this.markermanager
-          .getLastValueOfCurrentPage()
-          .getStartDate();
-        let now = new Date();
+    return new Promise<Marker[]>(async (resolve, reject) => {
+try{
+    await this.getEvents(filter, longitude, latitude, radius,this.markermanager.getCurrentPage().toString());
 
         //dann gehe bis zum Ende durch
         for (
@@ -50,38 +44,25 @@ export class EventService {
           i <= this.markermanager.getMaxPages();
           i++
         ) {
-          //wenn das Zeit Intervall am ende der Seite überschritten ist, dann stop.
-          if (limiter >= new Date(lastDate).getDay() - now.getDay()) {
-            await this.getEvents(i.toString(), filter);
-          } else {
-            break;
-          }
+          await this.getEvents(filter, longitude, latitude, radius,i.toString());
         }
-      } else {
-        for (
-          let i = this.markermanager.getCurrentPage();
-          i <= this.markermanager.getMaxPages();
-          i++
-        ) {
-          //Wenn es keinen Filter gibt, dann gibt alles sortiert aus
-          await this.getEvents(this.markermanager.getCurrentPage().toString());
-        }
+          resolve(this.markermanager.getallMarkersAsArray());
+
+      }catch(error){
+        reject(error);
       }
-    }
-    //wenn es auch keinen Filter gibt, dann gibt nur die akutelle Seite aus
-    else {
-      await this.getEvents(this.markermanager.getCurrentPage().toString(),"current_events");
-    }
+    });
   }
 
-  async getEvents(page: string, filter?: string) {
-    return new Promise<EventResponse>(async (resolve, reject) => {
+  async getEvents(filter: string, longitude: number, latitude: number, radius: number, page: string) {
+    return new Promise<void>(async (resolve, reject) => {
       try {
-        let params = new HttpParams().set('page', page);
-
-        if (filter) {
-          params=params.set('filter', filter);
-        }
+        let params = new HttpParams()
+        .set('page', page)
+        .set('lng', longitude.toString())
+        .set('lat', latitude.toString())
+        .set('radius', radius.toString())
+        .set('filter', filter);
 
         const Url = 'events';
 
@@ -91,7 +72,6 @@ export class EventService {
 
           console.log("no existing events")
         }
-
         let newThrowbacks: Marker[] = [];
 
         (response.data as Demonstration[]).forEach((value: Demonstration) => {
@@ -103,7 +83,9 @@ export class EventService {
             value.end_at,
             value.lat,
             value.lng,
-            value.location_name
+            value.location_name,
+            value.distance_meters,
+            value.description_shortened
           );
           newThrowbacks.push(newMarker);
         });
@@ -113,10 +95,51 @@ export class EventService {
           newThrowbacks
         );
 
-        resolve(response as EventResponse);
+        resolve();
       } catch (error) {
         reject(error);
       }
     });
   }
+
+  async getFirstValue() {
+    return new Promise<Marker>(async (resolve, reject) => {
+      try {
+        let params = new HttpParams()
+        .set('page', "1")
+        .set('filter', 'current_events');
+
+        const Url = 'events';
+
+        let response = await this.api.fetch(Url, params);
+
+        if(response.data==undefined){
+
+          console.log("no existing events");
+          reject();
+        }
+
+        let firstMarkerValues=response.data[0] as Demonstration;
+
+
+          let newMarker = new Marker(
+            firstMarkerValues.id,
+            firstMarkerValues.name,
+            firstMarkerValues.description,
+            firstMarkerValues.start_at,
+            firstMarkerValues.end_at,
+            firstMarkerValues.lat,
+            firstMarkerValues.lng,
+            firstMarkerValues.location_name,
+            firstMarkerValues.distance_meters,
+            firstMarkerValues.description_shortened
+          );
+        resolve(newMarker);
+
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
 }
