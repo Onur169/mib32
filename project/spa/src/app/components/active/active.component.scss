@@ -11,6 +11,19 @@ min-height: 400px;
 
 }
 */
+
+.bg-background{
+background-image: url("./../../../assets/pictures/active/bg_active.jpg");
+background-repeat: no-repeat;
+background-position: right;
+background-position: 0 40%;
+min-height: 400px;
+}
+
+.zindex {
+  z-index: 99000 !important;
+}
+
 #box{
 
   min-width: 360px;
@@ -24,4 +37,8 @@ min-height: 400px;
 .rounded-circle{
   min-width: 200px;
   min-height: 200px;
+}
+
+.rounded-circle:hover,.rounded-circle:active, .rounded-circle:focus{
+  background-color: $info !important;
 }
