@@ -69,6 +69,16 @@ class EventController
             $result = $api->getWithPaginator($sqlWithoutLimit);
             $list = $result[Database::DATA];
 
+            foreach($list as $listItem) {
+
+                $description = $listItem->description;
+                $descriptionShortened = $this->helper->shortenText($description);
+
+                $listItem->description_shortened = $descriptionShortened;
+
+            }
+
+
             $jsonResponse = ResponseBuilder::build(ResponseBuilder::SUCCESS_RESPONSE_VAL, $list, $prevPageUrl, $nextPageUrl, $maxPages);
 
         } catch (\Throwable $th) {
