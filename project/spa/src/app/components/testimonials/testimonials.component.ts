@@ -22,15 +22,14 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./testimonials.component.scss'],
 })
 export class TestimonialsComponent implements OnInit {
-  scrHeight: any;
-  scrWidth: any;
+  scrHeight: number = 0;
+  scrWidth: number = 0;
 
   //zeigt den Viewport an
   @HostListener('window:resize', ['$event'])
-  getScreenSize(event?: any) {
+  getScreenSize() {
     this.scrHeight = window.innerHeight;
     this.scrWidth = window.innerWidth;
-    //console.log(this.scrHeight, this.scrWidth);
   }
 
   allTestimonials: TestimonialClass[] = [];
@@ -78,10 +77,10 @@ export class TestimonialsComponent implements OnInit {
   }
 
   checkTestimonials(testimonials: TestimonialClass[]) {
-    if (testimonials == []) {
-      this.hasTestimonials = false;
-    } else {
+    if (testimonials.length > 0) {
       this.hasTestimonials = true;
+    } else {
+      this.hasTestimonials = false;
     }
   }
 
