@@ -252,6 +252,10 @@ if(!(marker.length>0)){
 });
     mapScreen.on('singleclick',  (event) => {
 
+    if (!mapScreen.hasFeatureAtPixel(event.pixel)){
+      this.overlay.setPosition(undefined);
+      }
+
      for(let j=0; j<=marker.length-1;j++) {
       var feature=mapScreen.forEachFeatureAtPixel(event.pixel, (feature, layer)=>{
         var coordinate = event.coordinate;
