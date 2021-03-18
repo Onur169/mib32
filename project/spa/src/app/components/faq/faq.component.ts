@@ -1,3 +1,13 @@
+/**
+ * @param createdBy
+ * Anna Glomb
+ * @param authors
+ * Anna Glomb, Christian Knoth
+ * @param summary
+ * Die FAQ-Komponente erfüllt sämtliche Aufgaben zur Darstellung unserer FAQ-Features
+ * die Daten sind statisch und werden nicht aus der API bezogen
+ */
+
 import { Component, OnInit } from '@angular/core';
 
 import { gsap } from 'gsap';

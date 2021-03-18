@@ -1,4 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+/**
+ * @param createdBy
+ * Anna Glomb
+ * @param authors
+ * Anna Glomb
+ * @param summary
+ * Die Fillersix-Komponente erfüllt sämtliche Aufgaben zur Darstellung unserer Filler-Features
+ * (Storytelling: soll dem Nutzer simulieren)
+ */import { Component, OnInit } from '@angular/core';
 
 import { gsap } from 'gsap';
 import { ScrollTrigger } from "gsap/ScrollTrigger";

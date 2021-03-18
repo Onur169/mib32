@@ -2,7 +2,9 @@
  * @param createdBy
  * Dustin Bastke
  * @param authors
- * Dustin Bastke
+ * Anna Glomb, Christian Knoth
+ * @param summary
+ * Die Navigation-Komponente erfüllt sämtliche Aufgaben zur Darstellung unserer Navigation-Features
  */
 
 import { Component, OnInit } from '@angular/core';

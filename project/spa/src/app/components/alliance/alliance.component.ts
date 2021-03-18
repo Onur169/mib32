@@ -5,6 +5,7 @@
  * Christian Knoth, Anna Glomb
  * @param summary
  * In der Alliance-Komponente werden die größten Partner dynamisch nach Viewport angezeigt
+ *  bezieht ihre dargestellten Daten aus dem alliance-Service
  */
 
 import { HostListener } from '@angular/core';
