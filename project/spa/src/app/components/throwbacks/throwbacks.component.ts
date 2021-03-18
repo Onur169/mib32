@@ -14,12 +14,17 @@ import { ThrowbackService } from 'src/app/services/throwback.service';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ViewportService } from 'src/app/services/viewport.service';
+
+import {NgbModal, ModalDismissReasons, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-throwbacks',
   templateUrl: './throwbacks.component.html',
   styleUrls: ['./throwbacks.component.scss'],
 })
 export class ThrowbacksComponent implements OnInit {
+  title = 'ng-bootstrap-modal-demo';
+  closeResult: string='';
+  modalOptions:NgbModalOptions;
 
   throwbackPages = new Map<number, ThrowbackClass[]>();
   throwbacks: ThrowbackClass[];
@@ -27,8 +32,12 @@ export class ThrowbacksComponent implements OnInit {
   page = 1;
   hasThrowback: boolean = false;
 
-  constructor(private throwbackService: ThrowbackService, private viewport: ViewportService) {
+  constructor(private throwbackService: ThrowbackService, private viewport: ViewportService, private modalService: NgbModal) {
     this.throwbacks = [];
+    this.modalOptions = {
+      backdrop:'static',
+      backdropClass:'customBackdrop'
+    }
   }
 
   ngOnInit() {
@@ -37,6 +46,24 @@ export class ThrowbacksComponent implements OnInit {
 
   ngAfterViewInit(){
     if(!this.viewport.getIsMobile())this.scrollUp();
+  }
+
+  open(content: any) {
+    this.modalService.open(content, this.modalOptions).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return  `with: ${reason}`;
+    }
   }
 
   async setProperties() {
@@ -60,7 +87,7 @@ export class ThrowbacksComponent implements OnInit {
       )!;
     }
     console.log(this.throwbacks);
-    
+
     if(this.throwbacks.length > 0){
       this.hasThrowback =true;
     }else{
