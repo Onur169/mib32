@@ -1,3 +1,12 @@
+/**
+ * @param createdBy
+ * Christian Knoth
+ * @param authors
+ * Christian Knoth, Anna Glomb
+ * @param summary
+ * Die Active-Komponente zeigt die Möglichkeiten auf, sich auf verschiedenen Wegen an dem kommenden Streik zu beteiligen
+ */
+
 import { Component, OnInit } from '@angular/core';
 
 import { ViewportService } from 'src/app/services/viewport.service';
@@ -22,10 +31,13 @@ export class ActiveComponent implements OnInit {
    // ScrollTrigger.refresh(true);
   }
 
+
+  //Animation der Komponente
   scrollUp(){
 
     gsap.registerPlugin(ScrollTrigger);
 
+    //Headline
         var tl=gsap.from("#active_head",{
           scrollTrigger: {
             trigger:"#active_head",
@@ -39,6 +51,7 @@ export class ActiveComponent implements OnInit {
           opacity:0
         });
 
+        //Erklärungstext
         var t2=gsap.from("#active_cover",{
           scrollTrigger: {
             trigger:"#active_cover",
@@ -51,7 +64,7 @@ export class ActiveComponent implements OnInit {
           opacity:0
         });
         
-        /*boxes */
+        //Animation der Kreise
         var t3=gsap.from("#first_activebox",{
           scrollTrigger: {
             trigger:"#first_activebox",
