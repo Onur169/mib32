@@ -163,12 +163,19 @@ if(zoom){
     mapScreen: Map
   ) {
 
+if(!(marker.length>0)){
+  //    mapScreen.removeOverlay(this.overlay);
+      mapScreen.removeLayer(this.clusters);
+    }
+    else{
     let features: Feature<Geometry>[] = [];
 
     //Zugriff auf HTML-Elemente, damit die Map mit den Elementen arbeiten kann
     let container = document.getElementById('popup');
     let content = document.getElementById('popup-content');
     let closer = document.getElementById('popup-closer');
+
+
 
     //Marker werden mit Koordinaten befüllt
     marker.forEach(value => {
@@ -249,6 +256,11 @@ if(zoom){
         var coordinate = event.coordinate;
         let markerCoords=new Point(fromLonLat([marker[j].getLng(),marker[j].getLat()]));
 
+        layer.getFeatures(event.pixel).then(features =>{
+          features[0].getGeometry
+        }
+
+        )
 
         let a=feature.getGeometry()!.getExtent()
         let b=markerCoords.getExtent()
@@ -276,7 +288,7 @@ if(zoom){
       })
         }
       });
-
+    }
   }
 
 
