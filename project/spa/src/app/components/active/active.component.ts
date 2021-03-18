@@ -50,13 +50,13 @@ export class ActiveComponent implements OnInit {
           },
           opacity:0
         });
-
+        
         /*boxes */
         var t3=gsap.from("#first_activebox",{
           scrollTrigger: {
             trigger:"#first_activebox",
             start:"top 100%",
-            end:"top 96%",
+            end:"top 80%",
             scrub: true,
             markers: true,
             toggleActions:"restart pause reverse pause"
@@ -68,7 +68,7 @@ export class ActiveComponent implements OnInit {
           scrollTrigger: {
             trigger:"#second_activebox",
             start:"top 100%",
-            end:"top 94%",
+            end:"top 70%",
             scrub: true,
             markers: false,
             toggleActions:"restart pause reverse pause"
@@ -80,7 +80,7 @@ export class ActiveComponent implements OnInit {
           scrollTrigger: {
             trigger:"#third_activebox",
             start:"top 100%",
-            end:"top 92%",
+            end:"top 60%",
             scrub: true,
             markers: false,
             toggleActions:"restart pause reverse pause"
@@ -92,14 +92,13 @@ export class ActiveComponent implements OnInit {
           scrollTrigger: {
             trigger:"#fourth_activebox",
             start:"top 100%",
-            end:"top 90%",
+            end:"top 50%",
             scrub: true,
             markers: false,
             toggleActions:"restart pause reverse pause"
           },
           y: 200
         });
-
       }
 
 }
