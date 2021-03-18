@@ -18,6 +18,7 @@
    private lat: number;
    private lng: number;
    private locationName: string;
+   private descriptionShortened: string;
 
 
    constructor(
@@ -29,7 +30,8 @@
     endDate: Date,
     lat: number,
     lng: number,
-    locationName: string
+    locationName: string,
+    descriptionShortened: string
      ){
        this.id=id;
        this.name=name;
@@ -40,6 +42,7 @@
        this.lat=lat;
        this.lng=lng;
        this.locationName=locationName;
+       this.descriptionShortened=descriptionShortened;
    }
 
     public getId(): string {
@@ -108,6 +111,14 @@
 
     public getLocationName(): string {
       return this.locationName;
+    }
+
+    public getDescriptionShortened():string{
+        return this.descriptionShortened;
+    }
+
+    public setDescriptionShortened(short: string): void{
+        this.descriptionShortened = short;
     }
 
 

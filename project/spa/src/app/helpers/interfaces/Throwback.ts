@@ -18,4 +18,5 @@
   lat: number;
   lng: number;
   location_name: string;
+  description_shortened: string;
 }
