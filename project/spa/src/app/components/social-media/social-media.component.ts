@@ -21,6 +21,9 @@ import { gsap } from 'gsap';
 })
 export class SocialMediaComponent implements OnInit {
 
+  count: number = 0;
+  hashtag: string = '';
+
   constructor(private viewport: ViewportService) { }
 
   ngOnInit(): void {
