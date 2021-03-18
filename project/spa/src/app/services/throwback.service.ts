@@ -79,7 +79,8 @@ export class ThrowbackService {
             value.end_at,
             value.lat,
             value.lng,
-            value.location_name
+            value.location_name,
+            value.description_shortened
           );
           newThrowbacks.push(newThrowback);
         });

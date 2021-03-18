@@ -1,3 +1,13 @@
+/**
+ * @param createdBy
+ * Christian Knoth
+ * @param authors
+ * Christian Knoth, Anna Glomb
+ * @param summary
+ * Die Footer-Komponente erfüllt sämtliche Aufgaben zur Darstellung unserer Footer-Features
+ * soll die wichtigsten Links zum Datenschutz darstellen
+ */
+
 import { Component, OnInit } from '@angular/core';
 
 @Component({

@@ -1,3 +1,13 @@
+/**
+ * @param createdBy
+ * Christian Knoth
+ * @param authors
+ * Christian Knoth
+ * @param summary
+ * Die Fillertwo-Komponente erfüllt sämtliche Aufgaben zur Darstellung unserer Filler-Features
+ * (Storytelling: soll dem Nutzer simulieren)
+ */
+
 import { Component, HostListener, OnInit } from '@angular/core';
 
 import { gsap } from 'gsap';

@@ -59,6 +59,7 @@ export class ThrowbacksComponent implements OnInit {
         this.throwbackService.throwbackmanager.getCurrentPage()
       )!;
     }
+    console.log(this.throwbacks);
     
     if(this.throwbacks.length > 0){
       this.hasThrowback =true;
