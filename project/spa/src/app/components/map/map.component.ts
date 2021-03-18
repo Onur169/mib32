@@ -61,6 +61,7 @@ export class MapComponent implements OnInit {
   });
 
   constructor(private eventService: EventService, private viewport: ViewportService) {
+    this.overlay.setPosition(undefined);
   }
 
   //personalisierter Standort wird abgefragt
@@ -164,14 +165,16 @@ if(zoom){
   ) {
 
 if(!(marker.length>0)){
-  //    mapScreen.removeOverlay(this.overlay);
+
       mapScreen.removeLayer(this.clusters);
     }
     else{
+      this.mapSuccess=true;
     let features: Feature<Geometry>[] = [];
 
     //Zugriff auf HTML-Elemente, damit die Map mit den Elementen arbeiten kann
     let container = document.getElementById('popup');
+    container!.style.display='block';
     let content = document.getElementById('popup-content');
     let closer = document.getElementById('popup-closer');
 
@@ -260,13 +263,7 @@ if(!(marker.length>0)){
       var feature=mapScreen.forEachFeatureAtPixel(event.pixel, (feature, layer)=>{
         var coordinate = event.coordinate;
         let markerCoords=new Point(fromLonLat([marker[j].getLng(),marker[j].getLat()]));
-/*
-        layer.getFeatures(event.pixel).then(features =>{
-          features[0].getGeometry
-        }
 
-        )
-*/
         let a=feature.getGeometry()!.getExtent()
         let b=markerCoords.getExtent()
         console.log(j,feature.getGeometry()!.getExtent()==markerCoords.getExtent(),feature.getGeometry()!.getExtent(),markerCoords.getExtent());
@@ -294,6 +291,7 @@ if(!(marker.length>0)){
         }
       });
     }
+
   }
 
 

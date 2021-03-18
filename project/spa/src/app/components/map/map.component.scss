@@ -64,6 +64,7 @@ mat-slider {
 
 .ol-popup {
   position: absolute;
+  display: none;
   background-color: white;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
   padding: 15px;
@@ -74,8 +75,8 @@ mat-slider {
   min-width: 280px;
   max-width: 50% !important;
 }
-.ol-popup:after,
-.ol-popup:before {
+.ol-popup::after,
+.ol-popup::before {
   top: 100%;
   border: solid transparent;
   content: " ";
