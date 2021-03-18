@@ -88,9 +88,9 @@ export class MapComponent implements OnInit {
 
     /*Setze bei Berechtigung den eigenen Marker, wenn nicht dann den default Wert*/
     let newCoords: Coordinate=await this.getCoords() as Coordinate;
-    /*if(newCoords){
+    if(newCoords.length>0){
      this.userPosition=newCoords;
-    }*/
+    }
 
      this.map= new Map({
       controls: defaultControls().extend([new FullScreen()]),
