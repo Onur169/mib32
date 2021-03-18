@@ -1,3 +1,12 @@
+/**
+ * @param createdBy
+ * Christian Knoth
+ * @param authors
+ * Christian Knoth, Anna Glomb
+ * @param summary
+ * In der Alliance-Komponente werden die größten Partner dynamisch nach Viewport angezeigt
+ */
+
 import { HostListener } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { AllianceClass } from 'src/app/helpers/classes/AllianceClass';
@@ -57,10 +66,13 @@ export class AllianceComponent implements OnInit {
     if(this.alliances.size > 0 )this.hasAlliance = true;
   }
 
+
+  //GSP Animation
   scrollUp(){
 
     gsap.registerPlugin(ScrollTrigger);
 
+    //Headline
         var tl=gsap.from("#alliance_head",{
           scrollTrigger: {
             trigger:"#alliance_head",
@@ -74,6 +86,7 @@ export class AllianceComponent implements OnInit {
           opacity:0
         });
 
+        //Subtext
         var t2=gsap.from("#alliance_cover",{
           scrollTrigger: {
             trigger:"#alliance_cover",

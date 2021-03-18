@@ -51,7 +51,7 @@ export class ActiveComponent implements OnInit {
           opacity:0
         });
 
-        //Erklärungstext
+        //Subtext
         var t2=gsap.from("#active_cover",{
           scrollTrigger: {
             trigger:"#active_cover",
