@@ -243,16 +243,17 @@ if(zoom){
       //beim Klicken auf die Map erscheint ein Popup mit einem bestimmten Inhalt
 });
     mapScreen.on('singleclick',  (event) => {
-      var coordinate = event.coordinate;
-      for(let j=0; j<=marker.length-1;j++) {
-        let markerCoords=fromLonLat([marker[j].getLng(),marker[j].getLat()]);
 
-        let pixel = mapScreen.getPixelFromCoordinate( markerCoords);
+     for(let j=0; j<=marker.length-1;j++) {
+      var feature=mapScreen.forEachFeatureAtPixel(event.pixel, (feature, layer)=>{
+        var coordinate = event.coordinate;
+        let markerCoords=new Point(fromLonLat([marker[j].getLng(),marker[j].getLat()]));
 
-        console.log(pixel,event.pixel);
 
-        if(mapScreen.hasFeatureAtPixel(pixel) && mapScreen.hasFeatureAtPixel(event.pixel)){
-
+        let a=feature.getGeometry()!.getExtent()
+        let b=markerCoords.getExtent()
+        console.log(j,feature.getGeometry()!.getExtent()==markerCoords.getExtent(),feature.getGeometry()!.getExtent(),markerCoords.getExtent());
+        if(a[0]==b[0] && a[1]==b[1]){
           content!.innerHTML =  '<div><code>' +
          marker[j].getName() +
           '</code> </br>' +
@@ -262,22 +263,22 @@ if(zoom){
           "in " +
           marker[j].getLocationName() +
           '</code>';
-          this.overlay.setPosition(markerCoords);
-          mapScreen.getView().setCenter(markerCoords);
+          this.overlay.setPosition(coordinate);
+          mapScreen.getView().setCenter(coordinate);
 
 
           this.place = 'in ' + marker[j].getLocationName();
           this.day = 'am ' + marker[j].getStartDate();
 
-         // mapScreen.getView().setZoom(zoom);
-
          console.log("geil, Marker aus",marker[j].getLocationName(),"bekommt den Wert:", coordinate);
-          break;
-        }
-      };
 
-  });
+        }
+      })
+        }
+      });
+
   }
+
 
 searchLocation(name: string){
 
