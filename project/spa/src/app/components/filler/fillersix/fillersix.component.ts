@@ -1,25 +1,23 @@
 /**
  * @param createdBy
- * Christian Knoth
+ * Anna Glomb
  * @param authors
- * Christian Knoth
+ * Anna Glomb
  * @param summary
- * Die Fillerfour-Komponente erfüllt sämtliche Aufgaben zur Darstellung unserer Filler-Features
+ * Die Fillersix-Komponente erfüllt sämtliche Aufgaben zur Darstellung unserer Filler-Features
  * (Storytelling: soll dem Nutzer simulieren)
- */
-
-import { Component, OnInit } from '@angular/core';
+ */import { Component, OnInit } from '@angular/core';
 
 import { gsap } from 'gsap';
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ViewportService } from 'src/app/services/viewport.service';
 
 @Component({
-  selector: 'app-fillerfour',
-  templateUrl: './fillerfour.component.html',
-  styleUrls: ['./fillerfour.component.scss']
+  selector: 'app-fillersix',
+  templateUrl: './fillersix.component.html',
+  styleUrls: ['./fillersix.component.scss']
 })
-export class FillerfourComponent implements OnInit {
+export class FillersixComponent implements OnInit {
 
   constructor(private viewport: ViewportService) { }
 
@@ -32,9 +30,9 @@ export class FillerfourComponent implements OnInit {
 
     gsap.registerPlugin(ScrollTrigger);
 
-    var t1=gsap.from("#fillerfour_bg",{
+    var t1=gsap.from("#fillersix_bg",{
       scrollTrigger: {
-        trigger:"#fillerfour_bg",
+        trigger:"#fillersix_bg",
         start:"top 90%",
         end:"center 60%",
         scrub: true,
@@ -44,9 +42,9 @@ export class FillerfourComponent implements OnInit {
       opacity:0
     });
 
-    var t2=gsap.from("#fillerfour_box",{
+    var t2=gsap.from("#fillersix_box",{
       scrollTrigger: {
-        trigger:"#fillerfour_box",
+        trigger:"#fillersix_box",
         start:"top 75%",
             end:"top 50%",
             scrub: true,

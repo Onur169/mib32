@@ -1,18 +1,14 @@
 @import "../../../custom-variables";
-/*
-.bg{
 
-background-image: url("./../../../assets/pictures/active/actice_bg.png");
+.bg-background{
+background-image: url("./../../../assets/pictures/active/bg_active.jpg");
 background-repeat: no-repeat;
 background-position: right;
-//background-size: cover;
-height: 60vh;
+background-position: 0 40%;
 min-height: 400px;
-
 }
-*/
-#box{
 
+#box{
   min-width: 360px;
 }
 
@@ -24,4 +20,10 @@ min-height: 400px;
 .rounded-circle{
   min-width: 200px;
   min-height: 200px;
+  background-color: rgba($color: $primary, $alpha: 0.8) !important;
+  border-width: 0.1vw 0.4vw 0.1vw 0 !important;
+}
+
+.rounded-circle:hover,.rounded-circle:active, .rounded-circle:focus{
+  background-color: $info !important;
 }

@@ -25,6 +25,7 @@ import { FillertwoComponent } from './components/filler/fillertwo/fillertwo.comp
 import { FillerthreeComponent } from './components/filler/fillerthree/fillerthree.component';
 import { FillerfourComponent } from './components/filler/fillerfour/fillerfour.component';
 import { FillerfiveComponent } from './components/filler/fillerfive/fillerfive.component';
+import { FillersixComponent } from './components/filler/fillersix/fillersix.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { FillerfiveComponent } from './components/filler/fillerfive/fillerfive.c
     FillertwoComponent,
     FillerthreeComponent,
     FillerfourComponent,
-    FillerfiveComponent
+    FillerfiveComponent,
+    FillersixComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

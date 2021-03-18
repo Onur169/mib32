@@ -21,7 +21,7 @@
       alt="Card image cap">
         <h5 class="bg-primary text-white card-title p-1 p-md-3">{{ testimonial.getHeadline() }}</h5>
         <p class="card-text pb-2 pl-2">
-          {{ testimonial.getDescription() }}
+          {{ testimonial.getDescriptionShortened() }}
         </p>
       </div>
     </div>
@@ -31,6 +31,6 @@
 </div>
 
 <ng-template #elseBlock>
-  <div class="text bg-primary text-white fs-2 text-center py-4 px-3">Wir halten noch Interviews mit den Menschen. Schaue später vorbei.</div>
+  <div class="text bg-primary text-white fs-2 text-center py-4 px-3 m-3 m-md-5">Wir halten noch Interviews mit den Menschen. Schaue später vorbei.</div>
 </ng-template>
 </div>

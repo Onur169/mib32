@@ -15,21 +15,21 @@ import { TestimonialService } from 'src/app/services/testimonial.service';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ViewportService } from 'src/app/services/viewport.service';
+import { DomSanitizer } from '@angular/platform-browser';
 @Component({
   selector: 'app-testimonials',
   templateUrl: './testimonials.component.html',
   styleUrls: ['./testimonials.component.scss'],
 })
 export class TestimonialsComponent implements OnInit {
-  scrHeight: any;
-  scrWidth: any;
+  scrHeight: number = 0;
+  scrWidth: number = 0;
 
   //zeigt den Viewport an
   @HostListener('window:resize', ['$event'])
-  getScreenSize(event?: any) {
+  getScreenSize() {
     this.scrHeight = window.innerHeight;
     this.scrWidth = window.innerWidth;
-    //console.log(this.scrHeight, this.scrWidth);
   }
 
   allTestimonials: TestimonialClass[] = [];
@@ -40,7 +40,7 @@ export class TestimonialsComponent implements OnInit {
 
   public setOfTestimonials: Map<number, TestimonialClass[]> = new Map();
 
-  constructor(private testimonialService: TestimonialService, private viewport: ViewportService) {
+  constructor(private testimonialService: TestimonialService, private viewport: ViewportService, public domsanitizer: DomSanitizer) {
     this.getScreenSize();
   }
 
@@ -77,10 +77,10 @@ export class TestimonialsComponent implements OnInit {
   }
 
   checkTestimonials(testimonials: TestimonialClass[]) {
-    if (testimonials == []) {
-      this.hasTestimonials = false;
-    } else {
+    if (testimonials.length > 0) {
       this.hasTestimonials = true;
+    } else {
+      this.hasTestimonials = false;
     }
   }
 

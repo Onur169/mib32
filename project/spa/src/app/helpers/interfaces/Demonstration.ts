@@ -18,4 +18,6 @@ export interface Demonstration {
     lat: number;
     lng: number;
     location_name: string;
+    distance_meters: string;
+    description_shortened: string;
 }

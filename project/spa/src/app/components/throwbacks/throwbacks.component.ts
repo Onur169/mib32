@@ -45,14 +45,6 @@ export class ThrowbacksComponent implements OnInit {
     this.throwbackPages = this.throwbackService.throwbackmanager.reCreatePages(5);
     this.setNewPage(1);
     this.setMaxPage(this.throwbackPages.size);
-
-    if(this.throwbacks.length > 0){
-      this.hasThrowback =true;
-    }else{
-      this.hasThrowback = false;
-    }
-
-this.preThrowback(this.throwbacks);
   }
 
   setMaxPage(size: number) {
@@ -67,35 +59,13 @@ this.preThrowback(this.throwbacks);
         this.throwbackService.throwbackmanager.getCurrentPage()
       )!;
     }
-  }
-
-  //kürzt die Beschreibung, wenn sie zu lang ist
-  preThrowback(throwback: ThrowbackClass[]): ThrowbackClass[] {
-    let filtered: ThrowbackClass[] = [];
-
-    let letters: number = 70;
-    let desc: string = ' ';
-
-    throwback.forEach((value) => {
-      //schaut ob was dirn ist...
-      if (value.getDescription()) {
-        value.setDescription(value.getDescription().slice(0, letters));
-
-        //geht den string zu einem Wort durch
-        while (value.getDescription().slice(-1) != ' ') {
-          desc = value.getDescription().slice(0, letters - 1);
-          value.setDescription(desc);
-          letters--;
-        }
-
-        desc = value.getDescription() + '...';
-        value.setDescription(desc);
-        filtered.push(value);
-      } else {
-        filtered.push(value);
-      }
-    });
-    return filtered;
+    console.log(this.throwbacks);
+    
+    if(this.throwbacks.length > 0){
+      this.hasThrowback =true;
+    }else{
+      this.hasThrowback = false;
+    }
   }
 
       ////////////////////GSAP///////////////////
