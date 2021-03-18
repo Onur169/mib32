@@ -51,6 +51,16 @@
     return this.name;
   }
 
+  public hasPictures(): boolean{
+    if(this.picture.getLarge()||this.picture.getMedium()||this.picture.getSmall()){
+      return true;
+    }
+    else {
+      return false;
+    }
+
+  }
+
 
   constructor(
     picture:AllianceImageClass,
