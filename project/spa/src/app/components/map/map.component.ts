@@ -240,10 +240,11 @@ if(!(marker.length>0)){
       mapScreen.addLayer(this.clusters);
       mapScreen.addOverlay(this.overlay);
 
-      closer!.onclick=()=> {
+      if(closer){
+      closer.onclick=()=> {
         this.overlay.setPosition(undefined);
         closer!.blur();
-        return false;
+        return false;}
       };
 
 
@@ -255,13 +256,13 @@ if(!(marker.length>0)){
       var feature=mapScreen.forEachFeatureAtPixel(event.pixel, (feature, layer)=>{
         var coordinate = event.coordinate;
         let markerCoords=new Point(fromLonLat([marker[j].getLng(),marker[j].getLat()]));
-
+/*
         layer.getFeatures(event.pixel).then(features =>{
           features[0].getGeometry
         }
 
         )
-
+*/
         let a=feature.getGeometry()!.getExtent()
         let b=markerCoords.getExtent()
         console.log(j,feature.getGeometry()!.getExtent()==markerCoords.getExtent(),feature.getGeometry()!.getExtent(),markerCoords.getExtent());
