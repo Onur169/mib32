@@ -147,9 +147,9 @@ async renderMap(radius: number){
 if(zoom){
     //je nach dem wie die Map zu sehen ist werden Marker zusammengefasst und ausgegeben
     if(zoom>0 && zoom <= 8){
-      distance = 20;
+      distance = 40;
     }else if(zoom > 8 && zoom <=10){
-      distance = 50;
+      distance = 60;
     }
      this.drawMap(marker, distance, zoom, this.map);
     }
@@ -211,7 +211,7 @@ if(zoom){
           if (!style) {
             style = new Style({
               image: new CircleStyle({
-                radius: 15,
+                radius: 12,
                 fill: new Fill({
                   color: '#CA054D',
                 }),
@@ -239,33 +239,43 @@ if(zoom){
         return false;
       };
 
-      console.log("bla");
-      //beim Klicken auf die Map erscheint ein Popup mit einem bestimmten Inhalt
 
-    mapScreen.on('click',  (event) => {
+      //beim Klicken auf die Map erscheint ein Popup mit einem bestimmten Inhalt
+});
+    mapScreen.on('singleclick',  (event) => {
       var coordinate = event.coordinate;
-      if (mapScreen.hasFeatureAtPixel(event.pixel)) {
-        console.log("locationname",value.getLocationName(),"startdate",value.getStartDate());
+      for(let j=0; j<=marker.length-1;j++) {
+        let markerCoords=fromLonLat([marker[j].getLng(),marker[j].getLat()]);
+
+        let pixel = mapScreen.getPixelFromCoordinate( markerCoords);
+
+        console.log(pixel,event.pixel);
+
+        if(mapScreen.hasFeatureAtPixel(pixel) && mapScreen.hasFeatureAtPixel(event.pixel)){
+
           content!.innerHTML =  '<div><code>' +
-         value.getName() +
+         marker[j].getName() +
           '</code> </br>' +
            "Du streikst am "+
-          value.getStartDate() +
+          marker[j].getStartDate() +
           '</code> </br>' +
           "in " +
-          value.getLocationName() +
+          marker[j].getLocationName() +
           '</code>';
-          this.overlay.setPosition(coordinate);
-          mapScreen.getView().setCenter(coordinate);
-      } else {
-          this.overlay.setPosition(undefined);
-          closer!.blur();
-      }
-    });
-    mapScreen.getView().setZoom(zoom);
+          this.overlay.setPosition(markerCoords);
+          mapScreen.getView().setCenter(markerCoords);
 
-    this.place = 'in ' + value.getLocationName();
-    this.day = 'am ' + value.getStartDate();
+
+          this.place = 'in ' + marker[j].getLocationName();
+          this.day = 'am ' + marker[j].getStartDate();
+
+         // mapScreen.getView().setZoom(zoom);
+
+         console.log("geil, Marker aus",marker[j].getLocationName(),"bekommt den Wert:", coordinate);
+          break;
+        }
+      };
+
   });
   }
 
