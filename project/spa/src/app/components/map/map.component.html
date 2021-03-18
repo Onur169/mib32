@@ -5,15 +5,13 @@
       <p id="map_cover" class="text text-primary">Schaue bitte wo wir für Dich den nächsten Streik rausgefunden haben.</p>
     </div>
 
-    <div *ngIf="mapSuccess; else elseBlock">
     <div id="map_search" class="px-2 px-lg-3 w-50">
       <mat-form-field>
-     <!-- <input matInput placeholder="Wo möchtest Du mitstreiken?" (enter) = searchLocation() (mouseout) = searchLocation() [(ngModel)]="searchedLocationValue" (click) = deleteValue()>-->
+     <input matInput placeholder="Wo möchtest Du mitstreiken?" (enter) = searchLocation() (mouseout) = searchLocation() [(ngModel)]="searchedLocationValue" (click) ="deleteValue()">
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
+    <div class="text-warning"> {{ error }}</div>
       </div>
-    </div>
-      <!--  <div class="text-primary"> {{ error }}</div>-->
     <div id="map" class="map mt-3">
       <div id="popup" class="ol-popup">
         <a href="#" id="popup-closer" class="ol-popup-closer"></a>

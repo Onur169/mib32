@@ -47,9 +47,11 @@ export class MapComponent implements OnInit {
 
   private mapView: View = new View();
   private map: any;
+  private markers: Marker[] = [];
 
   place='';
   day='';
+  error='';
 
   searchedLocationValue:string='';
 
@@ -134,6 +136,8 @@ async renderMap(radius: number){
   let allmarkers=await this.eventService.getPages('current_events', this.userPosition[0], this.userPosition[1], radius);
   console.log(allmarkers);
 
+  this.markers = allmarkers;
+
   this.markerCluster(allmarkers);
 }
 
@@ -174,8 +178,6 @@ if(!(marker.length>0)){
     let container = document.getElementById('popup');
     let content = document.getElementById('popup-content');
     let closer = document.getElementById('popup-closer');
-
-
 
     //Marker werden mit Koordinaten befüllt
     marker.forEach(value => {
@@ -247,7 +249,6 @@ if(!(marker.length>0)){
         return false;}
       };
 
-
       //beim Klicken auf die Map erscheint ein Popup mit einem bestimmten Inhalt
 });
     mapScreen.on('singleclick',  (event) => {
@@ -296,10 +297,33 @@ if(!(marker.length>0)){
     }
   }
 
-
-searchLocation(name: string){
-
+//sucht nach Events die sich in dem Ort befinden
+//zentriert das erste Event auf der Map
+//bildet die treffenden Marker auf der Map ab
+searchLocation(){
+  let searchmarker: Marker[] = [];
+if(this.searchedLocationValue){
+    for (let marker of this.markers){
+      if(marker.getLocationName().toLocaleLowerCase() === this.searchedLocationValue.toLocaleLowerCase())
+      searchmarker.push(marker);
+    }
+    if(searchmarker.length > 0){
+      this.map.removeLayer(this.clusters);
+      this.map.getView().setCenter(fromLonLat([searchmarker[0].getLng(), searchmarker[0].getLat()]));
+      this.markerCluster(searchmarker);
+    }else{
+      this.error = 'Leider findet in Deiner Nähe keine Aktion statt';
+    }
+  }else{
+      this.error = 'Leider findet in Deiner Nähe keine Aktion statt';
+    }
 }
+//löcht two-way-binding
+deleteValue(){
+  this.searchedLocationValue ='';
+  this.error = '';
+}
+
   ////////////////////GSAP///////////////////
 
 
