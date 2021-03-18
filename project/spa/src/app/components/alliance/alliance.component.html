@@ -10,12 +10,23 @@
     <ng-template *ngFor="let page of alliances | keyvalue" ngbSlide>
       <div class="d-flex justify-content-center flex-wrap">
         <ng-container *ngFor="let icon of page.value">
-          <a class="m-1 m-md-4" href="{{ icon.getPath() }}"
-            ><img
+          <a class="m-1 m-md-4" href="{{ icon.getPath() }}">
+
+            <div *ngIf="icon.hasPictures(); else placeholder">
+            <img
               class="border border-primary alliance_image"
-              src="{{ icon.getPicture().getLarge() }}"
-              alt="{{ icon.getName() }}"
-          /></a>
+              src="{{ icon.getPicture().getSmall() }}"
+              srcset="
+      {{icon.getPicture().getSmall()}} 600w,
+      {{icon.getPicture().getMedium()}} 750w,
+      {{icon.getPicture().getLarge()}} 1000w"
+              alt="{{ icon.getName() }}"/>
+            </div>
+            <ng-template #placeholder>
+              <img  class="border border-primary alliance_image" src="./../../../assets/pictures/placeholder/noimage.jpg" alt="no image">
+            </ng-template>
+        </a>
+
         </ng-container>
       </div>
     </ng-template>

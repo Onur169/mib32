@@ -30,10 +30,14 @@ export class TestimonialService {
   async fetchTestimonials(page?: number){
     return new Promise<TestimonialClass[]>(async (resolve, reject) => {
       try{
+
         if(page && (this.testimonialManager.getPageValue(page)!=undefined)){
           this.testimonialManager.setCurrentPage(page);
           return resolve(this.testimonialManager.getPageValue(page)!);
         }
+
+
+
         let params= new HttpParams()
         .set('page', this.testimonialManager.getCurrentPage().toString());
 
@@ -42,7 +46,6 @@ export class TestimonialService {
         }
 
         const Url='testimonials';
-
 
         let response= await this.api.fetch(Url, params);
 
