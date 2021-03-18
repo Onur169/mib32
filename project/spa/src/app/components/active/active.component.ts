@@ -69,7 +69,7 @@ export class ActiveComponent implements OnInit {
           scrollTrigger: {
             trigger:"#first_activebox",
             start:"top 100%",
-            end:"top 80%",
+            end:"top 85%",
             scrub: true,
             markers: true,
             toggleActions:"restart pause reverse pause"
@@ -81,7 +81,7 @@ export class ActiveComponent implements OnInit {
           scrollTrigger: {
             trigger:"#second_activebox",
             start:"top 100%",
-            end:"top 70%",
+            end:"top 87%",
             scrub: true,
             markers: false,
             toggleActions:"restart pause reverse pause"
@@ -93,7 +93,7 @@ export class ActiveComponent implements OnInit {
           scrollTrigger: {
             trigger:"#third_activebox",
             start:"top 100%",
-            end:"top 60%",
+            end:"top 90%",
             scrub: true,
             markers: false,
             toggleActions:"restart pause reverse pause"
@@ -105,7 +105,7 @@ export class ActiveComponent implements OnInit {
           scrollTrigger: {
             trigger:"#fourth_activebox",
             start:"top 100%",
-            end:"top 50%",
+            end:"top 93%",
             scrub: true,
             markers: false,
             toggleActions:"restart pause reverse pause"
