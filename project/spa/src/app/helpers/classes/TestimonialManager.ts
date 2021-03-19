@@ -83,7 +83,7 @@ import { TestimonialClass } from "./TestimonialClass";
       getTestimonialsByCurrentPage(): TestimonialClass[] | undefined{
         if(this.pages.get(this.currentPage))return this.pages.get(this.currentPage)!;
         else{
-          console.error("Leider konnten wir kein passendes Testimonial für dich finden");
+          //console.error("Leider konnten wir kein passendes Testimonial für dich finden");
           return undefined;
         }
       }
@@ -99,7 +99,7 @@ import { TestimonialClass } from "./TestimonialClass";
       getNextEvent(): TestimonialClass | undefined{
         if(this.pages.get(1))return this.pages.get(1)![0];
         else {
-          console.error("Momentan ist entweder kein Event in Aussicht oder es gab ein Problem beim Abrufen unserer Demos");
+          //console.error("Momentan ist entweder kein Event in Aussicht oder es gab ein Problem beim Abrufen unserer Demos");
           return undefined;
         }
       }

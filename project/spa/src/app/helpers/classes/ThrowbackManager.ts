@@ -78,7 +78,7 @@ import { ThrowbackClass } from "./ThrowbackClass";
 
     calculateSize(numberOfThrowbacksInview: number, throwbacks: ThrowbackClass[]){
      let numberOfThrowbacks=throwbacks.length;
-     console.log("inview",numberOfThrowbacksInview,"anzahl",numberOfThrowbacks)
+     //console.log("inview",numberOfThrowbacksInview,"anzahl",numberOfThrowbacks)
 
      return Math.ceil(numberOfThrowbacks/numberOfThrowbacksInview);
     }
