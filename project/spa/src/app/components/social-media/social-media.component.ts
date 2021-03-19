@@ -67,7 +67,7 @@ export class SocialMediaComponent implements OnInit {
           },
           opacity:0
         });
-        
+
         //Animation der Kreise
         var t3=gsap.from("#first_socialbox",{
           scrollTrigger: {
@@ -75,7 +75,7 @@ export class SocialMediaComponent implements OnInit {
             start:"top 100%",
             end:"top 95%",
             scrub: true,
-            markers: true,
+            markers: false,
             toggleActions:"restart pause reverse pause"
           },
           opacity:0
