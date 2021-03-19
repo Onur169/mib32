@@ -1,0 +1,10 @@
+@media (max-width: 768px) {
+  .float_box {
+      width: 100% !important;
+      flex-direction: column !important;
+  }
+
+  .w-25{
+      padding: 1rem 0 !important;
+  }
+}

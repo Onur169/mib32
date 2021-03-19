@@ -1,8 +1,10 @@
+@import "../../../custom-variables";
+
 .card{
     width: 18rem;
 }
 
 .grey_container{
-  background-color: #e0dfde52;
+  background-color: $info;
   height: 30vh;
 }

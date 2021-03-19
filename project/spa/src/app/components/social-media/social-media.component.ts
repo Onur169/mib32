@@ -1,10 +1,11 @@
 /**
  * @param createdBy
- * Christian Knoth
+ * Anna Glomb
  * @param authors
- * Christian Knoth, Anna Glomb
+ * Anna Glomb, Christian Knoth
  * @param summary
- * Die Active-Komponente zeigt die Möglichkeiten auf, sich auf verschiedenen Wegen an dem kommenden Streik zu beteiligen
+ * Die SocialMedia-Komponente erfüllt sämtliche Aufgaben zur Darstellung unserer SocialMedia-Features
+ * sie bedient sich an dem Service
  */
 
 import { Component, OnInit } from '@angular/core';
@@ -14,11 +15,14 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { gsap } from 'gsap';
 
 @Component({
-  selector: 'app-active',
-  templateUrl: './active.component.html',
-  styleUrls: ['./active.component.scss']
+  selector: 'app-social-media',
+  templateUrl: './social-media.component.html',
+  styleUrls: ['./social-media.component.scss']
 })
-export class ActiveComponent implements OnInit {
+export class SocialMediaComponent implements OnInit {
+
+  count: number = 0;
+  hashtag: string = '';
 
   constructor(private viewport: ViewportService) { }
 
@@ -28,7 +32,7 @@ export class ActiveComponent implements OnInit {
   ngAfterViewInit(){
     if(!this.viewport.getIsMobile())this.scrollUp();
 
-   // ScrollTrigger.refresh(true);
+   //ScrollTrigger.refresh(true);
   }
 
 
@@ -38,9 +42,9 @@ export class ActiveComponent implements OnInit {
     gsap.registerPlugin(ScrollTrigger);
 
     //Headline
-        var tl=gsap.from("#active_head",{
+        var tl=gsap.from("#social_head",{
           scrollTrigger: {
-            trigger:"#active_head",
+            trigger:"#social_head",
             start:"bottom 90%",
             end:"bottom 70%",
             scrub: true,
@@ -52,9 +56,9 @@ export class ActiveComponent implements OnInit {
         });
 
         //Subtext
-        var t2=gsap.from("#active_cover",{
+        var t2=gsap.from("#social_cover",{
           scrollTrigger: {
-            trigger:"#active_cover",
+            trigger:"#social_cover",
             start:"bottom 90%",
             end:"bottom 70%",
             scrub: true,
@@ -65,53 +69,78 @@ export class ActiveComponent implements OnInit {
         });
         
         //Animation der Kreise
-        var t3=gsap.from("#first_activebox",{
+        var t3=gsap.from("#first_socialbox",{
           scrollTrigger: {
-            trigger:"#first_activebox",
+            trigger:"#first_socialbox",
             start:"top 100%",
-            end:"top 85%",
+            end:"top 95%",
             scrub: true,
             markers: true,
             toggleActions:"restart pause reverse pause"
           },
-          y: 200
+          opacity:0
         });
 
-        var t4=gsap.from("#second_activebox",{
+        var t4=gsap.from("#second_socialbox",{
           scrollTrigger: {
-            trigger:"#second_activebox",
-            start:"top 100%",
-            end:"top 87%",
-            scrub: true,
-            markers: false,
-            toggleActions:"restart pause reverse pause"
-          },
-          y: 200
-        });
-
-        var t5=gsap.from("#third_activebox",{
-          scrollTrigger: {
-            trigger:"#third_activebox",
+            trigger:"#second_socialbox",
             start:"top 100%",
             end:"top 90%",
             scrub: true,
             markers: false,
             toggleActions:"restart pause reverse pause"
           },
-          y: 200
+          opacity:0
         });
 
-        var t6=gsap.from("#fourth_activebox",{
+        var t5=gsap.from("#third_socialbox",{
           scrollTrigger: {
-            trigger:"#fourth_activebox",
+            trigger:"#third_socialbox",
             start:"top 100%",
-            end:"top 93%",
+            end:"top 80%",
             scrub: true,
             markers: false,
             toggleActions:"restart pause reverse pause"
           },
-          y: 200
+          opacity:0
         });
+
+        var t6=gsap.from("#fourth_socialbox",{
+          scrollTrigger: {
+            trigger:"#fourth_socialbox",
+            start:"top 100%",
+            end:"top 70%",
+            scrub: true,
+            markers: false,
+            toggleActions:"restart pause reverse pause"
+          },
+          opacity:0
+        });
+
+        var t7=gsap.from("#count_bg",{
+          scrollTrigger: {
+            trigger:"#count_bg",
+            start:"top 90%",
+            end:"center 60%",
+            scrub: true,
+            markers: false,
+            toggleActions:"restart pause reverse pause" //wenn sichtbar, wenn nicht sichtbar, wenn wieder zurück
+          },
+          opacity:0
+        });
+
+        var t8=gsap.from("#count_box",{
+          scrollTrigger: {
+            trigger:"#count_box",
+            start:"top 75%",
+                end:"top 50%",
+                scrub: true,
+                markers: false,
+                toggleActions:"restart pause reverse pause" //wenn sichtbar, wenn nicht sichtbar, wenn wieder zurück
+              },
+              x: 50
+            });
       }
+
 
 }
