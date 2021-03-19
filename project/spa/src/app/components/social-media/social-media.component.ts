@@ -28,7 +28,13 @@ export class SocialMediaComponent implements OnInit {
   hashtagSuccess = false;
   allHashtags:HashtagClass[] = [];
 
-  constructor(private viewport: ViewportService, private socialService: SocialsService) { }
+  private plattformCookie:string | null=""
+  private hashCookie:string | null=""
+
+  constructor(private viewport: ViewportService, private socialService: SocialsService) {
+    this.plattformCookie=localStorage.getItem('plattform');
+    this.hashCookie=localStorage.getItem('socialhash');
+  }
 
   ngOnInit(): void {
     this.setSocials();
@@ -36,11 +42,10 @@ export class SocialMediaComponent implements OnInit {
 
   ngAfterViewInit(){
     if(!this.viewport.getIsMobile())this.scrollUp();
-
-   //ScrollTrigger.refresh(true);
   }
 
   async setSocials(){
+
    this.allHashtags =  await this.socialService.fetchAllHashtags();
     console.log(this.socialService.allhashtags);
 
@@ -49,13 +54,26 @@ export class SocialMediaComponent implements OnInit {
     }else{
       this.hashtagSuccess = false;
     }
+
+      this.allHashtags.forEach(hash =>{
+        console.log(hash.getName(),this.plattformCookie , hash.getHashtag(),this.hashCookie);
+        if(hash.getName()==this.plattformCookie && hash.getHashtag() ==this.hashCookie){
+          console.log(true);
+          this.getHashtag(this.hashCookie, this.plattformCookie);
+        }
+      })
+
+
   }
 
   getHashtag(name: string, plattform: string){
+    localStorage.setItem('plattform', plattform);
+    localStorage.setItem('socialhash', name);
+
     for (let hashtag of this.allHashtags){
-      if(hashtag.hashtag.toLocaleLowerCase() === name.toLocaleLowerCase() && hashtag.name.toLocaleLowerCase() === plattform.toLocaleLowerCase()){
-        this.count = hashtag.counter;
-        this.hashtag = hashtag.hashtag;
+      if(hashtag.getHashtag().toLocaleLowerCase() == name.toLocaleLowerCase() && hashtag.getName().toLocaleLowerCase() == plattform.toLocaleLowerCase()){
+        this.count = hashtag.getCounter();
+        this.hashtag = hashtag.getName();
       }
     }
   }

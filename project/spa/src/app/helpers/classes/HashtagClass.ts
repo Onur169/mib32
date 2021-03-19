@@ -9,10 +9,27 @@
 
  export class HashtagClass {
 
-  id: string;
-  hashtag: string;
-  counter: string;
-  name: string;
+  private id: string;
+  private hashtag: string;
+  private counter: string;
+  private name: string;
+
+  public getId(): string {
+    return this.id;
+  }
+
+  public getHashtag(): string {
+    return this.hashtag;
+  }
+
+  public getCounter(): string {
+    return this.counter;
+  }
+
+  public getName(): string {
+    return this.name;
+  }
+
 
   constructor(id: string, hashtag: string, counter: string, name: string){
     this.id=id;
