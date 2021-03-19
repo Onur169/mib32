@@ -15,7 +15,7 @@ import { TestimonialService } from 'src/app/services/testimonial.service';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ViewportService } from 'src/app/services/viewport.service';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 @Component({
   selector: 'app-testimonials',
   templateUrl: './testimonials.component.html',
@@ -25,17 +25,13 @@ export class TestimonialsComponent implements OnInit {
   scrHeight: number = 0;
   scrWidth: number = 0;
 
+  manyEntress: number=0;
   //zeigt den Viewport an
-  @HostListener('window:resize', ['$event'])
-  getScreenSize() {
-    this.scrHeight = window.innerHeight;
-    this.scrWidth = window.innerWidth;
-  }
 
-  allTestimonials: TestimonialClass[] = [];
-  public setTestimonials: TestimonialClass[] = [];
+  private allTestimonials: TestimonialClass[] = [];
+  chosenTestimonials: TestimonialClass[] = [];
+  urls: SafeUrl[]=[];
   hasTestimonials: boolean = false;
-  countButtonClick: number = 0;
   hasMore: boolean = false;
 
   public setOfTestimonials: Map<number, TestimonialClass[]> = new Map();
@@ -45,22 +41,33 @@ export class TestimonialsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getTestimonials();
+    this.fillTestimonials();
   }
+  async fillTestimonials() {
+    await this.getTestimonials();
+
+    this.buildTestimonalView();
+  }
+
 
   ngAfterViewInit(){
     if(!this.viewport.getIsMobile())this.scrollUp();
   }
 
+  @HostListener('window:resize', ['$event'])
+  async buildTestimonalView(){
+
+    this.getScreenSize();
+    this.setTestimonialsSet(this.manyEntress);
+  }
+
+
   async getTestimonials() {
     let manager = this.testimonialService.testimonialManager;
-
     await this.testimonialService.fetchTestimonials();
     if (manager.getPageValue(manager.getCurrentPage())) {
       await this.iterateTestimonials();
     }
-    this.checkTestimonials(this.allTestimonials);
-    this.getTestimonialsSet(this.countButtonClick);
   }
 
   async iterateTestimonials() {
@@ -72,49 +79,39 @@ export class TestimonialsComponent implements OnInit {
     }
     else{
       this.allTestimonials=manager.getAllValues();
-      ScrollTrigger.refresh(true);
     }
   }
 
-  checkTestimonials(testimonials: TestimonialClass[]) {
-    if (testimonials.length > 0) {
-      this.hasTestimonials = true;
-    } else {
-      this.hasTestimonials = false;
-    }
-  }
+  setTestimonialsSet(elements: number) {
+    this.chosenTestimonials=[];
+    this.urls=[];
+    let length=this.allTestimonials.length
+    if(elements<length)length=elements;
+    if(length>0)this.hasTestimonials=true;
+    for(let i=0; i<length; i++){
+      this.chosenTestimonials.push(this.allTestimonials[i]);
 
-  getTestimonialsSet(count: number) {
-    let testi: Map<number, TestimonialClass[]> = new Map();
-    this.hasMore = false;
     if (this.scrWidth < 576 && this.scrWidth < 768) {
-      testi = this.testimonialService.testimonialManager.getManyTestimonialsAsPages(2);
-      if(testi.get(count)){
-        this.setOfTestimonials.set(count, testi.get(count)!);
-        //console.log(this.setOfTestimonials.get(count));
-        this.hasMore = true;
-      }
-      console.log('small');
+      this.urls.push( this.chosenTestimonials[i].getImages().getSmall());
     } else if (this.scrWidth >=768 && this.scrWidth < 992) {
-        testi = this.testimonialService.testimonialManager.getManyTestimonialsAsPages(3);
-        if(testi.get(count)){
-          this.setOfTestimonials.set(count, testi.get(count)!);
-          //console.log(this.setOfTestimonials.get(count));
-          this.hasMore = true;
-        }
-        console.log('middle');
+      this.urls.push( this.chosenTestimonials[i].getImages().getMedium());
     } else{
-      testi = this.testimonialService.testimonialManager.getManyTestimonialsAsPages(4);
-      if(testi.get(count)){
-        this.setOfTestimonials.set(count, testi.get(count)!);
-        //console.log(this.setOfTestimonials.get(count));
-        this.hasMore = true;
-      }
+      this.urls.push( this.chosenTestimonials[i].getImages().getLarge());
     }
   }
+  }
 
-  count() {
-  this.getTestimonialsSet(this.countButtonClick++);
+  getScreenSize() {
+    this.scrHeight = window.innerHeight;
+    this.scrWidth = window.innerWidth;
+
+    if(this.scrWidth < 576){
+      this.manyEntress=2;
+    }else if(this.scrWidth >=576 && this.scrWidth < 768){
+      this.manyEntress=3;
+    }else{
+      this.manyEntress=4;
+    }
   }
 
 

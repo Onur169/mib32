@@ -7,27 +7,28 @@
  * Die Marker-Klasse repräsentiert ein instanziertes Event und wird im Rahmen der Timer- und der Event-Komponente genutzt.
  */
 
+import { SafeUrl } from "@angular/platform-browser";
+
 
 export class TestimonialsImageClass{
 
-  private small: string;
-  private medium: string;
-  private large: string;
+  private small: SafeUrl;
+  private medium: SafeUrl;
+  private large: SafeUrl;
 
-  public getSmall(): string {
+  public getSmall(): SafeUrl {
     return this.small;
   }
 
-  public getMedium(): string {
+  public getMedium(): SafeUrl {
     return this.medium;
   }
 
-  public getLarge(): string {
+  public getLarge(): SafeUrl {
     return this.large;
   }
 
-
-  constructor(small: string, medium: string, large: string){
+  constructor(small: SafeUrl, medium: SafeUrl, large: SafeUrl){
     this.small=small;
     this.medium=medium;
     this.large=large;

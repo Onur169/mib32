@@ -10,23 +10,27 @@
 
 import { HostListener } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
-import { AllianceClass } from 'src/app/helpers/classes/AllianceClass';
+import { AllianceClass, AllianceImageClass } from 'src/app/helpers/classes/AllianceClass';
 import { AllianceService } from 'src/app/services/alliance.service';
 
 import { gsap } from 'gsap';
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ViewportService } from 'src/app/services/viewport.service';
+import { SafeUrl } from '@angular/platform-browser';
 @Component({
   selector: 'app-alliance',
   templateUrl: './alliance.component.html',
   styleUrls: ['./alliance.component.scss'],
 })
 export class AllianceComponent implements OnInit {
-  scrHeight: number = 0;
-  scrWidth: number = 0;
+  private scrHeight: number = 0;
+  private scrWidth: number = 0;
+
+  urls: SafeUrl[]=[];
+  manyEntress: number=0;
 
   //zeigt den Viewport an
-  @HostListener('window:resize', ['$event'])
+
   getScreenSize() {
     this.scrHeight = window.innerHeight;
     this.scrWidth = window.innerWidth;
@@ -37,7 +41,6 @@ export class AllianceComponent implements OnInit {
   hasAlliance: boolean = false;
 
   constructor(private allianceService: AllianceService, private viewport: ViewportService) {
-    this.getScreenSize();
   }
 
   ngOnInit(): void {
@@ -46,23 +49,48 @@ export class AllianceComponent implements OnInit {
   async fillAlliances() {
     await this.allianceService.getAlliances();
 
-    this.createAllianceSet(this.scrWidth);
+    this.buildSlider();
   }
 
   ngAfterViewInit(){
     if(!this.viewport.getIsMobile())this.scrollUp();
   }
 
+  @HostListener('window:resize', ['$event'])
+  buildSlider(){
+
+    this.getScreenSize();
+    this.createAllianceSet(this.scrWidth);
+    this.calculatePicture();
+  }
+
+  calculatePicture(){
+    this.urls=[];
+    this.alliances.forEach(page=>{
+      page.forEach(alli =>{
+
+    if(this.scrWidth<576){
+      this.urls.push( alli.getPicture().getSmall());
+    }
+    else if(this.scrWidth>=576 && this.scrWidth < 768){
+      this.urls.push( alli.getPicture().getMedium());
+    }
+    else this.urls.push( alli.getPicture().getLarge());
+  })
+})
+}
+
   //gibt soviele Partner, wie die Breite des Bildschirms es erlaubt
   createAllianceSet(srcWidth: number) {
     //kleiner als der xs Breakpoint
     if(srcWidth < 576){
-      this.alliances = this.allianceService.getManyAlliancesAsPages(1);
+      this.manyEntress=1;
     }else if(srcWidth >=576 && srcWidth < 768){
-      this.alliances = this.allianceService.getManyAlliancesAsPages(2);
+      this.manyEntress=2;
     }else{
-      this.alliances = this.allianceService.getManyAlliancesAsPages(3);
+      this.manyEntress=3;
     }
+    this.alliances = this.allianceService.getManyAlliancesAsPages(this.manyEntress);
 
     if(this.alliances.size > 0 )this.hasAlliance = true;
   }

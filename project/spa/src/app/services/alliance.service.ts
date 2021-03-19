@@ -10,6 +10,7 @@
 
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { AllianceClass, AllianceImageClass } from '../helpers/classes/AllianceClass';
 import { Alliance } from '../helpers/interfaces/Alliance';
 import { ApiService } from './api.service';
@@ -22,7 +23,7 @@ export class AllianceService {
 private alliances: AllianceClass[];
 private maxPages: number;
 
-  constructor(private api:ApiService) {
+  constructor(private api:ApiService, private sani: DomSanitizer) {
     this.alliances=[];
     this.maxPages=0;
 
@@ -104,11 +105,25 @@ private maxPages: number;
         .set('page',page);
         }
 
+        let filler="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/240px-No_image_available.svg.png"
+
         let response= await this.api.fetch(RequestUrl,params);
 
         let newAlliancePage:AllianceClass[]=[];
         (response.data as Alliance[]).forEach(alli =>{
-          let img=new AllianceImageClass(alli.images.small,alli.images.medium,alli.images.large)
+          let fillerSmall=filler;
+          let fillerMedium=filler;
+          let fillerLarge=filler;
+          if(alli.images.small && alli.images.medium && alli.images.large){
+            fillerSmall=alli.images.small
+            fillerMedium=alli.images.medium
+            fillerLarge=alli.images.large
+          }
+          let img=new AllianceImageClass(
+            this.sani.bypassSecurityTrustUrl(fillerSmall),
+            this.sani.bypassSecurityTrustUrl(fillerMedium),
+            this.sani.bypassSecurityTrustUrl(fillerLarge)
+            )
           newAlliancePage.push(new AllianceClass(img,alli.url,alli.name));
         });
         //console.log(response);

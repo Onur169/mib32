@@ -1,3 +1,5 @@
+import { SafeUrl } from "@angular/platform-browser";
+
 /**
  * @param createdBy
  * Christian Knoth
@@ -9,23 +11,23 @@
  */
  export class AllianceImageClass{
 
-  private small: string;
-  private medium: string;
-  private large: string;
+  private small: SafeUrl;
+  private medium: SafeUrl;
+  private large: SafeUrl;
 
-  public getSmall(): string {
+  public getSmall(): SafeUrl {
     return this.small;
   }
 
-  public getMedium(): string {
+  public getMedium(): SafeUrl {
     return this.medium;
   }
 
-  public getLarge(): string {
+  public getLarge(): SafeUrl {
     return this.large;
   }
 
-  constructor(small: string, medium: string, large: string){
+  constructor(small: SafeUrl, medium: SafeUrl, large: SafeUrl){
     this.small=small;
     this.medium=medium;
     this.large=large;
@@ -50,17 +52,6 @@
   public getName(): string {
     return this.name;
   }
-
-  public hasPictures(): boolean{
-    if(this.picture.getLarge()||this.picture.getMedium()||this.picture.getSmall()){
-      return true;
-    }
-    else {
-      return false;
-    }
-
-  }
-
 
   constructor(
     picture:AllianceImageClass,

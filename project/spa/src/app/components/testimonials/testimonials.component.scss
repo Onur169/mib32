@@ -10,8 +10,10 @@
   border-width: 0.2rem !important;
 }
 
-.allCards{
+.card{
   background-color: #e0dfde52;
+  width: 20vw !important;
+  min-width: 280px;
 }
 
 @media(max-width: 576px){

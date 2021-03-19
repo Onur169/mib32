@@ -135,7 +135,6 @@ export class MapComponent implements OnInit {
 async renderMap(radius: number){
   console.log("render Map", radius, "Längengrad",this.userPosition[0], "Breitengrad",this.userPosition[1]);
   let allmarkers=await this.eventService.getPages('current_events', this.userPosition[0], this.userPosition[1], radius);
-  console.log(allmarkers);
 
   this.markers = allmarkers;
 
@@ -281,12 +280,8 @@ if(!(marker.length>0)){
           this.overlay.setPosition(coordinate);
           mapScreen.getView().setCenter(coordinate);
 
-
           this.place = 'in ' + marker[j].getLocationName();
           this.day = 'am ' + marker[j].getStartDate();
-
-         console.log("geil, Marker aus",marker[j].getLocationName(),"bekommt den Wert:", coordinate);
-
         }
       })
         }
