@@ -16,6 +16,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ViewportService } from 'src/app/services/viewport.service';
 
 import {NgbModal, ModalDismissReasons, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
+
 @Component({
   selector: 'app-throwbacks',
   templateUrl: './throwbacks.component.html',
@@ -30,7 +31,10 @@ export class ThrowbacksComponent implements OnInit {
   throwbacks: ThrowbackClass[];
   maxPage = 0;
   page = 1;
+
+  //Binding
   hasThrowback: boolean = false;
+  videoSuccess: boolean[] = [];
 
   constructor(private throwbackService: ThrowbackService, private viewport: ViewportService, private modalService: NgbModal) {
     this.throwbacks = [];
@@ -86,13 +90,21 @@ export class ThrowbacksComponent implements OnInit {
         this.throwbackService.throwbackmanager.getCurrentPage()
       )!;
     }
-    console.log(this.throwbacks);
 
     if(this.throwbacks.length > 0){
       this.hasThrowback =true;
     }else{
       this.hasThrowback = false;
     }
+
+    for( let throwback of this.throwbacks){
+      if(throwback.getsocialMediaVideoUrl()){
+        this.videoSuccess.push(true);
+      }else{
+        this.videoSuccess.push(false);
+      }
+      } 
+      console.log(this.throwbacks);
   }
 
       ////////////////////GSAP///////////////////
