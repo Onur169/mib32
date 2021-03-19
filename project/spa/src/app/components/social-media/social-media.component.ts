@@ -126,8 +126,7 @@ export class SocialMediaComponent implements OnInit {
             markers: false,
             toggleActions:"restart pause reverse pause" //wenn sichtbar, wenn nicht sichtbar, wenn wieder zurück
           },
-          opacity:0,
-          x: 500
+          opacity:0
         });
 
         var t8=gsap.from("#count_box",{
@@ -139,7 +138,7 @@ export class SocialMediaComponent implements OnInit {
                 markers: false,
                 toggleActions:"restart pause reverse pause" //wenn sichtbar, wenn nicht sichtbar, wenn wieder zurück
               },
-              x: 500
+              x: 50
             });
       }
 
