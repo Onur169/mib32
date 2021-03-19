@@ -11,6 +11,7 @@
 
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { TestimonialClass, TestimonialsImageClass } from '../helpers/classes/TestimonialClass';
 import { TestimonialManager } from '../helpers/classes/TestimonialManager';
 import { Testimonial } from '../helpers/interfaces/Testimonials';
@@ -22,7 +23,7 @@ import { ApiService } from './api.service';
 export class TestimonialService {
   testimonialManager: TestimonialManager
 
-  constructor(private api: ApiService) {
+  constructor(private api: ApiService, private sani: DomSanitizer) {
     this.testimonialManager=new TestimonialManager();
   }
 
@@ -53,7 +54,10 @@ export class TestimonialService {
 
         (response.data as Testimonial[]).forEach((value: Testimonial) => {
           if(value.images.small ||  value.images.medium|| value.images.large){
-          let newTestimonialImage=new TestimonialsImageClass(value.images.small, value.images.medium, value.images.large);
+          let newTestimonialImage=new TestimonialsImageClass(
+            this.sani.bypassSecurityTrustUrl(value.images.small),
+            this.sani.bypassSecurityTrustUrl(value.images.medium),
+            this.sani.bypassSecurityTrustUrl(value.images.large));
           let newTestimonial=new TestimonialClass(
             value.id,
             value.headline,

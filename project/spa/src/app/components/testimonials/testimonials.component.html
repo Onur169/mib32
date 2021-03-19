@@ -9,15 +9,11 @@
   </div>
 </div>
 <div *ngIf="hasTestimonials; else elseBlock">
-  <div *ngFor="let page of setOfTestimonials | keyvalue" class="row justify-content-center mx-0 allCards card-box py-2 py-md-4">
-  <ng-container *ngFor="let testimonial of page.value">
-    <div class="p-2 p-lg-3 col-12 col-sm-6 col-md-4 col-lg-3">
-    <div class="card">
+  <div  class="d-flex justify-content-start flex-wrap py-2 py-md-4">
+    <div *ngFor="let testimonial of chosenTestimonials; let i=index">
+    <div class="card mx-2 mx-md-4">
       <div class="card-body p-0">
-      <img class="card-img-top" src="{{testimonial.getImages().getSmall()}}" srcset="
-      {{testimonial.getImages().getSmall()}} 600w,
-      {{testimonial.getImages().getMedium()}} 750w,
-      {{testimonial.getImages().getLarge()}} 1000w"
+      <img class="card-img-top" [src]="urls[i]"
       alt="Card image cap">
         <h5 class="bg-primary text-white card-title p-1 p-md-3">{{ testimonial.getHeadline() }}</h5>
         <p class="card-text pb-2 pl-2">
@@ -25,9 +21,9 @@
         </p>
       </div>
     </div>
-  </div>
-  </ng-container>
 </div>
+  </div>
+
 </div>
 
 <ng-template #elseBlock>
