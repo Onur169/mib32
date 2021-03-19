@@ -7,7 +7,7 @@
  * Die Throwback-Komponente erfüllt sämtliche Aufgaben zur Darstellung unseres Rückblick-Features und
  * bezieht ihre dargestellten Daten aus dem throwback-Service.
  */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Sanitizer } from '@angular/core';
 import { ThrowbackClass } from 'src/app/helpers/classes/ThrowbackClass';
 import { ThrowbackService } from 'src/app/services/throwback.service';
 
@@ -17,6 +17,7 @@ import { ViewportService } from 'src/app/services/viewport.service';
 
 import {NgbModal, ModalDismissReasons, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
 
+import { DomSanitizer } from '@angular/platform-browser';
 @Component({
   selector: 'app-throwbacks',
   templateUrl: './throwbacks.component.html',
@@ -76,6 +77,8 @@ export class ThrowbacksComponent implements OnInit {
     this.throwbackPages = this.throwbackService.throwbackmanager.reCreatePages(5);
     this.setNewPage(1);
     this.setMaxPage(this.throwbackPages.size);
+    ScrollTrigger.refresh(true);
+
   }
 
   setMaxPage(size: number) {

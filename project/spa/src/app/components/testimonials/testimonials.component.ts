@@ -47,6 +47,8 @@ export class TestimonialsComponent implements OnInit {
     await this.getTestimonials();
 
     this.buildTestimonalView();
+    ScrollTrigger.refresh(true);
+
   }
 
 

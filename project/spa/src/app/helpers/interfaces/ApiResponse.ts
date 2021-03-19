@@ -11,12 +11,13 @@
 
  import { Alliance } from "./Alliance";
 import { Demonstration } from "./Demonstration";
+import { SocialHastag } from "./socialHastag";
 import { Testimonial } from "./Testimonials";
 import { Throwback } from "./Throwback";
 
  export interface ApiResponse {
    ack: string;
-   data: Demonstration[] | Throwback[]| Testimonial[]| Alliance[];
+   data: Demonstration[] | Throwback[] | Testimonial[] | Alliance[]| SocialHastag[];
    prev_page_url: string;
    next_page_url: string;
    current_page: number;

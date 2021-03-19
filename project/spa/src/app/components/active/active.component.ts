@@ -63,7 +63,7 @@ export class ActiveComponent implements OnInit {
           },
           opacity:0
         });
-        
+
         //Animation der Kreise
         var t3=gsap.from("#first_activebox",{
           scrollTrigger: {
@@ -71,7 +71,7 @@ export class ActiveComponent implements OnInit {
             start:"top 100%",
             end:"top 85%",
             scrub: true,
-            markers: true,
+            markers: false,
             toggleActions:"restart pause reverse pause"
           },
           y: 200
