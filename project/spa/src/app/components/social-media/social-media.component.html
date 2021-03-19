@@ -9,6 +9,7 @@
       benutzt wurden.
     </p>
 
+    <div *ngIf="hashtagSuccess; else elseBlock">
     <div class="w-90">
         <div class="row gy-5 justify-content-center">  
         <div class="btn btn-outline-warning col-10 col-sm-4 m-1 m-sm-2 m-md-4" id="first_socialbox">
@@ -50,7 +51,7 @@
       <div class="btn btn-outline-primary col-10 col-sm-4 m-1 m-sm-2 m-md-4" [routerLink]="['/Home']" fragment="Aktiv" id="fourth_socialbox">Sei dabei!</div>
     </div>
   </div>
-</div>
+
 
   <div class="float_box bg-primary w-25 d-flex flex-column justify-content-end align-items-center" id="count_bg">
     <div id="count_box">
@@ -59,4 +60,9 @@
       <div class="col-12 text text-white text-center pb-1 pb-sm-2 pb-md-5">zum #{{ hashtag }}</div>
     </div>
   </div>
+  </div>
+</div>
+  <ng-template #elseBlock>
+    <div class="text bg-primary text-white text-center py-4 px-3">Wir sind bemüht Dir passende Hashtags zu zeigen. Habe noch bisschen Geduld.</div>
+  </ng-template>
 </div>

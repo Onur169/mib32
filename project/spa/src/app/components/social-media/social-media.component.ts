@@ -23,6 +23,7 @@ export class SocialMediaComponent implements OnInit {
 
   count: number = 0;
   hashtag: string = '';
+  hashtagSuccess = false;
 
   constructor(private viewport: ViewportService) { }
 
