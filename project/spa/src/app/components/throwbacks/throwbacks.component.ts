@@ -17,7 +17,6 @@ import { ViewportService } from 'src/app/services/viewport.service';
 
 import {NgbModal, ModalDismissReasons, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
 
-import { DomSanitizer } from '@angular/platform-browser';
 @Component({
   selector: 'app-throwbacks',
   templateUrl: './throwbacks.component.html',

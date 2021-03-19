@@ -14,6 +14,7 @@ import { ViewportService } from 'src/app/services/viewport.service';
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { gsap } from 'gsap';
 import { SocialsService } from 'src/app/services/socials.service';
+import { HashtagClass } from 'src/app/helpers/classes/HashtagClass';
 
 @Component({
   selector: 'app-social-media',
@@ -22,9 +23,10 @@ import { SocialsService } from 'src/app/services/socials.service';
 })
 export class SocialMediaComponent implements OnInit {
 
-  count: number = 0;
+  count: string = '';
   hashtag: string = '';
   hashtagSuccess = false;
+  allHashtags:HashtagClass[] = [];
 
   constructor(private viewport: ViewportService, private socialService: SocialsService) { }
 
@@ -39,8 +41,23 @@ export class SocialMediaComponent implements OnInit {
   }
 
   async setSocials(){
-    await this.socialService.fetchAllHashtags();
+   this.allHashtags =  await this.socialService.fetchAllHashtags();
     console.log(this.socialService.allhashtags);
+
+    if(this.allHashtags.length > 0){
+      this.hashtagSuccess = true;
+    }else{
+      this.hashtagSuccess = false;
+    }
+  }
+
+  getHashtag(name: string, plattform: string){
+    for (let hashtag of this.allHashtags){
+      if(hashtag.hashtag.toLocaleLowerCase() === name.toLocaleLowerCase() && hashtag.name.toLocaleLowerCase() === plattform.toLocaleLowerCase()){
+        this.count = hashtag.counter;
+        this.hashtag = hashtag.hashtag;
+      }
+    }
   }
 
   //Animation der Komponente
