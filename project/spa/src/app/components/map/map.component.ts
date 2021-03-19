@@ -127,7 +127,7 @@ export class MapComponent implements OnInit {
       });
       resolve([position.coords.longitude,position.coords.latitude])
       }catch(error){
-        reject(error);
+        resolve(this.userPosition);
       }
   });
   }
