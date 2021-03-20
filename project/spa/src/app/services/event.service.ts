@@ -123,10 +123,10 @@ try{
 
         let response = await this.api.fetch(Url, params);
 
-        if(response.data==undefined){
+        if(response.data[0]==undefined){
 
-          console.log("no existing events");
-          reject();
+          console.log("Es existieren keine Events");
+          resolve(response.data[0]);
         }
 
         let firstMarkerValues=response.data[0] as Demonstration;
