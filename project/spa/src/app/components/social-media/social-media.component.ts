@@ -47,7 +47,7 @@ export class SocialMediaComponent implements OnInit {
     this.plattformCookie=localStorage.getItem('plattform');
     this.hashCookie=localStorage.getItem('socialhash');
     this.setSocials();
-    if(!this.viewport.getIsMobile())this.scrollUp();
+
   }
 
   async setSocials(){
@@ -57,6 +57,7 @@ export class SocialMediaComponent implements OnInit {
 
    if(this.allHashtags.length > 0){
       this.hashtagSuccess = true;
+      if(!this.viewport.getIsMobile())this.scrollUp();
     }else{
       this.hashtagSuccess = false;
     }
