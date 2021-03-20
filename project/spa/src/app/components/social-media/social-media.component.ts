@@ -27,6 +27,7 @@ export class SocialMediaComponent implements OnInit {
   hashtag: string = '';
   hashtagSuccess = false;
   allHashtags:HashtagClass[] = [];
+  model = 1;
 
   private plattformCookie:string | null=""
   private hashCookie:string | null=""
@@ -74,6 +75,11 @@ export class SocialMediaComponent implements OnInit {
         this.hashtag = hashtag.getHashtag();
       }
     }
+  }
+
+  deleteChecked(){
+    this.count = "";
+    this.hashtag = "";
   }
 
   //Animation der Komponente
