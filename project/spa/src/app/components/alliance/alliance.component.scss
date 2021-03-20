@@ -27,17 +27,20 @@ border-width: 3px !important;
   height: 300px;
 }
 
-.alliance_image{
-  width: 20vw;
-  min-width: 180px;
+@media (min-width: 768px) and (max-width: 992px){
+  .alliance_image{
+    width: 10rem;
+  }
 }
-
-
 
 @media(min-width: 576px) and (max-width: 767px){
   .carousel{
     outline: none ;
     height: 200px;
+  }
+
+  .alliance_image{
+    width: 10rem;
   }
 }
 
