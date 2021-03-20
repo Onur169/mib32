@@ -93,20 +93,26 @@ export class ThrowbacksComponent implements OnInit {
       )!;
     }
 
-    if(this.throwbacks.length > 0){
-      this.hasThrowback =true;
-    }else{
-      this.hasThrowback = false;
-    }
-
-    for( let throwback of this.throwbacks){
-      if(throwback.getsocialMediaVideoUrl()){
-        this.videoSuccess.push(true);
+    if(this.throwbacks){
+      if(this.throwbacks.length > 0){
+        this.hasThrowback =true;
       }else{
-        this.videoSuccess.push(false);
+        this.hasThrowback = false;
       }
-      } 
-      console.log(this.throwbacks);
+  
+      for( let throwback of this.throwbacks){
+        if(throwback.getsocialMediaVideoUrl()){
+          this.videoSuccess.push(true);
+        }else{
+          this.videoSuccess.push(false);
+        }
+        } 
+        console.log(this.throwbacks);
+    }else{
+      this.hasThrowback =false;
+    }
+  
+
   }
 
       ////////////////////GSAP///////////////////
