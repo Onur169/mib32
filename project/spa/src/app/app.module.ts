@@ -6,6 +6,8 @@ import { DatePipe } from '@angular/common'
 
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {NgbdModalFocusModule} from './cookie/modal-focus.module';
+
 import { TimerComponent } from './components/timer/timer.component';
 import { LandingpageComponent } from './components/landingpage/landingpage.component';
 
@@ -56,7 +58,8 @@ import { SocialMediaComponent } from './components/social-media/social-media.com
     HttpClientModule,
     AppRoutingModule,
     AngularMaterialModule,
-    FormsModule
+    FormsModule,
+    NgbdModalFocusModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]
