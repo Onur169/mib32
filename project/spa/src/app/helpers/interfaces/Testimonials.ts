@@ -23,5 +23,4 @@
   token: string;
   extension: string;
   images: TestimonialImages;
-  description_shortened: string;
 }

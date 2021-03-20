@@ -45,7 +45,6 @@ export class TestimonialClass {
   private token: string;
   private extension: string;
   private images: TestimonialsImageClass;
-  private descriptionShortened: string;
 
   public getId(): string {
     return this.id;
@@ -71,18 +70,13 @@ export class TestimonialClass {
     return this.images;
   }
 
-  public getDescriptionShortened(): string{
-    return this.descriptionShortened;
-  }
-
   constructor(
     id: string,
     headline: string,
     description: string,
     token: string,
     extension: string,
-    images: TestimonialsImageClass,
-    descriptionShortened: string
+    images: TestimonialsImageClass
     ){
       this.id=id;
       this.headline=headline;
@@ -90,7 +84,6 @@ export class TestimonialClass {
       this.token=token;
       this.extension=extension;
       this.images=images;
-      this.descriptionShortened=descriptionShortened
   }
 
 }

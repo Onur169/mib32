@@ -64,8 +64,7 @@ export class TestimonialService {
             value.description,
             value.token,
             value.extension,
-            newTestimonialImage,
-            value.description_shortened
+            newTestimonialImage
           );
 
           newThrowbacks.push(newTestimonial);
