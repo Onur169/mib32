@@ -67,7 +67,7 @@ export class FaqComponent implements OnInit {
             start:"top 100%",
             end:"top 96%",
             scrub: true,
-            markers: true,
+            markers: false,
             toggleActions:"restart pause reverse pause"
           },
           y: 200
