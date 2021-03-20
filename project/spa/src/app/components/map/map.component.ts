@@ -56,6 +56,7 @@ export class MapComponent implements OnInit {
   searchedLocationValue:string='';
 
   mapSuccess= false;
+  markerChecked = false;
 
   private clusters: VectorLayer=new VectorLayer();
   private overlay: Overlay=new Overlay({
@@ -282,6 +283,7 @@ if(!(marker.length>0)){
 
           this.place = 'in ' + marker[j].getLocationName();
           this.day = 'am ' + marker[j].getStartDate();
+          this.markerChecked = true;
         }
       })
         }
