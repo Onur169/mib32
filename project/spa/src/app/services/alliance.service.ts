@@ -30,7 +30,7 @@ private maxPages: number;
   }
 
   getManyAlliancesAsPages(elementsPerPage: number): Map<number,AllianceClass[]>{
-    let pageCounter: number=Math.round(this.alliances.length/elementsPerPage);
+    let pageCounter: number=Math.ceil(this.alliances.length/elementsPerPage);
 
     let paginator: Map<number,AllianceClass[]>=new Map();
 
@@ -49,6 +49,7 @@ private maxPages: number;
       pageValue+=elementsPerPage;
     }
 
+    console.log("counter",pageCounter);
 
     return paginator;
   }
@@ -126,7 +127,7 @@ private maxPages: number;
             )
           newAlliancePage.push(new AllianceClass(img,alli.url,alli.name));
         });
-        //console.log(response);
+        console.log("alliance",response);
 
         this.maxPages=response.max_pages;
           resolve(newAlliancePage);
