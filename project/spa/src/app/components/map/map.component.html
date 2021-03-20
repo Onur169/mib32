@@ -20,15 +20,25 @@
         <div id="popup-content"></div>
         </div>
     </div>
+    <div *ngIf="mapSuccess">
   <div class="d-flex justify-content-center">
   <div class="bg-info px-3">
-    <mat-slider #mapSlider value="50" min="1" max="150" tickInterval="1" thumbLabel (pointerup)="renderMap(mapSlider.value!)"></mat-slider>
+    <mat-slider #mapSlider value="50" min="0" max="250" tickInterval="10" thumbLabel (pointerup)="getSliderValue(mapSlider.value!)"></mat-slider>
     <div class="d-flex justify-content-between">
     <div class="">1 km</div>
-    <div class="">150 km</div>
+    <div class="">250 km</div>
   </div>
   </div>
   </div>
+
+  <div *ngIf="sliderChanged">
+    <div class="text event-text text-center text-primary p-1 p-sm-2">
+      Du hast den Umkreis: {{ mapSliderValue }} km ausgewählt.
+    </div>
+  </div>
+
+
+</div>
 
   <div id="next_demo_box" class="d-flex justify-content-center m-2 mb-md-5">
   <div id="next_demo" class="border border-primary w-lg-50 w-90 p-3 p-md-2 d-flex flex-column justify-content-center">

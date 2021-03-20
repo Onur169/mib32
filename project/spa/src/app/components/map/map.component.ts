@@ -56,6 +56,9 @@ export class MapComponent implements OnInit {
   searchedLocationValue:string='';
 
   mapSuccess= false;
+  mapSliderValue: number=0;
+  markerchecked=false;
+  sliderChanged=false;
 
   private clusters: VectorLayer=new VectorLayer();
   private overlay: Overlay=new Overlay({
@@ -283,6 +286,7 @@ if(!(marker.length>0)){
 
           this.place = 'in ' + marker[j].getLocationName();
           this.day = 'am ' + marker[j].getStartDate();
+          this.markerchecked = true;
           document.getElementById('next_demo_box')!.style.opacity="1";
         }
       })
@@ -317,6 +321,12 @@ if(this.searchedLocationValue){
 deleteValue(){
   this.searchedLocationValue ='';
   this.error = '';
+}
+
+getSliderValue(value: number){
+  this.mapSliderValue = value;
+  this.renderMap(value);
+  this.sliderChanged = true;
 }
 
   ////////////////////GSAP///////////////////
