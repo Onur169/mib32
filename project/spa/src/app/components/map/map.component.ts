@@ -57,7 +57,6 @@ export class MapComponent implements OnInit {
 
   mapSuccess= false;
   mapSliderValue: number=0;
-  markerchecked=false;
   sliderChanged=false;
 
   private clusters: VectorLayer=new VectorLayer();
@@ -286,8 +285,8 @@ if(!(marker.length>0)){
 
           this.place = 'in ' + marker[j].getLocationName();
           this.day = 'am ' + marker[j].getStartDate();
-          this.markerchecked = true;
           document.getElementById('next_demo_box')!.style.opacity="1";
+          document.getElementById('next_demo_box')!.style.position="relative";
         }
       })
         }
