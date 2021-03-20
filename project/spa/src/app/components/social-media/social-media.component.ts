@@ -114,55 +114,6 @@ export class SocialMediaComponent implements OnInit {
           opacity:0
         });
 
-        //Animation der Kreise
-        var t3=gsap.from("#first_socialbox",{
-          scrollTrigger: {
-            trigger:"#first_socialbox",
-            start:"top 100%",
-            end:"top 95%",
-            scrub: true,
-            markers: false,
-            toggleActions:"restart pause reverse pause"
-          },
-          opacity:0
-        });
-
-        var t4=gsap.from("#second_socialbox",{
-          scrollTrigger: {
-            trigger:"#second_socialbox",
-            start:"top 100%",
-            end:"top 90%",
-            scrub: true,
-            markers: false,
-            toggleActions:"restart pause reverse pause"
-          },
-          opacity:0
-        });
-
-        var t5=gsap.from("#third_socialbox",{
-          scrollTrigger: {
-            trigger:"#third_socialbox",
-            start:"top 100%",
-            end:"top 80%",
-            scrub: true,
-            markers: false,
-            toggleActions:"restart pause reverse pause"
-          },
-          opacity:0
-        });
-
-        var t6=gsap.from("#fourth_socialbox",{
-          scrollTrigger: {
-            trigger:"#fourth_socialbox",
-            start:"top 100%",
-            end:"top 70%",
-            scrub: true,
-            markers: false,
-            toggleActions:"restart pause reverse pause"
-          },
-          opacity:0
-        });
-
         var t7=gsap.from("#count_bg",{
           scrollTrigger: {
             trigger:"#count_bg",
