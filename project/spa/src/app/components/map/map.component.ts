@@ -75,7 +75,7 @@ export class MapComponent implements OnInit {
   }
 
   ngAfterViewInit(){
-    if(!this.viewport.getIsMobile())this.scrollUp();
+
   }
 
   async buildMap(){
@@ -140,6 +140,7 @@ async renderMap(radius: number){
   this.markers = allmarkers;
 
   this.markerCluster(allmarkers);
+  if(!this.viewport.getIsMobile())this.scrollUp();
 }
 
   //Marker richten sich nach dem Map-Zoom und die Marker werden zusammengefasst angezeigt
