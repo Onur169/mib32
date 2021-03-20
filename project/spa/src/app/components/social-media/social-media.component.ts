@@ -28,6 +28,7 @@ export class SocialMediaComponent implements OnInit {
   hashtag: string = '';
   hashtagSuccess = false;
   allHashtags:HashtagClass[] = [];
+  model = 1;
 
   private plattformCookie:string | null=""
   private hashCookie:string | null=""
@@ -54,14 +55,13 @@ export class SocialMediaComponent implements OnInit {
    this.allHashtags =  await this.socialService.fetchAllHashtags();
     console.log(this.socialService.allhashtags);
 
-    if(this.allHashtags.length > 0){
+   if(this.allHashtags.length > 0){
       this.hashtagSuccess = true;
     }else{
       this.hashtagSuccess = false;
     }
 
       this.allHashtags.forEach(hash =>{
-
         if(hash.getName()==this.plattformCookie && hash.getHashtag() ==this.hashCookie){
           this.getHashtag(this.hashCookie, this.plattformCookie);
         }
@@ -79,9 +79,14 @@ export class SocialMediaComponent implements OnInit {
     for (let hashtag of this.allHashtags){
       if(hashtag.getHashtag().toLocaleLowerCase() == name.toLocaleLowerCase() && hashtag.getName().toLocaleLowerCase() == plattform.toLocaleLowerCase()){
         this.count = hashtag.getCounter();
-        this.hashtag = hashtag.getName();
+        this.hashtag = hashtag.getHashtag();
       }
     }
+  }
+
+  deleteChecked(){
+    this.count = "";
+    this.hashtag = "";
   }
 
   //Animation der Komponente
