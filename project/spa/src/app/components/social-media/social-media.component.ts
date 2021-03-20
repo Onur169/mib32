@@ -15,6 +15,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { gsap } from 'gsap';
 import { SocialsService } from 'src/app/services/socials.service';
 import { HashtagClass } from 'src/app/helpers/classes/HashtagClass';
+import { CookieService } from 'src/app/services/cookie.service';
 
 @Component({
   selector: 'app-social-media',
@@ -32,16 +33,20 @@ export class SocialMediaComponent implements OnInit {
   private plattformCookie:string | null=""
   private hashCookie:string | null=""
 
-  constructor(private viewport: ViewportService, private socialService: SocialsService) {
-    this.plattformCookie=localStorage.getItem('plattform');
-    this.hashCookie=localStorage.getItem('socialhash');
+  constructor(private viewport: ViewportService, private socialService: SocialsService, private cookieService: CookieService) {
+
   }
 
   ngOnInit(): void {
-    this.setSocials();
+
+
   }
 
   ngAfterViewInit(){
+
+    this.plattformCookie=localStorage.getItem('plattform');
+    this.hashCookie=localStorage.getItem('socialhash');
+    this.setSocials();
     if(!this.viewport.getIsMobile())this.scrollUp();
   }
 
@@ -66,8 +71,10 @@ export class SocialMediaComponent implements OnInit {
   }
 
   getHashtag(name: string, plattform: string){
+    if(this.cookieService.getCookiesAllowed()){
     localStorage.setItem('plattform', plattform);
     localStorage.setItem('socialhash', name);
+    }
 
     for (let hashtag of this.allHashtags){
       if(hashtag.getHashtag().toLocaleLowerCase() == name.toLocaleLowerCase() && hashtag.getName().toLocaleLowerCase() == plattform.toLocaleLowerCase()){

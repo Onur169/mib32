@@ -9,7 +9,7 @@
  */
  import { gsap } from "gsap";
 
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { interval, Subscription } from 'rxjs';
 import { EventService } from 'src/app/services/event.service';
 import { ViewportService } from "src/app/services/viewport.service";
@@ -20,6 +20,7 @@ import { ViewportService } from "src/app/services/viewport.service";
   styleUrls: ['./timer.component.scss'],
 })
 export class TimerComponent implements OnInit {
+
   private subscription: Subscription;
 
   public dateNow = new Date();
@@ -91,6 +92,15 @@ export class TimerComponent implements OnInit {
       });
     }
     if(!this.viewport.getIsMobile())this.slideEffect();
+  }
+  else{
+    let banner: HTMLElement=document.getElementById("banner")!
+    let box: HTMLElement=document.getElementById("content_box")!
+
+    box.style.opacity= "1";
+
+    banner.style.opacity="1";
+    banner.style.transform="none";
   }
   }
 
