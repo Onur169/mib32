@@ -49,16 +49,14 @@ export class SocialMediaComponent implements OnInit {
    this.allHashtags =  await this.socialService.fetchAllHashtags();
     console.log(this.socialService.allhashtags);
 
-    if(this.allHashtags.length > 0){
+   if(this.allHashtags.length > 0){
       this.hashtagSuccess = true;
     }else{
       this.hashtagSuccess = false;
     }
 
       this.allHashtags.forEach(hash =>{
-        console.log(hash.getName(),this.plattformCookie , hash.getHashtag(),this.hashCookie);
         if(hash.getName()==this.plattformCookie && hash.getHashtag() ==this.hashCookie){
-          console.log(true);
           this.getHashtag(this.hashCookie, this.plattformCookie);
         }
       })
