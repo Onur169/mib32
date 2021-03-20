@@ -71,7 +71,7 @@ export class SocialMediaComponent implements OnInit {
     for (let hashtag of this.allHashtags){
       if(hashtag.getHashtag().toLocaleLowerCase() == name.toLocaleLowerCase() && hashtag.getName().toLocaleLowerCase() == plattform.toLocaleLowerCase()){
         this.count = hashtag.getCounter();
-        this.hashtag = hashtag.getName();
+        this.hashtag = hashtag.getHashtag();
       }
     }
   }
