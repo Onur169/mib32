@@ -1,5 +1,13 @@
 @import "../../../custom-variables";
 
+input {
+  visibility:hidden;
+}
+
+.btn-outline-warning{
+  min-width: 48% !important;
+}
+
 @media (max-width: 768px) {
   .float_box {
       width: 100% !important;

@@ -26,10 +26,9 @@ export class SocialMediaComponent implements OnInit {
 
   count: string = '';
   hashtag: string = '';
-  hashtagSuccess = false;
+  hashtagSuccess = true;
   allHashtags:HashtagClass[] = [];
-  model = 1;
-
+  model:string = "";
   private plattformCookie:string | null=""
   private hashCookie:string | null=""
 
@@ -47,7 +46,6 @@ export class SocialMediaComponent implements OnInit {
     this.plattformCookie=localStorage.getItem('plattform');
     this.hashCookie=localStorage.getItem('socialhash');
     this.setSocials();
-
   }
 
   async setSocials(){
@@ -66,9 +64,16 @@ export class SocialMediaComponent implements OnInit {
         if(hash.getName()==this.plattformCookie && hash.getHashtag() ==this.hashCookie){
           this.getHashtag(this.hashCookie, this.plattformCookie);
         }
-      })
+      });
 
-
+      if(this.plattformCookie && this.hashCookie){
+        for(let hashtag of this.allHashtags){
+          if(hashtag.getHashtag().toLocaleLowerCase() == this.hashCookie.toLocaleLowerCase() && hashtag.getName().toLocaleLowerCase() == this.plattformCookie.toLocaleLowerCase()){
+            this.hashtag = hashtag.getHashtag();
+            this.count = hashtag.getCounter();
+          }
+        }
+      }
   }
 
   getHashtag(name: string, plattform: string){
@@ -81,6 +86,7 @@ export class SocialMediaComponent implements OnInit {
       if(hashtag.getHashtag().toLocaleLowerCase() == name.toLocaleLowerCase() && hashtag.getName().toLocaleLowerCase() == plattform.toLocaleLowerCase()){
         this.count = hashtag.getCounter();
         this.hashtag = hashtag.getHashtag();
+        this.model = hashtag.getName();
       }
     }
   }
