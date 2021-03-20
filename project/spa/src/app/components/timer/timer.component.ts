@@ -64,6 +64,8 @@ export class TimerComponent implements OnInit {
 
     let timer=await this.eventService.getFirstValue();
 
+    if(timer){
+
     this.location=timer.getLocationName();
     let startTime=new Date(timer.getStartDate());
 
@@ -89,6 +91,7 @@ export class TimerComponent implements OnInit {
       });
     }
     if(!this.viewport.getIsMobile())this.slideEffect();
+  }
   }
 
   private getTimeDifference(newdate?: Date) {
