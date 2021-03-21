@@ -105,13 +105,13 @@ try {
         $group->post('/alliances', AllianceController::class . ':add')->add($authMiddleware);
 
         // Social-Media Calls
-        $group->post('/socialmedia', SocialMediaController::class . ':add')->add($authMiddleware);
-        $group->get('/socialmedia', SocialMediaController::class . ':get');
+        $group->post('/socialmedias', SocialMediaController::class . ':add')->add($authMiddleware);
+        $group->get('/socialmedias', SocialMediaController::class . ':get');
 
         // Social-Media-Stat Calls
-        $group->post('/socialmedia/{id}/hashtagstat', SocialMediaController::class . ':addStat')->add($authMiddleware);
-        $group->get('/socialmedia/hashtagstat', SocialMediaController::class . ':getStat');
-        $group->put('/socialmedia/{id}/hashtagstat', SocialMediaController::class . ':editStat')->add($authMiddleware);
+        $group->post('/socialmedias/{id}/hashtagstats', SocialMediaController::class . ':addStat')->add($authMiddleware);
+        $group->get('/socialmedias/hashtagstats', SocialMediaController::class . ':getStat');
+        $group->put('/socialmedias/{id}/hashtagstats', SocialMediaController::class . ':editStat')->add($authMiddleware);
 
     });
 
