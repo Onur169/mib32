@@ -48,9 +48,6 @@ private maxPages: number;
       }
       pageValue+=elementsPerPage;
     }
-
-    console.log("counter",pageCounter);
-
     return paginator;
   }
 
@@ -79,7 +76,6 @@ private maxPages: number;
           newPage.forEach(value =>{
             this.alliances.push(value);
           });
-
 
           resolve(newPage);
         }
@@ -127,11 +123,9 @@ private maxPages: number;
             )
           newAlliancePage.push(new AllianceClass(img,alli.url,alli.name));
         });
-        console.log("alliance",response);
 
         this.maxPages=response.max_pages;
           resolve(newAlliancePage);
-
 
       }catch (error){
         reject(error);

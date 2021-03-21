@@ -37,8 +37,6 @@ export class TestimonialService {
           return resolve(this.testimonialManager.getPageValue(page)!);
         }
 
-
-
         let params= new HttpParams()
         .set('page', this.testimonialManager.getCurrentPage().toString());
 
@@ -73,7 +71,6 @@ export class TestimonialService {
             value.extension,
             newTestimonialImage
           );
-
           newTestimonials.push(newTestimonial);
 
         });

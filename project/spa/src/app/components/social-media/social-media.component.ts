@@ -51,7 +51,6 @@ export class SocialMediaComponent implements OnInit {
   async setSocials(){
 
    this.allHashtags =  await this.socialService.fetchAllHashtags();
-    console.log(this.socialService.allhashtags);
 
    if(this.allHashtags.length > 0){
       this.hashtagSuccess = true;
