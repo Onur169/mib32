@@ -2,10 +2,10 @@
 
 namespace App\Routes;
 
-use App\Classes\Helper;
+use App\Classes\Api;
 use App\Classes\Database;
 use App\Classes\Filter;
-use App\Classes\Api;
+use App\Classes\Helper;
 use App\Classes\Response as ResponseBuilder;
 use DateTime;
 use Psr\Container\ContainerInterface;
@@ -22,6 +22,12 @@ class EventController
     private $helper;
     private $container;
 
+    /**
+     * __construct
+     * @author Onur Sahin <onursahin169@gmail.com>
+     * @param ContainerInterface $container
+     * @return void
+     */
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
@@ -30,6 +36,14 @@ class EventController
         $this->filter = $this->container->get('Filter');
     }
 
+    /**
+     * Get events
+     * @author Onur Sahin <onursahin169@gmail.com>
+     * @param  Request $request
+     * @param  Response $response
+     * @param  array $args
+     * @return Response
+     */
     public function get(Request $request, Response $response, array $args): Response
     {
 
@@ -44,7 +58,7 @@ class EventController
             $usedFilter = $params["filter"] ?? null;
             $filterSql = $this->filter->build("events", $usedFilter);
 
-            $distanceField = isset($lat) && isset($lng) && isset($radiusKm) ? ', ST_Distance_Sphere( point(lng, lat), point('.$lng.', '.$lat.') ) as distance_meters' : '';
+            $distanceField = isset($lat) && isset($lng) && isset($radiusKm) ? ', ST_Distance_Sphere( point(lng, lat), point(' . $lng . ', ' . $lat . ') ) as distance_meters' : '';
             $havingWhere = $distanceField == '' ? '' : 'having distance_meters <= ' . $radiusMeters;
 
             $api = new Api($this->db, $request);
@@ -67,7 +81,7 @@ class EventController
             $result = $api->getWithPaginator($sqlWithoutLimit);
             $list = $result[Database::DATA];
 
-            foreach($list as $listItem) {
+            foreach ($list as $listItem) {
 
                 $description = $listItem->description;
                 $descriptionShortened = $this->helper->shortenText($description);
@@ -82,7 +96,7 @@ class EventController
 
             $jsonResponse = ResponseBuilder::build(ResponseBuilder::ERROR_RESPONSE_KEY, [
                 ResponseBuilder::CODE_RESPONSE_KEY => $th->getCode(),
-                ResponseBuilder::MSG_RESPONSE_KEY => $th->getMessage()
+                ResponseBuilder::MSG_RESPONSE_KEY => $th->getMessage(),
             ]);
 
         } finally {
@@ -95,6 +109,14 @@ class EventController
 
     }
 
+    /**
+     * Add events
+     * @author Onur Sahin <onursahin169@gmail.com>
+     * @param  Request $request
+     * @param  Response $response
+     * @param  array $args
+     * @return Response
+     */
     public function add(Request $request, Response $response, array $args): Response
     {
 
@@ -145,6 +167,14 @@ class EventController
 
     }
 
+    /**
+     * Edit specific event
+     * @author Onur Sahin <onursahin169@gmail.com>
+     * @param  Request $request
+     * @param  Response $response
+     * @param  array $args
+     * @return Response
+     */
     public function edit(Request $request, Response $response, array $args): Response
     {
 
@@ -166,7 +196,7 @@ class EventController
                 "start_at" => $startAt,
                 "end_at" => $endAt,
                 "lat" => $lat,
-                "lng" => $lng
+                "lng" => $lng,
             ];
 
             $updateId = $this->db->update("events", $id, $updateArray);

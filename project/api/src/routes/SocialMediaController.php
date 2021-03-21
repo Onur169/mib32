@@ -20,6 +20,12 @@ class SocialMediaController
     private $helper;
     private $container;
 
+    /**
+     * __construct
+     * @author Onur Sahin <onursahin169@gmail.com>
+     * @param ContainerInterface $container
+     * @return void
+     */
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
@@ -28,6 +34,14 @@ class SocialMediaController
         $this->filter = $this->container->get('Filter');
     }
 
+    /**
+     * Get social media types
+     * @author Onur Sahin <onursahin169@gmail.com>
+     * @param  Request $request
+     * @param  Response $response
+     * @param  array $args
+     * @return Response
+     */
     public function get(Request $request, Response $response, array $args): Response
     {
 
@@ -77,6 +91,14 @@ class SocialMediaController
 
     }
 
+    /**
+     * Add social media types
+     * @author Onur Sahin <onursahin169@gmail.com>
+     * @param  Request $request
+     * @param  Response $response
+     * @param  array $args
+     * @return Response
+     */
     public function add(Request $request, Response $response, array $args): Response
     {
 
@@ -115,6 +137,14 @@ class SocialMediaController
 
     }
 
+    /**
+     * Get social media hashtag stats by social media type
+     * @author Onur Sahin <onursahin169@gmail.com>
+     * @param  Request $request
+     * @param  Response $response
+     * @param  array $args
+     * @return Response
+     */
     public function getStat(Request $request, Response $response, array $args): Response
     {
 
@@ -164,7 +194,14 @@ class SocialMediaController
 
     }
 
-
+    /**
+     * Add social media hashtag stats by social media type
+     * @author Onur Sahin <onursahin169@gmail.com>
+     * @param  Request $request
+     * @param  Response $response
+     * @param  array $args
+     * @return Response
+     */
     public function addStat(Request $request, Response $response, array $args): Response
     {
 
@@ -204,6 +241,14 @@ class SocialMediaController
 
     }
 
+    /**
+     * Edit social media hashtag stats by social media type
+     * @author Onur Sahin <onursahin169@gmail.com>
+     * @param  Request $request
+     * @param  Response $response
+     * @param  array $args
+     * @return Response
+     */
     public function editStat(Request $request, Response $response, array $args): Response
     {
 

@@ -3,11 +3,8 @@
 namespace App\Routes;
 
 use App\Classes\Helper;
-use App\Classes\Database;
-use App\Classes\Api;
 use App\Classes\Response as ResponseBuilder;
 use App\Exception\ToolException;
-use DateTime;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -21,6 +18,12 @@ class Utf8izeController
     private $container;
     private $config;
 
+    /**
+     * __construct
+     * @author Onur Sahin <onursahin169@gmail.com>
+     * @param ContainerInterface $container
+     * @return void
+     */
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
@@ -30,6 +33,14 @@ class Utf8izeController
         $this->config = $this->container->get('Config');
     }
 
+    /**
+     * Convert all tables, columns and the dabase itself into utf8 and get the report 
+     * @author Onur Sahin <onursahin169@gmail.com>
+     * @param  Request $request
+     * @param  Response $response
+     * @param  array $args
+     * @return Response
+     */
     public function get(Request $request, Response $response, array $args): Response
     {
 
@@ -45,24 +56,24 @@ class Utf8izeController
                 throw new ToolException(ToolException::COULD_NOT_RUN_TOOL);
 
             }
-    
+
             if ($this->db->getHandle()->connect_error) {
-    
+
                 throw new ToolException(ToolException::COULD_NOT_RUN_TOOL);
-    
+
             } else {
-    
+
                 $utf8mb4DatabaseRes = mysqli_query($this->db->getHandle(), "ALTER DATABASE " . $mainConfig["db"]["database"] . " CHARACTER SET " . $mainConfig["db"]["charset"]["set"]);
                 if ($utf8mb4DatabaseRes) {
                     $report[] = "DB: " . $mainConfig["db"]["database"] . " erfolgreich auf " . $mainConfig["db"]["charset"]["set"] . " gesetzt";
                 } else {
                     $report[] = "DB: " . $mainConfig["db"]["database"] . " nicht auf " . $mainConfig["db"]["charset"]["set"] . " gesetzt";
                 }
-    
+
                 $currentTable = null;
                 $showTableRes = mysqli_query($this->db->getHandle(), "SHOW TABLES");
                 while ($showTableRow = mysqli_fetch_array($showTableRes)) {
-    
+
                     $currentTable = $showTableRow[0];
                     $utf8mb4TableRes = mysqli_query($this->db->getHandle(), "ALTER TABLE " . $currentTable . " DEFAULT CHARACTER SET " . $mainConfig["db"]["charset"]["set"] . " COLLATE " . $mainConfig["db"]["charset"]["collation"]);
 
@@ -71,23 +82,23 @@ class Utf8izeController
                     } else {
                         $report[] = "Tabelle: " . $currentTable . " nicht auf " . $mainConfig["db"]["charset"]["set"] . " gesetzt";
                     }
-    
+
                     $showColumnsRes = mysqli_query($this->db->getHandle(), "SHOW COLUMNS FROM " . $currentTable);
                     while ($showColumnsRow = mysqli_fetch_array($showColumnsRes)) {
-    
+
                         $currentColumn = $showColumnsRow[0];
                         $utf8mb4ColumnRes = mysqli_query($this->db->getHandle(), "ALTER TABLE " . $currentTable . " MODIFY " . $currentColumn . " " . $showColumnsRow[1] . " CHARACTER SET " . $mainConfig["db"]["charset"]["set"]);
-    
+
                         if ($utf8mb4ColumnRes) {
                             $report[] = "Spalte: " . $currentColumn . " erfolgreich auf " . $mainConfig["db"]["charset"]["set"] . " gesetzt";
                         } else {
                             $report[] = "Spalte: " . $currentColumn . " nicht auf " . $mainConfig["db"]["charset"]["set"] . " gesetzt";
                         }
-    
+
                     }
-    
+
                 }
-    
+
             }
 
             $jsonResponse = ResponseBuilder::build(ResponseBuilder::SUCCESS_RESPONSE_VAL, $report);
@@ -96,7 +107,7 @@ class Utf8izeController
 
             $jsonResponse = ResponseBuilder::build(ResponseBuilder::ERROR_RESPONSE_KEY, [
                 ResponseBuilder::CODE_RESPONSE_KEY => $th->getCode(),
-                ResponseBuilder::MSG_RESPONSE_KEY => $th->getMessage()
+                ResponseBuilder::MSG_RESPONSE_KEY => $th->getMessage(),
             ]);
 
         } finally {
