@@ -50,13 +50,21 @@ export class TestimonialService {
 
         let response= await this.api.fetch(Url, params);
 
+        let filler="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/240px-No_image_available.svg.png"
+
         let newTestimonials: TestimonialClass[]=[];
 
         (response.data as Testimonial[]).forEach((value: Testimonial) => {
+          let small=value.images.small;
+          let medium=value.images.medium;
+          let large=value.images.large;
+          if(!small)small=filler;
+          if(!medium)medium=filler;
+          if(!large)large=filler;
           let newTestimonialImage=new TestimonialsImageClass(
-            this.sani.bypassSecurityTrustUrl(value.images.small),
-            this.sani.bypassSecurityTrustUrl(value.images.medium),
-            this.sani.bypassSecurityTrustUrl(value.images.large));
+            this.sani.bypassSecurityTrustUrl(small),
+            this.sani.bypassSecurityTrustUrl(medium),
+            this.sani.bypassSecurityTrustUrl(large));
           let newTestimonial=new TestimonialClass(
             value.id,
             value.headline,

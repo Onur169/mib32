@@ -70,7 +70,6 @@ export class TestimonialsComponent implements OnInit {
     if (manager.getPageValue(manager.getCurrentPage())) {
       await this.iterateTestimonials();
     }
-    console.log("testis",manager.getAllValues());
   }
 
   async iterateTestimonials() {
@@ -86,6 +85,7 @@ export class TestimonialsComponent implements OnInit {
   }
 
   setTestimonialsSet(elements: number) {
+
     this.chosenTestimonials=[];
     this.urls=[];
     let length=this.allTestimonials.length
@@ -95,13 +95,14 @@ export class TestimonialsComponent implements OnInit {
       this.chosenTestimonials.push(this.allTestimonials[i]);
 
     if (this.scrWidth < 576 && this.scrWidth < 768) {
-      this.urls.push( this.chosenTestimonials[i].getImages().getSmall());
+      if(this.chosenTestimonials[i].getImages().getSmall())this.urls.push( this.chosenTestimonials[i].getImages().getSmall());
     } else if (this.scrWidth >=768 && this.scrWidth < 992) {
-      this.urls.push( this.chosenTestimonials[i].getImages().getMedium());
+      if(this.chosenTestimonials[i].getImages().getMedium())this.urls.push( this.chosenTestimonials[i].getImages().getMedium());
     } else{
-      this.urls.push( this.chosenTestimonials[i].getImages().getLarge());
+      if(this.chosenTestimonials[i].getImages().getLarge())this.urls.push( this.chosenTestimonials[i].getImages().getLarge());
     }
   }
+
   }
 
   getScreenSize() {
