@@ -68,7 +68,7 @@ class AllianceController
 
                 $mediaToken = $listItem->token;
                 $filePath = $this->upload->getRecursiveDirectoryAbsolutePathByToken($mediaToken) . "/original." . $listItem->extension;
-                $images = $this->imageManipulator->getImagesByToken(ImageManipulator::COVER_IMAGE, $filePath, $mediaToken);
+                $images = $this->imageManipulator->getImagesByToken(ImageManipulator::ALLIANCES_IMAGE, $filePath, $mediaToken);
 
                 $listItem->images = $images;
             }

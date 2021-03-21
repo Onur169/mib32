@@ -166,7 +166,7 @@ class ImageManipulator
 
             $this->iterateAllBreakpoints(function($currentBreakpoint) use ($type, $token, $filePath, &$images) {
                 
-                $file = $this->getBreakpointFileName($type, $filePath, $currentBreakpoint);
+                $file = $this->getBreakpointFileName($filePath, $currentBreakpoint);
                 $file = file_exists($file) ? $file : null;
 
                 if(!empty($file)) {
