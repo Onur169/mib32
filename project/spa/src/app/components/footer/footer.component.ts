@@ -41,6 +41,8 @@ export class FooterComponent {
     }, (reason) => {
       let closeResult = `Dismissed ${this.getDismissReason(reason)}`;
       localStorage.removeItem("klimacookiesallowed");
+      localStorage.removeItem('plattform');
+      localStorage.removeItem('socialhash');
       this.cookieService.dontAllowCookies();
       console.log(closeResult);
     });
