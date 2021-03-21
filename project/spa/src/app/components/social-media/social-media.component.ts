@@ -145,28 +145,18 @@ export class SocialMediaComponent implements OnInit {
           opacity:0
         });
 
-        var t7=gsap.from("#count_bg",{
-          scrollTrigger: {
-            trigger:"#count_bg",
-            start:"top 90%",
-            end:"center 60%",
-            scrub: true,
-            markers: false,
-            toggleActions:"restart pause reverse pause" //wenn sichtbar, wenn nicht sichtbar, wenn wieder zurück
-          },
-          opacity:0
-        });
 
         var t8=gsap.from("#count_box",{
           scrollTrigger: {
             trigger:"#count_box",
-            start:"top 75%",
-                end:"top 50%",
+            start:"top 90%",
+                end:"top 60%",
                 scrub: true,
                 markers: false,
                 toggleActions:"restart pause reverse pause" //wenn sichtbar, wenn nicht sichtbar, wenn wieder zurück
               },
-              x: 50
+              y: -100,
+              opacity:0
             });
       }
 
