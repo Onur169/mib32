@@ -16,13 +16,13 @@ class DatabaseException extends Exception
     public function __construct($code = -1, Exception $previous = null)
     {
 
-        parent::__construct($this->getErrorMessage($code), $code, $previous);
-
         $this->errorMessages = [
             self::INSERT_WAS_NOT_SUCCESSFUL => "Insert was not successful",
             self::SELECT_WAS_NOT_SUCCESSFUL => "Select was not successful",
             self::UPDATE_WAS_NOT_SUCCESSFUL => "Update was not successful",
         ];
+
+        parent::__construct($this->getErrorMessage($code), $code, $previous);
 
     }
 

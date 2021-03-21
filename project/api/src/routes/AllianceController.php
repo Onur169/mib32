@@ -30,7 +30,7 @@ class AllianceController
         $this->helper = new Helper();
         $this->db = $this->container->get('Database');
         $this->filter = $this->container->get('Filter');
-        $this->upload = new Upload($this->db);
+        $this->upload = new Upload($this->db, ImageManipulator::ALLIANCES_IMAGE);
         $this->imageManipulator = new ImageManipulator();
     }
 
@@ -68,7 +68,7 @@ class AllianceController
 
                 $mediaToken = $listItem->token;
                 $filePath = $this->upload->getRecursiveDirectoryAbsolutePathByToken($mediaToken) . "/original." . $listItem->extension;
-                $images = $this->imageManipulator->getImagesByToken(ImageManipulator::COVER_IMAGE, $filePath, $mediaToken);
+                $images = $this->imageManipulator->getImagesByToken(ImageManipulator::ALLIANCES_IMAGE, $filePath, $mediaToken);
 
                 $listItem->images = $images;
             }

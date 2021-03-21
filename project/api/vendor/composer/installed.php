@@ -20,6 +20,15 @@
       ),
       'reference' => NULL,
     ),
+    'fig/http-message-util' => 
+    array (
+      'pretty_version' => '1.1.5',
+      'version' => '1.1.5.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '9d94dc0154230ac39e5bf89398b324a86f63f765',
+    ),
     'guzzlehttp/psr7' => 
     array (
       'pretty_version' => '1.7.0',
@@ -231,6 +240,15 @@
       ),
       'reference' => '120b605dfeb996808c31b6477290a714d356e822',
     ),
+    'slim/psr7' => 
+    array (
+      'pretty_version' => '1.3.0',
+      'version' => '1.3.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '235d2e5a5ee1ad4b97b96870f37f3091b22fffd7',
+    ),
     'slim/slim' => 
     array (
       'pretty_version' => '4.7.1',
@@ -239,6 +257,15 @@
       array (
       ),
       'reference' => '0905e0775f8c1cfb3bbcfabeb6588dcfd8b82d3f',
+    ),
+    'symfony/polyfill-php80' => 
+    array (
+      'pretty_version' => 'v1.22.1',
+      'version' => '1.22.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'dc3063ba22c2a1fd2f45ed856374d79114998f91',
     ),
     'zendframework/zend-diactoros' => 
     array (

@@ -24,6 +24,7 @@ use App\Classes\Database;
 use App\Classes\Helper;
 use App\Classes\Filter;
 use App\Middleware\CorsMiddleware;
+use App\Middleware\AuthMiddleware;
 use App\Routes\EventController;
 use App\Routes\ThrowbackController;
 use App\Routes\TestimonialController;
@@ -77,45 +78,48 @@ try {
     // Set Basepath
     $app->setBasePath($basePath);
 
-    // Middleware
+    // Global Middleware
     $app->add(new CorsMiddleware());
 
+    // Middleware
+    $authMiddleware = new AuthMiddleware();
+
     // Routen definieren
-    $app->group('climatestrike', function (RouteCollectorProxy $group) {
+    $app->group('climatestrike', function (RouteCollectorProxy $group) use ($authMiddleware) {
 
         // Event Calls
         $group->get('/events', EventController::class . ':get');
-        $group->post('/events', EventController::class . ':add');
-        $group->put('/events/{id}', EventController::class . ':edit');
+        $group->post('/events', EventController::class . ':add')->add($authMiddleware);
+        $group->put('/events/{id}', EventController::class . ':edit')->add($authMiddleware);
 
         // Throwback Calls
         $group->get('/throwbacks', ThrowbackController::class . ':get');
-        $group->put('/throwbacks/{id}', ThrowbackController::class . ':edit');
+        $group->put('/throwbacks/{id}', ThrowbackController::class . ':edit')->add($authMiddleware);
 
         // Testimonal Calls
         $group->get('/testimonials', TestimonialController::class . ':get');
-        $group->post('/testimonials', TestimonialController::class . ':add');
+        $group->post('/testimonials', TestimonialController::class . ':add')->add($authMiddleware);
 
         // Alliance Calls
         $group->get('/alliances', AllianceController::class . ':get');
-        $group->post('/alliances', AllianceController::class . ':add');
+        $group->post('/alliances', AllianceController::class . ':add')->add($authMiddleware);
 
         // Social-Media Calls
-        $group->post('/socialmedia', SocialMediaController::class . ':add');
+        $group->post('/socialmedia', SocialMediaController::class . ':add')->add($authMiddleware);
         $group->get('/socialmedia', SocialMediaController::class . ':get');
 
         // Social-Media-Stat Calls
-        $group->post('/socialmedia/{id}/hashtagstat', SocialMediaController::class . ':addStat');
+        $group->post('/socialmedia/{id}/hashtagstat', SocialMediaController::class . ':addStat')->add($authMiddleware);
         $group->get('/socialmedia/hashtagstat', SocialMediaController::class . ':getStat');
-        $group->put('/socialmedia/{id}/hashtagstat', SocialMediaController::class . ':editStat');
+        $group->put('/socialmedia/{id}/hashtagstat', SocialMediaController::class . ':editStat')->add($authMiddleware);
 
     });
 
     // Routen definieren
-    $app->group('tools', function (RouteCollectorProxy $group) {
+    $app->group('tools', function (RouteCollectorProxy $group) use ($authMiddleware) {
 
-        // Event Calls
-        $group->get('/utf8ize', Utf8izeController::class . ':get');
+        // Tool Calls
+        $group->get('/utf8ize', Utf8izeController::class . ':get')->add($authMiddleware);
 
     });
 

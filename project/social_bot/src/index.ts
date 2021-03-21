@@ -124,9 +124,19 @@ import Log from './Log';
                 let list = await api.fetch(`socialmedia/${selectedId}/hashtagstat?counter=${count}`, Response.PUT);
 
                 if(list.ack == Response.AckSuccess) {
+
                     log.successLog(`Der Hashtagcount von ${count} wurde durch die API geupdated!`);
+
                 } else {
+
                     log.errorLog(`Der Hashtagcount von ${count} wurde NICHT durch die API geupdated!`);
+
+                    let errorMsg = list.data["msg"].toLocaleLowerCase();
+
+                    if(errorMsg.includes("auth")) {
+                        log.errorLog(`Hinweiß: Api-Token ist nicht gültig!`);
+                    }
+
                 }
     
             } else {
@@ -136,9 +146,20 @@ import Log from './Log';
                 let list = await api.fetch(`socialmedia/${selectedId}/hashtagstat?counter=${count}`, Response.PUT);
                 
                 if(list.ack == Response.AckSuccess) {
+
                     log.successLog(`Der Hashtagcount von ${count} wurde durch die API geupdated!`);
+
                 } else {
+
                     log.errorLog(`Der Hashtagcount von ${count} wurde NICHT durch die API geupdated!`);
+
+                    let errorMsg = list.data["msg"].toLocaleLowerCase();
+                    console.log(errorMsg);
+
+                    if(errorMsg.includes("auth")) {
+                        log.errorLog(`Hinweiß: Api-Token ist nicht gültig!`);
+                    }
+
                 }
     
             }

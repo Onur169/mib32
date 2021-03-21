@@ -10,16 +10,24 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const fetch = require('node-fetch');
+const { Headers } = require('node-fetch');
 class Api {
     constructor() {
         this.apiUrl = 'https://api.judoclub-rockenberg.de/climatestrike';
+        this.xAuthToken = 'f6593626f871c3a479106ba4c770d41d42eee68e';
     }
     fetch(endpoint, method) {
         return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
             let response = null;
             try {
+                let meta = {
+                    'Content-Type': 'application/json',
+                    'X-Auth-Token': this.xAuthToken
+                };
+                let headers = new Headers(meta);
                 response = yield fetch(`${this.apiUrl}/${endpoint}`, {
-                    method
+                    method,
+                    headers
                 }).then(response => response.json());
                 resolve(response);
             }
