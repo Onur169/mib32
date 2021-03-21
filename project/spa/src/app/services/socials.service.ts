@@ -44,7 +44,7 @@ export class SocialsService {
           params=params.set('page', this.startpage.toString());
         }
 
-        const Url='socialmedia/hashtagstat';
+        const Url='socialmedias/hashtagstats';
 
         let response= await this.api.fetch(Url, params);
 
