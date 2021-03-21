@@ -287,6 +287,8 @@ if(!(marker.length>0)){
           this.day = 'am ' + marker[j].getStartDate();
           document.getElementById('next_demo_box')!.style.opacity="1";
           document.getElementById('next_demo_box')!.style.position="relative";
+          ScrollTrigger.refresh(true);
+
         }
       })
         }
