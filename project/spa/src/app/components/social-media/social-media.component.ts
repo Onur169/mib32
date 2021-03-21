@@ -25,6 +25,8 @@ import { CookieService } from 'src/app/services/cookie.service';
 export class SocialMediaComponent implements OnInit {
 
   count: string = '';
+  hashtagInstagram: string = '';
+  hashtagFacebook: string = '';
   hashtag: string = '';
   hashtagSuccess = true;
   allHashtags:HashtagClass[] = [];
@@ -37,8 +39,6 @@ export class SocialMediaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-
   }
 
   ngAfterViewInit(){
@@ -51,15 +51,11 @@ export class SocialMediaComponent implements OnInit {
   async setSocials(){
 
    this.allHashtags =  await this.socialService.fetchAllHashtags();
-    console.log(this.socialService.allhashtags);
 
    if(this.allHashtags.length > 0){
       this.hashtagSuccess = true;
       if(!this.viewport.getIsMobile())this.scrollUp();
-    }else{
-      this.hashtagSuccess = false;
-    }
-
+    
       this.allHashtags.forEach(hash =>{
         if(hash.getName()==this.plattformCookie && hash.getHashtag() ==this.hashCookie){
           this.getHashtag(this.hashCookie, this.plattformCookie);
@@ -73,7 +69,28 @@ export class SocialMediaComponent implements OnInit {
             this.count = hashtag.getCounter();
           }
         }
+      }else{
+        for(let hashtag of this.allHashtags ){
+          if(hashtag.getName().toLocaleLowerCase() === "instagram".toLocaleLowerCase() && hashtag.getHashtag().toLocaleLowerCase() === "klima".toLocaleLowerCase()){
+            this.hashtag = hashtag.getHashtag();
+            this.count = hashtag.getCounter();
+            this.model = "instagram";
+          }
+        }
       }
+
+      for(let hashtag of this.allHashtags ){
+        if(hashtag.getName().toLocaleLowerCase() === "instagram".toLocaleLowerCase()){
+          this.hashtagInstagram = hashtag.getHashtag();
+        }else{
+          this.hashtagFacebook = hashtag.getHashtag(); 
+        }
+      }  
+
+      }else{
+        this.hashtagSuccess = false;
+      }
+  
   }
 
   getHashtag(name: string, plattform: string){
