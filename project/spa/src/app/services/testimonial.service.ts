@@ -50,10 +50,9 @@ export class TestimonialService {
 
         let response= await this.api.fetch(Url, params);
 
-        let newThrowbacks: TestimonialClass[]=[];
+        let newTestimonials: TestimonialClass[]=[];
 
         (response.data as Testimonial[]).forEach((value: Testimonial) => {
-          if(value.images.small ||  value.images.medium|| value.images.large){
           let newTestimonialImage=new TestimonialsImageClass(
             this.sani.bypassSecurityTrustUrl(value.images.small),
             this.sani.bypassSecurityTrustUrl(value.images.medium),
@@ -67,13 +66,12 @@ export class TestimonialService {
             newTestimonialImage
           );
 
-          newThrowbacks.push(newTestimonial);
-        }
+          newTestimonials.push(newTestimonial);
+
         });
-        this.testimonialManager.setnewPage(response.current_page, response.max_pages,newThrowbacks);
+        this.testimonialManager.setnewPage(response.current_page, response.max_pages,newTestimonials);
 
-
-        resolve(newThrowbacks);
+        resolve(newTestimonials);
 
       }catch (error){
         reject(error)
