@@ -19,11 +19,13 @@ class Upload
 
     private $imageManipulator;
     private $db;
+    private $processType;
 
-    public function __construct(Database $db)
+    public function __construct(Database $db, $processType)
     {
         $this->imageManipulator = new ImageManipulator();
         $this->db = $db;
+        $this->processType = $processType;
     }
 
     public function getRecursiveDirectoryAbsolutePathByToken($mediaToken)
@@ -75,11 +77,7 @@ class Upload
                 $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
                 $uploadFilePath = $uploadDirPath . "/" . $filename;
 
-                $this->imageManipulator->iterateAllBreakpoints(function ($currentBreakpoint) use ($uploadFilePath) {
-
-                    $this->imageManipulator->createImage(ImageManipulator::COVER_IMAGE, $uploadFilePath, $uploadFilePath, $currentBreakpoint);
-
-                });
+                $this->imageManipulator->createImage($this->processType, $uploadFilePath, $uploadFilePath);
 
                 $mediaInsertId = $this->db->insert("medias",
                     ["id", "token", "extension", "created_at"],

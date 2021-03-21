@@ -30,7 +30,7 @@ class AllianceController
         $this->helper = new Helper();
         $this->db = $this->container->get('Database');
         $this->filter = $this->container->get('Filter');
-        $this->upload = new Upload($this->db);
+        $this->upload = new Upload($this->db, ImageManipulator::ALLIANCES_IMAGE);
         $this->imageManipulator = new ImageManipulator();
     }
 
