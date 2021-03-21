@@ -141,9 +141,6 @@ class ImageManipulator
     public function createImage($type, $sourcePath, $destinationPath)
     {
 
-        // TODO
-        // Fehlerhandling einbauen
-
         //$image->setImageCompressionQuality(self::BEST_QUALITY);
 
         if ($type == self::TESTIMONIALS_IMAGE) {
