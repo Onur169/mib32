@@ -37,8 +37,6 @@ export class TestimonialService {
           return resolve(this.testimonialManager.getPageValue(page)!);
         }
 
-
-
         let params= new HttpParams()
         .set('page', this.testimonialManager.getCurrentPage().toString());
 
@@ -50,14 +48,21 @@ export class TestimonialService {
 
         let response= await this.api.fetch(Url, params);
 
-        let newThrowbacks: TestimonialClass[]=[];
+        let filler="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/240px-No_image_available.svg.png"
+
+        let newTestimonials: TestimonialClass[]=[];
 
         (response.data as Testimonial[]).forEach((value: Testimonial) => {
-          if(value.images.small ||  value.images.medium|| value.images.large){
+          let small=value.images.small;
+          let medium=value.images.medium;
+          let large=value.images.large;
+          if(!small)small=filler;
+          if(!medium)medium=filler;
+          if(!large)large=filler;
           let newTestimonialImage=new TestimonialsImageClass(
-            this.sani.bypassSecurityTrustUrl(value.images.small),
-            this.sani.bypassSecurityTrustUrl(value.images.medium),
-            this.sani.bypassSecurityTrustUrl(value.images.large));
+            this.sani.bypassSecurityTrustUrl(small),
+            this.sani.bypassSecurityTrustUrl(medium),
+            this.sani.bypassSecurityTrustUrl(large));
           let newTestimonial=new TestimonialClass(
             value.id,
             value.headline,
@@ -66,14 +71,12 @@ export class TestimonialService {
             value.extension,
             newTestimonialImage
           );
+          newTestimonials.push(newTestimonial);
 
-          newThrowbacks.push(newTestimonial);
-        }
         });
-        this.testimonialManager.setnewPage(response.current_page, response.max_pages,newThrowbacks);
+        this.testimonialManager.setnewPage(response.current_page, response.max_pages,newTestimonials);
 
-
-        resolve(newThrowbacks);
+        resolve(newTestimonials);
 
       }catch (error){
         reject(error)

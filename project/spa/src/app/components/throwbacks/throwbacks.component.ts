@@ -23,7 +23,6 @@ import {NgbModal, ModalDismissReasons, NgbModalOptions} from '@ng-bootstrap/ng-b
   styleUrls: ['./throwbacks.component.scss'],
 })
 export class ThrowbacksComponent implements OnInit {
-  title = 'ng-bootstrap-modal-demo';
   closeResult: string='';
   modalOptions:NgbModalOptions;
 
@@ -99,19 +98,18 @@ export class ThrowbacksComponent implements OnInit {
       }else{
         this.hasThrowback = false;
       }
-  
+
       for( let throwback of this.throwbacks){
         if(throwback.getsocialMediaVideoUrl()){
           this.videoSuccess.push(true);
         }else{
           this.videoSuccess.push(false);
         }
-        } 
-        console.log(this.throwbacks);
+        }
     }else{
       this.hasThrowback =false;
     }
-  
+
 
   }
 

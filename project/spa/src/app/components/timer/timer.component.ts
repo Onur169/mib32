@@ -78,7 +78,6 @@ export class TimerComponent implements OnInit {
         this.dateNow.getTime() >
         0
     ) {
-      this.hasNewEvent = true;
 
       this.subscription = interval(1000).subscribe((x) => {
         this.getTimeDifference(startTime);
@@ -90,6 +89,7 @@ export class TimerComponent implements OnInit {
         day: 'numeric',
         hour: 'numeric'
       });
+      this.hasNewEvent = true;
     }
     if(!this.viewport.getIsMobile())this.slideEffect();
   }

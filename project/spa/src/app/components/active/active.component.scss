@@ -7,7 +7,6 @@ background-position: right;
 background-position: 0 40%;
 min-height: 400px;
 object-fit: cover;
-background-size: 100%;
 }
 
 #box{
@@ -29,3 +28,6 @@ background-size: 100%;
 .rounded-circle:hover,.rounded-circle:active, .rounded-circle:focus{
   background-color: $info !important;
 }
+
+
+

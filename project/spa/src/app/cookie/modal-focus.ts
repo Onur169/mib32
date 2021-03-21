@@ -66,8 +66,6 @@ const MODALS: {[name: string]: Type<any>} = {
 })
 export class NgbdModalFocus {
 
-  private modalReference!: NgbModalRef;
-
   withAutofocus = `<button type="button" ngbAutofocus class="btn btn-danger"
       (click)="modal.close('Ok click')">Ok</button>`;
 
@@ -95,6 +93,8 @@ export class NgbdModalFocus {
     }, (reason) => {
       let closeResult = `Dismissed ${this.getDismissReason(reason)}`;
       localStorage.removeItem("klimacookiesallowed");
+      localStorage.removeItem('plattform');
+      localStorage.removeItem('socialhash');
       this.cookieService.dontAllowCookies();
       console.log(closeResult);
     });

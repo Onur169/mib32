@@ -8,7 +8,7 @@
  *
  */
 
- export interface SocialHastag {
+ export interface SocialHashtag {
    id: string;
    hashtag: string;
    counter: string;
