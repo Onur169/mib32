@@ -86,7 +86,7 @@ export class AllianceComponent implements OnInit {
     //kleiner als der xs Breakpoint
     if(srcWidth < 576){
       this.manyEntress=1;
-    }else if(srcWidth >=576 && srcWidth < 768){
+    }else if(srcWidth >=576 && srcWidth < 1024){
       this.manyEntress=2;
     }else{
       this.manyEntress=3;

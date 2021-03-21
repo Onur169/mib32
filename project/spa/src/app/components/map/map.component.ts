@@ -56,7 +56,8 @@ export class MapComponent implements OnInit {
   searchedLocationValue:string='';
 
   mapSuccess= false;
-  markerChecked = false;
+  mapSliderValue: number=0;
+  sliderChanged=false;
 
   private clusters: VectorLayer=new VectorLayer();
   private overlay: Overlay=new Overlay({
@@ -71,17 +72,17 @@ export class MapComponent implements OnInit {
   //die Map wird mit personalisiertem Standort befüllt
   //personalisierte Marker werden gesetzt
   ngOnInit(): void {
-    this.buildMap();
+
   }
 
   ngAfterViewInit(){
-
+    this.buildMap();
   }
 
   async buildMap(){
     await this.initMap(10);
     await this.renderMap(50);
-
+    if(!this.viewport.getIsMobile())this.scrollUp();
   }
 
   //die Map wird mit dem Standort des Nutzers gefüllt
@@ -111,7 +112,7 @@ export class MapComponent implements OnInit {
       }),
       interactions: defaultInteractions().extend([new DragRotateAndZoom()]),
     });
-
+    this.mapSuccess=true;
     resolve();
   }catch(error){
     reject(error);
@@ -140,7 +141,7 @@ async renderMap(radius: number){
   this.markers = allmarkers;
 
   this.markerCluster(allmarkers);
-  if(!this.viewport.getIsMobile())this.scrollUp();
+
 }
 
   //Marker richten sich nach dem Map-Zoom und die Marker werden zusammengefasst angezeigt
@@ -174,7 +175,7 @@ if(!(marker.length>0)){
       mapScreen.removeLayer(this.clusters);
     }
     else{
-      this.mapSuccess=true;
+
     let features: Feature<Geometry>[] = [];
 
     //Zugriff auf HTML-Elemente, damit die Map mit den Elementen arbeiten kann
@@ -284,7 +285,8 @@ if(!(marker.length>0)){
 
           this.place = 'in ' + marker[j].getLocationName();
           this.day = 'am ' + marker[j].getStartDate();
-          this.markerChecked = true;
+          document.getElementById('next_demo_box')!.style.opacity="1";
+          document.getElementById('next_demo_box')!.style.position="relative";
         }
       })
         }
@@ -318,6 +320,12 @@ if(this.searchedLocationValue){
 deleteValue(){
   this.searchedLocationValue ='';
   this.error = '';
+}
+
+getSliderValue(value: number){
+  this.mapSliderValue = value;
+  this.renderMap(value);
+  this.sliderChanged = true;
 }
 
   ////////////////////GSAP///////////////////

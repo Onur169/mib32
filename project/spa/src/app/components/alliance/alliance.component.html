@@ -10,7 +10,7 @@
     <ng-template *ngFor="let page of alliances | keyvalue" ngbSlide>
       <div class="d-flex justify-content-center flex-wrap">
         <ng-container *ngFor="let icon of page.value ; let i= index">
-          <a class="m-1 m-md-4" href="{{ icon.getPath() }}">
+          <a class="m-2 m-md-4" href="{{ icon.getPath() }}">
             <img
               class="border border-primary alliance_image"
               [src]="urls[page.key*manyEntress+i]"
