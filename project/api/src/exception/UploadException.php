@@ -15,12 +15,12 @@ class UploadException extends Exception
     public function __construct($code = -1, Exception $previous = null)
     {
 
-        parent::__construct($this->getErrorMessage($code), $code, $previous);
-
         $this->errorMessages = [
             self::UPLOAD_DIR_COULD_NOT_BE_PREPARED => "Upload directory could not be prepared",
             self::UPLOAD_WAS_NOT_SUCCESSFUL => "Upload was not successful",
         ];
+
+        parent::__construct($this->getErrorMessage($code), $code, $previous);
 
     }
 

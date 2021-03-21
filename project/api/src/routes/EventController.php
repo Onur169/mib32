@@ -62,8 +62,6 @@ class EventController
                 null
             );
 
-            //var_dump($sqlWithoutLimit);exit;
-
             $maxPages = $api->getMaxPages($sqlWithoutLimit);
 
             $result = $api->getWithPaginator($sqlWithoutLimit);
@@ -77,7 +75,6 @@ class EventController
                 $listItem->description_shortened = $descriptionShortened;
 
             }
-
 
             $jsonResponse = ResponseBuilder::build(ResponseBuilder::SUCCESS_RESPONSE_VAL, $list, $prevPageUrl, $nextPageUrl, $maxPages);
 

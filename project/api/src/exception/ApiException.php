@@ -4,10 +4,11 @@ namespace App\Exception;
 
 use Exception;
 
-class ToolException extends Exception
+class ApiException extends Exception
 {
 
-    const COULD_NOT_RUN_TOOL = 0;
+    const AUTH_TOKEN_IS_NOT_SET = 0;
+    const AUTH_TOKEN_IS_NOT_VALID = 1;
 
     private $errorMessages;
 
@@ -15,7 +16,8 @@ class ToolException extends Exception
     {
 
         $this->errorMessages = [
-            self::COULD_NOT_RUN_TOOL => "Could not run tool",
+            self::AUTH_TOKEN_IS_NOT_SET => "Auth token is not set",
+            self::AUTH_TOKEN_IS_NOT_VALID => "Auth token is not valid",
         ];
 
         parent::__construct($this->getErrorMessage($code), $code, $previous);
@@ -31,4 +33,5 @@ class ToolException extends Exception
     {
         return $this->errorMessages[$code];
     }
+
 }
