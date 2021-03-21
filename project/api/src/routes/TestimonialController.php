@@ -9,7 +9,6 @@ use App\Classes\Helper;
 use App\Classes\ImageManipulator;
 use App\Classes\Response as ResponseBuilder;
 use App\Classes\Upload;
-use App\Exception\UploadException;
 use DateTime;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -24,6 +23,12 @@ class TestimonialController
     private $container;
     private $imageManipulator;
 
+    /**
+     * __construct
+     * @author Onur Sahin <onursahin169@gmail.com>
+     * @param ContainerInterface $container
+     * @return void
+     */
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
@@ -34,6 +39,14 @@ class TestimonialController
         $this->imageManipulator = new ImageManipulator();
     }
 
+    /**
+     * Get testimonials
+     * @author Onur Sahin <onursahin169@gmail.com>
+     * @param  Request $request
+     * @param  Response $response
+     * @param  array $args
+     * @return Response
+     */
     public function get(Request $request, Response $response, array $args): Response
     {
 
@@ -64,7 +77,7 @@ class TestimonialController
             $result = $api->getWithPaginator($sqlWithoutLimit);
             $list = $result[Database::DATA];
 
-            foreach($list as $listItem) {
+            foreach ($list as $listItem) {
 
                 $mediaToken = $listItem->token;
                 $filePath = $this->upload->getRecursiveDirectoryAbsolutePathByToken($mediaToken) . "/original." . $listItem->extension;
@@ -92,6 +105,14 @@ class TestimonialController
 
     }
 
+    /**
+     * Add testimonials
+     * @author Onur Sahin <onursahin169@gmail.com>
+     * @param  Request $request
+     * @param  Response $response
+     * @param  array $args
+     * @return Response
+     */
     public function add(Request $request, Response $response, array $args): Response
     {
 
@@ -113,13 +134,13 @@ class TestimonialController
 
             if (count($uploadedFiles) > 0) {
 
-                $insertAndMediaId = $this->upload->processUpload($uploadedFiles, $mediaToken, $guidv4, $guidv4Medias, function($guidv4, $mediaInsertId, $createdAt) use ($headline, $description) {
+                $insertAndMediaId = $this->upload->processUpload($uploadedFiles, $mediaToken, $guidv4, $guidv4Medias, function ($guidv4, $mediaInsertId, $createdAt) use ($headline, $description) {
 
                     return $this->db->insert("testimonials",
                         ["id", "headline", "description", "created_at", "medias_id"],
                         [$guidv4, $headline, $description, $createdAt, $mediaInsertId]
                     );
-                    
+
                 });
 
                 $insertId = $insertAndMediaId[Upload::INSERT_ID];

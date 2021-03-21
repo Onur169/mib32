@@ -9,6 +9,13 @@ use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 class CorsMiddleware
 {
 
+    /**
+     * Middleware to avoid cors problems
+     * @author Onur Sahin <onursahin169@gmail.com>
+     * @param  Request $request
+     * @param  RequestHandler $handler
+     * @return Response
+     */
     public function __invoke(Request $request, RequestHandler $handler): Response
     {
 
