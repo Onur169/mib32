@@ -14,7 +14,6 @@ import { Marker } from '../helpers/classes/Marker';
 
 import { MarkerManager } from '../helpers/classes/MarkerManager';
 import { Demonstration } from '../helpers/interfaces/Demonstration';
-import { EventResponse } from '../helpers/interfaces/EventResponse';
 import { ApiService } from './api.service';
 
 @Injectable({
