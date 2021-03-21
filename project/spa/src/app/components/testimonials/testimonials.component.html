@@ -1,4 +1,5 @@
 <div>
+<div *ngIf="hasTestimonials; else elseBlock">
 <div class="p-2 p-sm-4 p-lg-5">
   <div class="mb-2 mb-md-5">
     <p id="testimonials_head" class="display-4 text-primary mb-0">Was andere über uns berichten.</p>
@@ -8,7 +9,6 @@
     </p>
   </div>
 </div>
-<div *ngIf="hasTestimonials; else elseBlock">
   <div  class="d-flex justify-content-start flex-wrap py-2 py-md-4">
     <div *ngFor="let testimonial of chosenTestimonials; let i=index">
     <div class="card mx-2 mx-md-4">
@@ -23,10 +23,18 @@
     </div>
 </div>
   </div>
-
 </div>
 
 <ng-template #elseBlock>
-  <div class="text bg-primary text-white fs-2 text-center py-4 px-3 m-3 m-md-5">Wir halten noch Interviews mit den Menschen. Schaue später vorbei.</div>
+  <div class="p-2 p-sm-4">
+    <div class="mb-2 mb-md-5">
+      <p id="testimonials_head" class="display-4 text-primary mb-0">Was andere über uns berichten.</p>
+      <p id="testimonials_cover" class="text text-primary">
+        Wirf einen Blick in die Vergangenheit und erlebe mit uns noch einmal
+        unsere heroischsten Momente mit.
+      </p>
+    </div>
+  <div class="text bg-primary text-white fs-2 text-center py-4 px-3 m-3">Wir halten noch Interviews mit den Menschen. Schaue später vorbei.</div>
+  </div>
 </ng-template>
 </div>
