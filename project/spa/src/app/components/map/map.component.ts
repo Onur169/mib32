@@ -283,8 +283,13 @@ if(!(marker.length>0)){
           this.overlay.setPosition(coordinate);
           mapScreen.getView().setCenter(coordinate);
 
-          this.place = 'in ' + marker[j].getLocationName();
-          this.day = 'am ' + marker[j].getStartDate();
+          const options: Intl.DateTimeFormatOptions = {
+            weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+        };
+
+          this.place = ', in ' + marker[j].getLocationName();
+          this.day = 'Am ' + new Date(marker[j].getStartDate()).toLocaleString('de-DE', options);
+
           document.getElementById('next_demo_box')!.style.opacity="1";
           document.getElementById('next_demo_box')!.style.position="relative";
           ScrollTrigger.refresh(true);
