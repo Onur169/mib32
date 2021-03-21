@@ -104,6 +104,10 @@ const Log_1 = require("./Log");
                 }
                 else {
                     log.errorLog(`Der Hashtagcount von ${count} wurde NICHT durch die API geupdated!`);
+                    let errorMsg = list.data["msg"].toLocaleLowerCase();
+                    if (errorMsg.includes("auth")) {
+                        log.errorLog(`Hinweiß: Api-Token ist nicht gültig!`);
+                    }
                 }
             }
             else {
@@ -114,6 +118,11 @@ const Log_1 = require("./Log");
                 }
                 else {
                     log.errorLog(`Der Hashtagcount von ${count} wurde NICHT durch die API geupdated!`);
+                    let errorMsg = list.data["msg"].toLocaleLowerCase();
+                    console.log(errorMsg);
+                    if (errorMsg.includes("auth")) {
+                        log.errorLog(`Hinweiß: Api-Token ist nicht gültig!`);
+                    }
                 }
             }
         }

@@ -14,11 +14,11 @@ class ToolException extends Exception
     public function __construct($code = -1, Exception $previous = null)
     {
 
-        parent::__construct($this->getErrorMessage($code), $code, $previous);
-
         $this->errorMessages = [
             self::COULD_NOT_RUN_TOOL => "Could not run tool",
         ];
+
+        parent::__construct($this->getErrorMessage($code), $code, $previous);
 
     }
 

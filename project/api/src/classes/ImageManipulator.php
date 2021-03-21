@@ -16,16 +16,22 @@ class ImageManipulator
     const HEIGHT = "height";
 
     const IMAGES = "images";
-    const COVER_IMAGE = "cover_image";
+    const TESTIMONIALS_IMAGE = "testimonials_image";
+    const ALLIANCES_IMAGE = "alliances_image";
 
-    const LARGE_COVER_IMAGE_WIDTH = 1000;
-    const LARGE_COVER_IMAGE_HEIGHT = 500;
+    const LARGE_TESTIMONIALS_IMAGE_WIDTH = 400;
+    const LARGE_TESTIMONIALS_IMAGE_HEIGHT = 260;
+    const MEDIUM_TESTIMONIALS_IMAGE_WIDTH = 300;
+    const MEDIUM_TESTIMONIALS_IMAGE_HEIGHT = 200;
+    const SMALL_TESTIMONIALS_IMAGE_WIDTH = 160;
+    const SMALL_TESTIMONIALS_IMAGE_HEIGHT = 160;
 
-    const MEDIUM_COVER_IMAGE_WIDTH = 750;
-    const MEDIUM_COVER_IMAGE_HEIGHT = 250;
-
-    const SMALL_COVER_IMAGE_WIDTH = 600;
-    const SMALL_COVER_IMAGE_HEIGHT = 100;
+    const LARGE_ALLIANCES_IMAGE_WIDTH = 208;
+    const LARGE_ALLIANCES_IMAGE_HEIGHT = 114;
+    const MEDIUM_ALLIANCES_IMAGE_WIDTH = 208;
+    const MEDIUM_ALLIANCES_IMAGE_HEIGHT = 114;
+    const SMALL_ALLIANCES_IMAGE_WIDTH = 142;
+    const SMALL_ALLIANCES_IMAGE_HEIGHT = 105;
 
     const QUALITY = 40;
     const BEST_QUALITY = 60;
@@ -65,35 +71,44 @@ class ImageManipulator
 
     }
 
-    public function getCoverImageBreakpointDimensions()
+    public function getTestimonialsImageBreakpointDimensions()
     {
         return [
             self::LARGE => [
-                self::WIDTH => self::LARGE_COVER_IMAGE_WIDTH,
-                self::HEIGHT => self::LARGE_COVER_IMAGE_HEIGHT,
+                self::WIDTH => self::LARGE_TESTIMONIALS_IMAGE_WIDTH,
+                self::HEIGHT => self::LARGE_TESTIMONIALS_IMAGE_HEIGHT,
             ],
             self::SMALL => [
-                self::WIDTH => self::SMALL_COVER_IMAGE_WIDTH,
-                self::HEIGHT => self::SMALL_COVER_IMAGE_HEIGHT,
+                self::WIDTH => self::SMALL_TESTIMONIALS_IMAGE_WIDTH,
+                self::HEIGHT => self::SMALL_TESTIMONIALS_IMAGE_HEIGHT,
             ],
             self::MEDIUM => [
-                self::WIDTH => self::MEDIUM_COVER_IMAGE_WIDTH,
-                self::HEIGHT => self::MEDIUM_COVER_IMAGE_HEIGHT,
+                self::WIDTH => self::MEDIUM_TESTIMONIALS_IMAGE_WIDTH,
+                self::HEIGHT => self::MEDIUM_TESTIMONIALS_IMAGE_HEIGHT,
             ],
         ];
     }
 
-    public function getBreakpointFileName($type, $destinationPath, $breakpoint)
+    public function getAlliancesImageBreakpointDimensions()
     {
+        return [
+            self::LARGE => [
+                self::WIDTH => self::LARGE_ALLIANCES_IMAGE_WIDTH,
+                self::HEIGHT => self::LARGE_ALLIANCES_IMAGE_HEIGHT,
+            ],
+            self::SMALL => [
+                self::WIDTH => self::SMALL_ALLIANCES_IMAGE_WIDTH,
+                self::HEIGHT => self::SMALL_ALLIANCES_IMAGE_HEIGHT,
+            ],
+            self::MEDIUM => [
+                self::WIDTH => self::MEDIUM_ALLIANCES_IMAGE_WIDTH,
+                self::HEIGHT => self::MEDIUM_ALLIANCES_IMAGE_HEIGHT,
+            ],
+        ];
+    }
 
-        if ($type == self::COVER_IMAGE) {
-
-            $coverImageBreakpoints = $this->getCoverImageBreakpointDimensions();
-            $imageBreakpointSmall = $coverImageBreakpoints[self::SMALL];
-            $imageBreakpointMedium = $coverImageBreakpoints[self::MEDIUM];
-            $imageBreakpointLarge = $coverImageBreakpoints[self::LARGE];
-
-        }
+    public function getBreakpointFileName($destinationPath, $breakpoint)
+    {
 
         if ($breakpoint == self::LARGE) {
             $breakpointFileName = self::LARGE;
@@ -108,39 +123,38 @@ class ImageManipulator
         $destinationFileName = $destinationPathInfo["filename"];
         $destinationFileExt = $destinationPathInfo["extension"];
         $destinationPath = $destinationFilePath . "/" . $breakpointFileName . "." . $destinationFileExt;
+
         return $destinationPath;
 
     }
 
-    public function createImage($type, $sourcePath, $destinationPath, $breakpoint)
+    public function processImage($width, $height, $breakpoint, $sourcePath, $destinationPath) {
+
+        $manager = new ImageManager();
+
+        $manager->make($sourcePath)->fit($width, $height, function ($constraint) use ($breakpoint) {
+            $constraint->upsize();
+        })->save($this->getBreakpointFileName($destinationPath, $breakpoint));
+
+    }
+
+    public function createImage($type, $sourcePath, $destinationPath)
     {
 
         // TODO
         // Fehlerhandling einbauen
 
-        $manager = new ImageManager();
-
-        $createCoverImage = function ($width, $height) use ($manager, $sourcePath, $destinationPath, $breakpoint, $type) {
-
-            $manager->make($sourcePath)->fit($width, $height, function ($constraint) use ($breakpoint, $type) {
-                $constraint->upsize();
-            })->save($this->getBreakpointFileName($type, $destinationPath, $breakpoint));
-
-        };
-
         //$image->setImageCompressionQuality(self::BEST_QUALITY);
 
-        if ($type == self::COVER_IMAGE) {
-
-            if ($breakpoint == self::LARGE) {
-                $createCoverImage(self::LARGE_COVER_IMAGE_WIDTH, self::LARGE_COVER_IMAGE_HEIGHT);
-            } else if ($breakpoint == self::SMALL) {
-                $createCoverImage(self::SMALL_COVER_IMAGE_WIDTH, self::SMALL_COVER_IMAGE_HEIGHT);
-            } else if ($breakpoint == self::MEDIUM) {
-                $createCoverImage(self::MEDIUM_COVER_IMAGE_WIDTH, self::MEDIUM_COVER_IMAGE_HEIGHT);
-            }
-
+        if ($type == self::TESTIMONIALS_IMAGE) {
+            $breakpoint = self::getTestimonialsImageBreakpointDimensions();
+        } else if ($type == self::ALLIANCES_IMAGE) {
+            $breakpoint = self::getAlliancesImageBreakpointDimensions();
         }
+
+        $this->processImage($breakpoint[self::LARGE][self::WIDTH], $breakpoint[self::LARGE][self::HEIGHT], self::LARGE, $sourcePath, $destinationPath);
+        $this->processImage($breakpoint[self::MEDIUM][self::WIDTH], $breakpoint[self::MEDIUM][self::HEIGHT], self::MEDIUM, $sourcePath, $destinationPath);
+        $this->processImage($breakpoint[self::SMALL][self::WIDTH], $breakpoint[self::SMALL][self::HEIGHT], self::SMALL, $sourcePath, $destinationPath);
 
     }
 
@@ -152,7 +166,7 @@ class ImageManipulator
 
             $this->iterateAllBreakpoints(function($currentBreakpoint) use ($type, $token, $filePath, &$images) {
                 
-                $file = $this->getBreakpointFileName($type, $filePath, $currentBreakpoint);
+                $file = $this->getBreakpointFileName($filePath, $currentBreakpoint);
                 $file = file_exists($file) ? $file : null;
 
                 if(!empty($file)) {
