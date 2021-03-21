@@ -66,8 +66,6 @@ const MODALS: {[name: string]: Type<any>} = {
 })
 export class NgbdModalFocus {
 
-  private modalReference!: NgbModalRef;
-
   withAutofocus = `<button type="button" ngbAutofocus class="btn btn-danger"
       (click)="modal.close('Ok click')">Ok</button>`;
 

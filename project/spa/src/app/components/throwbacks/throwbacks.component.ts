@@ -23,7 +23,6 @@ import {NgbModal, ModalDismissReasons, NgbModalOptions} from '@ng-bootstrap/ng-b
   styleUrls: ['./throwbacks.component.scss'],
 })
 export class ThrowbacksComponent implements OnInit {
-  title = 'ng-bootstrap-modal-demo';
   closeResult: string='';
   modalOptions:NgbModalOptions;
 
