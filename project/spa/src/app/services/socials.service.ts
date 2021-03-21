@@ -1,7 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HashtagClass } from '../helpers/classes/HashtagClass';
-import { SocialHastag } from '../helpers/interfaces/socialHastag';
+import { SocialHashtag } from '../helpers/interfaces/SocialHashtag';
 import { ApiService } from './api.service';
 
 @Injectable({
@@ -48,7 +48,7 @@ export class SocialsService {
 
         let response= await this.api.fetch(Url, params);
 
-        (response.data as SocialHastag[]).forEach((value: SocialHastag) => {
+        (response.data as SocialHashtag[]).forEach((value: SocialHashtag) => {
 
           let newHashtag=new HashtagClass(
            value.id,

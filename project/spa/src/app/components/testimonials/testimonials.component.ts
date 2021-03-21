@@ -70,6 +70,7 @@ export class TestimonialsComponent implements OnInit {
     if (manager.getPageValue(manager.getCurrentPage())) {
       await this.iterateTestimonials();
     }
+    console.log("testis",manager.getAllValues());
   }
 
   async iterateTestimonials() {
