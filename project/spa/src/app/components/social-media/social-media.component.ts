@@ -60,37 +60,21 @@ export class SocialMediaComponent implements OnInit {
         if(hash.getName()==this.plattformCookie && hash.getHashtag() ==this.hashCookie){
           this.getHashtag(this.hashCookie, this.plattformCookie);
         }
+        if(hash.getName().toLocaleLowerCase() === "instagram".toLocaleLowerCase()){
+          this.hashtagInstagram = hash.getHashtag();
+        }else{
+          this.hashtagFacebook = hash.getHashtag(); 
+        }
       });
 
       if(this.plattformCookie && this.hashCookie){
-        for(let hashtag of this.allHashtags){
-          if(hashtag.getHashtag().toLocaleLowerCase() == this.hashCookie.toLocaleLowerCase() && hashtag.getName().toLocaleLowerCase() == this.plattformCookie.toLocaleLowerCase()){
-            this.hashtag = hashtag.getHashtag();
-            this.count = hashtag.getCounter();
-          }
-        }
+        this.getHashtag(this.hashCookie, this.plattformCookie);
       }else{
-        for(let hashtag of this.allHashtags ){
-          if(hashtag.getName().toLocaleLowerCase() === "instagram".toLocaleLowerCase() && hashtag.getHashtag().toLocaleLowerCase() === "klima".toLocaleLowerCase()){
-            this.hashtag = hashtag.getHashtag();
-            this.count = hashtag.getCounter();
-            this.model = "instagram";
+        this.getHashtag("klima", "instagram");
           }
-        }
-      }
-
-      for(let hashtag of this.allHashtags ){
-        if(hashtag.getName().toLocaleLowerCase() === "instagram".toLocaleLowerCase()){
-          this.hashtagInstagram = hashtag.getHashtag();
-        }else{
-          this.hashtagFacebook = hashtag.getHashtag(); 
-        }
-      }  
-
       }else{
         this.hashtagSuccess = false;
       }
-  
   }
 
   getHashtag(name: string, plattform: string){
