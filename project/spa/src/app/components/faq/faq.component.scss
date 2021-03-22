@@ -6,11 +6,18 @@
 
 .different:hover {
   background-color: $info !important;
+  cursor: pointer;
 }
 
 .info-box{
   min-width: 9rem;
   min-height: 9rem;
+}
+
+.text-info:hover{
+  cursor: pointer;
+  text-decoration: none;
+  color: $warning !important;
 }
 
 #fifth_faqbox{

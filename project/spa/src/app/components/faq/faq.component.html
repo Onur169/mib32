@@ -1,8 +1,8 @@
 <div>
 <div class="p-2 p-sm-4 p-lg-5">
   <div>
-  <p id="faq_head" class="display-4 text-primary mb-0">FAQ</p>
-  <p id="faq_cover" class="text text-primary">Noch etwas unklar? Kein Problem!</p>
+  <p id="faq_head" class="display-4 text-primary mb-0">Noch etwas unklar?</p>
+  <p id="faq_cover" class="text text-primary">Kein Problem! Wir haben Antworten auf häufig gestellte Fragen vorbereitet...</p>
 </div>
 
     <div class="d-flex justify-content-center row mx-0 w-100 h-50 flex-lg-nowrap">
@@ -43,7 +43,7 @@
 
     </div>
 
-    <p id="leak" class="h4 text-primary mt-2 my-md-5">...dann haben wir möglicherweise ein paar Anworten für Dich:</p>
+    <p id="leak" class="h4 text-primary mt-2 my-md-5">... möglicherweise sind ein paar Anworten für Dich dabei:</p>
 
     <div id="faq" class="w-90">
       <ngb-accordion #acc="ngbAccordion" [closeOthers]="true">
@@ -56,7 +56,7 @@
             </ng-template>
             <ng-template ngbPanelContent>
               Alle angekündigten Aktionen findest Du auf der
-              <a href="map" class="text-info"> Karte. </a>
+              <a [routerLink]="['/Home']" fragment ="Karte" class="text-info"> Karte.</a>
               Am einfachsten gibst Du den Namen Deiner Stadt direkt in die
               Suchleiste der Karte ein.
             </ng-template>
@@ -71,15 +71,21 @@
           </ng-template>
           <ng-template ngbPanelContent>
             <div>
-              AAnim pariatur cliche reprehenderit, enim eiusmod high life accusamus
-              terry richardson ad squid. 3 wolf moon officia aute, non cupidatat
-              skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
-              Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid
-              single-origin coffee nulla assumenda shoreditch et. Nihil anim
-              keffiyeh helvetica, craft beer labore wes anderson cred nesciunt
-              sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
-              occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt
-              you probably haven't heard of them accusamus labore sustainable VHS.
+             Du kannst Deine Aktion an <a class="text-info" onclick="window.open('https://fridaysforfuture.de/allefuer1komma5/?pk_campaign=nomoreemptypromises#eintragen', 'new_window')">Fridays for Future</a> melden.
+
+            Dabei werden von Dir folgende Informationen benötigt:
+
+             <ul>
+               <li>Dein Name</li>
+               <li>Startzeitpunkt inklusive des genauen Ortes</li>
+               <li>Genehmigung der Aktion</li>
+               <li>Besondere Aktionsform</li>
+               <li>Eine Handynummer und die dazugehörige Einverständniserklärung</li>
+               <li>Gegebenfalls ein Link zum Facebook-Event oder der Veranstaltungseite</li>
+             </ul>
+             Deine Daten werden nicht weitergegeben, lediglich die Uhrzeit, Stadt, der genaue Ort, die Aktionsform und der Link. 
+
+             Deine Aktion wird dann automatisch auf der Karte erscheinen.
             </div>
           </ng-template>
       </ngb-panel>
@@ -93,15 +99,7 @@
 
         </ng-template>
         <ng-template ngbPanelContent>
-          AAnim pariatur cliche reprehenderit, enim eiusmod high life accusamus
-          terry richardson ad squid. 3 wolf moon officia aute, non cupidatat
-          skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
-          Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid
-          single-origin coffee nulla assumenda shoreditch et. Nihil anim
-          keffiyeh helvetica, craft beer labore wes anderson cred nesciunt
-          sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
-          occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt
-          you probably haven't heard of them accusamus labore sustainable VHS.
+         Oft werden die Uhrzeiten und genauen Standorte der Aktionen erst kurzfristig bekannt gegeben. Daher lohnt es sich, regelmäßig unter <a class="text-info" [routerLink]= "['/Home']" fragment="Karte">Aktionen </a> nachzusehen.
         </ng-template>
     </ngb-panel>
 
@@ -113,15 +111,10 @@
           </div>
       </ng-template>
       <ng-template ngbPanelContent>
-        AAnim pariatur cliche reprehenderit, enim eiusmod high life accusamus
-        terry richardson ad squid. 3 wolf moon officia aute, non cupidatat
-        skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
-        Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid
-        single-origin coffee nulla assumenda shoreditch et. Nihil anim
-        keffiyeh helvetica, craft beer labore wes anderson cred nesciunt
-        sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
-        occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt
-        you probably haven't heard of them accusamus labore sustainable VHS.
+      Auf vielen Wegen kannst Du den Klimastreik unterstützen! Mach einen großen Unterschied und werde Mitstreikender. 
+      Du kannst aktiv werden, indem Du viele Leute informierst und Werbung für die Aktion machst. 
+      Dafür hast Du Möglichkeiten, <a class="text-info" onclick="window.open('https://www.klima-streik.org/helfen/mobilisieren', 'new_window')">online</a> Freunde und Familie zu mobilisieren.
+      Du kannst das Bündnis auch durch <a class="text-info" onclick="window.open('https://www.klima-streik.org/helfen/spenden', 'new_window')">Deine Spende</a> unterstützen.
       </ng-template>
   </ngb-panel>
 
