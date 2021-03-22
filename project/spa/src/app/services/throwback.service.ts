@@ -21,6 +21,8 @@ import { ApiService } from './api.service';
 export class ThrowbackService {
   throwbackmanager: ThrowbackManager;
 
+  limit=false;
+
   constructor(private api: ApiService) {
     this.throwbackmanager=new ThrowbackManager();
 
@@ -45,9 +47,8 @@ export class ThrowbackService {
         }
 
 
-        if(this.throwbackmanager.hasNextPage() && !this.throwbackmanager.getPageValue(current+1)){
+        if(!this.limit && this.throwbackmanager.hasNextPage() && !this.throwbackmanager.getPageValue(current+1)){
           console.log("hasNextPage",this.throwbackmanager.hasNextPage());
-          console.log("bla",this.throwbackmanager.getCurrentPage(),"currentPage",current, "maxPage", this.throwbackmanager.getMaxPages());
           await this.getThrowbacks(current+1);
         }
         if(this.throwbackmanager.hasPreviousPage() && !this.throwbackmanager.getPageValue(current-1)){
@@ -87,6 +88,7 @@ export class ThrowbackService {
         let newThrowbacks: ThrowbackClass[]=[];
 
         (response.data as Throwback[]).forEach((value: Throwback) => {
+          if(new Date().getTime()-new Date(value.end_at).getTime()>0){
           let newThrowback=new ThrowbackClass(
             value.id,
             value.name,
@@ -100,9 +102,16 @@ export class ThrowbackService {
             value.description_shortened
           );
           newThrowbacks.push(newThrowback);
-        });
+        }
+        else{
+          this.limit=true;
+        }
+      });
         this.throwbackmanager.setnewPage(response.current_page, response.max_pages,newThrowbacks);
         this.throwbackmanager.setMaxPages(response.max_pages);
+
+        if(this.limit)this.throwbackmanager.setMaxPages(response.current_page);
+
 
         resolve(newThrowbacks);
 
