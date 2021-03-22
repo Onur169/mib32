@@ -28,19 +28,17 @@ import { ThrowbackClass } from "./ThrowbackClass";
    * @param markers -Events
    * **/
   setnewPage(newPage:number, maxPages: number,markers: ThrowbackClass[]): void{
-    this.setMaxPages(maxPages);
-    this.setCurrentPage(newPage);
     this.pages.set(newPage,  markers);
    }
 
-   /**
-   * Gibt das erste Throwback der ersten Seite aus.
-   * **/
-  getFirstThrowback(): ThrowbackClass | undefined{
-    if(this.pages.get(1))return this.pages.get(1)![0];
-    else {
-      return undefined;
-    }
+  hasPreviousPage(){
+    if((this.currentPage-1)<=0)return false;
+    else return true;
+  }
+
+  hasNextPage(){
+    if(this.currentPage<this.maxPages)return true;
+    else return false;
   }
 
      //für das Überschreiben
@@ -57,9 +55,10 @@ import { ThrowbackClass } from "./ThrowbackClass";
       return this.currentPage;
     }
 
-    getPageValue(page:number): ThrowbackClass[]|undefined{
+    getPageValue(page:number): ThrowbackClass[]{
 
-      return this.pages.get(page)
+        return this.pages.get(page)!;
+
     }
 
     getMaxPages(): number {
@@ -123,4 +122,7 @@ import { ThrowbackClass } from "./ThrowbackClass";
       return filtered;
     }
 
+    getPages(){
+      return this.pages;
+    }
  }

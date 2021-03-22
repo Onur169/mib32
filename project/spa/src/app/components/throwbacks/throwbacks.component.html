@@ -7,9 +7,9 @@
     </p>
   </div>
   <div *ngIf="hasThrowback; else elseBlock" class="grey_container mb-4 h-100 bg-light">
-    <div *ngIf="throwbackPages.size > 1" class=" d-flex justify-content-center py-1 py-md-4">
+    <div *ngIf="throwbackPages.length > 1" class=" d-flex justify-content-center py-1 py-md-4">
       <ngb-pagination
-        (pageChange)="this.setNewPage($event)"
+        (pageChange)="this.setProperties($event)"
         [collectionSize]="maxPage"
         [(page)]="page"
         [maxSize]="5"
@@ -18,7 +18,7 @@
       ></ngb-pagination>
     </div>
     <div class="d-flex flex-wrap flex-lg-nowrap d-flex justify-content-around">
-      <ng-container *ngFor="let throwback of throwbacks, let i = index">
+      <ng-container *ngFor="let throwback of throwbackPages, let i = index">
         <div class="shadow row m-1 mb-2 mb-md-4 row-md-6 card ">
         <div class="card-header text-white bg-primary">
 <h5 class="card-title h4 mb-1">{{ throwback.getName() }}</h5>

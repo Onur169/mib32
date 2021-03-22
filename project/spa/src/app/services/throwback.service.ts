@@ -26,20 +26,38 @@ export class ThrowbackService {
 
   }
 
-  async getallThrowbacks(){
+  async getNecessaryThrowbacks(page?: number){
 
     return new Promise<ThrowbackClass[]>(async (resolve, reject)=>  {
       try{
 
-        if(this.throwbackmanager.getFirstThrowback()==undefined){
-          await this.getThrowbacks();
-        }
-        for(let i=1; i<= this.throwbackmanager.getMaxPages(); i++){
-          await this.getThrowbacks(i);
+
+        let current=this.throwbackmanager.getCurrentPage();
+        if(page){
+          current=page;
+          this.throwbackmanager.setCurrentPage(current);
         }
 
 
-        resolve(this.throwbackmanager.getallThrowbacksAsArray());
+        console.log("currentPage",current, "maxPage", this.throwbackmanager.getMaxPages());
+        if(!this.throwbackmanager.getPageValue(current)){
+          await this.getThrowbacks(current);
+        }
+
+
+        if(this.throwbackmanager.hasNextPage() && !this.throwbackmanager.getPageValue(current+1)){
+          console.log("hasNextPage",this.throwbackmanager.hasNextPage());
+          console.log("bla",this.throwbackmanager.getCurrentPage(),"currentPage",current, "maxPage", this.throwbackmanager.getMaxPages());
+          await this.getThrowbacks(current+1);
+        }
+        if(this.throwbackmanager.hasPreviousPage() && !this.throwbackmanager.getPageValue(current-1)){
+          console.log("hasPreviousPage",this.throwbackmanager.hasPreviousPage());
+          await this.getThrowbacks(current-1);
+        }
+
+
+
+        resolve(this.throwbackmanager.getPageValue(current));
 
       }catch (error){
         reject(error)
@@ -51,10 +69,9 @@ export class ThrowbackService {
   async getThrowbacks(page?: number){
     return new Promise<ThrowbackClass[]>(async (resolve, reject) => {
       try{
-        if(page && (this.throwbackmanager.getPageValue(page)!=undefined)){
-          this.throwbackmanager.setCurrentPage(page);
-          return resolve(this.throwbackmanager.getPageValue(page)!);
-        }
+
+        console.log("request");
+
         let params= new HttpParams()
         .set('page', this.throwbackmanager.getCurrentPage().toString());
 
@@ -85,6 +102,7 @@ export class ThrowbackService {
           newThrowbacks.push(newThrowback);
         });
         this.throwbackmanager.setnewPage(response.current_page, response.max_pages,newThrowbacks);
+        this.throwbackmanager.setMaxPages(response.max_pages);
 
         resolve(newThrowbacks);
 
