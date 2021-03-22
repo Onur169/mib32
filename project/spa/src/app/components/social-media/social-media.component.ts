@@ -87,7 +87,7 @@ export class SocialMediaComponent implements OnInit {
       if(hashtag.getHashtag().toLocaleLowerCase() == name.toLocaleLowerCase() && hashtag.getName().toLocaleLowerCase() == plattform.toLocaleLowerCase()){
         this.count = hashtag.getCounter();
         this.hashtag = hashtag.getHashtag();
-        this.model = hashtag.getName();
+        this.model = hashtag.getName().charAt(0).toUpperCase() + hashtag.getName().slice(1);
       }
     }
   }
