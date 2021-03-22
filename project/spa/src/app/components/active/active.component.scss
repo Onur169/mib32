@@ -29,5 +29,9 @@ object-fit: cover;
   background-color: $info !important;
 }
 
-
+@media(min-width: 1400px){
+  .bg-background{
+    background-size: 100% !important;  
+  }
+}
 
