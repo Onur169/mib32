@@ -317,10 +317,10 @@ if(this.searchedLocationValue){
       this.map.getView().setCenter(fromLonLat([searchmarker[0].getLng(), searchmarker[0].getLat()]));
       this.markerCluster(searchmarker);
     }else{
-      this.error = 'Leider findet in Deiner Nähe keine Aktion statt';
+      this.error = 'Leider findet in Deiner Nähe keine Aktion statt.';
     }
   }else{
-      this.error = 'Leider findet in Deiner Nähe keine Aktion statt';
+      this.error = 'Leider findet in Deiner Nähe keine Aktion statt.';
     }
 }
 //löcht two-way-binding
