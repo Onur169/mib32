@@ -1,7 +1,7 @@
 .alliance_image{
   width: 14rem;
+  height: auto;
   min-width: 80px;
-border-radius: 20%;
 border-color: gray !important;
 border-width: 3px !important;
 }
@@ -30,6 +30,7 @@ border-width: 3px !important;
 @media (min-width: 768px) and (max-width: 992px){
   .alliance_image{
     width: 10rem;
+
   }
 }
 

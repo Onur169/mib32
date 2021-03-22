@@ -26,8 +26,7 @@ export class ThrowbacksComponent implements OnInit {
   closeResult: string='';
   modalOptions:NgbModalOptions;
 
-  throwbackPages = new Map<number, ThrowbackClass[]>();
-  throwbacks: ThrowbackClass[];
+  throwbackPages : ThrowbackClass[]=[];
   maxPage = 0;
   page = 1;
 
@@ -36,7 +35,6 @@ export class ThrowbacksComponent implements OnInit {
   videoSuccess: boolean[] = [];
 
   constructor(private throwbackService: ThrowbackService, private viewport: ViewportService, private modalService: NgbModal) {
-    this.throwbacks = [];
     this.modalOptions = {
       backdrop:'static',
       backdropClass:'customBackdrop'
@@ -48,7 +46,7 @@ export class ThrowbacksComponent implements OnInit {
   }
 
   ngAfterViewInit(){
-    if(!this.viewport.getIsMobile())this.scrollUp();
+
   }
 
   open(content: any) {
@@ -69,49 +67,29 @@ export class ThrowbacksComponent implements OnInit {
     }
   }
 
-  async setProperties() {
+  async setProperties(page?: number) {
 
-   await this.throwbackService.getallThrowbacks();
-    this.throwbackPages = this.throwbackService.throwbackmanager.reCreatePages(5);
-    this.setNewPage(1);
-    this.setMaxPage(this.throwbackPages.size);
+    if(page){
+      this.throwbackPages=await this.throwbackService.getNecessaryThrowbacks(page);
+    }
+    else{
+      this.throwbackPages=await this.throwbackService.getNecessaryThrowbacks();
+    }
+
+    if(this.throwbackPages)this.hasThrowback=true;
+
+    this.setMaxPage(this.throwbackService.throwbackmanager.getMaxPages());
+    page=this.throwbackService.throwbackmanager.getCurrentPage();
+
+
+    if(!this.viewport.getIsMobile())this.scrollUp();
     ScrollTrigger.refresh(true);
-
   }
 
   setMaxPage(size: number) {
     this.maxPage = size * 10;
   }
 
-  async setNewPage(page: number) {
-    if (this.throwbackPages.get(page)) {
-      this.throwbacks = this.throwbackPages.get(page)!;
-    } else {
-      this.throwbacks = this.throwbackPages.get(
-        this.throwbackService.throwbackmanager.getCurrentPage()
-      )!;
-    }
-
-    if(this.throwbacks){
-      if(this.throwbacks.length > 0){
-        this.hasThrowback =true;
-      }else{
-        this.hasThrowback = false;
-      }
-
-      for( let throwback of this.throwbacks){
-        if(throwback.getsocialMediaVideoUrl()){
-          this.videoSuccess.push(true);
-        }else{
-          this.videoSuccess.push(false);
-        }
-        }
-    }else{
-      this.hasThrowback =false;
-    }
-
-
-  }
 
       ////////////////////GSAP///////////////////
 

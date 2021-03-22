@@ -21,25 +21,44 @@ import { ApiService } from './api.service';
 export class ThrowbackService {
   throwbackmanager: ThrowbackManager;
 
+  limit=false;
+
   constructor(private api: ApiService) {
     this.throwbackmanager=new ThrowbackManager();
 
   }
 
-  async getallThrowbacks(){
+  async getNecessaryThrowbacks(page?: number){
 
     return new Promise<ThrowbackClass[]>(async (resolve, reject)=>  {
       try{
 
-        if(this.throwbackmanager.getFirstThrowback()==undefined){
-          await this.getThrowbacks();
-        }
-        for(let i=1; i<= this.throwbackmanager.getMaxPages(); i++){
-          await this.getThrowbacks(i);
+
+        let current=this.throwbackmanager.getCurrentPage();
+        if(page){
+          current=page;
+          this.throwbackmanager.setCurrentPage(current);
         }
 
 
-        resolve(this.throwbackmanager.getallThrowbacksAsArray());
+        console.log("currentPage",current, "maxPage", this.throwbackmanager.getMaxPages());
+        if(!this.throwbackmanager.getPageValue(current)){
+          await this.getThrowbacks(current);
+        }
+
+
+        if(!this.limit && this.throwbackmanager.hasNextPage() && !this.throwbackmanager.getPageValue(current+1)){
+          console.log("hasNextPage",this.throwbackmanager.hasNextPage());
+          await this.getThrowbacks(current+1);
+        }
+        if(this.throwbackmanager.hasPreviousPage() && !this.throwbackmanager.getPageValue(current-1)){
+          console.log("hasPreviousPage",this.throwbackmanager.hasPreviousPage());
+          await this.getThrowbacks(current-1);
+        }
+
+
+
+        resolve(this.throwbackmanager.getPageValue(current));
 
       }catch (error){
         reject(error)
@@ -51,10 +70,9 @@ export class ThrowbackService {
   async getThrowbacks(page?: number){
     return new Promise<ThrowbackClass[]>(async (resolve, reject) => {
       try{
-        if(page && (this.throwbackmanager.getPageValue(page)!=undefined)){
-          this.throwbackmanager.setCurrentPage(page);
-          return resolve(this.throwbackmanager.getPageValue(page)!);
-        }
+
+        console.log("request");
+
         let params= new HttpParams()
         .set('page', this.throwbackmanager.getCurrentPage().toString());
 
@@ -70,6 +88,7 @@ export class ThrowbackService {
         let newThrowbacks: ThrowbackClass[]=[];
 
         (response.data as Throwback[]).forEach((value: Throwback) => {
+          if(new Date().getTime()-new Date(value.end_at).getTime()>0){
           let newThrowback=new ThrowbackClass(
             value.id,
             value.name,
@@ -83,8 +102,16 @@ export class ThrowbackService {
             value.description_shortened
           );
           newThrowbacks.push(newThrowback);
-        });
+        }
+        else{
+          this.limit=true;
+        }
+      });
         this.throwbackmanager.setnewPage(response.current_page, response.max_pages,newThrowbacks);
+        this.throwbackmanager.setMaxPages(response.max_pages);
+
+        if(this.limit)this.throwbackmanager.setMaxPages(response.current_page);
+
 
         resolve(newThrowbacks);
 
