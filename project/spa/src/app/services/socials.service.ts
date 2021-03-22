@@ -18,10 +18,10 @@ export class SocialsService {
   async fetchAllHashtags(){
     return new Promise<HashtagClass[]>(async (resolve, reject) => {
       try{
-    await this.fetchHastag();
+    await this.fetchHashtag();
 
     for(let i=this.startpage; i<=this.maxPage;i++){
-      await this.fetchHastag(i);
+      await this.fetchHashtag(i);
     }
 
     resolve(this.allhashtags);
@@ -33,7 +33,7 @@ export class SocialsService {
 
   }
 
-  async fetchHastag(page?: number){
+  async fetchHashtag(page?: number){
     return new Promise<HashtagClass[]>(async (resolve, reject) => {
       try{
 
