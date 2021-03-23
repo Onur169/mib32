@@ -62,7 +62,7 @@ export class AllianceComponent implements OnInit {
     this.getScreenSize();
     this.createAllianceSet(this.scrWidth);
     this.calculatePicture();
-    ScrollTrigger.refresh(true);
+    //ScrollTrigger.refresh(true);
   }
 
   calculatePicture(){
