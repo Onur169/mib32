@@ -135,7 +135,7 @@ export class MapComponent implements OnInit {
   }
 
 async renderMap(radius: number){
-  console.log("render Map", radius, "Längengrad",this.userPosition[0], "Breitengrad",this.userPosition[1]);
+ // console.log("render Map", radius, "Längengrad",this.userPosition[0], "Breitengrad",this.userPosition[1]);
   let allmarkers=await this.eventService.getPages('current_events', this.userPosition[0], this.userPosition[1], radius);
 
   this.markers = allmarkers;
@@ -269,7 +269,7 @@ if(!(marker.length>0)){
 
         let a=feature.getGeometry()!.getExtent()
         let b=markerCoords.getExtent()
-        console.log(j,feature.getGeometry()!.getExtent()==markerCoords.getExtent(),feature.getGeometry()!.getExtent(),markerCoords.getExtent());
+       // console.log(j,feature.getGeometry()!.getExtent()==markerCoords.getExtent(),feature.getGeometry()!.getExtent(),markerCoords.getExtent());
         if(a[0]==b[0] && a[1]==b[1]){
           content!.innerHTML =  '<div><code>' +
          marker[j].getName() +
@@ -292,7 +292,7 @@ if(!(marker.length>0)){
 
           document.getElementById('next_demo_box')!.style.opacity="1";
           document.getElementById('next_demo_box')!.style.position="relative";
-          ScrollTrigger.refresh(true);
+         ScrollTrigger.refresh(true);
 
         }
       })

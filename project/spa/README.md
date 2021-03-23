@@ -1,14 +1,13 @@
 # Deployment
 
-## install
+## Installation
 
-- ng add @nguniversal/express-engine
-- https://www.youtube.com/watch?v=w7xKZ5PWizs /Firebase-Hosting Tutorial
-
-## deploy
+- https://github.com/Onur169/mib32.git
+- run "git clone https://github.com/Onur169/mib32.git" inside the root folder
+- run npm install
+## Deployment
 
 -npm run build:ssr
--embed browser variant into public folder of spa
 -firebase deploy
 
 Domain: "https://klimaschutz-b225b.web.app/"
@@ -39,19 +38,3 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
-
-## Tätigkeiten im Front-End
-
-Hier werden alle Tätigkeiten seitens der Front-End-Programmierung gelistet. Alle anderen Tätigkeiten können der beigelegten Dokumentation, dem author Parameter der jeweiligen Dateien und dem Git-Verlauf entnommen werden. 
-
-### Christian Knoth
-
-#### Allgemein
-
--Verzeichnis-Architektur des Frontends festgelegt
-#### installierte Packages
-
-- ng-bootstrap installiert
-- Firebase-Hosting
-- Angular-Universal
--ng add @angular/material
