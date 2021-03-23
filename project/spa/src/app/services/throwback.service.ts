@@ -41,18 +41,18 @@ export class ThrowbackService {
         }
 
 
-        console.log("currentPage",current, "maxPage", this.throwbackmanager.getMaxPages());
+       // console.log("currentPage",current, "maxPage", this.throwbackmanager.getMaxPages());
         if(!this.throwbackmanager.getPageValue(current)){
           await this.getThrowbacks(current);
         }
 
 
         if(!this.limit && this.throwbackmanager.hasNextPage() && !this.throwbackmanager.getPageValue(current+1)){
-          console.log("hasNextPage",this.throwbackmanager.hasNextPage());
+         // console.log("hasNextPage",this.throwbackmanager.hasNextPage());
           await this.getThrowbacks(current+1);
         }
         if(this.throwbackmanager.hasPreviousPage() && !this.throwbackmanager.getPageValue(current-1)){
-          console.log("hasPreviousPage",this.throwbackmanager.hasPreviousPage());
+        //  console.log("hasPreviousPage",this.throwbackmanager.hasPreviousPage());
           await this.getThrowbacks(current-1);
         }
 
@@ -71,7 +71,7 @@ export class ThrowbackService {
     return new Promise<ThrowbackClass[]>(async (resolve, reject) => {
       try{
 
-        console.log("request");
+       // console.log("request");
 
         let params= new HttpParams()
         .set('page', this.throwbackmanager.getCurrentPage().toString());
