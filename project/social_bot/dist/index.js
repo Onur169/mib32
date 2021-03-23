@@ -98,7 +98,7 @@ const Log_1 = require("./Log");
             if (Object.keys(cookies).length || socialBot.isWithoutLogin()) {
                 let count = yield socialBot.scrapeAfterLogin();
                 log.successLog(`Der Hashtagcount für ${socialBot.getHashtagToSearch()} lautet: ${count}`);
-                let list = yield api.fetch(`socialmedia/${selectedId}/hashtagstat?counter=${count}`, Response_1.Response.PUT);
+                let list = yield api.fetch(`socialmedias/${selectedId}/hashtagstats?counter=${count}`, Response_1.Response.PUT);
                 if (list.ack == Response_1.Response.AckSuccess) {
                     log.successLog(`Der Hashtagcount von ${count} wurde durch die API geupdated!`);
                 }
@@ -112,7 +112,7 @@ const Log_1 = require("./Log");
             }
             else {
                 let count = yield socialBot.loginAndScrape(fs, cookiesPath);
-                let list = yield api.fetch(`socialmedia/${selectedId}/hashtagstat?counter=${count}`, Response_1.Response.PUT);
+                let list = yield api.fetch(`socialmedias/${selectedId}/hashtagstats?counter=${count}`, Response_1.Response.PUT);
                 if (list.ack == Response_1.Response.AckSuccess) {
                     log.successLog(`Der Hashtagcount von ${count} wurde durch die API geupdated!`);
                 }

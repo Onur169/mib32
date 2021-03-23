@@ -121,7 +121,7 @@ import Log from './Log';
 
                 log.successLog(`Der Hashtagcount für ${socialBot.getHashtagToSearch()} lautet: ${count}`);
 
-                let list = await api.fetch(`socialmedia/${selectedId}/hashtagstat?counter=${count}`, Response.PUT);
+                let list = await api.fetch(`socialmedias/${selectedId}/hashtagstats?counter=${count}`, Response.PUT);
 
                 if(list.ack == Response.AckSuccess) {
 
@@ -143,7 +143,7 @@ import Log from './Log';
 
                 let count = await socialBot.loginAndScrape(fs, cookiesPath);
 
-                let list = await api.fetch(`socialmedia/${selectedId}/hashtagstat?counter=${count}`, Response.PUT);
+                let list = await api.fetch(`socialmedias/${selectedId}/hashtagstats?counter=${count}`, Response.PUT);
                 
                 if(list.ack == Response.AckSuccess) {
 
