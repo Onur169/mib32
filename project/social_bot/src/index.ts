@@ -32,7 +32,7 @@ import Log from './Log';
 
     try {
 
-        let list = await api.fetch("socialmedia/hashtagstat?page=1", Response.GET);
+        let list = await api.fetch("socialmedias/hashtagstats?page=1", Response.GET);
 
         if(list.ack === Response.AckSuccess) {
 

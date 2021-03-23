@@ -68,12 +68,12 @@ class EventController
             $sqlWithoutLimit = $api->db()->buildSql(
                 'SELECT id, name, description, start_at, end_at, lat, lng, location_name' . $distanceField,
                 'FROM events',
-                null,
+                Database::NO_JOIN_PART,
                 $filterSql,
                 'group by id',
                 $havingWhere,
                 'ORDER BY start_at ASC',
-                null
+                Database::NO_LIMIT_PART
             );
 
             $maxPages = $api->getMaxPages($sqlWithoutLimit);

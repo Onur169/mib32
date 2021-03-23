@@ -59,12 +59,12 @@ class SocialMediaController
             $sqlWithoutLimit = $api->db()->buildSql(
                 'SELECT *',
                 'FROM social_media_types',
-                null,
+                Database::NO_JOIN_PART,
                 $filterSql,
-                null,
-                null,
+                Database::NO_GROUP_BY_PART,
+                Database::NO_HAVING_PART,
                 'ORDER BY name ASC',
-                null
+                Database::NO_LIMIT_PART
             );
 
             $maxPages = $api->getMaxPages($sqlWithoutLimit);
@@ -165,9 +165,9 @@ class SocialMediaController
                 'INNER JOIN social_media_types ON social_media_types.id = social_media_hashtag_stats.social_media_types_id',
                 $filterSql,
                 'group by id',
-                null,
+                Database::NO_HAVING_PART,
                 'ORDER BY social_media_types.name ASC',
-                null
+                Database::NO_LIMIT_PART
             );
         
             $maxPages = $api->getMaxPages($sqlWithoutLimit);

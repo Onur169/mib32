@@ -18,6 +18,15 @@ class Database
     const NUM_ROWS = "num_rows";
     const DATA = "data";
 
+    const NO_SELECT_PART = null;
+    const NO_FROM_PART = null;
+    const NO_JOIN_PART = null;
+    const NO_WHERE_PART = null;
+    const NO_GROUP_BY_PART = null;
+    const NO_HAVING_PART = null;
+    const NO_ORDER_BY_PART = null;
+    const NO_LIMIT_PART = null;
+
     public function __construct($config)
     {
 

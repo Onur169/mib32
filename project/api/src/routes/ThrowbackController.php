@@ -60,9 +60,9 @@ class ThrowbackController
                 'INNER JOIN throwbacks ON events.id = throwbacks.events_id',
                 $filterSql,
                 'group by id',
-                null,
+                Database::NO_HAVING_PART,
                 'ORDER BY start_at ASC',
-                null
+                Database::NO_LIMIT_PART
             );
 
             $maxPages = $api->getMaxPages($sqlWithoutLimit);

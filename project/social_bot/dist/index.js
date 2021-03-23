@@ -35,7 +35,7 @@ const Log_1 = require("./Log");
     let allowedSocialMediaTypes = [SocialType_1.SocialType.Facebook, SocialType_1.SocialType.Instagram];
     let log = new Log_1.default();
     try {
-        let list = yield api.fetch("socialmedia/hashtagstat?page=1", Response_1.Response.GET);
+        let list = yield api.fetch("socialmedias/hashtagstats?page=1", Response_1.Response.GET);
         if (list.ack === Response_1.Response.AckSuccess) {
             let data = list.data;
             let options = [];

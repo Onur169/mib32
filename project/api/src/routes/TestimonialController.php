@@ -67,9 +67,9 @@ class TestimonialController
                 'LEFT JOIN medias ON medias.id = testimonials.medias_id',
                 $filterSql,
                 'group by id',
-                null,
+                Database::NO_HAVING_PART,
                 'ORDER BY testimonials.created_at ASC',
-                null
+                Database::NO_LIMIT_PART
             );
 
             $maxPages = $api->getMaxPages($sqlWithoutLimit);
