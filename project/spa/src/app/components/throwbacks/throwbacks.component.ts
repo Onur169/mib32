@@ -83,7 +83,7 @@ export class ThrowbacksComponent implements OnInit {
 
 
     if(!this.viewport.getIsMobile())this.scrollUp();
-    //ScrollTrigger.refresh(true);
+    ScrollTrigger.refresh(true);
   }
 
   setMaxPage(size: number) {
