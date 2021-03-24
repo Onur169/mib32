@@ -38,8 +38,8 @@ export class NgbdModalConfirm {
   </div>
   <div class="modal-body">
     <p><strong>Wir möchten gerne ein Cookie setzen</strong></p>
-    <p>Wir möchten dein Web-Erlebnis bei uns verbesseren. Hierbei handelst es sich lediglich um die Erfassung der Social-Media Plattform, dessen Klima-Hashtag
-      dich zu letzt interessiert hatte.
+    <p>Wir möchten dein Web-Erlebnis bei uns verbessern. Hierbei handelt es sich lediglich um die Erfassung der Social-Media Plattform, deren Klima-Hashtag
+      dich zuletzt interessiert hat.
 </p>
 <p>
     <span class="text-danger">Im Fußbereich der Seite kannst du diese Einstellung jederzeit abändern bzw. Widerrufen.</span>
