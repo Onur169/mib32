@@ -9,6 +9,11 @@
   object-fit: cover;
 }
 
+#fillerfive_bg{
+  background-size: cover !important;
+  background-position: center center;
+}
+
 .intro{
   width: 50%;
   min-width: 360px;
@@ -28,12 +33,12 @@
 
 @media(max-width: 567px){
   .filler_bg{
-    background-size: 100% 100% !important;  
+    background-size: 100% 100% !important;
   }
 }
 
 @media(min-width: 568px){
   .filler_bg{
-    background-size: 100% !important;  
+    background-size: 100% !important;
   }
 }

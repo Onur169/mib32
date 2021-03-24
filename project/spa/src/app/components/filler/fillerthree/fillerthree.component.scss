@@ -6,7 +6,12 @@
   height: 40vw;
   min-height: 300px;
   background-repeat: no-repeat;
-  object-fit: cover;
+  object-fit: cover !important;
+}
+
+#fillerthree_bg{
+  background-size: cover !important;
+  background-position: center center;
 }
 
 .intro{
@@ -28,12 +33,12 @@
 
 @media(max-width: 768px){
   .filler_bg{
-    background-size: 100% 100% !important;  
+    background-size: 100% 100% !important;
   }
 }
 
 @media(min-width: 769px){
   .filler_bg{
-    background-size: 100% !important;  
+    background-size: 100% !important;
   }
 }
