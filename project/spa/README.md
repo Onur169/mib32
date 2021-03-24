@@ -2,7 +2,6 @@
 
 ## Installation
 
-- https://github.com/Onur169/mib32.git
 - run "git clone https://github.com/Onur169/mib32.git" inside the root folder
 - run npm install
 ## Deployment
